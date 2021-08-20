@@ -1,0 +1,28 @@
+{
+  "name": "DetailsThreeColumn",
+  "label": "Details (Three column)",
+  "description": "Details (Three column)",
+  "type": "Template",
+  "subtype": "DETAILS",
+  "icon": "ThreeColumnDetails.svg",
+  "properties": [
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views", "UIComponents"]
+    },
+    {
+      "name": "B",
+      "label": "Region B",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views", "UIComponents"]
+    },
+    {
+      "name": "C",
+      "label": "Region C",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views", "UIComponents"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "OneColumnPage",
+  "label": "One column",
+  "description": "OneColumn Page Template",
+  "type": "Template",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "viewNameLabel": "Page title",
+  "properties": [
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Insights"]
+    }
+  ]
+}

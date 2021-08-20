@@ -1,0 +1,24 @@
+
+
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+/*@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";*/
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+button.mat-menu-item {
+    line-height: 24px !important;
+  }
+  a.mat-menu-item > mat-icon {
+    margin-bottom: 14px;
+  }
+  .mat-icon svg {
+    height: 24px;
+    width: 24px;
+  }
+  .mat-step-icon-content .mat-icon svg {
+    height: 100%;
+    width: 100%;
+  }

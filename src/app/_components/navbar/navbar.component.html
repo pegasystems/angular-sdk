@@ -1,0 +1,60 @@
+<div class="psdk-appshell-nav">
+    <div class="psdk-nav-header">
+        <div>
+            <img src="{{portalLogoImage$}}" class="psdk-nav-logo">
+        </div>
+        <div class="psdk-nav-portal-info">
+            <div class="psdk-nav-portal-name">{{portalName$}}</div>
+            <div class="psdk-nav-portal-app">{{portalApp$}}</div>
+        </div>
+    </div>
+    <div class="psdk-nav-divider"></div>
+    <div>
+        <ul class="psdk-nav-ul-middle">
+            <li class="psdk-nav-li-middle">
+                <button mat-button (click)="navPanelCreateButtonClick()" style="width: 100%; text-align: left; padding: 1rem 0rem;">
+                    <img  class="psdk-nav-svg-icon" src="{{navExpandCollapse$}}" >
+                    <span class="psdk-nav-button-span">Create</span>
+                </button>
+                <div *ngIf="bShowCaseTypes$" style="padding-left: 40px;">
+                    <div *ngFor="let caseType of caseTypes$" style="display:flex">
+                        <button mat-button 
+                        (click)="navPanelCreateCaseType(caseType.pyClassName, caseType.pyFlowType);">{{caseType.pyLabel}}</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+ 
+    <div style="height: 100%;">
+        <ul class="psdk-nav-ul-middle">
+            <li class="psdk-nav-li-middle" *ngFor="let page of navPages$">
+                <button mat-button (click)="navPanelButtonClick(page)" style="width: 100%; text-align: left; padding: 1rem 0rem;">
+                    <img  class="psdk-nav-svg-icon" src="{{page.iconName}}" >
+                    <span class="psdk-nav-button-span">{{page.pyLabel}}</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="psdk-nav-divider"></div>
+    <div>
+        <ul class="psdk-nav-ul-middle">
+            <li class="psdk-nav-li-middle">
+                <button mat-button  style="width: 100%; text-align: left; padding: 1rem 0rem; margin-left: -0.375rem" [matMenuTriggerFor]="menu">
+                    <div class="psdk-nav-oper-avatar">{{portalOperatorInitials$}}</div>
+                    <span class="psdk-nav-button-span">{{portalOperator$}}</span>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                <button mat-menu-item>Profile</button>
+                <button mat-menu-item (click)="navPanelLogoutClick()">Logoff</button>
+                </mat-menu>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+
+    </div>
+
+</div>

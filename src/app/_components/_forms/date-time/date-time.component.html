@@ -1,0 +1,22 @@
+<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
+      <mat-form-field class="psdk-full-width" >
+        <mat-label>{{label$}}</mat-label>
+        <input 
+          matInput 
+          [placeholder]="" 
+          type="datetime-local" 
+          [value]="value$"
+          [required]="bRequired$" 
+          [formControlName]="controlName$" 
+          (click)="fieldOnClick($event)"
+          (change)="fieldOnChange($event)"
+          (blur)="fieldOnBlur($event)" 
+        >
+        <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <ng-template #noEdit>
+    <app-text [pConn$]="pConn$" [formatAs$]="'date-time'"></app-text>
+  </ng-template>

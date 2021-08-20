@@ -1,0 +1,57 @@
+{
+  "name": "Todo",
+  "label": "Todo",
+  "description": "My worklist widget",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "properties": [
+    {
+      "name": "headerText",
+      "label": "Header text",
+      "format": "TEXT",
+      "defaultValue": "@L My Worklist"
+    },
+    {
+      "name": "datasource",
+      "label": "Data source",
+      "defaultValue": "@DATASOURCE D_pyMyWorkList.pxResults",
+      "format": "DATASOURCE",
+      "required": true,
+      "properties": [
+        {
+          "name": "operator",
+          "label": "Operator",
+          "defaultValue": "@P .pxAssignedOperatorID"
+        },
+        {
+          "name": "id",
+          "label": "ID",
+          "defaultValue": "@P .pzInsKey"
+        },
+        {
+          "name": "name",
+          "label": "Label",
+          "defaultValue": "@P .pyLabel"
+        },
+        {
+          "name": "value",
+          "label": "Work ID",
+          "defaultValue": "@P .pxRefObjectKey"
+        },
+        {
+          "name": "priority",
+          "label": "Urgency",
+          "defaultValue": "@P .pxUrgencyAssign"
+        },
+        {
+          "name": "classname",
+          "label": "Class name",
+          "defaultValue": "@P .pxRefObjectClass"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "target": "primary"
+  }
+}

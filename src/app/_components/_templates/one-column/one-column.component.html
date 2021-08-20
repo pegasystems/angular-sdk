@@ -1,0 +1,12 @@
+<div *ngFor="let kid of arChildren$">
+    <div *ngIf="kid.getPConnect().getRawMetadata()['type'] === 'Region' && kid.getPConnect().getRawMetadata()['name'] === 'A'">
+        <app-region  [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
+    </div>
+    <div *ngIf="kid.getPConnect().getRawMetadata()['type'] === 'View'">
+        <app-view  [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-view>
+    </div>
+    <div *ngIf="kid.getPConnect().getRawMetadata()['type'] === 'CaseCreateStage'">
+        <app-case-create-stage [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-case-create-stage>
+    </div>
+</div>
+

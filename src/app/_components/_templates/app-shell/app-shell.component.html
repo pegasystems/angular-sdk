@@ -1,0 +1,12 @@
+
+<div class="appshell-top" *ngIf="bShowAppShell$">
+    <app-navbar [pConn$]=pConn$ [appName$]=appName$ [pages$]=pages$ [caseTypes$]=caseTypes$></app-navbar>
+    <div class="appshell-main">
+        <div *ngFor="let kid of arChildren$">
+            <div  *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'"> 
+                <app-view-container [pConn$]="kid.getPConnect()"></app-view-container>
+            </div>
+        </div>
+    </div>
+
+</div>

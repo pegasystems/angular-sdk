@@ -1,0 +1,19 @@
+<div *ngIf="!bReadonly$  && bHasForm$ else noEdit">
+  <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
+    <div class="mat-form-field-infix" *ngIf="showLabel$">
+      <span>
+          <label class="mat-form-field-label psdk-label-readonly">{{label$}}</label>
+      </span>     
+      <mat-checkbox [labelPosition]="checkboxLabelPos$" [checked]="isChecked$" [disabled]="bDisabled$"
+      (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)">{{caption$}}</mat-checkbox>
+    </div>
+    <div class="mat-form-field-infix" *ngIf="!bReadonly$ && !showLabel$">
+      <mat-checkbox [labelPosition]="checkboxLabelPos$" [checked]="isChecked$" [disabled]="bDisabled$"
+      (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)">{{caption$}}</mat-checkbox>
+    </div>
+
+  </div>
+</div>
+<ng-template #noEdit>
+  <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
+</ng-template>

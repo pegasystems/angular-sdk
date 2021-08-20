@@ -1,0 +1,21 @@
+<div class="psdk-operator psdk-double">
+    <div class="psdk-double"><button mat-button color="primary" style="text-decoration: underline;" (click)="showOperator()">{{name$}}</button></div>
+    <div>{{date$}}</div>
+</div>
+
+<div>
+    <div *ngIf="bShowPopover$" class="psdk-operator-popover">
+        <dl>
+            <div *ngFor="let field of fields$; let i = index">
+    
+                <dt class="psdk-operator-name" >{{field.name}}</dt>
+                <dd class="psdk-operator-value">{{field.value}}</dd>
+    
+            </div>
+        </dl>
+    
+    </div>
+</div>
+
+
+

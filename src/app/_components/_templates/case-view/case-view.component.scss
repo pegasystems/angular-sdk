@@ -1,0 +1,108 @@
+
+@import "../../../_shared/styles.scss";
+
+h1 {
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+}
+
+::ng-deep  .mat-menu-panel {
+    overflow: unset;
+    max-width: unset;
+}
+
+.psdk-case-view-label {
+    font-size: 1rem; 
+    display: block;
+    transform: translateY(0.2em) scale(0.75) perspective(100px) translateZ(0.001px);
+    -ms-transform: translateY(0.2em) scale(.75);
+    width: 133.33333%;
+}
+
+.psdk-case-view {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.ng-case-view-toolbar {
+    padding: 0.625rem 0.625rem;
+}
+
+.psdk-case-icon-div {
+    background-color: $app-primary-dark-color;
+    border-radius: 1rem;
+    padding: 0.5rem 0.3rem 0.3rem 0.3rem;
+}
+.psdk-case-svg-icon {
+    width: 2rem;
+    padding: 0rem 0.3125rem;
+    filter: $app-white-color-filter;
+}
+
+.psdk-case-view-info-box {
+    display: flex;
+    flex-direction: row;
+    padding: 0rem 0.3125rem 0rem 0rem;
+}
+
+.psdk-case-view-info {
+    flex: 0 0 auto;
+    width: 25rem;
+    float: left;
+    padding: 0rem 0.3125rem 0rem 0rem;
+    height: 100%; /* Should be removed. Only for demonstration */
+    background-color: $app-form-color;
+}
+
+.psdk-case-view-main {
+    flex-grow: 2;
+    float: left;
+    padding: 0rem 0.3125rem;
+    height: 100%; /* Should be removed. Only for demonstration */
+}
+
+.psdk-case-view-summary {
+    padding-left: 0.75rem;
+}
+
+.psdk-case-view-heading {
+    display: block; 
+    text-align: left;
+    padding-left: 0.5rem;
+    padding-bottom: 0.75rem;
+}
+.psdk-case-view-heading-id {
+    font-size: 0.9rem; 
+    font-weight: normal;
+}
+
+.psdk-case-view-buttons {
+    display: flex; 
+    justify-content: flex-start;  
+    padding: 0.3125rem;
+}
+
+.psdk-case-view-utilities {
+    width: 21.875rem;
+    float: left;
+    padding: 0rem 0.3125rem;
+    height: 100%; /* Should be removed. Only for demonstration */
+}
+
+.psdk-case-view-divider {
+    border-bottom: 0.0625rem solid $app-neutral-light-color;
+}
+
+.psdk-status {
+    padding: 0.3125rem 0.3125rem;
+    background-color: $app-primary-color;
+    color: white;
+    width: fit-content;
+    margin: 0.625rem;
+}
+
+button {
+    margin: 0rem 0.3125rem;
+}
+
+

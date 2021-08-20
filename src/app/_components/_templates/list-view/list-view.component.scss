@@ -1,0 +1,141 @@
+@import "../../../_shared/styles.scss";
+  
+  table {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-sort-header-content {
+    white-space: nowrap;
+  }
+
+  ::ng-deep td.mat-cell {
+    white-space: nowrap;
+
+  }
+
+  ::ng-deep th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    padding: 0rem 0.188rem;
+  }
+
+  ::ng-deep .mat-button {
+    padding: 0px;
+    text-align: left;
+  }
+
+  .mat-icon-button {
+    width: fit-content;
+  }
+
+  .mat-row .mat-cell {
+      text-align: left;
+  }
+
+  .psdk-mat-header {
+    white-space: nowrap;
+    padding-right: 5px;
+  }
+
+  .psdk-mat-header-button {
+    display: inline-grid;
+  }
+
+  .psdk-mat-header-arrow {
+    display: inline-grid;
+    vertical-align: middle;
+  }
+
+  .psdk-mat-header-filter {
+    display: inline-grid;
+    vertical-align: middle;
+  }
+
+  .psdk-full-width {
+    width: 100%;
+  }   
+
+  .psdk-search {
+    padding-left: 0.625rem;
+  }
+
+  .psdk-icon-search {
+      vertical-align: sub;
+      padding: 0rem 0.125rem;
+      min-width: unset;
+      width: 1.1rem;
+  }
+
+  .psdk-outer-div-in-form {
+    display: inline-grid;
+  }
+
+  .psdk-inner-div-in-form {
+    height: auto;
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    max-height: 550px;
+    min-height: auto;
+  }
+
+  .psdk-list-view-svg-icon {
+    width: 1.4rem;
+    display: inline-block;
+    vertical-align: middle;
+    filter: $app-primary-color-filter;
+  }
+
+  .psdk-filter-svg-icon {
+    width: 1.0rem;
+    display: inline-block;
+    vertical-align: middle;
+    filter: $app-neutral-color-filter;
+  }
+
+  .psdk-arrow-svg-icon {
+    width: 1.0rem;
+    display: inline-block;
+    vertical-align: middle;
+    filter: $app-neutral-color-filter;
+  }
+
+  .psdk-filter-popover {
+    display: table;
+    margin: auto;
+    min-width: 100px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px 3px #777;
+    position: absolute;
+    z-index: 99;
+}
+
+.psdk-dialog-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(100,100,100, 0.4);
+  position: fixed;
+  z-index: 999;
+  top: 0px;
+  left: 0px;
+}
+
+.psdk-modal-file-top {
+  display: table;
+  margin: auto;
+  min-width: 150px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px 3px #777;
+}
+
+  tr.mat-row {
+    cursor: pointer;
+  }

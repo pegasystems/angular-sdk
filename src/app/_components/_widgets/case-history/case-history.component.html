@@ -1,0 +1,14 @@
+<div>
+    <h2>{{configProps$.label}}</h2>
+    <table mat-table [dataSource]="repeatList$">
+
+        <ng-container *ngFor="let dCol of fields$" [matColumnDef]="dCol.fieldName" >
+            <th mat-header-cell *matHeaderCellDef>{{dCol.label}}</th>
+            <td mat-cell *matCellDef="let element"> {{element[dCol.fieldName]}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns$"></tr>s
+        <tr mat-row *matRowDef="let row; columns: displayedColumns$;"></tr>
+    </table>
+
+</div>

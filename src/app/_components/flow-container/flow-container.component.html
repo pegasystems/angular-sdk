@@ -1,0 +1,26 @@
+<div style="text-align: left;"  class="psdk-flow-container-top">
+
+  <div *ngIf="!bHasCaseMessages$; else show_messages">
+    <h2 *ngIf="!todo_showTodo$">{{containerName$}}</h2>
+    <div *ngIf="todo_showTodo$">
+      <app-todo [pConn$]="todo_pConn$" [caseInfoID$]="todo_caseInfoID$" [datasource$]="todo_datasource$" [showTodoList$]="todo_showTodoList$"
+        [headerText$]="todo_headerText$" [type$]="todo_type$" [context$]="todo_context$" ></app-todo>
+    </div>
+    <div *ngIf="!todo_showTodo$">
+      <app-assignment [pConn$]="pConn$" [formGroup$]="formGroup$" [arChildren$]=arChildren$ [itemKey$]="itemKey$"></app-assignment>
+    </div>
+  </div>
+  <ng-template #show_messages>
+      <mat-card class="psdk-message-card">
+        <div style="display: flex; flex-direction: row;">
+          <div><img  class="psdk-icon" src="{{checkSvg$}}" ></div>
+          <div>{{caseMessages$}}</div>
+        </div>
+    
+      </mat-card>
+  </ng-template>
+
+
+
+
+</div>

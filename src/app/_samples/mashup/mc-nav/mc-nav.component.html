@@ -1,0 +1,24 @@
+<div class="progress-box" *ngIf="isProgress$">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  
+  <mat-toolbar color="primary" class="mc-toolbar">
+    <mat-toolbar-row class="mc-toolbar-row">
+
+      MediaCo
+      <mat-icon class="mc-icon">router</mat-icon>
+
+      <span class="toolbar-spacer"> </span>
+
+      <button mat-button>v {{starterPackVersion$}}</button>
+
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div *ngIf="bLoggedIn$ == true && bHasPConnect$ == true" >
+    <app-main-screen [pConn$]="pConn$"></app-main-screen>
+  </div>
+
+  
+  
+

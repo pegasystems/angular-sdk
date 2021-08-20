@@ -1,0 +1,28 @@
+@import "../../../_shared/styles.scss";
+
+.psdk-user-reference {
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8rem;
+    color: $app-neutral-color;
+}
+.psdk-single {
+    flex: 1;
+}
+
+.psdk-double {
+    flex: 2;
+}
+
+.psdk-top-pad {
+    padding-top: 10px;
+}
+
+
+dt {
+    flex: 1;
+}
+
+dd {
+    flex: 2;
+}

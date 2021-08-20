@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" id="dataviz-bubble">
+  <g fill="none" fill-rule="evenodd">
+    <polygon fill="#000" fill-rule="nonzero" points="2 23 2 1 1 1 1 23 1 24 2 24 24 24 24 23"/>
+    <circle cx="7.5" cy="17.5" r="3.5" fill="#000" fill-rule="nonzero"/>
+    <circle cx="7.5" cy="10.5" r="2.5" fill="#000" fill-rule="nonzero"/>
+    <circle cx="14" cy="15" r="2" fill="#000" fill-rule="nonzero"/>
+    <circle cx="14" cy="9" r="2" fill="#000" fill-rule="nonzero"/>
+    <circle cx="19.5" cy="10.5" r="1.5" fill="#000" fill-rule="nonzero"/>
+    <circle cx="19" cy="4" r="1" fill="#000" fill-rule="nonzero"/>
+  </g>
+  <title>Dataviz Bubble</title>
+</svg>

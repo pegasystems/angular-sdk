@@ -1,0 +1,132 @@
+
+@import "../../_shared/styles.scss";
+
+
+
+// Things related to movement
+$transition-slow: 0.5s !default;
+$transition-medium: 0.3s !default;
+$transition-fast: 0.1s !default;
+$natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1) !default;
+
+
+.psdk-nav-divider {
+    border-bottom: 0.0625rem solid invert($app-nav-bg, 15%);
+    width: 100%;
+}
+
+.psdk-nav-header {
+    display: flex;
+    padding-top: 0.625rem;
+}
+
+.psdk-nav-logo {
+    width: 3.75rem;
+    padding: 0.625rem;
+}
+
+// background color white 
+.psdk-nav-svg-icon {
+    filter: $app-white-color-filter;
+    width: 1.6rem;
+    padding-right: 0.625rem;
+}
+
+.psdk-nav-portal-name {
+    font-size: 0.875rem;
+}
+
+.psdk-nav-portal-app {
+    font-size: 1rem;
+}
+
+.psdk-appshell-nav {
+    z-index: 3;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: $app-nav-bg;
+    width: $app-nav-width;
+    height: 100%;
+    color: invert($app-nav-bg, 100%);
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width $transition-medium $natural-ease;
+    will-change: width;
+    
+}
+
+.psdk-appshell-nav:hover {
+    width: $app-nav-width-expanded;
+}
+
+.psdk-appshell-topnav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: $app-nav-bg;
+    width: $app-nav-width;
+    height: 15%;
+    color: invert($app-nav-bg, 100%);
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width $transition-medium $natural-ease;
+    will-change: width;
+}
+
+
+
+.psdk-appshell-middlenav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: $app-nav-bg;
+    width: $app-nav-width;
+    height: 50%;
+    color: invert($app-nav-bg, 100%);
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width $transition-medium $natural-ease;
+    will-change: width;
+}
+
+
+.psdk-nav-ul-middle {
+    display: block;
+    list-style-type: none;
+    margin: 0rem;
+    padding-inline-start: 30px;
+}
+
+.psdk-nav-li-middle {
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.psdk-icon {
+    padding: 0rem 0.125rem;
+    min-width: unset;
+}
+
+.psdk-nav-button-span {
+    padding: 1rem;
+}
+
+.psdk-nav-oper-avatar {
+    margin: 0rem;
+    padding: 0rem;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    max-width: 2.5rem;
+    max-height: 2.5rem; 
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: inline-flex;
+    background: $app-neutral-color;
+    color: white;
+    font-weight: normal;
+    font-size: 1rem;
+}

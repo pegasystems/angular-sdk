@@ -1,0 +1,10 @@
+<div class="psdk-label-infix-readonly">
+    <span class="psdk-label-wrapper-readonly"> 
+      <label class="psdk-label-readonly">{{label$}}</label>
+    </span>
+    <div class="psdk-data-readonly">
+      <label *ngIf="formatAs$!='url'">{{formattedValue$}}</label>
+      <a *ngIf="formatAs$=='url'" href="{{formattedUrl$}}">{{formattedValue$}}</a>
+    </div>
+</div>
+ 

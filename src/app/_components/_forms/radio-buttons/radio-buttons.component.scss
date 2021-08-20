@@ -1,0 +1,42 @@
+
+
+.psdk-label-readonly {
+  opacity: 54%;
+  font-size: 0.7rem;
+}
+
+  
+  .psdk-data-readonly {
+    padding-top: 0.625rem;
+    width: 100%;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    width: auto;
+  }
+
+.psdk-radio-horizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.psdk-radio-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.psdk-radio-button {
+    padding: 0.3125rem;
+}
+
+.psdk-radio-form {
+  width: 100%;
+}
+                                        
+.psdk-radio-form ::ng-deep .mat-form-field-underline {
+    background-color: transparent;
+  }
+
+.psdk-radio-form ::ng-deep .mat-form-field-label {
+    top: 0.0em;
+  }

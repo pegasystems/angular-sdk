@@ -1,0 +1,25 @@
+.pega-login-div {
+    display:flex; 
+    justify-content:center; 
+    align-items: center; 
+    align-content: center; 
+    height: 600px;
+}
+.pega-login-card {
+    max-width: 400px;
+    width: 400px;
+  }
+
+  .pega-login-form {
+    min-width: 150px;
+    width: 100%;
+  }
+  
+  .pega-login-full-width {
+    width: 100%;
+  }
+
+  .pega-login-actions {
+    display: flex; 
+    justify-content: center;
+  }

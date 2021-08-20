@@ -1,0 +1,32 @@
+
+@import "../../_shared/styles.scss";
+
+h2 {
+    font-size: 1.1rem;
+}
+
+.psdk-case-view-divider {
+    border-bottom: 0.0625rem solid $app-neutral-light-color;
+}
+
+
+.psdk-flow-container-top {
+    background-color: $app-form-color;
+    padding: 0rem 0.625rem;
+    border-radius: 0.3125rem;
+
+}
+.psdk-flow-container {
+    padding-left: 2.1875rem;
+}
+
+.psdk-message-card {
+    margin: 10px;
+}
+
+.psdk-icon {
+    width: 1.6rem;
+    display: inline-block;
+    padding: 0rem 0.6rem;
+    filter: $app-primary-color-filter;
+}

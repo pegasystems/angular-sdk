@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" id="dataviz-scatter">
+  <g fill="none" fill-rule="evenodd">
+    <polygon fill="#000" fill-rule="nonzero" points="2 23 2 1 1 1 1 23 1 24 2 24 24 24 24 23"/>
+    <circle cx="7" cy="18" r="2" fill="#000" fill-rule="nonzero"/>
+    <circle cx="7" cy="12" r="2" fill="#000" fill-rule="nonzero"/>
+    <circle cx="12" cy="14" r="2" fill="#000" fill-rule="nonzero"/>
+    <circle cx="15" cy="8" r="2" fill="#000" fill-rule="nonzero"/>
+    <circle cx="21" cy="5" r="2" fill="#000" fill-rule="nonzero"/>
+  </g>
+  <title>Dataviz Scatter</title>
+</svg>

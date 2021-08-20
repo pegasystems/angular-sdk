@@ -1,0 +1,20 @@
+@import "../../_shared/styles.scss";
+
+.progress-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: whitesmoke;
+    position: fixed;
+    z-index: 99999;
+    top: 0rem;
+    left: 0rem;
+    opacity: 0.5;
+}
+
+.progress-spinner {
+    text-align: center;
+}

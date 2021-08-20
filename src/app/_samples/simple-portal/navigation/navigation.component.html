@@ -1,0 +1,33 @@
+<div class="progress-box" *ngIf="isProgress$">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <mat-icon style="padding: 0px 10px 0px 20px;">home</mat-icon>Simple Portal
+      <span class="toolbar-spacer"> </span>
+      <button mat-button>v 1.00</button>
+      <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="bLoggedIn$ == true">{{userName$}}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu" overlapTrigger="false">
+        <button mat-menu-item (click)=logOff()>Log off</button>
+      </mat-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div *ngIf="bLoggedIn$ == true && bHasPConnect$ == true" style="display: flex; height: 100%;">
+    <aside class="psdk-aside">
+      <app-side-bar [pConn$]="pConn$"></app-side-bar>
+    </aside>
+    <main class="psdk-main">
+      <app-main-content *ngIf="bPConnectLoaded$" [pConn$]="pConn$"></app-main-content>
+    </main>
+  </div>
+
+
+ 
+  
+  <app-login *ngIf="bLoggedIn$ == false"></app-login>
+  
+  
+

@@ -1,0 +1,34 @@
+<!-- When adding a component here, add the same component in 'region' template as well -->
+<div [className]="divClass$">
+    <div *ngFor="let kid of arChildren$" >
+        <div [ngSwitch]="kid.getPConnect().getComponentName()">
+            <app-pulse *ngSwitchCase="'Pulse'" [pConn$]="kid.getPConnect()"></app-pulse>
+            <app-todo  *ngSwitchCase="'Todo'" [pConn$]="kid.getPConnect()"></app-todo>
+            <app-view  *ngSwitchCase="'View'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-view>
+            <app-utility  *ngSwitchCase="'Utility'" [pConn$]="kid.getPConnect()"></app-utility>
+            <app-text-input  *ngSwitchCase="'TextInput'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-text-input>
+            <app-text-area  *ngSwitchCase="'TextArea'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-text-area>
+            <app-check-box  *ngSwitchCase="'Checkbox'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-check-box>
+            <app-integer  *ngSwitchCase="'Integer'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-integer>
+            <app-date-time  *ngSwitchCase="'DateTime'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-date-time>
+            <app-date  *ngSwitchCase="'Date'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-date>
+            <app-time  *ngSwitchCase="'Time'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-time>
+            <app-percentage  *ngSwitchCase="'Percentage'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-percentage>
+            <app-email  *ngSwitchCase="'Email'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-email>
+            <app-url  *ngSwitchCase="'URL'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-url>
+            <app-currency  *ngSwitchCase="'Currency'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-currency>
+            <app-decimal  *ngSwitchCase="'Decimal'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-decimal>
+            <app-phone  *ngSwitchCase="'Phone'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-phone>
+            <app-radio-buttons  *ngSwitchCase="'RadioButtons'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-radio-buttons>
+            <app-dropdown  *ngSwitchCase="'Dropdown'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-dropdown>
+            <app-auto-complete  *ngSwitchCase="'AutoComplete'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-auto-complete>
+            <app-repeating-structures *ngSwitchCase="'Table'" [pConn$]="kid.getPConnect()"></app-repeating-structures>
+            <app-app-announcement *ngSwitchCase="'AppAnnouncement'" [pConn$]="kid.getPConnect()"></app-app-announcement>        
+            <app-user-reference *ngSwitchCase="'UserReference'" [pConn$]="kid.getPConnect()"></app-user-reference>
+            <app-file-utility *ngSwitchCase="'FileUtility'" [pConn$]="kid.getPConnect()"></app-file-utility>
+            <app-attachment *ngSwitchCase="'Attachment'" [pConn$]="kid.getPConnect()"></app-attachment>
+            <div  *ngSwitchDefault >Region Missing: {{kid.getPConnect().getComponentName()}}</div>
+        </div>  
+    </div>
+</div>
+

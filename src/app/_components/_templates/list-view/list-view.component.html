@@ -1,0 +1,227 @@
+<div>
+    <mat-form-field class="psdk-search" *ngIf="bShowSearch$">
+        
+        <mat-label><img  class="psdk-icon-search " src="{{searchIcon$}}" >  Search</mat-label>
+        <input matInput (keyup)="applySearch($event)" placeholder="">
+    </mat-form-field>
+
+    <div *ngIf="bInForm$" class="psdk-outer-div-in-form">
+        <div class="psdk-inner-div-in-form" *ngIf="bColumnReorder$"> 
+                <div>
+                <table mat-table [dataSource]="repeatList$" matSort 
+                cdkDropList
+                cdkDropListOrientation = "horizontal"
+                (cdkDropListDropped)="drop($event)">
+    
+                    <ng-container *ngFor="let dCol of fields$" [matColumnDef]="dCol.config.name" sticky=true>
+                        <th mat-header-cell *matHeaderCellDef class="psdk-mat-header" (click)="_headerSortClick($event, dCol)"
+                            cdkDrag>
+                            {{dCol.config.label}}
+                            <div class="psdk-mat-header-filter">
+                                <img class="psdk-filter-svg-icon" name="filterOnIcon">
+                            </div>
+                            <div class="psdk-mat-header-arrow">
+                                <img class="psdk-arrow-svg-icon" arrow="none" [attr.arrowid]="dCol.config.name">
+                            </div>
+                            <div class="psdk-mat-header-button" (click)="$event.stopPropagation()">
+                                <button mat-icon-button [matMenuTriggerFor]="groupMenu">
+                                    <img class="psdk-list-view-svg-icon" src="{{menuSvgIcon$}}">
+                                </button>
+                                <mat-menu #groupMenu>
+                                    <button *ngIf="!_showUnGroupBy(dCol) && bGrouping$" mat-menu-item (click)="_groupBy($event, dCol);">
+                                        <img class="psdk-list-view-svg-icon" src="{{groupBySvgIcon$}}"><span>Group By</span></button>
+                                    <button *ngIf="_showUnGroupBy(dCol) && bGrouping$" mat-menu-item (click)="_unGroupBy($event, dCol);" >
+                                        <img class="psdk-list-view-svg-icon" src="{{groupBySvgIcon$}}"><span>Ungroup</span></button>
+                                    <button  mat-menu-item (click)="_filter($event, dCol);" >
+                                        <img class="psdk-list-view-svg-icon" src="{{filterSvgIcon$}}"><span>Filter</span></button>
+                                </mat-menu>
+                                
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; index as i"> 
+                            <button *ngIf="_showButton(dCol.config.name, dCol) else regular"  mat-button color="primary" 
+                            (click)="_listViewClick(dCol.config.name, element[dCol.config.name], i)">
+                                {{element[dCol.config.name]}} 
+                            </button>
+                            <ng-template #regular>
+                                {{element[dCol.config.name]}}
+                            </ng-template>
+                        </td>
+                    </ng-container>
+            
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns$; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns$;"></tr>
+
+                    <!-- Group header -->
+                    <ng-container matColumnDef="groupHeader">
+                        <td mat-cell colspan="999" *matCellDef="let group">
+                            <mat-icon *ngIf="group.expanded" [attr.style]="_getIconStyle(group.level)">expand_less</mat-icon>
+                            <mat-icon *ngIf="!group.expanded" [attr.style]="_getIconStyle(group.level)">expand_more</mat-icon>
+                                <strong>{{_getGroupName(groupByColumns$[group.level-1])}}: {{group[groupByColumns$[group.level-1]]}} ({{group.totalCounts}})</strong>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="_groupHeaderClick(row)"> </tr>
+                </table>
+                </div>
+    
+        </div>
+        <div class="psdk-inner-div-in-form" *ngIf="!bColumnReorder$"> 
+            <div>
+            <table mat-table [dataSource]="repeatList$" matSort>
+
+                <ng-container *ngFor="let dCol of fields$" [matColumnDef]="dCol.config.name" sticky=true>
+                    <th mat-header-cell *matHeaderCellDef class="psdk-mat-header" (click)="_headerSortClick($event, dCol)">
+                        {{dCol.config.label}}
+                        <div class="psdk-mat-header-filter">
+                            <img class="psdk-filter-svg-icon" name="filterOnIcon">
+                        </div>
+                        <div class="psdk-mat-header-arrow">
+                            <img class="psdk-arrow-svg-icon" arrow="none" [attr.arrowid]="dCol.config.name">
+                        </div>
+                        <div class="psdk-mat-header-button" (click)="$event.stopPropagation()">
+                            <button mat-icon-button [matMenuTriggerFor]="groupMenu">
+                                <img class="psdk-list-view-svg-icon" src="{{menuSvgIcon$}}">
+                            </button>
+                            <mat-menu #groupMenu>
+                                <button *ngIf="!_showUnGroupBy(dCol) && bGrouping$" mat-menu-item (click)="_groupBy($event, dCol);">
+                                    <img class="psdk-list-view-svg-icon" src="{{groupBySvgIcon$}}"><span>Group By</span></button>
+                                <button *ngIf="_showUnGroupBy(dCol) && bGrouping$" mat-menu-item (click)="_unGroupBy($event, dCol);" >
+                                    <img class="psdk-list-view-svg-icon" src="{{groupBySvgIcon$}}"><span>Ungroup</span></button>
+                                <button  mat-menu-item (click)="_filter($event, dCol);" >
+                                    <img class="psdk-list-view-svg-icon" src="{{filterSvgIcon$}}"><span>Filter</span></button>
+                            </mat-menu>
+                            
+                        </div>
+                    </th>
+                    <td mat-cell *matCellDef="let element; index as i"> 
+                        <button *ngIf="_showButton(dCol.config.name, dCol) else regular"  mat-button color="primary" 
+                        (click)="_listViewClick(dCol.config.name, element[dCol.config.name], i)">
+                            {{element[dCol.config.name]}} 
+                        </button>
+                        <ng-template #regular>
+                            {{element[dCol.config.name]}}
+                        </ng-template>
+                    </td>
+                </ng-container>
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns$; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns$;"></tr>
+
+                <!-- Group header -->
+                <ng-container matColumnDef="groupHeader">
+                    <td mat-cell colspan="999" *matCellDef="let group">
+                        <mat-icon *ngIf="group.expanded" [attr.style]="_getIconStyle(group.level)">expand_less</mat-icon>
+                        <mat-icon *ngIf="!group.expanded" [attr.style]="_getIconStyle(group.level)">expand_more</mat-icon>
+                            <strong>{{_getGroupName(groupByColumns$[group.level-1])}}: {{group[groupByColumns$[group.level-1]]}} ({{group.totalCounts}})</strong>
+                    </td>
+                </ng-container>
+
+                <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="_groupHeaderClick(row)"> </tr>
+            </table>
+            </div>
+
+        </div>
+
+    </div>
+    <div *ngIf="!bInForm$">
+        <div> 
+                <div>
+                <table mat-table [dataSource]="repeatList$" matSort>
+    
+                    <ng-container *ngFor="let dCol of fields$" [matColumnDef]="dCol.config.name" >
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{dCol.config.label}}</th>
+                        <td mat-cell *matCellDef="let element"> {{element[dCol.config.name]}} </td>
+                    </ng-container>
+            
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns$"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns$;" (click)="rowClick(row)"></tr>
+                </table>
+                </div>
+    
+        </div>
+    </div>
+
+
+
+
+
+
+    <mat-paginator *ngIf="bInForm$" [pageSizeOptions]="[100, 500, 1000]" showFirstLastButtons></mat-paginator>
+    <mat-paginator *ngIf="!bInForm$" [pageSizeOptions]="[10, 20, 50, 100, 500]" showFirstLastButtons></mat-paginator>
+</div>
+
+<!-- pop overs for filters-->
+<div *ngIf="bShowFilterPopover$" class="psdk-dialog-background">
+    <div  class="psdk-modal-file-top">
+
+        <h4>Filter:<b> {{filterContainsLabel$}}</b></h4>
+        <div *ngIf="bContains$">
+            <mat-form-field class="psdk-full-width" >
+                <mat-select [value]="filterContainsType$" 
+                (selectionChange)="_filterContainsType($event)"  >
+                    <mat-option value="contains">Contains</mat-option>
+                    <mat-option value="equals">Equals</mat-option>
+                    <mat-option value="startswith">Starts with</mat-option>
+                  </mat-select>
+            </mat-form-field>
+ 
+              <mat-form-field class="psdk-full-width" >
+                <input matInput  [placeholder]="" type="text" [value]="filterContainsValue$" 
+                (change)="_filterContainsValue($event)">
+              </mat-form-field>
+
+        </div>
+
+        <div *ngIf="bDateTime$">
+            <mat-form-field class="psdk-full-width" >
+                <mat-select [value]="filterContainsType$" 
+                (selectionChange)="_filterContainsType($event)"  >
+                    <mat-option value="notequal">is not equal to</mat-option>
+                    <mat-option value="after">after</mat-option>
+                    <mat-option value="before">before</mat-option>
+                    <mat-option value="null">is null</mat-option>
+                    <mat-option value="notnull">is not null</mat-option>
+                  </mat-select>
+            </mat-form-field>
+ 
+            <mat-form-field *ngIf="bIsDate$ && filterContainsType$ !== 'null' && filterContainsType$ != 'notnull'" class="psdk-full-width" >
+                <mat-label>Date</mat-label>
+                <input 
+                  matInput 
+                  #dateInput 
+                  [matDatepicker]="pegadate" 
+                  [placeholder]="" 
+                  type="text" 
+                  [value]="filterContainsValue$" 
+                  (dateChange)="_filterContainsDateValue($event, dateInput.value)" 
+                >
+                <mat-datepicker-toggle matSuffix [for]="pegadate"></mat-datepicker-toggle>
+                <mat-datepicker #pegadate [startAt]="filterContainsValue$"></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="bIsDateTime$ && filterContainsType$ !== 'null' && filterContainsType$ != 'notnull'" class="psdk-full-width" >
+                <mat-label>Date time</mat-label>
+                <input 
+                  matInput 
+                  type="datetime-local" 
+                  [value]="filterContainsValue$" 
+                  (change)="_filterContainsDateTimeValue($event)"
+                >
+              </mat-form-field>
+
+              <mat-form-field *ngIf="bIsTime$ && filterContainsType$ !== 'null' && filterContainsType$ != 'notnull'" class="psdk-full-width" >
+                <mat-label>Time</mat-label>
+                <input 
+                  matInput 
+                  type="time" 
+                  [value]="filterContainsValue$"
+                  (change)="_filterContainsTimeValue($event)"
+                >
+              </mat-form-field>
+
+        </div>
+    
+        <app-action-buttons [arMainButtons$]="arFilterMainButtons$" [arSecondaryButtons$]="arFilterSecondaryButtons$" (ActionButtonClick)="_onFilterActionButtonClick($event)"></app-action-buttons>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<mat-grid-list cols="2" rowHeight="6.25rem">
+    <mat-grid-tile>
+      <button *ngFor="let aButton of arSecondaryButtons$" mat-raised-button color="secondary" (click)="buttonClick(aButton.jsAction, 'secondary')" >{{aButton.name}}</button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button *ngFor="let aButton of arMainButtons$" mat-raised-button color="primary" (click)="buttonClick(aButton.jsAction, 'primary')" >{{aButton.name}}</button>
+    </mat-grid-tile>
+</mat-grid-list>

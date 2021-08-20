@@ -1,0 +1,88 @@
+<div>
+    <app-list-utility [name$]="lu_name$" [icon$]="lu_icon$"
+        [bLoading$]="lu_bLoading$" [count$]="lu_count$"
+        [arActions$]="lu_arActions$" [arItems$]="lu_arItems$"
+        [onViewAll$]="lu_onViewAllFunction"></app-list-utility>
+</div>
+
+<div *ngIf="bShowFileModal$" class="psdk-dialog-background">
+    <div class="psdk-modal-file-top">
+        <h3>Add local files</h3>
+        <div class="psdk-modal-body">
+            <div class="psdk-modal-file-selector">
+                <input hidden type="file" multiple #uploader (change)="uploadMyFiles($event)"/>
+            
+                <button mat-stroked-button color="primary" (click)="uploader.click()">
+                    Upload file(s)
+                </button>
+            </div>
+    
+            <app-material-summary-list [arItems$]="arFileList$" [menuIconOverride$]="'trash'" [menuIconOverrideAction$]="removeFileFromList$"></app-material-summary-list>
+    
+        </div>
+ 
+        <app-action-buttons [arMainButtons$]="arFileMainButtons$" [arSecondaryButtons$]="arFileSecondaryButtons$" (ActionButtonClick)="onFileActionButtonClick($event)"></app-action-buttons>
+    </div>
+</div>
+
+<div *ngIf="bShowLinkModal$" class="psdk-dialog-background">
+    <div class="psdk-modal-link-top">
+        <h3>Add local link</h3>
+        <div class="psdk-modal-link-entry">
+            <div class="psdk-modal-body">
+                <div class="psdk-modal-links-row">
+                    <div class="psdk-links-two-column">
+                        <div class="psdk-modal-link-data">
+                            <mat-form-field class="psdk-full-width" >
+                                <mat-label>Link title</mat-label>
+                                <input matInput  type="text" required=true
+                                (change)="_fieldOnChangeLink($event)" [value]="link_title$" >
+                            </mat-form-field>
+                        </div>
+                        <div class="psdk-modal-link-data">
+                            <mat-form-field class="psdk-full-width" >
+                                <mat-label>URL</mat-label>
+                                <input matInput  type="text" required=true
+                                (change)="_fieldOnChangeURL($event)" [value]="link_url$" >
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="psdk-modal-link-add">
+                        <button mat-raised-button color="primary" (click)="_addLink($event)">
+                            Add Link
+                        </button>
+                    </div>
+                </div>
+
+ 
+
+                <app-material-summary-list [arItems$]="arLinksList$" [menuIconOverride$]="'trash'" [menuIconOverrideAction$]="removeLinksFromList$"></app-material-summary-list>
+
+            </div>
+
+
+        </div>
+
+        <app-action-buttons [arMainButtons$]="arLinkMainButtons$" [arSecondaryButtons$]="arLinkSecondaryButtons$" (ActionButtonClick)="onLinkActionButtonClick($event)"></app-action-buttons>
+
+    </div>
+</div>
+
+<div *ngIf="bShowViewAllModal$" class="psdk-dialog-background">
+    <div class="psdk-modal-file-top">
+        <div class="psdk-view-all-header">
+            <div><h3>Attachments</h3></div>
+            <div>
+                <button mat-icon-button (click)="_closeViewAll()">
+                    <img class="psdk-utility-card-actions-svg-icon" src="{{closeSvgIcon$}}">
+                </button>
+            </div>
+        </div>
+        <div class="psdk-view-all-body" >
+            <app-material-summary-list [arItems$]="va_arItems$"></app-material-summary-list>
+        </div>
+        
+    </div>
+</div>
+
