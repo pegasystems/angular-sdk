@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" id="dataviz-area">
+  <g fill="none" fill-rule="evenodd">
+    <polygon fill="#000" fill-rule="nonzero" points="2 23 2 1 1 1 1 23 1 24 2 24 24 24 24 23"/>
+    <polyline fill="#000" fill-rule="nonzero" points="3 8 7 12.939 12.5 9.364 16.02 12.939 24 14.771 24 22 3 22"/>
+  </g>
+  <title>Dataviz Area</title>
+</svg>

@@ -1,0 +1,20 @@
+<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
+  <div [formGroup]="formGroup$" *ngIf="bVisible$">
+    <mat-form-field class="psdk-full-width" >
+      <mat-label>{{label$}}</mat-label>
+      <input matInput [placeholder]=""  [formControlName]="controlName$" 
+      [value]="value$" [required]="bRequired$" [matAutocomplete]="auto"
+      (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionChanged($event)" >
+        <mat-option *ngFor="let opt of options$" [value]="opt.key">
+          <span>{{opt.key}}</span><span *ngIf="opt?.value"> -- ({{opt.value}})</span>
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+</div>
+<ng-template #noEdit>
+  <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
+</ng-template>
+

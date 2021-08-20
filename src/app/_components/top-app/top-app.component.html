@@ -1,0 +1,27 @@
+
+
+
+<div *ngIf="!bPCoreReady$" class="psdk-loading">
+    <div class="progress-box" >
+        <mat-spinner class="progress-spinner"></mat-spinner>
+    </div>
+</div>
+<!--
+<div *ngIf="bPCoreReady$">
+    <div *ngFor="let kid of arChildren$">
+        <div *ngIf="kid.getPConnect().getComponentName() == 'AppShell'">
+            <app-app-shell [pConn$]="kid.getPConnect()"></app-app-shell>
+        </div>
+    </div>
+</div>
+-->
+<div *ngIf="bPCoreReady$">
+    <div *ngIf="sComponentName$ == 'RootContainer'">
+        <app-root-container [pConn$]="pConn$" [PCore$]=PCore$ [props$]=props$></app-root-container>
+    </div>
+</div>
+
+
+
+
+

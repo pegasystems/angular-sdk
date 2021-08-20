@@ -1,0 +1,86 @@
+
+
+<div class="psdk-case-view">
+  <div *ngIf="!displayOnlyFA$" class="psdk-case-view-info">
+
+
+
+    <mat-toolbar color="primary" class="psdk-case-view-toolbar">
+      <mat-toolbar-row style="padding-left: 1rem;">
+           <div class="psdk-case-icon-div">
+            <img  class="psdk-case-svg-icon" src="{{svgCase$}}" >  
+          </div> 
+          <div class="psdk-case-view-heading" >        
+            <div class="psdk-case-view-heading-id">{{id$}}</div>
+            <div><h1>{{heading$}}</h1></div>
+          </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="psdk-case-view-buttons">
+      <button mat-raised-button color="secondary" (click)="_editClick()" >Edit</button>
+      <button mat-raised-button color="secondary"  [matMenuTriggerFor]="actionMenu">Actions...</button>
+      <mat-menu #actionMenu="matMenu" overlapTrigger="false">
+        <ng-container *ngFor="let action of arAvailableActions$">
+            <button mat-menu-item (click)="_menuActionClick(action)" >
+              {{action.name}}
+            </button>
+        </ng-container>
+        <ng-container *ngFor="let process of arAvailabeProcesses$">
+          <button mat-menu-item (click)="_menuProcessClick(process)" >
+            {{process.name}}
+          </button>
+        </ng-container>
+        
+      </mat-menu>   
+    </div>
+      
+    <div class="psdk-case-view-divider"></div>   
+    
+    
+    
+    <div class="psdk-case-view-summary">
+      <app-case-summary [pConn$]="caseSummaryPConn$"></app-case-summary> 
+    </div>
+    
+    <app-material-vertical-tabs [tabConfig$]="caseTabs$" (TabClick)="onTabClick($event)"></app-material-vertical-tabs>
+    
+  </div>
+  <div class="psdk-case-view-main">
+
+    <div *ngIf="!displayOnlyFA$">
+      <div *ngFor="let kid of arChildren$">
+        <div *ngIf="kid.getPConnect().getRawMetadata().type.toLowerCase() == 'region' && kid.getPConnect().getRawMetadata().name.toLowerCase() == 'stages'">
+           <app-region [pConn$]="kid.getPConnect()"></app-region> 
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let kid of arChildren$">
+      <div *ngIf="kid.getPConnect().getRawMetadata().type.toLowerCase() == 'region' && kid.getPConnect().getRawMetadata().name.toLowerCase() == 'todo'">
+        <app-region [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
+      </div>
+    </div>
+
+    <div *ngFor="let kid of arChildren$">
+      <div *ngIf="kid.getPConnect().getRawMetadata().type.toLowerCase() == 'region' && kid.getPConnect().getRawMetadata().name == 'Main'">
+        <app-region [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
+      </div>    
+    </div>
+
+    <div *ngIf="!displayOnlyFA$">
+      <app-defer-load [pConn$]=pConn$  [loadData$]="tabData$"></app-defer-load>
+    </div>
+
+  </div>
+  <div *ngIf="!displayOnlyFA$">
+    <div *ngIf="arChildren$" class="psdk-case-view-utilities">   
+      <div *ngFor="let kid of arChildren$">
+        <div *ngIf="kid.getPConnect().getRawMetadata()?.type.toLowerCase() == 'region' && kid.getPConnect().getRawMetadata()?.name == 'Utilities'">
+          <app-region [pConn$]="kid.getPConnect()"></app-region>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

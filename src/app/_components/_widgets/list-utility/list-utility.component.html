@@ -1,0 +1,34 @@
+<div style="text-align: left;">
+    <div class="psdk-utility">
+      <div class="header">
+        <div class="header-icon">
+          <img  class="psdk-utility-svg-icon" src="{{headerSvgIcon$}}" >
+        </div>
+        <div class="header-text">{{name$}}</div>
+        <div class="psdk-utility-count">{{count$}}</div>
+        <div style="flex-grow: 1"></div>
+        <div class="header-icon">
+          <button mat-icon-button [matMenuTriggerFor]="utilityMenu">
+            <img class="psdk-utility-card-actions-svg-icon" src="{{settingsSvgIcon$}}">
+          </button>
+          <mat-menu #utilityMenu="matMenu" overlapTrigger="false">
+            <ng-container *ngFor="let action of arActions$">
+              <button mat-menu-item (click)="action.onClick()" >{{action.text}}</button>
+            </ng-container>
+            
+          </mat-menu>
+        </div>
+      </div>
+      <div class="psdk-utiltiy-divider"></div>
+      <br>
+      <mat-spinner *ngIf="bLoading$" class="progress-spinner" diameter="50"></mat-spinner>
+      <div *ngIf="count$ == 0" class="message">{{noItemsMessage$}}</div>
+      <div *ngIf="count$ > 0" class="psdk-utility-items">
+        <app-material-summary-list [arItems$]="arItems$"></app-material-summary-list>
+      </div>
+      <div class="psdk-utility-view-all">
+        <button *ngIf="count$ > 3" mat-button color="primary" (click)="onViewAll$.onClick()" >View all</button>
+      </div>
+      
+    </div>
+</div>

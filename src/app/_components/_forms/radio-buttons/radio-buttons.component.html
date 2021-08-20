@@ -1,0 +1,21 @@
+<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$" >
+        <mat-form-field class="psdk-radio-form">
+            <span class="psdk-label-wrapper-readonly"> 
+                <label class="psdk-label-readonly">{{label$}}</label>
+            </span>
+            <!-- <mat-label>{{label$}}</mat-label> -->
+            <input matInput [placeholder]="" style="display: none;">
+            <mat-radio-group  [value]="value$" [required]="bRequired$" [formControlName]="controlName$" 
+            (change)="fieldOnChange($event)" class="psdk-radio-vertical">
+                <mat-radio-button *ngFor="let opt of options$" [checked]="isSelected(opt.key)" [value]="opt.key" class="psdk-radio-button">
+                    {{opt.value}}
+                </mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<ng-template #noEdit>
+    <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
+ </ng-template>

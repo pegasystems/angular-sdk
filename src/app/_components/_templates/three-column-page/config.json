@@ -1,0 +1,29 @@
+{
+  "name": "ThreeColumnPage",
+  "label": "Three column",
+  "description": "ThreeColumn Page Template",
+  "type": "Template",
+  "subtype": "PAGE",
+  "icon": "ThreeColumnPage.svg",
+  "viewNameLabel": "Page title",
+  "properties": [
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Insights"]
+    },
+    {
+      "name": "B",
+      "label": "Region B",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Insights"]
+    },
+    {
+      "name": "C",
+      "label": "Region C",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Insights"]
+    }
+  ]
+}

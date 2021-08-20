@@ -1,0 +1,13 @@
+<article class="psdk-announcement">
+    <h2>{{header$}}</h2>
+    <div>
+        <p>{{description$}}</p>
+        <div>
+            <h3>{{label$}}</h3>
+            <ul>
+                <li *ngFor="let detail of arDetails$">{{detail}}</li>
+            </ul>
+        </div>
+    </div>
+    <a *ngIf="whatsnewlink$ != ''" mat-raised-button color="primary" [href]="whatsnewlink$">See what's new</a>
+</article>

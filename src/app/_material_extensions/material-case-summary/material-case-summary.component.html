@@ -1,0 +1,46 @@
+
+
+<div class="psdk-case-summary-fields">
+  <dl class="psdk-case-summary-fields-primary">
+    <div *ngFor="let field of primaryFieldsWithStatus$" class="psdk-csf-primary-field">
+      <dt class="psdk-csf-primary-field-header">
+        {{field.config.label}}
+      </dt>
+      <dd *ngIf="field.config.value === '' else hasValue" class="psdk-csf-primary-field-data">
+        <ng-container [ngSwitch]="field.type.toLowerCase()">
+          <label *ngSwitchCase="'caseoperator'">operator</label>
+          <span *ngSwitchDefault class="psdk-csf-text-style">---</span>
+        </ng-container>
+      </dd>
+      <ng-template #hasValue>
+        <dd class="psdk-csf-primary-field-data" [ngSwitch]="field.type.toLowerCase()">
+          <span *ngSwitchCase="'textinput'" class="psdk-csf-text-style">{{field.config.value}}</span>
+          <span *ngSwitchCase="'status'" class="psdk-csf-status-style">{{field.config.value}}</span>
+          <a *ngSwitchCase="'phone'" as="a" href="tel: {{field.config.value}}">{{field.config.value}}</a>
+          <a *ngSwitchCase="'email'" href="mailto: {{field.config.value}}">{{field.config.value}}</a>
+          <span *ngSwitchCase="'date'" class="psdk-csf-text-style">{{field.config.value}}</span>
+          <label *ngSwitchCase="'caseoperator'">operator</label>
+          <span *ngSwitchDefault class="psdk-csf-text-style">{{field.config.value}}</span>
+        </dd>
+      </ng-template>
+
+    </div>
+  </dl>
+</div>
+<div class="psdk-case-summary-fields">
+  <dl *ngFor="let field of secondaryFields$" class="psdk-case-summary-fields-secondary">
+    <div class="psdk-csf-secondary-field">
+      <dt class="psdk-csf-secondary-field-header">
+        {{field.config.displayLabel}}
+      </dt>
+      <dd class="psdk-csf-secondary-field-data">
+       <app-operator *ngIf="field.config.label.toLowerCase() == 'create operator'" 
+        [name$]="field.config.createOperator.userName" [date$]="field.config.updateDateTime"
+        [id$]="field.config.createOperator.userId"></app-operator>
+       <app-operator *ngIf="field.config.label.toLowerCase() == 'update operator'"
+        [name$]="field.config.updateOperator.userName" [date$]="field.config.updateDateTime"
+        [id$]="field.config.updateOperator.userId"></app-operator>
+      </dd>
+    </div>
+  </dl>
+</div>

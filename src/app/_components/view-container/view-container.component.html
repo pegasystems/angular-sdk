@@ -1,0 +1,28 @@
+<div class="psdk-view-container-top" id={{buildName$}}>
+    <h3 *ngIf="title$ != ''">{{title$}}</h3>
+    <div [ngSwitch]="templateName$">
+        <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="createdViewPConn$"></app-default-form>
+        <app-one-column *ngSwitchCase="'OneColumn'" [formGroup$]="formGroup$" [pConn$]="createdViewPConn$"></app-one-column>
+        <app-two-column *ngSwitchCase="'TwoColumn'" [formGroup$]="formGroup$" [pConn$]="createdViewPConn$"></app-two-column>
+        <app-three-column *ngSwitchCase="'ThreeColumn'" [formGroup$]="formGroup$" [pConn$]="createdViewPConn$"></app-three-column>
+        <app-one-column-page *ngSwitchCase="'OneColumnPage'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-one-column-page>
+        <app-two-column-page *ngSwitchCase="'TwoColumnPage'" [formGroup$]="formGroup$" [pConn$]="createdViewPConn$"></app-two-column-page>
+        <app-three-column-page *ngSwitchCase="'ThreeColumnPage'" [formGroup$]="formGroup$" [pConn$]="createdViewPConn$"></app-three-column-page>
+        <app-case-view *ngSwitchCase="'CaseView'" [pConn$]="createdViewPConn$" [displayOnlyFA$]="displayOnlyFA$"></app-case-view>
+        <app-list-page *ngSwitchCase="'ListPage'" [pConn$]="createdViewPConn$" ></app-list-page>
+        <div *ngSwitchCase="''">
+            <div *ngFor="let kid of arChildren$">
+                <div [ngSwitch]="kid.getPConnect().getComponentName()" id={{context$}} >
+                    <app-view *ngSwitchCase="'View'" [pConn$]="kid.getPConnect()" [displayOnlyFA$]="displayOnlyFA$"></app-view>
+                    <app-case-view *ngSwitchCase="'CaseView'" [pConn$]="kid.getPConnect()" [displayOnlyFA$]="displayOnlyFA$"></app-case-view>
+                    <app-page *ngSwitchCase="'Page'" [pConn$]="kid.getPConnect()"></app-page>
+                    <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
+                    <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="kid.getPConnect()" [displayOnlyFA$]="displayOnlyFA$"></app-view-container>
+                    <div  *ngSwitchDefault >ViewContainer Missing: {{kid.getPConnect().getComponentName()}}</div>
+                </div>
+            </div>
+        </div>
+        <div *ngSwitchDefault>View Container missing Template {{templateName$}}</div>
+    </div>
+
+</div>

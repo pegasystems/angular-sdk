@@ -1,0 +1,19 @@
+<form [formGroup]="formGroup$" name="flowContainer" class="psdk-flow-container">
+    <div  *ngFor="let kid of arChildren$">
+      <div [ngSwitch]="kid.getPConnect().getComponentName()">
+        <app-view *ngSwitchCase="'View'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-view>
+        <app-case-create-stage *ngSwitchCase="'CaseCreateStage'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-case-create-stage>
+        <div *ngSwitchDefault>Assignment Card missing Component: {{kid.getPConnect().getComponentName()}}</div>
+      </div>
+      
+    </div>
+ </form> 
+
+<div>
+    <br>
+    <div class="psdk-case-view-divider"></div>
+    
+    <app-action-buttons [arMainButtons$]="arMainButtons$" [arSecondaryButtons$]="arSecondaryButtons$"
+    (ActionButtonClick)="onActionButtonClick($event)"></app-action-buttons>
+
+</div>

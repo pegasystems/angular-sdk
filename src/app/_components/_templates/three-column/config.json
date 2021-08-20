@@ -1,0 +1,29 @@
+{
+  "name": "ThreeColumnTab",
+  "label": "Three column",
+  "description": "Three column",
+  "type": "Template",
+  "subtype": "TAB",
+  "icon": "ThreeColumnTab.svg",
+  "viewNameLabel": "Tab name",
+  "properties": [
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Fields", "Insights"]
+    },
+    {
+      "name": "B",
+      "label": "Region B",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Fields", "Insights"]
+    },
+    {
+      "name": "C",
+      "label": "Region C",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Fields", "Insights"]
+    }
+  ]
+}

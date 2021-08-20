@@ -1,0 +1,114 @@
+@import "../../_shared/styles.scss";
+  
+  .psdk-stages {
+      padding: 0.625rem 0rem;
+    }
+  
+  .psdk-stages-span span {
+      padding: 0.3125rem;
+      font-weight: bold;
+      font-size: 1.5rem;
+    } 
+
+  .psdk-stages-div {
+    display: inline-flex; 
+    padding: 0.3125rem; 
+    font-weight: bold; 
+    font-size: 1.3rem;
+    color: $app-neutral-color;
+  }
+   
+    
+  .psdk-stages-past  {
+    color: $app-primary-color;
+    padding-right: 0.3125rem;
+  }
+
+  .psdk-stages-present  {
+    color: $app-secondary-color;
+    padding-right: 0.3125rem;
+  }
+
+  .psdk-stages-future  {
+    color: $app-neutral-color;
+    padding-right: 0.3125rem;
+  }
+    
+  
+  .psdk-stages-full {
+      display: block;
+  }
+  
+  .psdk-stages-divider {
+    border-bottom: 0.0625rem solid $app-neutral-light-color;
+  }
+
+
+
+
+  .psdk-stages-full {
+      display: block;
+  }
+
+  .psdk-stages-divider {
+    border-bottom: 0.0625rem solid $app-neutral-light-color;
+  }
+
+  .psdk-stages-icon {
+    width: 1.4rem;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .psdk-stages-bar {
+    margin: 1rem 0rem;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    border: 0.0625rem solid $app-neutral-light-color;
+    overflow: hidden;
+    height: 2rem;
+    display: flex;
+  }
+
+  .psdk-stages-chevron {
+    position: relative;
+    padding: calc(1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    min-width: 0px;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  .psdk-stages-chevron:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    display: block;
+    z-index: 2;
+    width: calc(1.75rem);
+    right: calc(-0.4375rem);
+    background: inherit;
+    border-style: solid;
+    border-color: rgb(207, 207, 207);
+    border-width: 0.0625rem 0.0625rem 0px 0px;
+    border-radius: 0px calc(0.3125rem) 0px 0px;
+    transform: rotateZ(45deg) skew(15deg, 15deg);
+    height: 2rem;
+  }
+
+  .psdk-stages-inner-past {
+    color: black;
+    font-size: 1rem;
+  }
+
+  .psdk-stages-inner-present {
+    color: $app-primary-color;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  .psdk-stages-inner-future {
+    color: $app-neutral-color;
+    font-size: 1rem;
+  }

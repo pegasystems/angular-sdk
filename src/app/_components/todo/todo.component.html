@@ -1,0 +1,44 @@
+<div class="psdk-todo">
+    <div class="psdk-todo-header">
+        <div *ngIf= "showTodoList$" class="psdk-avatar">{{this.currentUserInitials$}}</div>
+        <div class="psdk-todo-text ">{{headerText$}}</div>
+        <div *ngIf= "showTodoList$" class="psdk-assignment-count">{{assignmentCount$}}</div>
+    </div>
+    <br><br>
+    <div *ngIf= "showTodoList$" class="psdk-display-divider"></div>
+    
+    <div class="psdk-todo-assignments">
+        <div *ngFor="let assignment of arAssignments$">
+            <div class="psdk-todo-assignment">
+                <div class="psdk-avatar">{{this.currentUserInitials$}}</div>
+                <div class="psdk-todo-card">
+                    <div class="psdk-todo-assignment-title">{{ assignment.stepName }}</div>
+                    <div class="psdk-todo-assignment-data">
+                        <div class="psdk-todo-assignment-task" (click)="clickGo([assignment])">Task in <span class="psdk-todo-id">{{ assignment.name }} {{getID(assignment)}}</span>
+                            <span *ngIf="assignment.status != undefined">
+                                &bull; <span class="psdk-todo-assignment-status">{{assignment?.status}}</span> 
+                            </span>
+                            &bull; Priority {{assignment?.priority}}</div>
+                    </div>
+                </div>
+                <div class="psdk-todo-assignment-action">
+                    <button mat-flat-button color="primary" (click)="clickGo([assignment])">Go</button>
+                </div>
+            </div>
+            <div class="psdk-display-divider"></div>
+        </div>
+    </div>
+
+    <div *ngIf= "showTodoList$">
+        <div *ngIf="bShowMore$ else showLess" class="psdk-todo-show-more">
+            <button mat-stroked-button  (click)="_showMore()">Show more</button>
+        </div>
+        <ng-template #showLess>
+            <div class="psdk-todo-show-more">
+            <button mat-stroked-button (click)="_showLess()">Show less</button>
+            </div>
+        </ng-template>
+    </div>
+
+</div>
+

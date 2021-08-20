@@ -1,0 +1,29 @@
+<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
+  <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
+    <mat-form-field class="psdk-full-width" >
+      <mat-label>{{label$}}</mat-label>
+      <input 
+        matInput 
+        #dateInput 
+        [matDatepicker]="pegadate" 
+        [placeholder]="" 
+        type="text" 
+        [value]="value$" 
+        [required]="bRequired$" 
+        [formControlName]="controlName$" 
+        (dateChange)="fieldOnDateChange($event, dateInput.value)" 
+        (click)="fieldOnClick($event)"  
+        (blur)="fieldOnBlur($event)" 
+      >
+      <mat-datepicker-toggle matSuffix [for]="pegadate"></mat-datepicker-toggle>
+      <mat-datepicker #pegadate [startAt]="value$"></mat-datepicker>
+      <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+</div>
+<ng-template #noEdit>
+  <app-text [pConn$]="pConn$" [formatAs$]="'date'"></app-text>
+</ng-template>
+
+
+

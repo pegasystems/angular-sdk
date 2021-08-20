@@ -1,0 +1,41 @@
+
+<div class="mc-main-div">
+    <div class="mc-main-screen" *ngIf="showTriplePlayOptions$">
+        <div class="mc-banner">
+            Combine TV, Internet, and Voice for the best deal
+        </div>
+    
+        <div style="display: flex; justify-content: space-evenly;">
+            <app-bundle-swatch [swatchConfig$]="firstConfig$" (ShopNowButtonClick)="onShopNow($event)"></app-bundle-swatch>
+            <app-bundle-swatch [swatchConfig$]="secondConfig$" (ShopNowButtonClick)="onShopNow($event)"></app-bundle-swatch>
+            <app-bundle-swatch [swatchConfig$]="thirdConfig$" (ShopNowButtonClick)="onShopNow($event)"></app-bundle-swatch>
+        </div>
+
+    </div>
+    <div *ngIf="showPega$">
+        <div class="mc-info">
+            <div class="mc-info-pega">
+                <app-root-container [pConn$]="pConn$" [displayOnlyFA$]="true" [isMashup$]="true"></app-root-container>
+                <div style="padding-left: 50px;"> * - required fields</div>
+            </div>
+            <div class="mc-info-banner">
+                <div class="mc-info-banner-text">
+                    We need to gather a little information about you.
+                </div>
+                <div>
+                    <img src="../../../assets/cableinfo.png" class="mc-info-image">
+                </div>
+                
+            </div>
+
+
+
+        </div>
+        
+    </div>
+    <div *ngIf="showResolution$">
+        <app-resolution-screen></app-resolution-screen>
+    </div>
+</div>
+
+

@@ -1,0 +1,12 @@
+<div class="psdk-page-title">
+    <h2>{{title$}}</h2>
+</div>
+<div class="page-body">
+    <div *ngFor="let kid of arChildren$">
+        <div [ngSwitch]="kid.getPConnect().getComponentName()">
+            <app-view *ngSwitchCase="'View'" [pConn$]="kid.getPConnect()"></app-view>
+            <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
+            <div  *ngSwitchDefault >Page Missing: {{kid.getPConnect().getComponentName()}}</div>
+        </div>
+    </div>
+</div>

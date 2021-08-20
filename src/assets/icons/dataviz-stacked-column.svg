@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" id="dataviz-stacked-column">
+  <g fill="none" fill-rule="evenodd">
+    <rect width="5" height="6.15" x="3" y="17.85" fill="#000" fill-rule="nonzero"/>
+    <rect width="5" height="7.15" x="3" y="10" fill="#000" fill-rule="nonzero"/>
+    <rect width="5" height="4.15" x="10" y="19.85" fill="#000" fill-rule="nonzero"/>
+    <rect width="5" height="6.15" x="10" y="6" fill="#000" fill-rule="nonzero"/>
+    <rect width="5" height="6.3" x="10" y="12.85" fill="#000" fill-rule="nonzero"/>
+    <rect width="5" height="7.15" x="17" y="1" fill="#000" fill-rule="nonzero"/>
+    <rect width="5" height="7.3" x="17" y="8.85" fill="#000" fill-rule="nonzero"/>
+    <rect width="5" height="7.15" x="17" y="16.85" fill="#000" fill-rule="nonzero"/>
+  </g>
+  <title>Dataviz Stacked Column</title>
+</svg>

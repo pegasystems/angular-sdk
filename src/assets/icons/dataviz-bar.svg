@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" id="dataviz-bar">
+  <g fill="none" fill-rule="evenodd">
+    <polygon fill="#000" fill-rule="nonzero" points="10 8 15 8 15 31 10 31" transform="rotate(90 12.5 19.5)"/>
+    <polygon fill="#000" fill-rule="nonzero" points="6 5 11 5 11 20 6 20" transform="rotate(90 8.5 12.5)"/>
+    <polygon fill="#000" fill-rule="nonzero" points="3 1 8 1 8 10 3 10" transform="rotate(90 5.5 5.5)"/>
+  </g>
+  <title>Dataviz Bar</title>
+</svg>

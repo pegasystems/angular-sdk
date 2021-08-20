@@ -1,0 +1,28 @@
+<div class="progress-box" *ngIf="bIsProgress$">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+</div>
+
+
+<div *ngIf="bShowRoot$">
+    <div [ngSwitch]="componentName$">
+        <app-view *ngSwitchCase="'View'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-view>
+        <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-view-container>
+        <app-hybrid-view-container *ngSwitchCase="'HybridViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-hybrid-view-container>
+        <app-modal-view-container *ngSwitchCase="'ModalViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$" (modalVisibleChange)="modalVisibleChanged($event)"></app-modal-view-container>
+        <div *ngSwitchCase="''"></div>
+        <div  *ngSwitchDefault >Root Missing:{{componentName$}}.</div>
+    </div>
+</div>
+
+
+
+
+<div *ngIf="pvConn$ != null">
+    <app-preview-view-container [pConn$]="pvConn$"></app-preview-view-container>
+
+</div>
+
+<div *ngIf="mConn$ != null">
+    <app-modal-view-container [pConn$]="mConn$" [displayOnlyFA$]="displayOnlyFA$" (modalVisibleChange)="modalVisibleChanged($event)"></app-modal-view-container>
+
+</div>

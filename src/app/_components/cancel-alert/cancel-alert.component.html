@@ -1,0 +1,19 @@
+<div *ngIf="bShowAlert$" class="psdk-cancel-alert-background ">
+    <div class="psdk-cancel-alert-top">
+        <h3 *ngIf="heading$ != ''">{{heading$}}</h3>
+        <div>
+            <p>{{body1$}}</p>
+            <p>{{body2$}}</p>
+        </div>
+        <mat-grid-list cols="2" rowHeight="6.25rem">
+            <mat-grid-tile>
+              <button  mat-raised-button color="secondary" (click)="buttonClick('save')" >Save for later</button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <button  mat-raised-button color="secondary" (click)="buttonClick('continue')" >Continue working</button>
+              <button  mat-raised-button color="primary" (click)="buttonClick('delete')" >Delete</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+
+</div>

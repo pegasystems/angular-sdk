@@ -1,0 +1,69 @@
+@import "../../../_shared/styles.scss";
+
+.mc-banner {
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.mc-main-screen {
+    display: flex; 
+    flex-direction: column;
+    height: calc(100% - 100px);
+    position: relative;
+    width: 100%;
+}
+
+.mc-main-div {
+    width: 100%;
+    height: calc(100% - 100px);
+    position: relative;
+    top: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;  
+}
+
+.mc-work-button {
+    font-size: 22px;
+    color: $app-primary-color;
+    text-decoration: underline;
+    padding-top: 10px;
+}
+
+.mc-work-ready {
+    font-size: 22px;
+    padding: 20px 20px 0px 40px;
+}
+
+.mc-info {
+    display:flex; 
+    flex-direction: row;
+}
+
+.mc-info-pega {
+    width: 50%; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.mc-info-banner {
+    width: 50%; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+.mc-info-banner-text {
+    font-size: 30px; 
+    line-height: 40px; 
+    padding: 20px 20px; 
+    color: darkslategray;
+}
+
+.mc-info-image {
+    width: 700px; 
+    margin: 20px; 
+    border-radius: 10px;
+}
+

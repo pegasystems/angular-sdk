@@ -1,0 +1,12 @@
+
+
+
+    <!-- mashup -->
+    <div *ngIf="sComponentName$ == 'ViewContainer'" class="psdk-main-content">
+        <app-view-container [pConn$]="pConn$" [displayOnlyFA$]="false"></app-view-container>
+    </div>
+
+
+    <div *ngIf="sComponentName$ == 'RootContainer'">
+        <app-root-container [pConn$]="pConn$" [PCore$]=PCore$ [props$]=props$ [isMashup$]="true" [displayOnlyFA$]="false"></app-root-container>
+    </div>

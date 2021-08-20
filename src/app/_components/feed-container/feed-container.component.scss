@@ -1,0 +1,195 @@
+@import "../../_shared/styles.scss";
+
+.psdk-pulse-divider {
+    border-bottom: 0.0625rem solid $app-neutral-light-color;
+}
+
+.psdk-full-width {
+    width: 100%;
+    padding-left: 0.625rem;
+}
+
+
+.psdk-icon {
+    padding: 0rem 0.125rem;
+    min-width: unset;
+    display: inline-block;
+}
+
+
+.psdk-icon-liked-by-me {
+    padding: 0rem 0.125rem;
+    min-width: unset;
+    display: inline-block;
+    color: $app-primary-color;
+}
+
+
+.psdk-send-svg-icon {
+    width: 1.4rem;
+}
+
+.psdk-comment-svg-icon {
+    width: 1.4rem;
+    padding: 0rem 0.3215rem;
+}
+
+.psdk-like-svg-icon {
+    width: 1.4rem;
+    padding: 0rem 0.3215rem;
+}
+
+.psdk-liked-by-me-svg-icon {
+    width: 1.4rem;
+    padding: 0rem 0.3215rem;
+    filter: $app-primary-color-filter;
+}
+
+.psdk-avatar {
+    margin: 0rem;
+    padding: 0rem;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    max-width: 2.5rem;
+    max-height: 2.5rem; 
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    background: $app-primary-color;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.psdk-avatar-big {
+    margin: 0rem;
+    padding: 0rem;
+    min-width: 3.125rem;
+    min-height: 3.125rem;
+    max-width: 3.125rem;
+    max-height: 3.125rem; 
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    background: $app-primary-color;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5625rem;
+}
+
+.psdk-pulse {
+    display: inline-flex; 
+    width: 100%;
+    padding-bottom: 0.625rem;
+}
+
+.psdk-pulse-message-group {
+    display: flex; 
+    flex-direction: column; 
+    padding-left: 0.625rem;
+}
+
+.psdk-pulse-message-by {
+    margin-bottom: 0rem; 
+    font-weight: bold; 
+    font-size: 0.9375rem;
+}
+
+.psdk-pulse-message-time {
+    color: #aaaaaa;
+}
+
+.psdk-pulse-message-text {
+    white-space: pre-line;
+}
+
+
+.psdk-pulse-message-actions {
+    display:flex; 
+    flex-direction: row; 
+    padding-top: 1.25rem;
+}
+
+.psdk-pulse-message-action-group {
+    flex-basis: 15em;
+}
+
+.psdk-pulse-message-action-like {
+    flex-basis: 15em;
+}
+
+.psdk-pulse-message-like-label {
+    vertical-align: middle;
+}
+
+
+
+.psdk-pulse-reply {
+    padding-left: 1.25rem;
+}
+
+.psdk-pulse-reply-align {
+    text-align: left;
+}
+
+.psdk-pulse-reply-group {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+}
+
+.psdk-pulse-reply-by {
+    padding: 0rem 0.625rem; 
+    font-weight: bold; 
+    font-size: 0.9375rem;
+}
+
+.psdk-pulse-reply-message {
+    background-color:#dddddd; 
+    border-radius: 0.625rem; 
+    padding: 0rem 1.25rem; 
+    white-space: pre-line;
+}
+
+.psdk-pulse-reply-actions {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    padding-left: 3.125rem;
+}
+
+.psdk-pulse-reply-comment {
+    padding: 0rem; 
+    min-width: 1.875rem;
+}
+
+.psdk-pulse-reply-like {
+    padding: 0rem; 
+    min-width: 1.875rem;
+}
+
+.psdk-pulse-reply-like-label {
+    vertical-align:middle; 
+    padding-right: 0.3125rem;
+}
+
+.psdk-pulse-reply-time {
+    color: #aaaaaa; 
+    padding-left: 0.625rem;
+}
+
+
+.psdk-pulse-comment-group {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+}
+
+.psdk-pulse-comment-post {
+    padding: 0rem; 
+    min-width: 1.875rem;
+}

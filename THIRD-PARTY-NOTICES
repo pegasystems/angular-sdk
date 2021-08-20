@@ -1,0 +1,8 @@
+The angular-sdk uses third-party libraries or other resources that may
+be distributed under licenses different than the angular-sdk software.
+
+The third-party libraries and links to their licenses include the following:
+
+* Angular - https://angular.io/license
+
+* Angular Material - https://github.com/angular/components/blob/master/LICENSE

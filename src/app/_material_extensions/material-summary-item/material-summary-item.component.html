@@ -1,0 +1,39 @@
+<div class="psdk-utility-card">
+    <div class="psdk-utility-card-icon">
+      <img class="psdk-utility-card-svg-icon" src="{{imagePath$}}{{item$.visual.icon}}.svg">
+    </div>
+    <div class="psdk-utility-card-main">
+      <div *ngIf="item$.primary.type == 'URL'" class="psdk-utility-card-main-primary-url">
+        <button mat-button color="primary" (click)="item$.primary.click()">
+          {{item$.primary.name}}&nbsp;
+          <img class="psdk-utility-card-actions-svg-icon" src="{{imagePath$}}{{item$.primary.icon}}.svg">
+        </button>
+      </div>
+      <div *ngIf="item$.primary.type != 'URL'" class="psdk-utility-card-main-primary-label">
+        {{item$.primary.name}}
+      </div>
+      <div *ngIf="item$.secondary.text != ''">{{item$.secondary.text}}</div>
+    </div>
+    <div class="psdk-utility-card-actions">
+      <div *ngIf="menuIconOverride$ == '' else showCustom">
+        <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+          <img class="psdk-utility-card-action-svg-icon" src="{{settingsSvgIcon$}}">
+        </button>
+        <mat-menu #actionMenu="matMenu" overlapTrigger="false">
+          <ng-container *ngFor="let action of item$.actions">
+              <button mat-menu-item (click)="action.onClick()" >
+                <img class="psdk-utility-card-action-actions-svg-icon" src="{{imagePath$}}{{action.icon}}.svg">&nbsp;
+                {{action.text}}
+              </button>
+            </ng-container>
+          
+        </mat-menu>
+      </div>
+      <ng-template #showCustom>
+        <button mat-icon-button (click)="menuIconOverrideAction$.onClick(item$)">
+          <img class="psdk-utility-card-action-svg-icon" src="{{menuIconOverride$}}">
+        </button>
+      </ng-template>
+
+    </div>
+  </div>

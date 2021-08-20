@@ -1,0 +1,12 @@
+<div>
+    <mat-button-toggle-group vertical (change)="onChange($event.value)" [value]="selectedTabId$" aria-label="Tabs">
+      <mat-button-toggle *ngFor="let tab of tabConfig$" [value]="tab.id" style="text-align: left;">
+        <div style="display: flex">
+            <div style="flex-grow: 10">{{tab.name}}</div>
+            <div style="flex-grow: 1">
+              <span *ngIf="tab?.count" [matBadge]="tab.count" matBadgeOverlap="false" matBadgePosition="after" class="psdk-vtab-badge">&nbsp;</span>
+            </div>
+          </div>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+</div>

@@ -1,0 +1,39 @@
+<div *ngIf="bShowLogin$" class="pega-login-div">
+    <mat-card class="pega-login-card">
+      <mat-card-header>
+        <mat-card-title><h1>Login with Pega</h1></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-select [value]="loginType$" 
+        (selectionChange)="loginTypeChanged($event)">
+            <mat-option [value]="'BASIC'">Basic Authentication</mat-option>
+            <mat-option [value]="'OAUTH'">OAuth 2.0 Authentication</mat-option>
+          </mat-select>
+          <div *ngIf="loginType$ == 'BASIC'">
+            <form class="pega-login-form" (submit)=doLogin()>
+                <mat-form-field class="pega-login-full-width">
+                  <input matInput placeholder="User Name" id="userName" type="text" [formControl]="userNameControl" value='' (change)="fieldChanged($event)">
+                </mat-form-field>
+            </form>
+            <form class="pega-login-form" (submit)=doLogin()>
+                <mat-form-field class="pega-login-full-width">
+                  <input matInput placeholder="Password" id="password" type="text" [formControl]="passwordControl" value='' type="password" (change)="fieldChanged($event)">
+                </mat-form-field>
+            </form>
+          </div>
+          <div *ngIf="loginType$ == 'OAUTH'">
+            <form class="pega-login-form" (submit)=doLogin()>
+                <mat-form-field class="pega-login-full-width">
+                  <input matInput placeholder="Client ID" [value]="clientID$" id="clientID" type="text" [formControl]="clientIDControl" (change)="clientIDChanged($event)">
+                </mat-form-field>
+            </form>
+
+          </div>
+
+      </mat-card-content>
+      <mat-card-actions class="pega-login-actions">
+        <button mat-raised-button color="primary" (click)=attemptLogin() >Login</button>
+      </mat-card-actions>
+    </mat-card>
+    </div>
+    

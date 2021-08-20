@@ -1,0 +1,123 @@
+@import "../../../_shared/styles.scss";
+
+.mc-swatch-header {
+    display: flex; 
+    flex-direction:  row;
+}
+
+.mc-swatch-package {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 210px;
+    height: 70px;
+    background-color: #333000;
+    padding: 5px;
+}
+
+.mc-swatch-package .mc-swatch-play {
+    letter-spacing: normal;
+    color: white;
+    font-size: 25px;
+}
+
+.mc-swatch-package .mc-swatch-level {
+    letter-spacing: normal;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.mc-swatch-channels {
+    letter-spacing: normal;
+    background-color: #B00B55;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.mc-swatch-channels .mc-swatch-count {
+    letter-spacing: normal;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.mc-swatch-channels .mc-swatch-label {
+    letter-spacing: normal;
+    color: white;
+    font-size: 17px;
+}
+
+.mc-swatch-body {
+    letter-spacing: normal;
+    border: 1px solid lightgray;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.mc-swatch-body .mc-swatch-banner {
+    letter-spacing: normal;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 5px;
+}
+
+.mc-swatch-body .mc-swatch-price {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+}
+
+.mc-swatch-body .mc-swatch-from-group {
+    height: 90px;
+}
+
+.mc-swatch-body .mc-swatch-from {
+    color: $app-primary-color;
+    text-align: right;
+}
+
+.mc-swatch-body .mc-swatch-currency {
+    letter-spacing: normal;
+    color: $app-primary-color;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Tahoma;
+}
+
+.mc-swatch-body .mc-swatch-dollars {
+    letter-spacing: normal;
+    color: $app-primary-color;
+    font-size: 90px;
+    font-weight: bold;
+    font-family: Tahoma;
+}
+
+.mc-swatch-body .mc-swatch-monthly {
+    display:flex; 
+    flex-direction: column;
+}
+
+.mc-swatch-body .mc-swatch-cents {
+    letter-spacing: normal;
+    color: $app-primary-color;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.mc-swatch-body .mc-swatch-shop-button {
+    color: white;
+    background-color: $app-secondary-color;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 25px;
+    border: 0px;
+    margin: 20px;
+    padding: 10px 30px;
+}

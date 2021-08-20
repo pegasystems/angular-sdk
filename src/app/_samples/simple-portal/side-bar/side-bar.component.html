@@ -1,0 +1,14 @@
+
+<h2>Create Work</h2>
+<div class="psdk-create-work">
+    <div *ngFor="let aButton of arButtons$" class="psdk-create-work-button">
+        <button  mat-raised-button color="primary" (click)="buttonClick(aButton)" >{{aButton.caption}}</button>
+    </div>
+</div>
+<div class="psdk-worklist">
+    <div *ngFor="let workitem of arWorkItems$" class="psdk-open-work-button">
+        <button  mat-flat-button  (click)="workButtonClick(workitem)" >{{workitem.caption}}</button>
+    </div>
+</div>
+
+

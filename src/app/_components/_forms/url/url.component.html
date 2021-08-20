@@ -1,0 +1,15 @@
+<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
+  <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
+    <mat-form-field class="psdk-full-width" >
+      <mat-label>{{label$}}</mat-label>
+      <input matInput  [placeholder]="" type="url" [value]="value$" [required]="bRequired$" 
+      [formControlName]="controlName$" 
+      (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)" >
+      <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+</div>
+<ng-template #noEdit>
+  <app-text [pConn$]="pConn$" [formatAs$]="'url'"></app-text>
+</ng-template>
+

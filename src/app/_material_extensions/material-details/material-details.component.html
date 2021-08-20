@@ -1,0 +1,58 @@
+
+<div class="psdk-details-group">
+    <div class="psdk-details-fields">
+        <dl class="psdk-details-fields-primary">
+            <div *ngFor="let field of arFields$" class="psdk-details-fields-single">
+                <dt class="psdk-details-fields-label">
+                    {{field.config.label}}
+                </dt>
+                <dd [ngSwitch]="field.type.toLowerCase()" class="psdk-csf-primary-field-value">
+                    <span *ngSwitchCase="'textinput'" class="psdk-details-text-style">{{_getValue(field.config.value)}}</span>
+                    <span *ngSwitchCase="'status'" class="psdk-details-status-style">{{_getValue(field.config.value)}}</span>
+                    <a *ngSwitchCase="'phone'" as="a" href="tel: {{field.config.value}}">{{_getValue(field.config.value)}}</a>
+                    <a *ngSwitchCase="'email'" href="mailto: {{field.config.value}}">{{_getValue(field.config.value)}}</a>
+                    <span *ngSwitchCase="'date'" class="psdk-details-text-style">{{_formatDate(field.config.value, field.type)}}</span>
+                    <span *ngSwitchCase="'caseoperator'"></span>
+                    <span *ngSwitchDefault>{{_getValue(field.config.value)}}</span>
+                </dd>
+            </div>
+        </dl>
+    </div>
+    <div class="psdk-details-fields">
+        <dl class="psdk-details-fields-primary">
+            <div *ngFor="let field of arFields2$" class="psdk-details-fields-single">
+                <dt class="psdk-details-fields-label">
+                    {{field.config.label}}
+                </dt>
+                <dd [ngSwitch]="field.type.toLowerCase()" class="psdk-csf-primary-field-value">
+                    <span *ngSwitchCase="'textinput'" class="psdk-details-text-style">{{_getValue(field.config.value)}}</span>
+                    <span *ngSwitchCase="'status'" class="psdk-details-status-style">{{_getValue(field.config.value)}}</span>
+                    <a *ngSwitchCase="'phone'" as="a" href="tel: {{field.config.value}}">{{_getValue(field.config.value)}}</a>
+                    <a *ngSwitchCase="'email'" href="mailto: {{field.config.value}}">{{_getValue(field.config.value)}}</a>
+                    <span *ngSwitchCase="'date'" class="psdk-details-text-style">{{_formatDate(field.config.value, field.type)}}</span>
+                    <span *ngSwitchCase="'caseoperator'"></span>
+                    <span *ngSwitchDefault>{{_getValue(field.config.value)}}</span>
+                </dd>
+            </div>
+        </dl>
+    </div>
+    <div class="psdk-details-fields">
+        <dl class="psdk-details-fields-primary">
+            <div *ngFor="let field of arFields3$" class="psdk-details-fields-single">
+                <dt class="psdk-details-fields-label">
+                    {{field.config.label}}
+                </dt>
+                <dd [ngSwitch]="field.type.toLowerCase()" class="psdk-csf-primary-field-value">
+                    <span *ngSwitchCase="'textinput'" class="psdk-details-text-style">{{_getValue(field.config.value)}}</span>
+                    <span *ngSwitchCase="'status'" class="psdk-details-status-style">{{_getValue(field.config.value)}}</span>
+                    <a *ngSwitchCase="'phone'" as="a" href="tel: {{field.config.value}}">{{_getValue(field.config.value)}}</a>
+                    <a *ngSwitchCase="'email'" href="mailto: {{field.config.value}}">{{_getValue(field.config.value)}}</a>
+                    <span *ngSwitchCase="'date'" class="psdk-details-text-style">{{_formatDate(field.config.value, field.type)}}</span>
+                    <span *ngSwitchCase="'caseoperator'"></span>
+                    <span *ngSwitchDefault>{{_getValue(field.config.value)}}</span>
+                </dd>
+            </div>
+        </dl>
+    </div>
+</div>
+

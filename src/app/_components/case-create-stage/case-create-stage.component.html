@@ -1,0 +1,13 @@
+
+
+<div  *ngFor="let kid of arChildren$">
+    <div *ngIf="kid.getPConnect().getConfigProps().template != ''" >
+        <div [ngSwitch]="kid.getPConnect().getConfigProps().template">
+            <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-default-form>
+            <app-one-column *ngSwitchCase="'OneColumn'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-one-column>
+            <app-two-column *ngSwitchCase="'TwoColumn'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-two-column>
+            <app-three-column *ngSwitchCase="'ThreeColumn'" [formGroup$]="formGroup$"[pConn$]="kid.getPConnect()"></app-three-column>
+            <div  *ngSwitchDefault >CreateCaseStage Missing: {{kid.getPConnect().getConfigProps().template}}</div>
+        </div>
+    </div>
+</div>

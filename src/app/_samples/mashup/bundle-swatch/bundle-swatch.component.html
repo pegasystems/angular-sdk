@@ -1,0 +1,49 @@
+<div>
+    <div class="mc-swatch-header">
+        <div class="mc-swatch-package">
+            <div class="mc-swatch-play">
+               {{labelPlay$}}
+            </div>
+            <div class="mc-swatch-level"> 
+                {{labelLevel$}}
+            </div>
+        </div>
+        <div class="mc-swatch-channels">
+            <div class="mc-swatch-count">
+                {{labelChannelCount$}}
+            </div>
+            <div class="mc-swatch-label">
+                Channels
+            </div>
+        </div>
+    </div>
+    <div class="mc-swatch-body">
+        <div class="mc-swatch-banner">
+            {{labelBanner$}}
+        </div>
+        <ul>
+            <li>{{labelChannelFull$}} channels plus FREE HD</li>
+            <li>Thousands of On Demand choices</li>
+            <li>Watch on MediaCo App</li>
+            <li>Up to {{labelInternetSpeed$}} Internet Speeds</li>
+            <li>Unlimited nationwide calling {{extraCalling$}}</li>
+        </ul>
+
+        <div class="mc-swatch-price">
+            <div class="mc-swatch-from-group">
+                <div class="mc-swatch-from">From</div>
+                <div class="mc-swatch-currency">$</div>
+            </div>
+
+            <div class="mc-swatch-dollars">{{labelDollars$}}</div>
+            <div class="mc-swatch-monthly">
+                <div class="mc-swatch-cents">{{labelCents$}}</div>
+                <div>for 12 mons</div>
+                <div>when bundled</div>
+            </div>
+        </div>
+        <div>
+            <button class="mc-swatch-shop-button" (click)="shopClick(labelLevel$)">SHOP NOW</button>
+        </div>
+    </div>
+</div>
