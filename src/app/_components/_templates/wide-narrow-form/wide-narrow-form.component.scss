@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+}
+
+
+
+.psdk-narrow-wide-column {
+    display: flow-root;
+    height: 100%;
+}
+
+
+
+.psdk-narrow-column {
+    float: left;
+    min-width: 30%;
+    padding: 0rem 0.3125rem;
+}
+
+.psdk-wide-column {
+    float: left;
+    width: 70%;
+    padding: 0rem 0.3125rem;
+}

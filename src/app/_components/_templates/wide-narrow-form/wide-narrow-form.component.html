@@ -1,0 +1,16 @@
+<div class="psdk-narrow-wide-column">
+    <div  *ngFor="let kid of arChildren$">
+        <div class="psdk-wide-column" *ngIf="kid.getPConnect().getRawMetadata()['name'].toLowerCase() ==='left' ">
+            <app-region  [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
+        </div>
+        <div class="psdk-narrow-column" *ngIf="kid.getPConnect().getRawMetadata()['name'].toLowerCase() ==='right' ">
+            <app-region  [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
+        </div>  
+        <div class="psdk-wide-column" *ngIf="kid.getPConnect().getRawMetadata()['name'].toLowerCase() ==='a' ">
+            <app-region  [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
+        </div>
+        <div class="psdk-narrow-column" *ngIf="kid.getPConnect().getRawMetadata()['name'].toLowerCase() ==='b' ">
+            <app-region  [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
+        </div>          
+    </div>
+</div>

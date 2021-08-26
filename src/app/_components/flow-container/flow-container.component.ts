@@ -412,12 +412,19 @@ export class FlowContainerComponent implements OnInit {
           const assignmentsList = localPConn.getValue(
             CASE_CONSTS.D_CASE_ASSIGNMENTS_RESULTS
           );
+                  // add status
+          const status = localPConn.getValue("caseInfo.status");
+          
+          let localAssignment = JSON.parse(JSON.stringify(assignmentsList[0]));
+          localAssignment.status = status;
+          let locaAssignmentsList: Array<any> = [];
+          locaAssignmentsList.push(localAssignment);
      
           const caseActions = localPConn.getValue(CASE_CONSTS.CASE_INFO_ACTIONS);
           
           if (caseActions) {
             this.todo_caseInfoID$ = localPConn.getValue(CASE_CONSTS.CASE_INFO_ID);
-            this.todo_datasource$ = { source: assignmentsList };
+            this.todo_datasource$ = { source: locaAssignmentsList };
           }
 
           let kid = this.pConn$.getChildren()[0];

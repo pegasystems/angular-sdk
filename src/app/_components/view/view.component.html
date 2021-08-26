@@ -2,6 +2,8 @@
     <h3 *ngIf="title$ != ''">{{title$}}</h3>
     <div [ngSwitch]="templateName$">
         <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-default-form>
+        <app-narrow-wide-form *ngSwitchCase="'NarrowWideForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-narrow-wide-form>
+        <app-wide-narrow-form *ngSwitchCase="'WideNarrowForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-wide-narrow-form>
         <app-one-column *ngSwitchCase="'OneColumn'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-one-column>
         <app-one-column-page *ngSwitchCase="'OneColumnPage'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-one-column-page>
         <app-two-column *ngSwitchCase="'TwoColumn'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-two-column>
