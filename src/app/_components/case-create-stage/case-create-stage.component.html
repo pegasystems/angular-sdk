@@ -4,6 +4,8 @@
     <div *ngIf="kid.getPConnect().getConfigProps().template != ''" >
         <div [ngSwitch]="kid.getPConnect().getConfigProps().template">
             <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-default-form>
+            <app-narrow-wide-form *ngSwitchCase="'NarrowWideForm'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-narrow-wide-form>
+            <app-wide-narrow-form *ngSwitchCase="'WideNarrowForm'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-wide-narrow-form>
             <app-one-column *ngSwitchCase="'OneColumn'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-one-column>
             <app-two-column *ngSwitchCase="'TwoColumn'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-two-column>
             <app-three-column *ngSwitchCase="'ThreeColumn'" [formGroup$]="formGroup$"[pConn$]="kid.getPConnect()"></app-three-column>

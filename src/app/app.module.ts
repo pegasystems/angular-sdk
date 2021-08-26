@@ -123,6 +123,8 @@ import { DetailsThreeColumnComponent } from './_components/_templates/details-th
 import { PercentageComponent } from './_components/_forms/percentage/percentage.component';
 import { CaseHistoryComponent } from './_components/_widgets/case-history/case-history.component';
 import { ServerConfigService } from './_services/server-config.service';
+import { NarrowWideFormComponent } from './_components/_templates/narrow-wide-form/narrow-wide-form.component';
+import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-form/wide-narrow-form.component';
 
 
 
@@ -208,7 +210,9 @@ import { ServerConfigService } from './_services/server-config.service';
     DetailsOneColumnComponent,
     DetailsThreeColumnComponent,
     PercentageComponent,
-    CaseHistoryComponent
+    CaseHistoryComponent,
+    NarrowWideFormComponent,
+    WideNarrowFormComponent
     
   ],
   imports: [
