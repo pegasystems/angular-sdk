@@ -871,7 +871,7 @@ export class ListViewComponent implements OnInit {
       bVisible = false;
       for (let col of this.displayedColumns$) {
         // filter is lower case
-        if (data[col].toString().toLowerCase().indexOf(filter) >= 0) {
+        if (data[col] && data[col].toString().toLowerCase().indexOf(filter) >= 0) {
           bVisible = true;
           break;
         }
