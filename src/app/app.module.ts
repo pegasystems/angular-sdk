@@ -77,6 +77,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { FeedContainerComponent } from './_components/feed-container/feed-container.component';
 import { AutoCompleteComponent } from './_components/_forms/auto-complete/auto-complete.component';
 import { TextComponent } from './_components/_forms/text/text.component';
+import { TextContentComponent } from './_components/_forms/text-content/text-content.component';
 import { ActionButtonsComponent } from './_components/action-buttons/action-buttons.component';
 import { AssignmentCardComponent } from './_components/assignment-card/assignment-card.component';
 import { MultiStepComponent } from './_components/multi-step/multi-step.component';
@@ -127,7 +128,6 @@ import { NarrowWideFormComponent } from './_components/_templates/narrow-wide-fo
 import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-form/wide-narrow-form.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -167,6 +167,7 @@ import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-fo
     FeedContainerComponent,
     AutoCompleteComponent,
     TextComponent,
+    TextContentComponent,
     ActionButtonsComponent,
     AssignmentCardComponent,
     MultiStepComponent,
