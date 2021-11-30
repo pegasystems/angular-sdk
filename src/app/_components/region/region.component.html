@@ -7,6 +7,7 @@
         <app-utility  *ngSwitchCase="'Utility'" [pConn$]="kid.getPConnect()"></app-utility>
         <app-text-input  *ngSwitchCase="'TextInput'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-text-input>
         <app-text-area  *ngSwitchCase="'TextArea'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-text-area>
+        <app-text-content  *ngSwitchCase="'TextContent'" [pConn$]="kid.getPConnect()"></app-text-content>
         <app-check-box  *ngSwitchCase="'Checkbox'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-check-box>
         <app-integer  *ngSwitchCase="'Integer'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-integer>
         <app-date-time  *ngSwitchCase="'DateTime'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-date-time>
@@ -27,6 +28,6 @@
         <app-file-utility *ngSwitchCase="'FileUtility'" [pConn$]="kid.getPConnect()"></app-file-utility>
         <app-attachment *ngSwitchCase="'Attachment'" [pConn$]="kid.getPConnect()"></app-attachment>
         <app-case-history *ngSwitchCase="'CaseHistory'" [pConn$]="kid.getPConnect()"></app-case-history>
-        <div  *ngSwitchDefault >Region Missing: {{kid.getPConnect().getComponentName()}}</div>
+        <div  *ngSwitchDefault >Region  wants component not yet available: {{kid.getPConnect().getComponentName()}}</div>
     </div>  
 </div>
