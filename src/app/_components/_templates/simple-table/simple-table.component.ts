@@ -83,12 +83,12 @@ export class SimpleTableComponent implements OnInit {
 
     // At this point, fields has resolvedFields and rawFields we can use
 
-    console.log("SimpleTable resolvedFields:");
-    console.log( resolvedFields );
-    console.log("SimpleTable rawFields:");
-    console.log( rawFields );
+    // console.log("SimpleTable resolvedFields:");
+    // console.log( resolvedFields );
+    // console.log("SimpleTable rawFields:");
+    // console.log( rawFields );
 
-    // from Nebula
+    // start of from Nebula
     // get context name and referenceList which will be used to prepare config of PConnect
     const { contextName, referenceListStr, pageReferenceForRows } = getContext(
       this.pConn$
@@ -154,16 +154,15 @@ export class SimpleTableComponent implements OnInit {
 
     for (var row of referenceList) {
       let dataForRow: Object = {};
+
       for ( var col of this.displayedColumns ) {
         const colKey: string = col;
-        
-        const refKeys: Array<string> = colKey.split('.');
-        let valBuilder = row;
-        for ( var key of refKeys) {
-          valBuilder = valBuilder[key];
-        }
 
-        dataForRow[colKey] = valBuilder;
+        const theProcessedField = this.getFieldFromFieldArray(colKey, this.processedFields);
+
+        const theVal = this.getRowValue(row, colKey, theProcessedField);
+        
+        dataForRow[colKey] = theVal;
       }
 
       this.rowData.push(dataForRow);
@@ -203,6 +202,39 @@ export class SimpleTableComponent implements OnInit {
     if (bUpdateSelf) {
       this.updateSelf();
     }
+  }
+
+  // return the value that should be shown as the contents for the given row data
+  //  of the given row field
+  getRowValue( inRowData: Object, inColKey: string, inRowField: any  ): any {
+
+    if (this.requestedReadOnlyMode || inRowField?.config?.readOnly) {
+      // Show the requested data as a readOnly entry in the table.
+      const refKeys: Array<string> = inColKey.split('.');
+      let valBuilder = inRowData;
+      for ( var key of refKeys) {
+        valBuilder = valBuilder[key];
+      }
+      return valBuilder;
+    } else {
+      const thePlaceholder = inRowField?.config?.placeholder ? inRowField.config.placeholder : "";
+      const theEditComponent = inRowField.type ? inRowField.type : "not specified";
+      return `${thePlaceholder} ${theEditComponent}`;
+    }
+  }
+  // return the field from the incoming fields array that has "name" of
+  //  requested field
+  getFieldFromFieldArray ( inFieldName: string, inFieldArray: Array<any>) : Object {
+    let objRet = {};
+
+    for (var field of inFieldArray) {
+      if ( field?.config?.name === inFieldName) {
+        objRet = field;
+        break;
+      }
+    }
+
+    return objRet;
   }
 
 }
