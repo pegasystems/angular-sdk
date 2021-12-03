@@ -208,18 +208,22 @@ export class SimpleTableComponent implements OnInit {
   //  of the given row field
   getRowValue( inRowData: Object, inColKey: string, inRowField: any  ): any {
 
+    // See what data (if any) we have to display
+    const refKeys: Array<string> = inColKey.split('.');
+    let valBuilder = inRowData;
+    for ( var key of refKeys) {
+      valBuilder = valBuilder[key];
+    }    
+
     if (this.requestedReadOnlyMode || inRowField?.config?.readOnly) {
       // Show the requested data as a readOnly entry in the table.
-      const refKeys: Array<string> = inColKey.split('.');
-      let valBuilder = inRowData;
-      for ( var key of refKeys) {
-        valBuilder = valBuilder[key];
-      }
       return valBuilder;
-    } else {
+    } else { 
       const thePlaceholder = inRowField?.config?.placeholder ? inRowField.config.placeholder : "";
       const theEditComponent = inRowField.type ? inRowField.type : "not specified";
-      return `${thePlaceholder} ${theEditComponent}`;
+      // For, display (readonly), the initial value (if there is one - otherwise, try placeholder)
+      //  and which component should be used for editing
+      return `${ (valBuilder !== "") ? valBuilder: thePlaceholder} (edit with ${theEditComponent})`;
     }
   }
   // return the field from the incoming fields array that has "name" of
