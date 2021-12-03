@@ -16,6 +16,7 @@
         <app-details-two-column *ngSwitchCase="'DetailsTwoColumn'" [pConn$]="pConn$"></app-details-two-column>
         <app-details-three-column *ngSwitchCase="'DetailsThreeColumn'" [pConn$]="pConn$"></app-details-three-column>
         <app-list-view *ngSwitchCase="'ListView'" [pConn$]="pConn$" [bInForm$]="true"></app-list-view>
+        <app-simple-table *ngSwitchCase="'SimpleTable'" [pConn$]="pConn$"></app-simple-table>
         <div *ngSwitchDefault>
             <div *ngIf="displayOnlyFA$, else displayAll">
                 <div *ngFor="let kid of arChildren$">

@@ -126,6 +126,7 @@ import { CaseHistoryComponent } from './_components/_widgets/case-history/case-h
 import { ServerConfigService } from './_services/server-config.service';
 import { NarrowWideFormComponent } from './_components/_templates/narrow-wide-form/narrow-wide-form.component';
 import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-form/wide-narrow-form.component';
+import { SimpleTableComponent } from './_components/_templates/simple-table/simple-table.component';
 
 
 @NgModule({
@@ -213,8 +214,8 @@ import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-fo
     PercentageComponent,
     CaseHistoryComponent,
     NarrowWideFormComponent,
-    WideNarrowFormComponent
-    
+    WideNarrowFormComponent,
+    SimpleTableComponent    
   ],
   imports: [
     BrowserModule,

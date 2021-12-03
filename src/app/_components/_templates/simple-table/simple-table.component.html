@@ -1,0 +1,21 @@
+<div class="psdk-data-readonly">
+  <strong>simple-table-component</strong> not complete in the Angular SDK. This is a work in progress.
+  <div *ngIf="requestedReadOnlyMode">
+    Table is readOnly.
+  </div>
+  <div *ngIf="!requestedReadOnlyMode">
+    You have requested an editable table which is not yet supported. Showing in readOnly mode.
+  </div>
+</div>
+
+<table mat-table [dataSource]="rowData" class="mat-elevation-z8 psdk-simple-table">
+
+  <ng-container *ngFor="let dCol of processedFields" [matColumnDef]="dCol.config.name">
+    <th mat-header-cell *matHeaderCellDef> {{ dCol.config.label }}</th>
+    <td mat-cell *matCellDef="let element"> {{ element[dCol.config.name] }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
