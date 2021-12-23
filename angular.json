@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angularskd": {
+    "angularsdk": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -30,6 +30,26 @@
                 "glob": "mdi.svg",
                 "input": "./node_modules/@mdi/angular-material",
                 "output": "./assets"
+              },
+              {
+                "glob": "sdk-config.json",
+                "input": "./",
+                "output": "./"
+              },
+              {
+                "glob": "bootstrap-shell.js",
+                "input": "./constellation/",
+                "output": "./"
+              },
+              {
+                "glob": "lib_asset.json",
+                "input": "./constellation/",
+                "output": "./"
+              },
+              {
+                "glob": "constellation-core.*.*",
+                "input": "./constellation/",
+                "output": "./prerequisite"
               }
             ],
             "styles": [
@@ -67,7 +87,8 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "angularsdk:build"
+            "browserTarget": "angularsdk:build",
+            "port": 3500
           },
           "configurations": {
             "production": {
