@@ -4,6 +4,7 @@ import { interval } from "rxjs/internal/observable/interval";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Subscribable, Subscription } from 'rxjs';
 import { NgZone } from '@angular/core';
+import { compareSdkPCoreVersions } from 'src/app/_helpers/versionHelpers';
 
 
 @Component({
@@ -35,21 +36,23 @@ export class TopAppComponent implements OnInit {
 
 
   constructor(private cdRef: ChangeDetectorRef,
-              private ngZone: NgZone) { 
+              private ngZone: NgZone) {
 
   }
 
   ngOnInit() {
-    
+
     this.doSubscribe();
   }
-  
+
   doSubscribe() {
 
 
-  
+
     window.PCore.onPCoreReady( (renderObj: any) => {
-    
+      // Check that we're seeing the PCore version we expect
+      compareSdkPCoreVersions();
+
       // Change to reflect new use of arg in the callback:
       const { props /*, domContainerID = null */ } = renderObj;
 
@@ -57,15 +60,15 @@ export class TopAppComponent implements OnInit {
         this.props$ = props;
 
         this.pConn$ = this.props$.getPConnect();
-    
+
         this.sComponentName$ = this.pConn$.getComponentName();
-  
+
         this.store = window.PCore.getStore();
         this.PCore$ = window.PCore;
-  
+
         this.arChildren$ = this.pConn$.getChildren();
-  
-  
+
+
         this.bPCoreReady$ = true;
 
       });

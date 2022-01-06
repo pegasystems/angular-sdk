@@ -12,6 +12,7 @@ import { endpoints } from '../../../_services/endpoints';
 import { UpdateWorklistService } from '../../../_messages/update-worklist.service';
 import { NgZone } from '@angular/core';
 import { ServerConfigService } from '../../../_services/server-config.service';
+import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
 
 
 declare global {
@@ -56,7 +57,7 @@ export class TopAppMashupComponent implements OnInit {
   props$: any;
   PCore$: any;
 
-  
+
 
   storeUnsubscribe : any;
   store: any;
@@ -81,7 +82,7 @@ export class TopAppMashupComponent implements OnInit {
 
 
 
-  constructor(private glsservice: GetLoginStatusService, 
+  constructor(private glsservice: GetLoginStatusService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private settingsDialog: MatDialog,
@@ -90,17 +91,17 @@ export class TopAppMashupComponent implements OnInit {
     private uwservice: UpdateWorklistService,
     private ngZone: NgZone,
     private scservice: ServerConfigService
-    ) { 
+    ) {
 
 
   }
 
   ngOnInit() {
-    
+
     this.scservice.getServerConfig().then( () => {
       this.initialize();
     });
- 
+
   }
 
   ngOnDestroy() {
@@ -108,7 +109,7 @@ export class TopAppMashupComponent implements OnInit {
     this.progressSpinnerSubscription.unsubscribe();
     this.resetPConnectSubscription.unsubscribe();
   }
-  
+
 
   initialize() {
     if (sessionStorage.getItem("userFullName") && sessionStorage.getItem("userPortal")) {
@@ -129,7 +130,7 @@ export class TopAppMashupComponent implements OnInit {
               this.bLoggedIn$ = true;
               this.userName$ = sessionStorage.getItem("userFullName");
             });
-        
+
             this.getPConnectAndUpdate();
 
           }
@@ -148,7 +149,7 @@ export class TopAppMashupComponent implements OnInit {
             setTimeout(() => {
               window.location.reload();
             })
-           
+
           }
 
 
@@ -157,7 +158,7 @@ export class TopAppMashupComponent implements OnInit {
     );
 
     // handle showing and hiding the progress spinner
-    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => { 
+    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => {
       this.progressSpinnerMessage = message;
 
       this.showHideProgress(this.progressSpinnerMessage.show);
@@ -183,10 +184,10 @@ export class TopAppMashupComponent implements OnInit {
       //     // update the worklist
       //     this.uwservice.sendMessage(true);
 
-          
+
       //   });
 
-       
+
       // }
 
     });
@@ -232,7 +233,7 @@ export class TopAppMashupComponent implements OnInit {
         // OATH
         oHeaders["Authorization"] = sessionStorage.getItem("oauthUser");
       }
-      
+
 
       oConfig["additionalHeaders"] = oHeaders;
 
@@ -259,8 +260,10 @@ export class TopAppMashupComponent implements OnInit {
   pConnectUpdate(oConfig: any, bootstrapShell: any) {
     bootstrapShell.bootstrap(oConfig).then( () => {
 
-        
+
       window.PCore.onPCoreReady( (renderObj) => {
+        // Check that we're seeing the PCore version we expect
+        compareSdkPCoreVersions();
 
 
         // Change to reflect new use of arg in the callback:
@@ -283,24 +286,24 @@ export class TopAppMashupComponent implements OnInit {
 
 
         this.ngZone.run( () => {
-          
+
           this.props$ = props;
-  
+
           this.pConn$ = this.props$.getPConnect();
-      
+
           this.sComponentName$ = this.pConn$.getComponentName();
-    
+
           this.store = window.PCore.getStore();
           this.PCore$ = window.PCore;
-    
+
           this.arChildren$ = this.pConn$.getChildren();
-    
-    
+
+
           this.bPCoreReady$ = true;
 
-  
-  
-        }); 
+
+
+        });
 
 
       } );
@@ -317,15 +320,15 @@ export class TopAppMashupComponent implements OnInit {
     (err) => {
       alert("error");
     }
-    
+
     );
   }
-  
+
 
   showHideProgress(bShow: boolean) {
 
     return;
-    
+
     if (bShow) {
 
       if (!this.isProgress$) {
@@ -361,7 +364,7 @@ export class TopAppMashupComponent implements OnInit {
         });
       }
 
-      
+
     }
   }
 
@@ -374,9 +377,11 @@ export class TopAppMashupComponent implements OnInit {
   doSubscribe() {
 
 
-  
+
     window.PCore.onPCoreReady( (renderObj: any) => {
-    
+      // Check that we're seeing the PCore version we expect
+      compareSdkPCoreVersions();
+
       // Change to reflect new use of arg in the callback:
       const { props /*, domContainerID = null */ } = renderObj;
 
@@ -384,15 +389,15 @@ export class TopAppMashupComponent implements OnInit {
         this.props$ = props;
 
         this.pConn$ = this.props$.getPConnect();
-    
+
         this.sComponentName$ = this.pConn$.getComponentName();
-  
+
         this.store = window.PCore.getStore();
         this.PCore$ = window.PCore;
-  
+
         this.arChildren$ = this.pConn$.getChildren();
-  
-  
+
+
         this.bPCoreReady$ = true;
 
       });
@@ -416,7 +421,7 @@ export class TopAppMashupComponent implements OnInit {
     //     timer.unsubscribe();
 
     //   }
-  
+
     //   });
 
  }
