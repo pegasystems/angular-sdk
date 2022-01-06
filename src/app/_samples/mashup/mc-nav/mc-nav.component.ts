@@ -16,6 +16,7 @@ import { HttpParams } from '@angular/common/http';
 import { Utils } from "../../../_helpers/utils";
 import { Title } from '@angular/platform-browser';
 import { ServerConfigService } from 'src/app/_services/server-config.service';
+import { compareSdkPCoreVersions } from 'src/app/_helpers/versionHelpers';
 
 
 
@@ -46,7 +47,7 @@ export class MCNavComponent implements OnInit {
 
   bootstrapShell: any;
 
-  constructor(private glsservice: GetLoginStatusService, 
+  constructor(private glsservice: GetLoginStatusService,
               private cdRef: ChangeDetectorRef,
               private snackBar: MatSnackBar,
               private settingsDialog: MatDialog,
@@ -102,8 +103,8 @@ export class MCNavComponent implements OnInit {
           if (!sConfig || sConfig === "") {
             this.dservice.getDataPage("D_OperatorID", operatorParams).subscribe(
               response => {
-  
-              
+
+
                 let operator: any = response.body;
                 //sessionStorage.setItem("loginType", this.loginType$);
                 sessionStorage.setItem("userFullName", operator.pyUserName);
@@ -114,31 +115,31 @@ export class MCNavComponent implements OnInit {
                 this.dservice.getDataPage("D_pxBootstrapConfig", {}).subscribe(
                   response => {
                     this.psservice.sendMessage(false);
-          
+
                     let myConfig : any = response.body;
-        
+
                     sessionStorage.setItem("bootstrapConfig", myConfig.pyConfigJSON);
-      
+
                     //this.glsservice.sendMessage("LoggedIn");
                     this.getPConnectAndUpdate();
-       
-      
-      
+
+
+
                   },
                   err => {
                     this.psservice.sendMessage(false);
-                            
+
                     let sError = "Errors getting config: " + err.message;
                     let snackBarRef = this.snackBar.open(sError, "Ok");
                   }
                 );
-  
-   
-                
+
+
+
               },
               err => {
                 this.psservice.sendMessage(false);
-  
+
                 let sError = "Errors getting data page: " + err.message;
                 let snackBarRef = this.snackBar.open(sError, "Ok");
               }
@@ -146,14 +147,14 @@ export class MCNavComponent implements OnInit {
           }
           else {
             this.psservice.sendMessage(false);
-          
+
             //this.glsservice.sendMessage("LoggedIn");
             this.getPConnectAndUpdate();
           }
 
- 
 
-          
+
+
         }
       },
       err => {
@@ -180,7 +181,7 @@ export class MCNavComponent implements OnInit {
           if (message.loginStatus === 'LoggedIn') {
             this.bLoggedIn$ = true;
             this.userName$ = sessionStorage.getItem("userFullName");
-        
+
             this.getPConnectAndUpdate();
 
           }
@@ -204,7 +205,7 @@ export class MCNavComponent implements OnInit {
     );
 
     // handle showing and hiding the progress spinner
-    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => { 
+    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => {
       this.progressSpinnerMessage = message;
 
       this.showHideProgress(this.progressSpinnerMessage.show);
@@ -228,7 +229,7 @@ export class MCNavComponent implements OnInit {
           timer.unsubscribe();
         });
 
-       
+
       }
 
     });
@@ -258,7 +259,7 @@ export class MCNavComponent implements OnInit {
       }
 
       oConfig["serviceConfig"].staticContentServer = sContentServer;
-      
+
       //oConfig["restServerConfig"] = endpoints.BASEURL.substring(0, endpoints.BASEURL.indexOf("/prweb"));
       oConfig["restServerConfig"] = this.scservice.getBaseUrl().substring(0, this.scservice.getBaseUrl().indexOf("/prweb"));
       oConfig["dynamicLoadComponents"] = false;
@@ -275,7 +276,7 @@ export class MCNavComponent implements OnInit {
         // OATH
         oHeaders["Authorization"] = sessionStorage.getItem("oauthUser");
       }
-      
+
 
       oConfig["additionalHeaders"] = oHeaders;
 
@@ -289,7 +290,7 @@ export class MCNavComponent implements OnInit {
         this.pConnectUpdate(oConfig, bootstrapShell);
       });
 
- 
+
     }
 
   }
@@ -303,9 +304,10 @@ export class MCNavComponent implements OnInit {
       if (!this.PCore$) {
         this.PCore$ = window.PCore;
       }
-      
-      this.PCore$.onPCoreReady( (renderObj) => {
 
+      this.PCore$.onPCoreReady( (renderObj) => {
+      // Check that we're seeing the PCore version we expect
+      compareSdkPCoreVersions();
 
         // Change to reflect new use of arg in the callback:
         const { props /*, domContainerID = null */ } = renderObj;
@@ -329,7 +331,7 @@ export class MCNavComponent implements OnInit {
 
   }
 
-  
+
 
   showHideProgress(bShow: boolean) {
     this.isProgress$ = bShow;
@@ -340,14 +342,7 @@ export class MCNavComponent implements OnInit {
 
   logOff() {
     this.glsservice.sendMessage("LoggedOff");
-    
+
   }
 
 }
-
-
-
-
-
-
-

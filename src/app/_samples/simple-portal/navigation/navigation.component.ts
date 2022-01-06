@@ -12,6 +12,7 @@ import { UpdateWorklistService } from '../../../_messages/update-worklist.servic
 import { NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ServerConfigService } from 'src/app/_services/server-config.service';
+import { compareSdkPCoreVersions } from 'src/app/_helpers/versionHelpers';
 
 
 
@@ -42,7 +43,7 @@ export class NavigationComponent implements OnInit {
 
 
 
-  constructor(private glsservice: GetLoginStatusService, 
+  constructor(private glsservice: GetLoginStatusService,
               private cdRef: ChangeDetectorRef,
               private snackBar: MatSnackBar,
               private settingsDialog: MatDialog,
@@ -54,7 +55,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
 
- 
+
     this.scservice.getServerConfig().then( () => {
       this.initialize();
     });
@@ -105,7 +106,7 @@ export class NavigationComponent implements OnInit {
               this.bLoggedIn$ = true;
               this.userName$ = sessionStorage.getItem("userFullName");
             });
-        
+
             this.getPConnectAndUpdate();
 
           }
@@ -207,7 +208,7 @@ export class NavigationComponent implements OnInit {
         // OATH
         oHeaders["Authorization"] = sessionStorage.getItem("oauthUser");
       }
-      
+
 
       oConfig["additionalHeaders"] = oHeaders;
 
@@ -232,9 +233,10 @@ export class NavigationComponent implements OnInit {
 
     bootstrapShell.bootstrap(oConfig).then(() => {
 
-        
-      window.PCore.onPCoreReady( (renderObj) => {
 
+      window.PCore.onPCoreReady( (renderObj) => {
+        // Check that we're seeing the PCore version we expect
+        compareSdkPCoreVersions();
 
         if (!this.PCore$) {
           this.PCore$ = window.PCore;
@@ -260,12 +262,12 @@ export class NavigationComponent implements OnInit {
           this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
           "cancelAssignment"
         );
-    
+
         this.PCore$.getPubSubUtils().unsubscribe(
           "assignmentFinished",
           "assignmentFinished"
         );
-    
+
         this.PCore$.getPubSubUtils().unsubscribe(
           "showWork",
           "showWork"
@@ -280,13 +282,13 @@ export class NavigationComponent implements OnInit {
           () => { this.cancelAssignment() },
           "cancelAssignment"
         );
-    
+
         this.PCore$.getPubSubUtils().subscribe(
           "assignmentFinished",
           () => { this.assignmentFinished() },
           "assignmentFinished"
         );
-    
+
         this.PCore$.getPubSubUtils().subscribe(
           "showWork",
           () => { this.showWork() },
@@ -303,7 +305,7 @@ export class NavigationComponent implements OnInit {
 
     });
   }
-  
+
 
 
 
@@ -311,14 +313,7 @@ export class NavigationComponent implements OnInit {
 
   logOff() {
     this.glsservice.sendMessage("LoggedOff");
-    
+
   }
 
 }
-
-
-
-
-
-
-
