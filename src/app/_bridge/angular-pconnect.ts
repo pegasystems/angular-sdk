@@ -16,7 +16,7 @@ export class AngularPConnectService {
    * Local variable for access to the store once the service is connected to it.
    */
   private theStore: any = null;
-  
+
   /**
    * Local variable used to compute the next componentID
    */
@@ -33,9 +33,9 @@ export class AngularPConnectService {
 
   constructor(private psService: ProgressSpinnerService,
               private erService: ErrorMessagesService,
-              private utils: Utils) { 
+              private utils: Utils) {
 
-                
+
 
     // Establish necessary override flags for our use of Core
     //const coreOverrides = { "dynamicLoadComponents": false };
@@ -73,7 +73,7 @@ export class AngularPConnectService {
    * @param inComp The component that's subscribing to the store
    * @param inCallback The component's callback function (typically called onStateChange) that will
    * be called when the store changes.
-   * @returns The **unsubscribe** function that should be called when the component needs 
+   * @returns The **unsubscribe** function that should be called when the component needs
    * to unsubscribe from the store. (Typically during ngOnDestroy)
    */
   private subscribeToStore(inComp: object = null, inCallback: Function = null): Function {
@@ -99,7 +99,7 @@ export class AngularPConnectService {
       console.error( `AngularPConnect: getComponentProps called with bad component: ${inComp}`);
     }
 
-    // if ((inComp.constructor.name === "FlowContainerComponent") || (inComp.constructor.name === "ViewContainerComponent") 
+    // if ((inComp.constructor.name === "FlowContainerComponent") || (inComp.constructor.name === "ViewContainerComponent")
     //     || (inComp.constructor.name === "ViewComponent") || (inComp.constructor.name === "DeferLoadComponent")) {
     //   console.log(`--> AngularPConnect getComponentProps: ${inComp.constructor.name}`);
     // }
@@ -113,16 +113,16 @@ export class AngularPConnectService {
         addProps = inComp.pConn$.resolveConfigProps( propsToAdd );
       }
     }
-    
+
     compProps = inComp.pConn$.getConfigProps();
-    
+
     let componentName = inComp.constructor.name;
 
-    // The following comment is from the Nebula/Constellation version of this code. Meant as a reminder to check this occasionally  
+    // The following comment is from the Nebula/Constellation version of this code. Meant as a reminder to check this occasionally
     // populate additional props which are component specific and not present in configurations
     // This block can be removed once all these props will be added as part of configs
     inComp.pConn$.populateAdditionalProps(compProps);
-    
+
 
     compProps = inComp.pConn$.resolveConfigProps(compProps);
 
@@ -139,7 +139,7 @@ export class AngularPConnectService {
   }
 
    /**
-   * Returns the unique id for given component created when registering 
+   * Returns the unique id for given component created when registering
    * Otherwise, return undefined.
    * @param inComp The component whose property is being requested.
    */
@@ -170,7 +170,7 @@ export class AngularPConnectService {
 
 
   /**
-   * 
+   *
    * @returns The current complete set of resolved properties that are associated with
    * this component.
    * This is the full set of properties that are tracked in Redux for this component.
@@ -179,8 +179,8 @@ export class AngularPConnectService {
     if (null === inComp) {
       console.error( `AngularPConnect: getCurrentCompleteProps called with bad component: ${inComp}`);
     }
-    return this.componentPropsArr[inComp.angularPConnectData.compID] 
-  } 
+    return this.componentPropsArr[inComp.angularPConnectData.compID]
+  }
 
   /**
    * Registers the component and its callback function. When a component calls this method
@@ -190,7 +190,7 @@ export class AngularPConnectService {
    * (passed in as ___inCallback___) to the component. If a problem is encountered, an empty object,
    * {}, is returned.
    * @param inComp The component being registered and subscribed
-   * @param inCallback The component's callback function (typically called onStateChange) that 
+   * @param inCallback The component's callback function (typically called onStateChange) that
    * will be called whenever the state changes.
    * @returns A JSON object with the following keys:
    * compID: the unique ID associated with this component,
@@ -218,7 +218,7 @@ export class AngularPConnectService {
       console.error( `OLD SCHOOL: ${compType}`);
     }
 
-    
+
     if (undefined === inComp.actions && undefined === inComp.angularPConnectData) {
       console.error(`AngularPConnect: bad call to registerAndSubscribe from ${compType}: actions not defined as a class variable for inComp`);
       return returnObject;
@@ -258,7 +258,7 @@ export class AngularPConnectService {
       returnObject.compID = theCompID;
       returnObject.unsubscribeFn = theUnsub;
     }
-    
+
     // initialize this components entry in the componentPropsArr
     this.componentPropsArr[theCompID] = {};
 
@@ -282,7 +282,7 @@ export class AngularPConnectService {
    * **Note**: It is assumed that the incoming component has the following:
    * (a) a bridgeComponentID _string_ property used as lookup key in ___componentPropsArr___
    * and (b) a ___pConn$___ property used to access functions called in ___getComponentProps___
-   * 
+   *
    * @param inComp The component asking if it should update itself
    * @returns Return **true**: means the component props are different and the component should update itself (re-render).
    * Return **false**: means the component props are the same and the component doesn't need to update (re-render).
@@ -344,7 +344,7 @@ export class AngularPConnectService {
         // if have a validate message, turn off spinner
         let timer = interval(100).subscribe(() => {
           this.psService.sendMessage(false);
-  
+
           timer.unsubscribe();
           });
 
@@ -361,7 +361,7 @@ export class AngularPConnectService {
     //console.log( `AngularPConnect component ${compID} - ${inComp.constructor.name} - shouldComponentUpdate: ${bRet}`);
 
     if (bRet) {
-      
+
       // console.log("current props: " + currentPropsAsStr);
       // console.log("incoming props: " + incomingPropsAsStr);
       // console.log(`    ${inComp.constructor.name}: shouldComponentUpdate returning: ${bRet}, compId: ${compID}` );
@@ -473,13 +473,12 @@ export class AngularPConnectService {
       console.error(`AngularPConnect: bad call to processActions: pConn$: ${pConnect} from component: ${inComp.constructor.name}`);
       return;
     }
-    
-    inComp.pConn$.processActions(inComp.pConn$.eventHandler);
+
     if (inComp.pConn$.isEditable()) {
       inComp.pConn$.setAction("onChange", this.changeHandler.bind(this));
       inComp.pConn$.setAction("onBlur", this.eventHandler.bind(this));
     }
-  }  
+  }
 
 }
 
