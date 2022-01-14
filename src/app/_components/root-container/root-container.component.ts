@@ -8,7 +8,7 @@ import { NgZone } from '@angular/core';
 import { Utils} from '../../_helpers/utils';
 
 //
-// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with 
+// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
 // Redux and creation/update of Redux containers and PConnect.  Modifying this code could have undesireable results and
 // is totally at your own risk.
 //
@@ -52,7 +52,7 @@ export class RootContainerComponent implements OnInit {
               private cdRef: ChangeDetectorRef ) { }
 
   ngOnInit(): void {
-    
+
     let myContext = "app";
     if (this.isMashup$) {
       myContext = "root";
@@ -69,12 +69,12 @@ export class RootContainerComponent implements OnInit {
     const items = Object.keys(containers).filter((item) =>
       item.includes("root")
     );
-    
-    this.PCore$.getContainerItems().addContainerItems(items);
+
+    this.PCore$.getContainerUtils().getContainerAPI().addContainerItems(items);
 
     // add preview and modalview containers to redux
     // keep local copies of the the pConnect that is related
- 
+
     const configObjPreview = this.PCore$.createPConnect({
       meta: {
         type: "PreviewViewContainer",
@@ -110,7 +110,7 @@ export class RootContainerComponent implements OnInit {
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     // handle showing and hiding the progress spinner
-    this.progressSpinnerSubscription = this.psService.getMessage().subscribe(message => { 
+    this.progressSpinnerSubscription = this.psService.getMessage().subscribe(message => {
       this.progressSpinnerMessage = message;
 
       this.showHideProgress(this.progressSpinnerMessage.show);
@@ -157,7 +157,7 @@ export class RootContainerComponent implements OnInit {
 
   updateSelf() {
 
-    // need to call this.getCurrentCompleteProps (not this.thePConn.getConfigProps) 
+    // need to call this.getCurrentCompleteProps (not this.thePConn.getConfigProps)
     //  to get full set of props that affect this component in Redux
     const myProps: any = this.angularPConnect.getCurrentCompleteProps(this);
 
@@ -197,7 +197,7 @@ export class RootContainerComponent implements OnInit {
               context: items[key].context
             }
           });
-    
+
           setTimeout(() => {
             // makes sure Angular tracks these changes
             this.ngZone.run(() => {
@@ -208,8 +208,8 @@ export class RootContainerComponent implements OnInit {
 
         }
       }
-  
-    } else if (renderingMode == noPortalMode) { 
+
+    } else if (renderingMode == noPortalMode) {
       // bootstrap loadMashup resolves to here
 
       let arChildren = this.pConn$.getChildren()
@@ -226,7 +226,7 @@ export class RootContainerComponent implements OnInit {
 
       }
 
-    
+
     } else if (children && children.length > 0) {
       // haven't resolved to here
 
@@ -236,7 +236,7 @@ export class RootContainerComponent implements OnInit {
     } else {
 
     }
-  } 
+  }
 
 
   showHideProgress(bShow: boolean) {
@@ -252,13 +252,13 @@ export class RootContainerComponent implements OnInit {
               this.spinnerTimer.unsubscribe();
             }
             catch (ex) {
-  
+
             }
-  
+
             this.ngZone.run(() => {
               this.bIsProgress$ = true;
             });
-  
+
           });
         }
 
