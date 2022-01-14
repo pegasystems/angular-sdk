@@ -47,6 +47,11 @@ testem.log
 Thumbs.db
 
 # Constellation build files
-### /constellation/bootstrap*
-### /constellation/lib_asset.json
-### /constellation/constellation*
+/constellation/bootstrap*
+/constellation/lib_asset.json
+/constellation/constellation*
+constellation/*
+
+# localhost cert files
+/private.*
+/ssl.conf
