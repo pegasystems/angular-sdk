@@ -10,7 +10,7 @@ import { Utils } from "../../_helpers/utils";
 import { NgZone } from '@angular/core';
 
 //
-// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with 
+// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
 // Redux and creation/update of Redux containers and PConnect.  Modifying this code could have undesireable results and
 // is totally at your own risk.
 //
@@ -28,7 +28,7 @@ export class FlowContainerComponent implements OnInit {
   configProps$ : Object;
   arChildren$: Array<any>;
 
-  itemKey$: string = ""; 
+  itemKey$: string = "";
 
   containerName$: string;
   workID$: string;
@@ -45,7 +45,7 @@ export class FlowContainerComponent implements OnInit {
   mainButtonFn$ : string;
   secondaryButtonFn$ : string;
 
-  
+
 
   //bHasNavigation$: boolean = false;
 
@@ -73,30 +73,30 @@ export class FlowContainerComponent implements OnInit {
   //itemKey: string = "";   // JA - this is what Nebula/Constellation uses to pass to finishAssignment, navigateToStep
 
   PCore$: any;
+  pCoreConstants;
 
   // For interaction with AngularPConnect
-  angularPConnectData: any = {};  
+  angularPConnectData: any = {};
 
-  constructor(private angularPConnect: AngularPConnectService, 
+  constructor(private angularPConnect: AngularPConnectService,
               private cdRef: ChangeDetectorRef,
               private psService: ProgressSpinnerService,
               private erService: ErrorMessagesService,
               private rpcService: ResetPConnectService,
               private fb: FormBuilder,
               private ngZone: NgZone,
-              private utils: Utils) { 
+              private utils: Utils) {
 
 
-  
+
     // create the formGroup
     this.formGroup$ = fb.group({ hideRequired: false});
 
 
-  
   }
 
 
-  
+
 
   ngOnInit() {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
@@ -108,12 +108,15 @@ export class FlowContainerComponent implements OnInit {
 
     // Then, continue on with other initialization
 
+    // get the PCore constants
+    this.pCoreConstants = this.PCore$.getConstants();
+
 
     //with init, force children to be loaded of global pConn
     this.initComponent(true);
 
     this.initContainer();
-  
+
     this.PCore$.getPubSubUtils().subscribe(
       this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
       () => { this.handleCancel() },
@@ -125,7 +128,8 @@ export class FlowContainerComponent implements OnInit {
       () => { this.handleCancelPressed() },
       "cancelPressed"
     );
-  
+
+
   }
 
   ngOnDestroy() {
@@ -192,7 +196,7 @@ export class FlowContainerComponent implements OnInit {
 
       }
 
-      
+
     }
 
 
@@ -255,7 +259,7 @@ export class FlowContainerComponent implements OnInit {
     if (bLoadChildren) {
       this.arChildren$ = this.pConn$.getChildren();
     }
-   
+
 
     let oData = this.pConn$.getDataObject();
 
@@ -265,7 +269,7 @@ export class FlowContainerComponent implements OnInit {
 
 
     this.todo_showTodo$ = this.getTodoVisibilty();
-    
+
     // create pointers to functions
     let containerMgr = this.pConn$.getContainerManager();
     let actionsAPI = this.pConn$.getActionsApi();
@@ -282,26 +286,36 @@ export class FlowContainerComponent implements OnInit {
     let oWorkData = oWorkItem.getDataObject();
 
     //this.containerName$ = oWorkMeta["name"];
-    if (bLoadChildren && oWorkData) { 
+    if (bLoadChildren && oWorkData) {
       this.containerName$ = this.getActiveViewLabel() || oWorkData.caseInfo.assignments[0].name;
     }
 
 
     // turn off spinner
     this.psService.sendMessage(false);
-  
+
 
   }
 
   hasAssignments() {
 
     let hasAssignments = false;
-    const assignmentsList = this.pConn$.getValue("caseInfo.assignments");
+    const assignmentsList = this.pConn$.getValue(this.pCoreConstants.CASE_INFO.D_CASE_ASSIGNMENTS_RESULTS);
+    const thisOperator = this.PCore$.getEnvironmentInfo().getOperatorIdentifier();
+    // 8.7 includes assignments in Assignments List that may be assigned to
+    //  a different operator. So, see if there are any assignments for
+    //  the current operator
+    let bAssignmentsForThisOperator = false;
+    for (const assignment of assignmentsList) {
+      if (assignment["assigneeInfo"]["ID"] === thisOperator) {
+        bAssignmentsForThisOperator = true;
+      }
+    }
 
     const hasChildCaseAssignments = this.hasChildCaseAssignments();
 
     if (
-      assignmentsList ||
+      bAssignmentsForThisOperator ||
       hasChildCaseAssignments ||
       this.isCaseWideLocalAction()
     ) {
@@ -312,8 +326,8 @@ export class FlowContainerComponent implements OnInit {
   }
 
   isCaseWideLocalAction() {
-    const actionID = this.pConn$.getValue("caseInfo.activeActionID");
-    const caseActions = this.pConn$.getValue("caseInfo.availableActions");
+    const actionID = this.pConn$.getValue(this.pCoreConstants.CASE_INFO.ACTIVE_ACTION_ID);
+    const caseActions = this.pConn$.getValue(this.pCoreConstants.CASE_INFO.AVAILABLEACTIONS);
     let bCaseWideAction = false;
     if (caseActions && actionID) {
       const actionObj = caseActions.find(
@@ -328,7 +342,7 @@ export class FlowContainerComponent implements OnInit {
 
   hasChildCaseAssignments() {
 
-    const childCases = this.pConn$.getValue("caseInfo.childCases");
+    const childCases = this.pConn$.getValue(this.pCoreConstants.CASE_INFO.CHILD_ASSIGNMENTS);
     let allAssignments = [];
     if (childCases && childCases.length > 0) {
       return true;
@@ -385,7 +399,7 @@ export class FlowContainerComponent implements OnInit {
   // Called when bridge shouldComponentUpdate indicates that this component
   //  should update itself (re-render)
   updateSelf() {
-     
+
      // for now
      let { getPConnect } = this.arChildren$[0].getPConnect();
      let localPConn = this.arChildren$[0].getPConnect();
@@ -396,11 +410,11 @@ export class FlowContainerComponent implements OnInit {
      let loadingInfo: any;
      try {
       loadingInfo = this.pConn$.getLoadingStatus();
-     } 
+     }
      catch (ex) {
 
      }
-     
+
      const caseViewMode = this.pConn$.getValue("context_data.caseViewMode");
      const { CASE_INFO: CASE_CONSTS, CONTAINER_TYPE } = this.PCore$.getConstants();
 
@@ -414,14 +428,14 @@ export class FlowContainerComponent implements OnInit {
           );
                   // add status
           const status = localPConn.getValue("caseInfo.status");
-          
+
           let localAssignment = JSON.parse(JSON.stringify(assignmentsList[0]));
           localAssignment.status = status;
           let locaAssignmentsList: Array<any> = [];
           locaAssignmentsList.push(localAssignment);
-     
+
           const caseActions = localPConn.getValue(CASE_CONSTS.CASE_INFO_ACTIONS);
-          
+
           if (caseActions) {
             this.todo_caseInfoID$ = localPConn.getValue(CASE_CONSTS.CASE_INFO_ID);
             this.todo_datasource$ = { source: locaAssignmentsList };
@@ -431,7 +445,7 @@ export class FlowContainerComponent implements OnInit {
           let todoKid = kid.getPConnect().getChildren()[0];
 
           this.todo_pConn$ = todoKid.getPConnect();
-    
+
           this.todo_showTodo$ = true;
 
           this.psService.sendMessage(false);
@@ -478,7 +492,7 @@ export class FlowContainerComponent implements OnInit {
     }
 
 
-     // this check in routingInfo, mimic Nebula/Constellation (React) to check and get the internals of the 
+     // this check in routingInfo, mimic Nebula/Constellation (React) to check and get the internals of the
      // flowContainer and force updates to pConnect/redux
      if (routingInfo && loadingInfo != undefined) {
 
@@ -492,14 +506,14 @@ export class FlowContainerComponent implements OnInit {
           // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
           setTimeout(() => {
             if (key && key != "") {
-              this.itemKey$ = key; 
+              this.itemKey$ = key;
               this.cdRef.detectChanges();
             }
           });
 
 
           if (currentOrder.length > 0) {
-  
+
             if (currentItems[key] &&
                 currentItems[key].view &&
                 type === "single" &&
@@ -512,7 +526,7 @@ export class FlowContainerComponent implements OnInit {
                   let rootView = currentItem.view;
                   let { context } = rootView.config;
                   let config = { meta: rootView };
-  
+
                   config["options"] = {
                     context: currentItem.context,
                     pageReference: context || localPConn.getPageReference(),
@@ -522,11 +536,11 @@ export class FlowContainerComponent implements OnInit {
                     containerItemName: key,
                     parentPageReference: localPConn.getPageReference()
                   };
-  
+
                   // add more data to pConnect
                   let configObject = this.PCore$.createPConnect(config);
 
-                  
+
 
                   // makes sure Angular tracks these changes
                   this.ngZone.run(() => {
@@ -544,8 +558,8 @@ export class FlowContainerComponent implements OnInit {
 
                     this.containerName$ = this.getActiveViewLabel() || oWorkData.caseInfo.assignments[0].name;
                   });
-  
-                
+
+
             }
           }
         }
@@ -553,10 +567,10 @@ export class FlowContainerComponent implements OnInit {
      }
 
   }
- 
+
 
   getBuildName(): string {
-  
+
     // let { getPConnect, name } = this.pConn$.props;
     let context = this.pConn$.getContextName();
     let viewContainerName = this.pConn$.getContainerName();
@@ -579,7 +593,7 @@ export class FlowContainerComponent implements OnInit {
       control => {
           control.markAsTouched();
       }
-    )   
+    )
   }
 
 
@@ -594,6 +608,6 @@ export class FlowContainerComponent implements OnInit {
     )
 
   }
-  
+
 
 }
