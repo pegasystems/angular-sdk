@@ -25,13 +25,13 @@ export class DateComponent implements OnInit {
   controlName$: string;
   bHasForm$: boolean = true;
   componentReference: string = "";
-  fieldControl = new FormControl('', null); 
+  fieldControl = new FormControl('', null);
   // Used with AngularPConnect
   angularPConnectData: any = {};
 
-  constructor(private angularPConnect: AngularPConnectService, 
+  constructor(private angularPConnect: AngularPConnectService,
               private cdRef: ChangeDetectorRef,
-              private utils: Utils) { 
+              private utils: Utils) {
 
   }
 
@@ -43,13 +43,13 @@ export class DateComponent implements OnInit {
     // Then, continue on with other initialization
     // call updateSelf when initializing
     this.updateSelf();
-     
+
     if (null != this.formGroup$) {
       // add control to formGroup
       this.formGroup$.addControl(this.controlName$, this.fieldControl);
       this.fieldControl.setValue(this.value$);
       this.bHasForm$ = true;
-    }    
+    }
     else {
       this.bReadonly$ = true;
       this.bHasForm$ = false;
@@ -64,14 +64,14 @@ export class DateComponent implements OnInit {
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
     }
-  } 
+  }
 
   // Callback passed when subscribing to store change
   onStateChange() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
+
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
       this.updateSelf();
@@ -88,13 +88,15 @@ export class DateComponent implements OnInit {
 
     if (this.configProps$["value"] != undefined) {
 
-      let sDateValue = "";
+      let sDateValue: any = "";
       sDateValue = this.configProps$["value"];
 
 
       if (sDateValue != "") {
-        // if we have the "pega" format, then for display, convert to standard format (US)
-        if (sDateValue.indexOf("/") < 0) {
+        if (typeof sDateValue == "object") {
+          sDateValue = sDateValue.toISOString();
+        } else if (sDateValue.indexOf("/") < 0) {
+          // if we have the "pega" format, then for display, convert to standard format (US)
           // sDateValue = this.formatDate(sDateValue);
           sDateValue = this.utils.generateDate(sDateValue, "Date-Long-Custom-YYYY")
           // sDateValue = moment(sDateValue, "YYYYMMDD").format("MM/DD/YYYY");
@@ -104,7 +106,7 @@ export class DateComponent implements OnInit {
     }
 
     this.label$ = this.configProps$["label"];
-    
+
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       if (this.configProps$["required"] != null) {
@@ -121,17 +123,17 @@ export class DateComponent implements OnInit {
      if (this.configProps$["disabled"] != undefined) {
       this.bDisabled$ = this.utils.getBooleanValue(this.configProps$["disabled"]);
     }
-  
+
     if (this.bDisabled$) {
       this.fieldControl.disable();
     }
     else {
       this.fieldControl.enable();
     }
-       
+
     if (this.configProps$["readOnly"] != null) {
       this.bReadonly$ = this.utils.getBooleanValue(this.configProps$["readOnly"]);
-    } 
+    }
 
     this.componentReference = this.pConn$.getStateProps().value;
 
@@ -149,11 +151,12 @@ export class DateComponent implements OnInit {
   fieldOnDateChange(event: any, sValue: string) {
     // this comes from the date pop up
     if (typeof(event.value) == "object") {
+      event.value = (event.value).toISOString();
       // convert date to pega "date" format
       // event.value = moment(event.value).format("YYYYMMDD");
     }
-    this.angularPConnectData.actions.onChange(this, event);
-  } 
+    this.angularPConnectData.actions.onChange(this, {value: event.value});
+  }
 
   fieldOnClick(event: any) {
 
@@ -162,10 +165,11 @@ export class DateComponent implements OnInit {
   fieldOnBlur(event: any) {
     // PConnect wants to use eventHandler for onBlur
     if (typeof(event.value) == "object") {
+      event.value = (event.value).toISOString();
       // convert date to pega "date" format
       // event.value = moment(event.value).format("YYYYMMDD");
     }
-    this.angularPConnectData.actions.onBlur(this, event);
+    this.angularPConnectData.actions.onBlur(this, {value: event.value});
   }
 
   hasErrors() {
