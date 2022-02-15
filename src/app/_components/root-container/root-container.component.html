@@ -6,11 +6,12 @@
 <div *ngIf="bShowRoot$">
     <div [ngSwitch]="componentName$">
         <app-view *ngSwitchCase="'View'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-view>
+        <reference-component *ngSwitchCase="'reference'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></reference-component>
         <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-view-container>
         <app-hybrid-view-container *ngSwitchCase="'HybridViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-hybrid-view-container>
         <app-modal-view-container *ngSwitchCase="'ModalViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$" (modalVisibleChange)="modalVisibleChanged($event)"></app-modal-view-container>
         <div *ngSwitchCase="''"></div>
-        <div  *ngSwitchDefault >Root Missing:{{componentName$}}.</div>
+        <div  *ngSwitchDefault >RootContainer Missing: {{componentName$}}.</div>
     </div>
 </div>
 
