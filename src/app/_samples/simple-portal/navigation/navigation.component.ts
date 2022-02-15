@@ -242,6 +242,27 @@ export class NavigationComponent implements OnInit {
           this.PCore$ = window.PCore;
         }
 
+        // Need to register the callback function for PCore.registerComponentCreator
+        //  This callback is invoked if/when you call a PConnect createComponent
+        window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+          // debugger;
+
+          return c11nEnv;
+
+          // REACT implementaion:
+          // const PConnectComp = createPConnectComponent();
+          // return (
+          //     <PConnectComp {
+          //       ...{
+          //         ...c11nEnv,
+          //         ...c11nEnv.getPConnect().getConfigProps(),
+          //         ...c11nEnv.getPConnect().getActions(),
+          //         additionalProps
+          //       }}
+          //     />
+          //   );
+        });
+
         // Change to reflect new use of arg in the callback:
         const { props /*, domContainerID = null */ } = renderObj;
 

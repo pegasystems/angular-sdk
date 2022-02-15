@@ -127,6 +127,7 @@ import { ServerConfigService } from './_services/server-config.service';
 import { NarrowWideFormComponent } from './_components/_templates/narrow-wide-form/narrow-wide-form.component';
 import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-form/wide-narrow-form.component';
 import { SimpleTableComponent } from './_components/_templates/simple-table/simple-table.component';
+import { ReferenceComponent } from './_components/reference/reference.component';
 
 
 @NgModule({
@@ -215,7 +216,8 @@ import { SimpleTableComponent } from './_components/_templates/simple-table/simp
     CaseHistoryComponent,
     NarrowWideFormComponent,
     WideNarrowFormComponent,
-    SimpleTableComponent    
+    SimpleTableComponent,
+    ReferenceComponent
   ],
   imports: [
     BrowserModule,
@@ -245,7 +247,7 @@ import { SimpleTableComponent } from './_components/_templates/simple-table/simp
     MatSortModule,
     MatSelectModule,
     MatTabsModule,
-    MatExpansionModule, 
+    MatExpansionModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
@@ -253,8 +255,8 @@ import { SimpleTableComponent } from './_components/_templates/simple-table/simp
     MatRadioModule,
     MatAutocompleteModule,
     MatTooltipModule,
-    MatDialogModule, 
-    MatStepperModule,  
+    MatDialogModule,
+    MatStepperModule,
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'auto'} },
@@ -266,5 +268,5 @@ import { SimpleTableComponent } from './_components/_templates/simple-table/simp
 
 
 
-export class AppModule { 
+export class AppModule {
 }

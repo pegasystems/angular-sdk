@@ -31,6 +31,7 @@ declare global {
       getEnvironmentInfo: Function;
       getPubSubUtils(): any;
       getUserApi() : any;
+      registerComponentCreator( c11nPropObject ): Function
     }
   }
 }
@@ -260,11 +261,30 @@ export class TopAppMashupComponent implements OnInit {
   pConnectUpdate(oConfig: any, bootstrapShell: any) {
     bootstrapShell.bootstrap(oConfig).then( () => {
 
-
       window.PCore.onPCoreReady( (renderObj) => {
         // Check that we're seeing the PCore version we expect
         compareSdkPCoreVersions();
 
+        // Need to register the callback function for PCore.registerComponentCreator
+        //  This callback is invoked if/when you call a PConnect createComponent
+        window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+          // debugger;
+
+          return c11nEnv;
+
+          // REACT implementaion:
+          // const PConnectComp = createPConnectComponent();
+          // return (
+          //     <PConnectComp {
+          //       ...{
+          //         ...c11nEnv,
+          //         ...c11nEnv.getPConnect().getConfigProps(),
+          //         ...c11nEnv.getPConnect().getActions(),
+          //         additionalProps
+          //       }}
+          //     />
+          //   );
+        });
 
         // Change to reflect new use of arg in the callback:
         const { props /*, domContainerID = null */ } = renderObj;
@@ -381,6 +401,27 @@ export class TopAppMashupComponent implements OnInit {
     window.PCore.onPCoreReady( (renderObj: any) => {
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
+
+      // Need to register the callback function for PCore.registerComponentCreator
+      //  This callback is invoked if/when you call a PConnect createComponent
+      window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+        // debugger;
+
+        return c11nEnv;
+
+        // REACT implementaion:
+        // const PConnectComp = createPConnectComponent();
+        // return (
+        //     <PConnectComp {
+        //       ...{
+        //         ...c11nEnv,
+        //         ...c11nEnv.getPConnect().getConfigProps(),
+        //         ...c11nEnv.getPConnect().getActions(),
+        //         additionalProps
+        //       }}
+        //     />
+        //   );
+      });
 
       // Change to reflect new use of arg in the callback:
       const { props /*, domContainerID = null */ } = renderObj;
