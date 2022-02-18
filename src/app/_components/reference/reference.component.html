@@ -1,4 +1,29 @@
 <div [ngSwitch]="componentName$">
-  <app-view *ngSwitchCase="'View'" [pConn$]="referencedComponent" [displayOnlyFA$]="displayOnlyFA$"></app-view>
-  <div  *ngSwitchDefault >Reference Missing: {{componentName$}}.</div>
+  <div *ngIf="templateName$ != ''">
+    <div class="psdk-view-container-top" id={{buildName$}}>
+      <h3 *ngIf="title$ != ''">{{title$}}</h3>
+      <div [ngSwitch]="templateName$">
+        <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-default-form>
+        <app-one-column *ngSwitchCase="'OneColumn'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-one-column>
+        <app-two-column *ngSwitchCase="'TwoColumn'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-two-column>
+        <app-three-column *ngSwitchCase="'ThreeColumn'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponents"></app-three-column>
+        <app-one-column-page *ngSwitchCase="'OneColumnPage'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-one-column-page>
+        <app-two-column-page *ngSwitchCase="'TwoColumnPage'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-two-column-page>
+        <app-three-column-page *ngSwitchCase="'ThreeColumnPage'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-three-column-page>
+        <app-case-view *ngSwitchCase="'CaseView'" [pConn$]="referencedViewComponent" [displayOnlyFA$]="displayOnlyFA$"></app-case-view>
+        <app-list-page *ngSwitchCase="'ListPage'" [pConn$]="referencedViewComponent" ></app-list-page>
+
+        <!-- NOTE: temporary mapping until we figure out how to handle these with the referece component -->
+        <app-one-column *ngSwitchCase="'OneColumnTab'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-one-column>
+        <app-details-two-column *ngSwitchCase="'DetailsTwoColumn'" [formGroup$]="formGroup$" [pConn$]="referencedViewComponent"></app-details-two-column>
+        <app-wide-narrow-form *ngSwitchCase="'WideNarrowPage'" [pConn$]="referencedViewComponent"></app-wide-narrow-form>
+
+        <div *ngSwitchDefault>Reference with template missing Template {{templateName$}}</div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="templateName$ == ''">
+    <app-view *ngSwitchCase="'View'" [pConn$]="referencedViewComponent" [formGroup$]="formGroup$" [displayOnlyFA$]="displayOnlyFA$"></app-view>
+    <div  *ngSwitchDefault >Reference withOUT template issing: {{componentName$}}.</div>
+  </div>
 </div>

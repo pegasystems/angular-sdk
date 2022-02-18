@@ -2,17 +2,19 @@
     <div  *ngFor="let kid of arChildren$">
       <div [ngSwitch]="kid.getPConnect().getComponentName()">
         <app-view *ngSwitchCase="'View'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-view>
+        <app-reference *ngSwitchCase="'reference'" [emittedBy$]="'AssignmentCard'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-reference>
+        <app-region *ngSwitchCase="'Region'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-region>
         <app-case-create-stage *ngSwitchCase="'CaseCreateStage'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-case-create-stage>
         <div *ngSwitchDefault>Assignment Card wants component not yet available: {{kid.getPConnect().getComponentName()}}</div>
       </div>
-      
+
     </div>
- </form> 
+ </form>
 
 <div>
     <br>
     <div class="psdk-case-view-divider"></div>
-    
+
     <app-action-buttons [arMainButtons$]="arMainButtons$" [arSecondaryButtons$]="arSecondaryButtons$"
     (ActionButtonClick)="onActionButtonClick($event)"></app-action-buttons>
 

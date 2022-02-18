@@ -1,0 +1,11 @@
+/* Adopted from ViewContainer since we sometimes have to render a reference
+**  that's coming from a ViewContainer
+*/
+
+h3 {
+  margin-left: 0.8rem;
+}
+
+.psdk-view-container-top {
+  padding: 0;
+}

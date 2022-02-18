@@ -1,6 +1,7 @@
 <div *ngIf="bShowDefer$">
     <div [ngSwitch]="componentName$">
         <app-view *ngSwitchCase="'View'"  [pConn$]="loadedPConn$"></app-view>
+        <app-reference *ngSwitchCase="'reference'" [emittedBy$]="'DeferLoad'" [pConn$]="loadedPConn$"></app-reference>
         <div *ngSwitchDefault >Defer Load Missing: {{componentName$}}</div>
     </div>
 </div>

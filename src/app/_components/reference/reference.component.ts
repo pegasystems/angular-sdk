@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { AngularPConnectService } from "../../_bridge/angular-pconnect";
 
 
@@ -9,7 +10,7 @@ import { AngularPConnectService } from "../../_bridge/angular-pconnect";
 //
 
 @Component({
-  selector: 'reference-component',
+  selector: 'app-reference',
   templateUrl: './reference.component.html',
   styleUrls: ['./reference.component.scss']
 })
@@ -18,11 +19,16 @@ export class ReferenceComponent implements OnInit {
 
   @Input() pConn$: any;
   @Input() displayOnlyFA$ : boolean;
+  @Input() formGroup$: FormGroup = null;
+  @Input() emittedBy$: string = "unspecified";
 
   angularPConnectData: any = { };
   configProps$ : Object;
   componentName$: string = "";
-  referencedComponent: any = null;
+  referencedViewComponent: any = null;
+  templateName$: string;
+  title$: string = "";
+
 
 
   constructor(private angularPConnect: AngularPConnectService) {
@@ -95,8 +101,9 @@ export class ReferenceComponent implements OnInit {
 
     // debugger;
 
-    // updating the referencedComponent should trigger a render
+    // updating the referencedViewComponent should trigger a render
     const newCompPConnect = viewComponent.getPConnect();
+    const newCompPConnectConfigProps = newCompPConnect.getConfigProps();
 
     newCompPConnect.setInheritedConfig({
           ...referenceConfig,
@@ -105,9 +112,17 @@ export class ReferenceComponent implements OnInit {
         }
     );
 
+    this.templateName$ = ('template' in newCompPConnectConfigProps) ? newCompPConnectConfigProps["template"] : "";
+    this.title$ = ('title' in newCompPConnectConfigProps) ? newCompPConnectConfigProps["title"] : "";
+
+    console.log(`Angular Reference component: emittedBy$: ${this.emittedBy$}`);
+    // console.log(`Angular Reference component: formGroup$: ${JSON.stringify(this.formGroup$)}`);
+    console.log(`Angular Reference component: newCompPConnectConfigProps templateName$: ${this.templateName$} title$: ${this.title$}`);
     console.log(`Angular Reference component: newCompPConnect configProps: ${JSON.stringify(newCompPConnect.getConfigProps())}`);
 
-    this.referencedComponent = newCompPConnect;
+    debugger;
+
+    this.referencedViewComponent = newCompPConnect;
 
     // From React implementation...
     // viewComponent.props.getPConnect().setInheritedConfig({
