@@ -12,7 +12,7 @@ Note: The Angular SDK is offered in early adopter mode. It is built on the new a
 
 # Prerequisites
 
-## Pega Infinity Server and Constellation-enabled Application 
+## Pega Infinity Server and Constellation-enabled Application
 
 The Angular SDK assumes that you have access to a Pega Infinity server (8.6.1 GA) running an application that is configured to run using the Constellation UI service. The sample application can be found in the Angular SDK download associated with this repo that is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk)
 
@@ -25,7 +25,7 @@ Please refer to the **Angular SDK Guide** provided in the Marketplace download f
 ---
 # Installing and Running the Application
 
-### **Install** the Angular SDK 
+### **Install** the Angular SDK
 
 1. Install
 
@@ -63,17 +63,23 @@ Please refer to the **Angular SDK Guide** provided in the Marketplace download f
    $ npm run build:dev:ci
    $ npm run start-dev (or start-dev-https)
    ```
-   or <br> 
-   
+   or <br>
+
     4.2 Build without clean and install (assumes npm install has already been run)
    ```
    $ npm run build:dev
    $ npm run start-dev (or npm run start-dev-https)
    ```
+   or <br>
+
+    4.3 Build without clean and install and enable live reload (compiles and reloads the page whenever a project file is saved during development; assumes npm install has already been run)
+   ```
+   $ ng serve
+   ```
 
 5. **Production build and start**
 
-    5.1 Full production clean and install of npm modules, and build; then start the server. (Building in production mode 
+    5.1 Full production clean and install of npm modules, and build; then start the server. (Building in production mode
     generates gzip and Brotli compressed versions of the static content. Serving in production mode will serve the
     gzip or Brotli static content when available.)
 
@@ -123,11 +129,11 @@ The **APIHeadersAllowed** record on your Infinity server (found in Security | Cr
 For the **APIHeadersAllowed** CORS record, please confirm of update the record as follows:
 
 * **Allowed methods**
-  * **All 5 methods** should be checked: 
+  * **All 5 methods** should be checked:
   **GET, POST, PUT, PATCH, and DELETE**
 
 * **Allowed headers**
-  * The list of allowed request header should include the following: 
+  * The list of allowed request header should include the following:
   **authorization, content-type, Access-Control-Expose-Headers, If-Match, pzCTKn, context, remotesystemid**
 
 * Exposed headers
@@ -207,7 +213,7 @@ If the `MediaCo` app was imported to your Infinity server, a `MediaCoOAuth` OAut
    * Add a RedirectURI value based on the url used to access the deployed Angular SDK (e.g., http://localhost:3500/auth.html)
    * Enable the "Enable proof code for pkce" option
    * Set the "Access token lifetime" for how long you want the logged in session to last.  Pega does not presently support the ability to referesh the token (for Public clients), so the user will have to reauthenticate again after this interval.
-   * Enter the appropriate values within **sdk-config.json** 
+   * Enter the appropriate values within **sdk-config.json**
 
 <br>
 
@@ -218,7 +224,7 @@ If the `MediaCo` app was imported to your Infinity server, a `MediaCoOAuth` OAut
 
 The following steps will enable setting up a secure self-signed certificate for localhost (adapted from the procedure outlined here: https://gist.github.com/pgilad/63ddb94e0691eebd502deee207ff62bd).  At the end of the process two files are expected within the root project directory: private.pem and private.key
 
-Step 1: Create a private key 
+Step 1: Create a private key
    ```
    $ openssl genrsa -out private.key 4096
    ```
@@ -297,13 +303,13 @@ This project is licensed under the terms of the **Apache 2** license.
 
 We welcome contributions to the Angular SDK project.
 
-Please refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are interested in helping. 
+Please refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are interested in helping.
 
 <br>
 
 
 ---
-   
+
 ## Additional Resources
 
 * __Angular__: https://angular.io/
