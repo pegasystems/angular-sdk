@@ -75,8 +75,8 @@ export class AssignmentComponent implements OnInit {
               private psService: ProgressSpinnerService,
               private erService: ErrorMessagesService,
               private utils: Utils,
-              private ngZone: NgZone) { 
- 
+              private ngZone: NgZone) {
+
   }
 
   ngOnInit(): void {
@@ -112,11 +112,11 @@ export class AssignmentComponent implements OnInit {
       let loadingInfo;
       try {
         loadingInfo = this.pConn$.getLoadingStatus();
-  
+
         this.psService.sendMessage(loadingInfo);
       }
       catch (ex) {
-  
+
       }
     }
 
@@ -125,14 +125,18 @@ export class AssignmentComponent implements OnInit {
  }
 
   ngOnChanges() {
+    // de-reference children...
+    this.arChildren$ = this.dereferenceChildren(this.arChildren$);
 
     this.createButtons();
-    
+
   }
 
 
   initComponent() {
 
+    // de-reference children...
+    this.arChildren$ = this.dereferenceChildren(this.arChildren$);
 
     // prevent re-intializing with flowContainer update unless an action is taken
     this.bReInit = false;
@@ -141,11 +145,11 @@ export class AssignmentComponent implements OnInit {
 
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
-    let activeActionLabel: string = "";
-    let { getPConnect } = this.arChildren$[0].getPConnect();
+    // let activeActionLabel: string = "";
+    // let { getPConnect } = this.arChildren$[0].getPConnect();
 
     this.templateName$ = this.configProps$["template"];
-    
+
     // create pointers to functions
     let containerMgr = this.pConn$.getContainerManager();
     let actionsAPI = this.pConn$.getActionsApi();
@@ -156,7 +160,7 @@ export class AssignmentComponent implements OnInit {
     if (this.itemKey$ === "") {
       this.itemKey$ = baseContext.concat("/").concat(acName);
     }
-    
+
 
     this.pConn$.isBoundToState();
 
@@ -175,7 +179,29 @@ export class AssignmentComponent implements OnInit {
 
   }
 
+  // Look at the current value of this.arChildren$ and replace any
+  //  children that are "reference" components with their
+  //  de-referenced View.
+  dereferenceChildren(inChildren) {
+    const theDereferencedChildren = (inChildren)
+      ? inChildren.map((child) => {
+        const theChildType = child.getPConnect().getComponentName();
+        debugger;
+        if (theChildType === 'reference') {
+          return child.getPConnect().getReferencedViewPConnect();
+        } else {
+          return child;
+        }
+      })
+      : null;
+
+    return theDereferencedChildren;
+  }
+
+
   createButtons() {
+
+    debugger;
 
     let oData = this.pConn$.getDataObject();
 
@@ -194,21 +220,21 @@ export class AssignmentComponent implements OnInit {
 
       if (oWorkData.caseInfo && oWorkData.caseInfo.assignments != null) {
         this.containerName$ = oWorkData.caseInfo.assignments[0].name;
-  
+
         // get caseInfo
         let oCaseInfo = oData.caseInfo;
-    
+
         if (oCaseInfo && oCaseInfo.actionButtons) {
-    
+
           this.arMainButtons$ = oCaseInfo.actionButtons.main;
           this.arSecondaryButtons$ = oCaseInfo.actionButtons.secondary;
-    
+
         }
-    
+
         if (oCaseInfo.navigation != null) {
-    
+
           this.bHasNavigation$ = true;
-    
+
           if (oCaseInfo.navigation.template && oCaseInfo.navigation.template.toLowerCase() === "standard") {
             this.bHasNavigation$ = false;
           }
@@ -218,30 +244,30 @@ export class AssignmentComponent implements OnInit {
           else {
             this.bIsVertical$ = false;
           }
-    
-    
+
+
           // iterate through steps to find current one(s)
           // immutable, so we want to change the local copy, so need to make a copy
-    
+
           this.ngZone.run(() => {
             // what comes back now in configObject is the children of the flowContainer
             this.arNavigationSteps$ = JSON.parse(JSON.stringify(oCaseInfo.navigation.steps));
             this.arCurrentStepIndicies$ = new Array();
             this.arCurrentStepIndicies$ = this.findCurrentIndicies(this.arNavigationSteps$, this.arCurrentStepIndicies$, 0);
-          });  
-    
-    
-    
+          });
+
+
+
         }
         else {
           this.bHasNavigation$ = false;
         }
       }
-  
-      
+
+
     }
 
-    
+
   }
 
 
@@ -272,15 +298,15 @@ export class AssignmentComponent implements OnInit {
     return arIndicies;
   }
 
- 
-    
-    
+
+
+
   onActionButtonClick(oData: any) {
     this.buttonClick(oData.action, oData.buttonType);
   }
 
   buttonClick(sAction, sButtonType) {
-    
+
     // right now, done on an individual basis, setting bReInit to true
     // upon the next flow container state change, will cause the flow container
     // to re-initialize
@@ -291,7 +317,7 @@ export class AssignmentComponent implements OnInit {
     let acName = this.pConn$.getContainerName();
     let itemID = baseContext.concat("/").concat(acName);
 
-  
+
     if (sButtonType == "secondary") {
 
       let stepID = ""; // ???
@@ -304,8 +330,8 @@ export class AssignmentComponent implements OnInit {
           if (this.formValid()) {
             this.bReInit =true;
             this.psService.sendMessage(true);
-            
-            let navigatePromise = this.navigateToStep("previous", this.itemKey$);  
+
+            let navigatePromise = this.navigateToStep("previous", this.itemKey$);
 
             navigatePromise
               .then(() => {
@@ -319,8 +345,8 @@ export class AssignmentComponent implements OnInit {
           break;
         case "cancelAssignment":
           this.bReInit =true;
-          
-          
+
+
           this.erService.sendMessage("dismiss", "");
 
           // check if create stage (modal)
@@ -365,14 +391,14 @@ export class AssignmentComponent implements OnInit {
 
 
           break;
-        default: 
+        default:
           break;
       }
-      
+
 
     }
     else if (sButtonType == "primary") {
-      
+
       switch (sAction) {
         case "finishAssignment" :
           this.erService.sendMessage("publish", "");
@@ -396,10 +422,10 @@ export class AssignmentComponent implements OnInit {
 
           }
           break;
-        default: 
+        default:
           break;
       }
-      
+
     }
 
 
@@ -419,7 +445,7 @@ export class AssignmentComponent implements OnInit {
       control => {
           control.markAsTouched();
       }
-    )   
+    )
   }
 
 

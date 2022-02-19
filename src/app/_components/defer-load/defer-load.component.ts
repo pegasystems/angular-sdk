@@ -3,7 +3,7 @@ import { ChangeDetectorRef } from "@angular/core";
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
 
 //
-// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with 
+// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
 // Redux and creation/update of Redux containers and PConnect.  Modifying this code could have undesireable results and
 // is totally at your own risk.
 //
@@ -47,6 +47,7 @@ export class DeferLoadComponent implements OnInit {
       (data) => { this.loadActiveTab(data) },
       "loadActiveTab"
     );
+
   }
 
   ngOnDestroy(): void {
@@ -66,8 +67,19 @@ export class DeferLoadComponent implements OnInit {
     if (!this.PCore$) {
       this.PCore$ = window.PCore;
     }
-    
+
     this.loadActiveTab();
+  }
+
+  // The incoming pConn may be a "reference" component.
+  //  If so, need to de-reference that to the referenced View
+  dereferencePConn(inPConn) {
+
+    if (inPConn.getComponentName() === 'reference') {
+      return inPConn.getReferencedViewPConnect().getPConnect();
+    } else {
+      return inPConn;
+    }
   }
 
   loadActiveTab(data: any = {}) {
@@ -99,7 +111,7 @@ export class DeferLoadComponent implements OnInit {
             }
           };
 
-        
+
           let configObject = this.PCore$.createPConnect(config);
 
           this.bShowDefer$ = true;
@@ -109,15 +121,15 @@ export class DeferLoadComponent implements OnInit {
             // for now, prevent details from being drawn
             this.componentName$ = "Details";
 
-            this.loadedPConn$ = configObject.getPConnect();
-            this.componentName$ = this.loadedPConn$.getComponentName();  
-    
+            this.loadedPConn$ = this.dereferencePConn(configObject.getPConnect());
+            this.componentName$ = this.loadedPConn$.getComponentName();
+
           }
           else {
-            this.loadedPConn$ = configObject.getPConnect();
-            this.componentName$ = this.loadedPConn$.getComponentName();         
+            this.loadedPConn$ = this.dereferencePConn(configObject.getPConnect());
+            this.componentName$ = this.loadedPConn$.getComponentName();
           }
-          
+
 
           this.psService.sendMessage(false);
           this.cdRef.detectChanges();
@@ -127,6 +139,6 @@ export class DeferLoadComponent implements OnInit {
 
 
   }
-  
+
 
 }

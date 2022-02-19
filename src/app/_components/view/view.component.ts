@@ -6,7 +6,7 @@ import { throwError } from 'rxjs';
 import { Utils } from "../../_helpers/utils";
 
 //
-// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with 
+// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
 // Redux and creation/update of Redux containers and PConnect.  Modifying this code could have undesireable results and
 // is totally at your own risk.
 //
@@ -38,13 +38,8 @@ export class ViewComponent implements OnInit {
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     // Then, continue on with other initialization
+    this.updateSelf();
 
-    this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    this.arChildren$ = this.pConn$.getChildren();
-    this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
-    this.title$ = ('title' in this.configProps$) ? this.configProps$["title"] : "";
-
-  
   }
 
   // Callback passed when subscribing to store change
@@ -52,7 +47,7 @@ export class ViewComponent implements OnInit {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
+
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
       this.updateSelf();
@@ -65,10 +60,34 @@ export class ViewComponent implements OnInit {
 
   updateSelf() {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    this.arChildren$ = this.pConn$.getChildren();
     this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
     this.title$ = ('title' in this.configProps$) ? this.configProps$["title"] : "";
 
+    if (this.templateName$ === "") {
+      this.arChildren$ = this.dereferenceChildren(this.pConn$.getChildren());
+    } else {
+      this.arChildren$ = this.pConn$.getChildren();
+    }
+
+  }
+
+
+  // Look at the current value of this.arChildren$ and replace any
+  //  children that are "reference" components with their
+  //  de-referenced View.
+  dereferenceChildren(inChildren) {
+    const theDereferencedChildren = (inChildren)
+      ? inChildren.map((child) => {
+        const theChildType = child.getPConnect().getComponentName();
+        if (theChildType === 'reference') {
+          return child.getPConnect().getReferencedViewPConnect();
+        } else {
+          return child;
+        }
+      })
+      : null;
+
+    return theDereferencedChildren;
   }
 
 

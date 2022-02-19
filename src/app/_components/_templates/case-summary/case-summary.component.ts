@@ -43,6 +43,17 @@ export class CaseSummaryComponent implements OnInit {
 
   initComponent() {
 
+    const pConnType = this.pConn$.getComponentName();
+    console.log(`CaseSummary pConn$ type: ${pConnType}`);
+
+    // debugger;
+
+    // If we received a "reference" type, we need to update
+    //  pConn$ to use that component's getReferencedViewPConnect().getPConnect()
+    //  instead of the one we have...
+    if (pConnType === 'reference') {
+      this.pConn$ = this.pConn$.getReferencedViewPConnect().getPConnect();
+    }
 
     // Then, continue on with other initialization
 
@@ -57,13 +68,13 @@ export class CaseSummaryComponent implements OnInit {
 
   }
 
-  
+
   // Callback passed when subscribing to store change
   onStateChange() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
+
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
       this.updateSelf();
@@ -96,7 +107,7 @@ export class CaseSummaryComponent implements OnInit {
       let kid = oField.getPConnect();
       this.secondaryFields$.push(kid.resolveConfigProps(kid.getRawMetadata()));
     }
-    
+
   }
 
 

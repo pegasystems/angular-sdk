@@ -21,9 +21,24 @@ export class RegionComponent implements OnInit {
 
   ngOnInit() {
 
-    this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    this.arChildren$ = this.pConn$.getChildren();
-    
+    // iterate over the children and replace any "reference" components with the
+    //  View they reference
+
+    const theDereferencedChildren = (this.pConn$.getChildren())
+      ? this.pConn$.getChildren().map((child) => {
+        const theChildType = child.getPConnect().getComponentName();
+        if (theChildType === 'reference') {
+          return child.getPConnect().getReferencedViewPConnect();
+        } else {
+          return child;
+        }
+      })
+      : null;
+
+      this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
+      // Use the de-referenced children...
+      this.arChildren$ = theDereferencedChildren;
+
   }
 
 }

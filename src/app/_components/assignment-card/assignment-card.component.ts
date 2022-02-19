@@ -24,11 +24,47 @@ export class AssignmentCardComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // Replace any child "reference" components with their
+    //  de-referenced View
+    const theDereferencedChildren = this.dereferenceChildren();
+
+    // Update to use the de-referenced children...
+    this.arChildren$ = theDereferencedChildren;
+
   }
 
   ngOnChanges(data: any) {
 
-    
+    // this gets called whenever the Assignment changes and
+    //  the change can include getting updated arChildren$. So, we need
+    //  to de-reference any children here, too.
+
+    // Replace any child "reference" components with their
+    //  de-referenced View
+    const theDereferencedChildren = this.dereferenceChildren();
+
+    // Update to use the de-referenced children...
+    this.arChildren$ = theDereferencedChildren;
+
+  }
+
+  // Look at the current value of this.arChildren$ and replace any
+  //  children that are "reference" components with their
+  //  de-referenced View.
+  dereferenceChildren() {
+    const theDereferencedChildren = (this.pConn$.getChildren())
+      ? this.pConn$.getChildren().map((child) => {
+        const theChildType = child.getPConnect().getComponentName();
+        if (theChildType === 'reference') {
+          debugger;
+          return child.getPConnect().getReferencedViewPConnect();
+        } else {
+          return child;
+        }
+      })
+      : null;
+
+    return theDereferencedChildren;
   }
 
   onActionButtonClick(oData: any) {

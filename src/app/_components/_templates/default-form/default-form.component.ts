@@ -40,9 +40,28 @@ export class DefaultFormComponent implements OnInit {
     }
 
     // repoint children before getting templateArray
-    this.arChildren$ = kids[0].getPConnect().getChildren();
-    
+    this.arChildren$ = this.dereferenceChildren(kids[0].getPConnect().getChildren());
+
 
   }
+
+  // Look at the current value of this.arChildren$ and replace any
+  //  children that are "reference" components with their
+  //  de-referenced View.
+  dereferenceChildren(inChildren) {
+    const theDereferencedChildren = (inChildren)
+      ? inChildren.map((child) => {
+        const theChildType = child.getPConnect().getComponentName();
+        if (theChildType === 'reference') {
+          return child.getPConnect().getReferencedViewPConnect();
+        } else {
+          return child;
+        }
+      })
+      : null;
+
+    return theDereferencedChildren;
+  }
+
 
 }
