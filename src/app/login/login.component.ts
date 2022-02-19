@@ -235,6 +235,7 @@ export class LoginComponent implements OnInit {
 
   attemptLogin() {
 
+    /* No longer supporting BASIC login 
     sessionStorage.setItem("loginType", this.loginType$);
 
     if (this.loginType$ === "BASIC") {
@@ -302,12 +303,17 @@ export class LoginComponent implements OnInit {
 
     }
     else if (this.loginType$ === "OAUTH") {
+    */
 
         this.clientID$ = sessionStorage.getItem("clientID");
-        this.uservice.loginOauth(this.clientID$);
+        this.uservice.loginOauth(false);
 
 
+    /*
     }
+    */
+
+    this.uservice.loginOauth(false);
 
     
   }

@@ -31,6 +31,7 @@ declare global {
       getEnvironmentInfo: Function;
       getPubSubUtils(): any;
       getUserApi() : any;
+      getAuthUtils(): any;
       registerComponentCreator( c11nPropObject ): Function
     }
   }
