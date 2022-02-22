@@ -237,13 +237,6 @@ export class TopAppMashupComponent implements OnInit {
       window.myLoadPortal("app-root", thePortal, [], null);   // this is defined in bootstrap shell that's been loaded already
     })
 
-    //window.myLoadPortal('app-root', this.portalName, [], null);
-
-    // //alert("loaded");
-    //loadMashup('app-root', false);
-
-
-
   }
 
   showHideProgress(bShow: boolean) {
