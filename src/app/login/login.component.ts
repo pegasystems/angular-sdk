@@ -181,14 +181,14 @@ export class LoginComponent implements OnInit {
                             
                     let sError = "Errors getting config: " + err.message;
                     let snackBarRef = this.snackBar.open(sError, "Ok");
-                    this.uservice.login(true);
+                    this.uservice.login();
                   }
                 );
               }
             )
           },
           err => {
-            this.uservice.login(true);
+            this.uservice.login();
           });
 
       }
@@ -224,7 +224,7 @@ export class LoginComponent implements OnInit {
 
   attemptLogin() {
 
-    this.uservice.login(false);
+    this.uservice.login();
     
   }
 

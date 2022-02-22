@@ -99,8 +99,9 @@ export class UserService {
     };
 
     const fnAuthFullReauth = () => {
-      this.clearAuthMgr(false);
-      this.login(true);
+      // Don't want to do a full clear of authMgr as will loose sessionIndex.  Rather just clear the tokens
+      this.clearAuthMgr(true);
+      this.login();
     };
 
     if( !token ) {
@@ -290,7 +291,7 @@ export class UserService {
   };
 
 
-  login = (bFullReauth:boolean=false) => {
+  login = () => {
 
     this.scservice.getServerConfig().then(() => {
       this.initConfig(true);
@@ -335,7 +336,7 @@ export class UserService {
         if( this.bLoggedIn ) {
           this.fireTokenAvailable(null);
         } else {
-          return this.login(false);
+          return this.login();
         }  
       });  
     }
