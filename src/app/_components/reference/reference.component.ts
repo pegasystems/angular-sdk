@@ -9,7 +9,7 @@ import { AngularPConnectService } from "../../_bridge/angular-pconnect";
 //
 
 @Component({
-  selector: 'reference-component',
+  selector: 'app-reference',
   templateUrl: './reference.component.html',
   styleUrls: ['./reference.component.scss']
 })
@@ -89,6 +89,8 @@ export class ReferenceComponent implements OnInit {
     // eslint-disable-next-line no-console
     console.log( `Reference: about to call createComponent with pageReference: context: ${this.configProps$["context"]}`);
 
+    debugger;
+
     const viewComponent = this.pConn$.createComponent(viewObject, null, null, {
       pageReference: this.configProps$["context"]
     });
@@ -116,6 +118,66 @@ export class ReferenceComponent implements OnInit {
     //   displayMode: this.configProps$["displayMode"] ? this.configProps$["displayMode"]: null
     // });
 
+  }
+
+  // STATIC method that other components can call to normalize
+  //  a pConn object that might be a 'reference'. If the incoming
+  //  pConn is a reference, return its deferenced View PConnect's
+  //  getPConnect. Otherwise, return the passed in pConn unchanged
+  //  inPConn = a PConn object (ex: { getPConnect()} )
+  static normalizePConn(inPConn: any) {
+    debugger;
+    let returnObj = false;
+    let thePConnType = "";
+
+    if (inPConn["getPConnect"]) {
+      // inPConn is an object (ex: { getPConnect()} ), so we want to return
+      //  any referenced view as the object containing the
+      //  the getPConnect function
+      returnObj = true;
+      thePConnType = inPConn.getPConnect().getComponentName();
+   } else {
+      // inPConn is an object wih the PConnect function, so we want
+      //  to return any referenced view as the object containing the
+      //  the c11n function
+      returnObj = false;
+      thePConnType = inPConn.getComponentName();
+    }
+
+    if (thePConnType === 'reference') {
+      if (returnObj) {
+        return inPConn.getPConnect().getReferencedViewPConnect();
+      } else {
+        return inPConn.getReferencedViewPConnect().getPConnect();
+      }
+    } else {
+      return inPConn;
+    }
+  }
+
+  // STATIC method that other components can call to normalize
+  //  an array of pConn objects where any of the children might
+  //  be a 'reference'. The array returns an array of children
+  //  where any 'reference' is replaced with its ReferencedView
+  //  inPConnArray is an array of PConn objects or functions.
+  //    Its value is passed to normalizePConn
+
+  static normalizePConnArray(inPConnArray: any) {
+
+    debugger;
+    if (!(inPConnArray?.length > 0)) {
+      debugger;
+      // null or empty array, return what was passed in
+      return inPConnArray;
+    }
+
+    const theDererencedArray = inPConnArray.map((child) => {
+      debugger;
+      return ReferenceComponent.normalizePConn(child);
+    });
+
+    debugger;
+    return theDererencedArray;
   }
 
 }

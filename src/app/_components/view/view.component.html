@@ -24,7 +24,7 @@
                         <app-flow-container *ngSwitchCase="'FlowContainer'" [pConn$]="kid.getPConnect()"></app-flow-container>
                         <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
                         <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="kid.getPConnect()"></app-view-container>
-                        <div  *ngSwitchDefault >View Missing: {{kid.getPConnect().getComponentName()}}</div>
+                        <div  *ngSwitchDefault >View Missing (displayOnlyFA): {{kid.getPConnect().getComponentName()}}</div>
                     </div>
                 </div>
             </div>
@@ -39,10 +39,12 @@
                         <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
                         <app-app-shell *ngSwitchCase="'AppShell'" [pConn$]="kid.getPConnect()"></app-app-shell>
                         <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="kid.getPConnect()"></app-view-container>
-                        <div  *ngSwitchDefault >View Missing: {{kid.getPConnect().getComponentName()}}</div>
+                        <app-view *ngSwitchCase="'View'" [pConn$]="kid.getPConnect()"></app-view>
+                        <app-reference *ngSwitchCase="'reference'" [pConn$]="kid.getPConnect()"></app-reference>
+                        <div  *ngSwitchDefault >View Missing (displayAll): {{kid.getPConnect().getComponentName()}}</div>
                     </div>
-    
-    
+
+
                 </div>
             </ng-template>
 

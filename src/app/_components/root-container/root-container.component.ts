@@ -6,6 +6,7 @@ import { interval } from "rxjs/internal/observable/interval";
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
 import { NgZone } from '@angular/core';
 import { Utils} from '../../_helpers/utils';
+import { ReferenceComponent } from '../reference/reference.component';
 
 //
 // WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
@@ -201,6 +202,10 @@ export class RootContainerComponent implements OnInit {
           setTimeout(() => {
             // makes sure Angular tracks these changes
             this.ngZone.run(() => {
+              // the new rootObject may be a 'reference'. So,
+              //  normalize it to get the referencedView if that's the case
+              debugger;
+              // this.pConn$ = ReferenceComponent.normalizePConn(rootObject.getPConnect());
               this.pConn$ = rootObject.getPConnect();
               this.componentName$ = this.pConn$.getComponentName();
             });

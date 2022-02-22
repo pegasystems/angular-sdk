@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ReferenceComponent } from '../reference/reference.component';
 
 @Component({
   selector: 'app-region',
@@ -22,8 +23,13 @@ export class RegionComponent implements OnInit {
   ngOnInit() {
 
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    this.arChildren$ = this.pConn$.getChildren();
-    
+
+    // The children may contain 'reference' components, so normalize the children...
+    debugger;
+
+    this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
+
+    debugger;
   }
 
 }

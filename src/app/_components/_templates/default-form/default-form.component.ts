@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ReferenceComponent } from '../../reference/reference.component';
 
 @Component({
   selector: 'app-default-form',
@@ -40,8 +41,9 @@ export class DefaultFormComponent implements OnInit {
     }
 
     // repoint children before getting templateArray
-    this.arChildren$ = kids[0].getPConnect().getChildren();
-    
+    // Children may contain 'reference' component, so we need to
+    //  normalize them
+    this.arChildren$ = ReferenceComponent.normalizePConnArray(kids[0].getPConnect().getChildren());
 
   }
 
