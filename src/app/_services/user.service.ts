@@ -30,9 +30,8 @@ export class UserService {
   bConfigInitialized: boolean = false;
   bEmbeddedLogin: boolean = sessionStorage.getItem("asdk_embedded") === "1";
   bLoggedIn: boolean = false;
-  bLoginInProgress: boolean = sessionStorage.getItem("asdk_loggingIn") === "1";
+  bLoginInProgress: boolean = sessionStorage.getItem("asdk_loggingIn") !== null;
   bUsePopupForRestOfSession: boolean = false;
-  bC11NInitialized: boolean = false;
 
 
   constructor(private http: HttpClient,
@@ -69,6 +68,15 @@ export class UserService {
     }
   };
 
+  isLoginExpired = () => {
+    let bExpired = true;
+    const sLoginStart = sessionStorage.get("asdk_loggingIn");
+    if( sLoginStart !== null ) {
+        bExpired = (new Date()).getTime() - parseInt(sLoginStart, 10) > 60000;
+    }
+    return bExpired;
+  };
+
   getCurrentTokens = () => {
     let tokens = null;
     const sTI = sessionStorage.getItem('asdk_TI');
@@ -93,22 +101,10 @@ export class UserService {
   
   fireTokenAvailable = (token, bFire=true) => {
 
-    const fnAuthTokenUpdated = ( tokenInfo ) => {
-      sessionStorage.setItem("asdk_TI", JSON.stringify(tokenInfo));
-      console.log("Setting TI:" + JSON.stringify(tokenInfo));
-    };
-
-    const fnAuthFullReauth = () => {
-      // Don't want to do a full clear of authMgr as will loose sessionIndex.  Rather just clear the tokens
-      this.clearAuthMgr(true);
-      this.login();
-    };
-
     if( !token ) {
       // This is used on page reload to load the token from sessionStorage and carry on
       token = this.getCurrentTokens();
     }
-    this.setAuthHdr(token);
   
     this.updateLoginStatus();
   
@@ -140,17 +136,25 @@ export class UserService {
     document.dispatchEvent(event);
     */
     // Code that sets up use of Constellation once it's been loaded and ready
-    if( !this.bC11NInitialized ) {
-      constellationInit(this.scservice, authConfig, token, fnAuthTokenUpdated, fnAuthFullReauth );
-      this.bC11NInitialized = true;
+    if( !window.PCore ) {
+      constellationInit(this.scservice, authConfig, token, this.updateTokens.bind(this), this.fullReauth.bind(this) );
     }
 
   };
+
+
+  updateTokens = (token) => {
+    sessionStorage.setItem("asdk_TI", JSON.stringify(token));  
+    const authToken = token.token_type + " " + token.access_token;
+    sessionStorage.setItem("authHdr", authToken);
+  }
   
 
   processTokenOnLogin = ( token ) => {
-    sessionStorage.setItem("asdk_TI", JSON.stringify(token));
+    this.updateTokens(token);
     if( window.PCore ) {
+      this.bLoginInProgress = false;
+      sessionStorage.removeItem("asdk_loggingIn");
       window.PCore.getAuthUtils().setTokens(token);
     } else {
       this.fireTokenAvailable(token, false);
@@ -298,13 +302,12 @@ export class UserService {
 
       this.bLoginInProgress = true;
       // Needed so a redirect to login screen and back will know we are still in process of logging in
-      sessionStorage.setItem("asdk_loggingIn", "1");
+      sessionStorage.setItem("asdk_loggingIn", `${new Date().getTime()}`);
 
       if( this.bUsePopupForRestOfSession ) {
         //this.adjustConfigInfo();
         return new Promise( (resolve, reject) => {
           this.authMgr.login().then(token => {
-            this.bLoginInProgress = false;
             this.processTokenOnLogin(token);
             resolve(token.access_token);
           }).catch( (e) => {
@@ -329,7 +332,7 @@ export class UserService {
    */
   loginIfNecessary = (bEmbedded:boolean=false) => {
     this.setIsEmbedded(bEmbedded);
-    if( !this.bLoginInProgress ) {
+    if( !this.bLoginInProgress || this.isLoginExpired() ) {
       this.scservice.getServerConfig().then(() => {
         this.initConfig(false);
         this.updateLoginStatus();
@@ -342,10 +345,10 @@ export class UserService {
     }
   };
 
-  setAuthHdr = (token: any) => {
-    const authToken = token.token_type + " " + token.access_token;
-    sessionStorage.setItem("authHdr", authToken);
-    return authToken;
+  fullReauth = () => {
+    // Don't want to do a full clear of authMgr as will loose sessionIndex.  Rather just clear the tokens
+    this.clearAuthMgr(true);
+    this.login();
   };
 
   logout = () => {
