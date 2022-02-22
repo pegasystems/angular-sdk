@@ -97,8 +97,8 @@ export class NavigationComponent implements OnInit {
       this.startMashup();
     });
   
-    /* Login if needed (and indicate this is an embedded scenario) */
-    this.uservice.loginIfNecessary(true);
+    /* Login if needed (and indicate this is a portal scenario) */
+    this.uservice.loginIfNecessary(false);
   }
 
 
@@ -230,11 +230,7 @@ export class NavigationComponent implements OnInit {
 
     } );
 
-    this.scservice.selectPortal()
-    .then( () => {
-      const thePortal = this.scservice.getAppPortal();
-      window.myLoadMashup("app-root", false);   // this is defined in bootstrap shell that's been loaded already
-    })
+    window.myLoadMashup("app-root", false);   // this is defined in bootstrap shell that's been loaded already
 
   }
 
