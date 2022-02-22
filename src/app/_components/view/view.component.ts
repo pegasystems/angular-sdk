@@ -66,16 +66,10 @@ export class ViewComponent implements OnInit {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
     this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
     this.title$ = ('title' in this.configProps$) ? this.configProps$["title"] : "";
-    this.arChildren$ = this.pConn$.getChildren();
+    // children may have a 'reference' so normalize the children array
+    this.arChildren$ = ReferenceComponent.normalizePConnArray( this.pConn$.getChildren() );
+    // this.arChildren$ = this.pConn$.getChildren();
 
-    // if (this.templateName$ === "") {
-    //   debugger;
-    //   // The children may contain 'reference' components, so normalize the children...
-    //   this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
-    // } else {
-    //   debugger;
-    //   this.arChildren$ = this.pConn$.getChildren();
-    // }
   }
 
 

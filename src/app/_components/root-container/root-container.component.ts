@@ -205,16 +205,24 @@ export class RootContainerComponent implements OnInit {
               // the new rootObject may be a 'reference'. So,
               //  normalize it to get the referencedView if that's the case
               debugger;
-              // this.pConn$ = ReferenceComponent.normalizePConn(rootObject.getPConnect());
-              this.pConn$ = rootObject.getPConnect();
-              this.componentName$ = this.pConn$.getComponentName();
+              const theNewPConn = ReferenceComponent.normalizePConn(rootObject.getPConnect());
+              // update ComponentName$ before we update pConn$ to make sure they're in sync
+              //  when rendering...
+              this.componentName$ = theNewPConn.getComponentName();
+
+              this.pConn$ = theNewPConn;
+              // this.pConn$ = rootObject.getPConnect();
+
+              console.log(`RootContainer updated pConn$ to be: ${this.componentName$}`);
             });
           });
 
         }
       }
 
-    } else if (renderingMode == noPortalMode) {
+    } else if (renderingMode === noPortalMode) {
+      console.log(`RootContainer: renderingMode === noPortalMode: ${noPortalMode}`);
+
       // bootstrap loadMashup resolves to here
 
       let arChildren = this.pConn$.getChildren()

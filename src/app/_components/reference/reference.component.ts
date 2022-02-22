@@ -26,40 +26,116 @@ export class ReferenceComponent implements OnInit {
 
 
   constructor(private angularPConnect: AngularPConnectService) {
+    window.alert(`in ReferenceComponent constructor!`);
   }
 
   ngOnInit(): void {
     // debugger;
 
-    // First thing in initialization is registering and subscribing to the AngularPConnect service
-    this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
+    // // First thing in initialization is registering and subscribing to the AngularPConnect service
+    // this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
-    // Then, continue on with other initialization
-    // Do initial update...
-    this.updateSelf();
+    // // Then, continue on with other initialization
+    // // Do initial update...
+    // this.updateSelf();
 
   }
 
   // Callback passed when subscribing to store change
-  onStateChange() {
-    // Should always check the bridge to see if the component should
-    // update itself (re-render)
-    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
+  // onStateChange() {
+  //   // Should always check the bridge to see if the component should
+  //   // update itself (re-render)
+  //   const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
 
-    // debugger;
+  //   // debugger;
 
-    // ONLY call updateSelf when the component should update
-    if (bUpdateSelf) {
-      this.updateSelf();
+  //   // ONLY call updateSelf when the component should update
+  //   if (bUpdateSelf) {
+  //     this.updateSelf();
+  //   }
+  // }
+
+  // updateSelf() {
+  //   // debugger;
+
+  //   this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
+
+  //   const referenceConfig = { ...this.pConn$.getComponentConfig() } || {};
+
+  //   // debugger;
+
+  //   delete referenceConfig?.name;
+  //   delete referenceConfig?.type;
+  //   delete referenceConfig?.visibility;
+
+  //   const viewMetadata = this.pConn$.getReferencedView();
+
+  //   if (!viewMetadata) {
+  //     console.log("View not found ", this.pConn$.getComponentConfig());
+  //     // debugger;
+  //     return null;
+  //   }
+
+  //   // If we get here, we have metadata for a View component...
+  //   this.componentName$ = viewMetadata.type;
+
+  //   const viewObject = {
+  //     ...viewMetadata,
+  //     config: {
+  //       ...viewMetadata.config,
+  //       ...referenceConfig
+  //     }
+  //   };
+
+  //   // eslint-disable-next-line no-console
+  //   console.log( `Reference: about to call createComponent with pageReference: context: ${this.configProps$["context"]}`);
+
+  //   debugger;
+
+  //   const viewComponent = this.pConn$.createComponent(viewObject, null, null, {
+  //     pageReference: this.configProps$["context"]
+  //   });
+
+  //   // debugger;
+
+  //   // updating the referencedComponent should trigger a render
+  //   const newCompPConnect = viewComponent.getPConnect();
+
+  //   newCompPConnect.setInheritedConfig({
+  //         ...referenceConfig,
+  //         readOnly: this.configProps$["readOnly"] ? this.configProps$["readOnly"] : false,
+  //         displayMode: this.configProps$["displayMode"] ? this.configProps$["displayMode"]: null
+  //       }
+  //   );
+
+  //   console.log(`Angular Reference component: newCompPConnect configProps: ${JSON.stringify(newCompPConnect.getConfigProps())}`);
+
+  //   this.referencedComponent = newCompPConnect;
+
+  //   // From React implementation...
+  //   // viewComponent.props.getPConnect().setInheritedConfig({
+  //   //   ...referenceConfig,
+  //   //   readOnly: this.configProps$["readOnly"] ? this.configProps$["readOnly"] : false,
+  //   //   displayMode: this.configProps$["displayMode"] ? this.configProps$["displayMode"]: null
+  //   // });
+
+  // }
+
+  // STATIC method to create a normalized PConn (a fully realized View that the 'reference'
+  //  component refers to) from the given pConn. Has to add in some stuff as in the constructor
+  static createFullReferencedViewFromRef(inPConn: any) {
+    debugger;
+
+    // BAIL and ERROR if inPConn is NOT a reference!
+    if (inPConn.getComponentName() !== 'reference') {
+      debugger;
+      console.error( `Reference component: createFullReferencedViewFromRef inPConn is NOT a reference! ${inPConn.getComponentName()}`);
     }
-  }
+    debugger;
 
-  updateSelf() {
-    // debugger;
+    const theResolvedConfigProps = inPConn.resolveConfigProps(inPConn.getConfigProps());
 
-    this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-
-    const referenceConfig = { ...this.pConn$.getComponentConfig() } || {};
+    const referenceConfig = { ...inPConn.getComponentConfig() } || {};
 
     // debugger;
 
@@ -67,16 +143,16 @@ export class ReferenceComponent implements OnInit {
     delete referenceConfig?.type;
     delete referenceConfig?.visibility;
 
-    const viewMetadata = this.pConn$.getReferencedView();
+    const viewMetadata = inPConn.getReferencedView();
 
     if (!viewMetadata) {
-      console.log("View not found ", this.pConn$.getComponentConfig());
+      console.log("View not found ", inPConn.getComponentConfig());
       // debugger;
       return null;
     }
 
     // If we get here, we have metadata for a View component...
-    this.componentName$ = viewMetadata.type;
+    const referencedComponentName = viewMetadata.type;
 
     const viewObject = {
       ...viewMetadata,
@@ -87,12 +163,12 @@ export class ReferenceComponent implements OnInit {
     };
 
     // eslint-disable-next-line no-console
-    console.log( `Reference: about to call createComponent with pageReference: context: ${this.configProps$["context"]}`);
+    console.log( `Reference: about to call createComponent with pageReference: context: ${theResolvedConfigProps["context"]}`);
 
     debugger;
 
-    const viewComponent = this.pConn$.createComponent(viewObject, null, null, {
-      pageReference: this.configProps$["context"]
+    const viewComponent = inPConn.createComponent(viewObject, null, null, {
+      pageReference: theResolvedConfigProps["context"]
     });
 
     // debugger;
@@ -102,21 +178,14 @@ export class ReferenceComponent implements OnInit {
 
     newCompPConnect.setInheritedConfig({
           ...referenceConfig,
-          readOnly: this.configProps$["readOnly"] ? this.configProps$["readOnly"] : false,
-          displayMode: this.configProps$["displayMode"] ? this.configProps$["displayMode"]: null
+          readOnly: theResolvedConfigProps["readOnly"] ? theResolvedConfigProps["readOnly"] : false,
+          displayMode: theResolvedConfigProps["displayMode"] ? theResolvedConfigProps["displayMode"]: null
         }
     );
 
-    console.log(`Angular Reference component: newCompPConnect configProps: ${JSON.stringify(newCompPConnect.getConfigProps())}`);
+    console.log(`Angular Reference component: createFullReferencedViewFromRef -> newCompPConnect configProps: ${JSON.stringify(newCompPConnect.getConfigProps())}`);
 
-    this.referencedComponent = newCompPConnect;
-
-    // From React implementation...
-    // viewComponent.props.getPConnect().setInheritedConfig({
-    //   ...referenceConfig,
-    //   readOnly: this.configProps$["readOnly"] ? this.configProps$["readOnly"] : false,
-    //   displayMode: this.configProps$["displayMode"] ? this.configProps$["displayMode"]: null
-    // });
+    return newCompPConnect;
 
   }
 
@@ -145,10 +214,15 @@ export class ReferenceComponent implements OnInit {
     }
 
     if (thePConnType === 'reference') {
+      debugger;
       if (returnObj) {
+        debugger;
         return inPConn.getPConnect().getReferencedViewPConnect();
       } else {
-        return inPConn.getReferencedViewPConnect().getPConnect();
+        debugger;
+        const theFullRefView = this.createFullReferencedViewFromRef(inPConn);
+        debugger;
+          return theFullRefView;
       }
     } else {
       return inPConn;

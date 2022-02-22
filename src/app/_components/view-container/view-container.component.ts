@@ -77,7 +77,9 @@ export class ViewContainerComponent implements OnInit {
     // Then, continue on with other initialization
 
 //    this.configProps$ = this.pConn$.getConfigProps();
-    this.arChildren$ = this.pConn$.getChildren();
+    // children may have a 'reference' so normalize the children array
+    this.arChildren$ = ReferenceComponent.normalizePConnArray( this.pConn$.getChildren() );
+
     this.buildName$ = this.buildName();
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
     this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
@@ -178,7 +180,8 @@ export class ViewContainerComponent implements OnInit {
     const newState = this.angularPConnect.getState();
 
     if (this.arChildren$ == null) {
-      this.arChildren$ = this.pConn$.getChildren();
+      // children may have a 'reference' so normalize the children array
+      this.arChildren$ = ReferenceComponent.normalizePConnArray( this.pConn$.getChildren() );
 
 
     }
@@ -252,10 +255,12 @@ export class ViewContainerComponent implements OnInit {
               debugger;
               const theDereferencedView = ReferenceComponent.normalizePConn(newComp);
               const newConfigProps = theDereferencedView.getConfigProps();
-              const theDereferencedViewChilden = theDereferencedView.getChildren();
+              // children may have a 'reference' so normalize the children array
+              debugger;
+              const theDereferencedViewChildren = ReferenceComponent.normalizePConnArray(theDereferencedView.getChildren());
               this.templateName$ = ('template' in newConfigProps) ? newConfigProps["template"] : "";
               this.title$ = ('title' in newConfigProps) ? newConfigProps["title"] : "";
-              this.arChildren$ = theDereferencedViewChilden;
+              this.arChildren$ = theDereferencedViewChildren;
               this.createdViewPConn$ = theDereferencedView;
 
             } else {
@@ -267,7 +272,8 @@ export class ViewContainerComponent implements OnInit {
               this.templateName$ = ('template' in newConfigProps) ? newConfigProps["template"] : "";
               this.title$ = ('title' in newConfigProps) ? newConfigProps["title"] : "";
               // update children with new view's children
-              this.arChildren$ = newComp.getChildren();
+              // children may have a 'reference' so normalize the children array
+              this.arChildren$ = ReferenceComponent.normalizePConnArray(newComp.getChildren());
               }
 
 
