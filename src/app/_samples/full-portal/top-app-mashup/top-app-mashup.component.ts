@@ -1,18 +1,16 @@
 import { Component, OnInit, Inject, Optional, SkipSelf } from '@angular/core';
-import { GetLoginStatusService } from "../../../_messages/get-login-status.service";
 import { ChangeDetectorRef } from "@angular/core";
 import { Subscription, Observable } from 'rxjs';
 import { ProgressSpinnerService } from "../../../_messages/progress-spinner.service";
 import { ResetPConnectService } from "../../../_messages/reset-pconnect.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDialogModule, MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { interval } from "rxjs/internal/observable/interval";
-import { endpoints } from '../../../_services/endpoints';
 import { UpdateWorklistService } from '../../../_messages/update-worklist.service';
 import { NgZone } from '@angular/core';
 import { ServerConfigService } from '../../../_services/server-config.service';
 import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
+import { UserService } from '../../../_services/user.service';
 
 
 declare global {
@@ -32,8 +30,9 @@ declare global {
       getPubSubUtils(): any;
       getUserApi() : any;
       getAuthUtils(): any;
-      registerComponentCreator( c11nPropObject ): Function
-    }
+      registerComponentCreator( c11nPropObject ): Function;
+    },
+    myLoadPortal: Function;
   }
 }
 
@@ -84,7 +83,7 @@ export class TopAppMashupComponent implements OnInit {
 
 
 
-  constructor(private glsservice: GetLoginStatusService,
+  constructor(private uservice: UserService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private settingsDialog: MatDialog,
@@ -114,50 +113,7 @@ export class TopAppMashupComponent implements OnInit {
 
 
   initialize() {
-    if (sessionStorage.getItem("userFullName") && sessionStorage.getItem("userPortal")) {
-      // if have a userName, then have already logged in
-      this.bLoggedIn$ = true;
 
-      this.userName$ = sessionStorage.getItem("userFullName");
-
-      this.getPConnectAndUpdate();
-
-     }
-
-
-    this.subscription = this.glsservice.getMessage().subscribe(
-        message => {
-          if (message.loginStatus === 'LoggedIn') {
-            this.ngZone.run(() => {
-              this.bLoggedIn$ = true;
-              this.userName$ = sessionStorage.getItem("userFullName");
-            });
-
-            this.getPConnectAndUpdate();
-
-          }
-          else {
-            this.bLoggedIn$ = false;
-
-            // save last login type, before clear out local storage
-            let loginType = sessionStorage.getItem("loginType");
-
-            sessionStorage.clear();
-
-            // resetlogin type
-            sessionStorage.setItem("loginType", loginType);
-
-            //this.cdRef.detectChanges();
-            setTimeout(() => {
-              window.location.reload();
-            })
-
-          }
-
-
-        }
-
-    );
 
     // handle showing and hiding the progress spinner
     this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => {
@@ -193,158 +149,102 @@ export class TopAppMashupComponent implements OnInit {
       // }
 
     });
+
+    // Add event listener for when logged in and constellation bootstrap is loaded
+    document.addEventListener("ConstellationReady", () => {
+      this.bLoggedIn$ = true;
+      // start the portal
+      this.startPortal();
+    });
+  
+    /* Login if needed */
+    this.uservice.loginIfNecessary(false);
   }
 
-  getPConnectAndUpdate() {
-    let sConfig = sessionStorage.getItem("bootstrapConfig");
+  startPortal() {
 
-    this.portalName = sessionStorage.getItem("userPortal");
+    window.PCore.onPCoreReady( (renderObj) => {
+      // Check that we're seeing the PCore version we expect
+      compareSdkPCoreVersions();
 
-    if (sConfig && sConfig != "") {
-      let oConfig = JSON.parse(sConfig);
-      //oConfig["serviceConfig"].staticContentServer = "http://localhost:3000/";
-      //oConfig["restServerConfig"] = "http://localhost:1080";
+      /* In react initialRender happens here */
 
-      let sContentServer = window.location.href.indexOf("?code") != -1 ? window.location.href.substring(0, window.location.href.indexOf("?code")) + "/" : window.location.href;
-      if (null != endpoints.FULLPORTALHTML && endpoints.FULLPORTALHTML != "" && sContentServer.indexOf("/" + endpoints.FULLPORTALHTML) >= 0) {
-        sContentServer = sContentServer.substring(0, sContentServer.indexOf(endpoints.FULLPORTALHTML));
-      }
-      else if (null != endpoints.FULLPORTAL && endpoints.FULLPORTAL != "" && sContentServer.indexOf("/" + endpoints.FULLPORTAL) >= 0) {
-        sContentServer = sContentServer.substring(0, sContentServer.indexOf(endpoints.FULLPORTAL));
-      }
-      else if (null != endpoints.PORTALHMTL && endpoints.PORTALHMTL != "" && sContentServer.indexOf("/" + endpoints.PORTALHMTL) >= 0) {
-        sContentServer = sContentServer.substring(0, sContentServer.indexOf(endpoints.PORTALHMTL));
-      }
-      else if (null != endpoints.PORTAL && endpoints.PORTAL != "" && sContentServer.indexOf("/" + endpoints.PORTAL) >= 0) {
-        sContentServer = sContentServer.substring(0, sContentServer.indexOf(endpoints.PORTAL));
-      }
-      oConfig["serviceConfig"].staticContentServer = sContentServer;
-      //oConfig["restServerConfig"] = endpoints.BASEURL.substring(0, endpoints.BASEURL.indexOf("/prweb"));
-      oConfig["restServerConfig"] = this.scservice.getBaseUrl().substring(0, this.scservice.getBaseUrl().indexOf("/prweb"));
-      oConfig["dynamicLoadComponents"] = false;
-      oConfig["dynamicSemanticUrl"] = false;
-      oConfig["dynamicSetCookie"] = false;
+      // Need to register the callback function for PCore.registerComponentCreator
+      //  This callback is invoked if/when you call a PConnect createComponent
+      window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+        // debugger;
 
-      let oHeaders = oConfig["additionalHeaders"];
-      oHeaders["Content-Type"] = "application/x-www-form-urlencoded";
+        return c11nEnv;
 
-      if (sessionStorage.getItem("loginType") === "BASIC") {
-        oHeaders["Authorization"] = "Basic " + sessionStorage.getItem("encodedUser");
-      }
-      else {
-        // OATH
-        oHeaders["Authorization"] = sessionStorage.getItem("oauthUser");
-      }
-
-
-      oConfig["additionalHeaders"] = oHeaders;
-
-      sessionStorage.setItem("savedConfig", JSON.stringify(oConfig));
-
-      this.showHideProgress(true);
-
-      if (sContentServer == "" || sContentServer.lastIndexOf("/") != sContentServer.length -1) {
-        sContentServer = sContentServer.concat("/");
-      }
-
-      // import bootstrap-shell from /dist
-      import(/* webpackIgnore: true */ `${sContentServer}bootstrap-shell.js`).then((bootstrapShell) => {
-
-        this.pConnectUpdate(oConfig, bootstrapShell);
+        // REACT implementaion:
+        // const PConnectComp = createPConnectComponent();
+        // return (
+        //     <PConnectComp {
+        //       ...{
+        //         ...c11nEnv,
+        //         ...c11nEnv.getPConnect().getConfigProps(),
+        //         ...c11nEnv.getPConnect().getActions(),
+        //         additionalProps
+        //       }}
+        //     />
+        //   );
       });
 
+      // Change to reflect new use of arg in the callback:
+      const { props /*, domContainerID = null */ } = renderObj;
+
+      // makes sure Angular tracks these changes
+      // this.ngZone.run(() => {
+      //   this.pConn$ = props.getPConnect();
+
+      //   this.bHasPConnect$ = true;
+      //   this.bPConnectLoaded$ = true;
+
+      //   //this.cdRef.detectChanges();
+      //   this.showHideProgress(false);
+
+      //   sessionStorage.setItem("pCoreUsage", "QuasarMashup");
+      // });
 
 
-    }
+
+
+      this.ngZone.run( () => {
+
+        this.props$ = props;
+
+        this.pConn$ = this.props$.getPConnect();
+
+        this.sComponentName$ = this.pConn$.getComponentName();
+
+        this.store = window.PCore.getStore();
+        this.PCore$ = window.PCore;
+
+        this.arChildren$ = this.pConn$.getChildren();
+
+
+        this.bPCoreReady$ = true;
+
+
+
+      });
+
+    } );
+
+    this.scservice.selectPortal()
+    .then( () => {
+      const thePortal = this.scservice.getAppPortal();
+      window.myLoadPortal("app-root", thePortal, [], null);   // this is defined in bootstrap shell that's been loaded already
+    })
+
+    //window.myLoadPortal('app-root', this.portalName, [], null);
+
+    // //alert("loaded");
+    //loadMashup('app-root', false);
+
+
 
   }
-
-  pConnectUpdate(oConfig: any, bootstrapShell: any) {
-    bootstrapShell.bootstrap(oConfig).then( () => {
-
-      window.PCore.onPCoreReady( (renderObj) => {
-        // Check that we're seeing the PCore version we expect
-        compareSdkPCoreVersions();
-
-        // Need to register the callback function for PCore.registerComponentCreator
-        //  This callback is invoked if/when you call a PConnect createComponent
-        window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
-          // debugger;
-
-          return c11nEnv;
-
-          // REACT implementaion:
-          // const PConnectComp = createPConnectComponent();
-          // return (
-          //     <PConnectComp {
-          //       ...{
-          //         ...c11nEnv,
-          //         ...c11nEnv.getPConnect().getConfigProps(),
-          //         ...c11nEnv.getPConnect().getActions(),
-          //         additionalProps
-          //       }}
-          //     />
-          //   );
-        });
-
-        // Change to reflect new use of arg in the callback:
-        const { props /*, domContainerID = null */ } = renderObj;
-
-        // makes sure Angular tracks these changes
-        // this.ngZone.run(() => {
-        //   this.pConn$ = props.getPConnect();
-
-        //   this.bHasPConnect$ = true;
-        //   this.bPConnectLoaded$ = true;
-
-        //   //this.cdRef.detectChanges();
-        //   this.showHideProgress(false);
-
-        //   sessionStorage.setItem("pCoreUsage", "QuasarMashup");
-        // });
-
-
-
-
-        this.ngZone.run( () => {
-
-          this.props$ = props;
-
-          this.pConn$ = this.props$.getPConnect();
-
-          this.sComponentName$ = this.pConn$.getComponentName();
-
-          this.store = window.PCore.getStore();
-          this.PCore$ = window.PCore;
-
-          this.arChildren$ = this.pConn$.getChildren();
-
-
-          this.bPCoreReady$ = true;
-
-
-
-        });
-
-
-      } );
-
-
-      bootstrapShell.loadPortal('app-root', this.portalName, [], null);
-
-      // //alert("loaded");
-      //loadMashup('app-root', false);
-
-
-
-    },
-    (err) => {
-      alert("error");
-    }
-
-    );
-  }
-
 
   showHideProgress(bShow: boolean) {
 
@@ -396,8 +296,6 @@ export class TopAppMashupComponent implements OnInit {
 
 
   doSubscribe() {
-
-
 
     window.PCore.onPCoreReady( (renderObj: any) => {
       // Check that we're seeing the PCore version we expect

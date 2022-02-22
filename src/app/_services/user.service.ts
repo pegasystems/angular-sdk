@@ -27,10 +27,12 @@ export class UserService {
 
   authMgr: any;
 
-  bInit: boolean = false;
+  bConfigInitialized: boolean = false;
+  bEmbeddedLogin: boolean = sessionStorage.getItem("asdk_embedded") === "1";
   bLoggedIn: boolean = false;
-  bLoginInProgress: boolean = false;
-  usePopupForRestOfSession: boolean = false;
+  bLoginInProgress: boolean = sessionStorage.getItem("asdk_loggingIn") === "1";
+  bUsePopupForRestOfSession: boolean = false;
+  bC11NInitialized: boolean = false;
 
 
   constructor(private http: HttpClient,
@@ -49,39 +51,56 @@ export class UserService {
   forcePopupForReauths = ( bForce ) => {
     if( bForce ) {
         sessionStorage.setItem("asdk_popup", "1");
-        this.usePopupForRestOfSession = true;
+        this.bUsePopupForRestOfSession = true;
     } else {
         sessionStorage.removeItem("asdk_popup");
-        this.usePopupForRestOfSession = false;
+        this.bUsePopupForRestOfSession = false;
+    }
+  };
+
+  setIsEmbedded = ( bEmbedded ) => {
+    if( bEmbedded ) {
+      this.forcePopupForReauths(true);
+      sessionStorage.setItem("asdk_embedded", "1");
+      this.bEmbeddedLogin = true;
+    } else {
+      sessionStorage.removeItem("asdk_embedded");
+      this.bEmbeddedLogin = false;
     }
   };
 
   getCurrentTokens = () => {
     let tokens = null;
     const sTI = sessionStorage.getItem('asdk_TI');
-    if(!sTI) return;
-    try {
-      tokens = JSON.parse(sTI);
-    } catch(e) {
-      tokens = null;
+    if( sTI !== null ) {
+      try {
+        tokens = JSON.parse(sTI);
+      } catch(e) {
+        tokens = null;
+      }  
     }
     return tokens;
   };
+
+  isRedirectInProgress = () => {
+    return this.bLoginInProgress;
+  }
 
   updateLoginStatus = () => {
     this.bLoggedIn = this.getCurrentTokens() !== null;
   };
   
   
-  fireTokenAvailable = (token) => {
+  fireTokenAvailable = (token, bFire=true) => {
 
     const fnAuthTokenUpdated = ( tokenInfo ) => {
       sessionStorage.setItem("asdk_TI", JSON.stringify(tokenInfo));
+      console.log("Setting TI:" + JSON.stringify(tokenInfo));
     };
 
     const fnAuthFullReauth = () => {
-      this.clearAuthMgr(true);
-      this.loginOauth(true);
+      this.clearAuthMgr(false);
+      this.login(true);
     };
 
     if( !token ) {
@@ -97,7 +116,7 @@ export class UserService {
     this.bLoginInProgress = false;
     sessionStorage.removeItem("asdk_loggingIn");
     this.forcePopupForReauths(true);
-  
+
     const sSI = sessionStorage.getItem("asdk_CI");
     let authConfig = null;
     if( sSI ) {
@@ -108,16 +127,22 @@ export class UserService {
       }
     }
 
+    // Fire event which indicates the token has changed
+    if( bFire ) {
+        this.oarservice.sendMessage(token);
+    }
+
     // Was firing an event to boot constellation, but thinking might be better to just do that here.
     /*
     // Create and dispatch the SdkLoggedIn event to trigger constellationInit
     const event = new CustomEvent('SdkLoggedIn', { detail: { authConfig, tokenInfo: token } });
     document.dispatchEvent(event);
     */
-
-    constellationInit(this.scservice, authConfig, token, fnAuthTokenUpdated, fnAuthFullReauth );
-
-    this.oarservice.sendMessage(token);
+    // Code that sets up use of Constellation once it's been loaded and ready
+    if( !this.bC11NInitialized ) {
+      constellationInit(this.scservice, authConfig, token, fnAuthTokenUpdated, fnAuthFullReauth );
+      this.bC11NInitialized = true;
+    }
 
   };
   
@@ -127,11 +152,28 @@ export class UserService {
     if( window.PCore ) {
       window.PCore.getAuthUtils().setTokens(token);
     } else {
-      this.fireTokenAvailable(token);
+      this.fireTokenAvailable(token, false);
     }
   };
   
-
+  // Adjust client id and redirectUri based on embedded an popup login status
+  adjustConfigInfo = () => {
+    const sdkConfigAuth = this.scservice.getSdkConfigAuth();
+    const sSI = sessionStorage.getItem("rsdk_CI");
+    let authConfig = null;
+    if( sSI != null ) {
+      try {
+          authConfig = JSON.parse(sSI);
+      } catch(e) {
+        // do nothing
+      }
+    }
+    authConfig.clientId = this.bEmbeddedLogin ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
+    authConfig.redirectUri = this.bEmbeddedLogin || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup ?
+      `${window.location.origin}/auth.html` : `${window.location.origin}${window.location.pathname}`;
+    sessionStorage.setItem("rsdk_CI", JSON.stringify(authConfig));
+    this.authMgr.reloadConfig();
+  }
 
   authRedirectCallback = ( href, fnLoggedInCB=null ) => {
     // Get code from href and swap for token
@@ -172,8 +214,8 @@ export class UserService {
     //const authConfig = this.scservice.getSdkConfigAuth();
     const pegaUrl = this.scservice.getSdkConfigServer().infinityRestServerUrl;
     const currPath = location.pathname;
-    const bPortalLogin = currPath.includes("/portal");
-    const bEmbeddedLogin = currPath.includes("/embedded");
+    // const bPortalLogin = currPath.includes("/portal");
+    // const bEmbeddedLogin = currPath.includes("/embedded");
   
     // Construct default OAuth endpoints (if not explicitly specified)
     if (pegaUrl) {
@@ -193,19 +235,23 @@ export class UserService {
     }
 
     const authConfig:any = {
-      clientId: bPortalLogin ? sdkConfigAuth.portalClientId : sdkConfigAuth.mashupClientId,
+      clientId: this.bEmbeddedLogin ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
       authorizeUri: sdkConfigAuth.authorize,
       tokenUri: sdkConfigAuth.token,
       revokeUri: sdkConfigAuth.revoke,
-      redirectUri: endpoints.loginExperience == loginBoxType.Main ? `${window.location.origin}${window.location.pathname}` : "",
-      //redirectUri: `${window.location.origin}/`,
+      redirectUri: this.bEmbeddedLogin || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup ?
+        `${window.location.origin}/auth.html` : `${window.location.origin}${window.location.pathname}`,
       authService: sdkConfigAuth.authService,
       useLocking: true
     };
     if( 'silentTimeout' in sdkConfigAuth ) {
       authConfig.silentTimeout = sdkConfigAuth.silentTimeout;
     }
-
+    if( this.bEmbeddedLogin ) {
+      authConfig.userIdentifier = sdkConfigAuth.mashupUserIdentifier;
+      authConfig.password = sdkConfigAuth.mashupPassword;
+    }
+  
     // Check if sessionStorage exists (and if so if for same authorize endpoint).  Otherwise, assume
     //  sessionStorage is out of date (user just edited endpoints).  Else, logout required to clear
     //  sessionStorage and get other endpoints updates.
@@ -234,49 +280,17 @@ export class UserService {
     // Checking for ?code=
     if( this.authMgr && window.location.href.indexOf("?code") !== -1 ) {
       this.authRedirectCallback(window.location.href, (token)=> {
-        this.fireTokenAvailable(token);
+        // Already would be fired in authRedirectCallback
+        //this.fireTokenAvailable(token, false);
         location.href = location.pathname;
       });
     }
 
-    /*
-    if (this.userManager) {
-      if (window.location.href.indexOf("?code=") != -1 ) {
-        this.userManager.signinRedirectCallback(window.location.href)
-          .then(
-            (user) => {
-              this.setToken(user);
-              this.oarservice.sendMessage(user);
-
-            }
-          )
-          .catch( (e) => {alert(e);});
-      }
-    }
-    */
-  }
+    this.bConfigInitialized = true;
+  };
 
 
-  login(userName: string, password: string) {
-    const encodedUser = btoa(userName + ":" + password);
-
-    this.authUrl = this.scservice.getBaseUrl() + endpoints.API + endpoints.AUTH;
-
-    let authParams = new HttpParams();
-    let authHeaders = new HttpHeaders();
-    authHeaders = authHeaders.append('Authorization', 'Basic ' + encodedUser);
-
-    sessionStorage.setItem("userName", userName);
-    sessionStorage.setItem("encodedUser", encodedUser);
-
-
-    return this.http.get(this.authUrl + "/",
-      { observe: 'response', params: authParams, headers: authHeaders});     
-
-  }
-
-  loginOauth(bFullReauth:boolean) {
-
+  login = (bFullReauth:boolean=false) => {
 
     this.scservice.getServerConfig().then(() => {
       this.initConfig(true);
@@ -285,58 +299,55 @@ export class UserService {
       // Needed so a redirect to login screen and back will know we are still in process of logging in
       sessionStorage.setItem("asdk_loggingIn", "1");
 
-      this.authMgr.loginRedirect();
-    
-      /*
-      getAuthMgr(!bFullReauth).then( (aMgr) => {
-        const bPortalLogin = !authIsEmbedded();
-    
-        // If portal will redirect to main page, otherwise will authorize in a popup window
-        if (bPortalLogin && !bFullReauth) {
-          // update redirect uri to be the root
-          updateRedirectUri(aMgr, `${window.location.origin}/`);
-          aMgr.loginRedirect();
-          // Don't have token til after the redirect
-          return Promise.resolve(undefined);
-        } else {
-          // Set redirectUri to static auth.html
-          updateRedirectUri(aMgr, `${window.location.origin}/auth.html`)
-          return new Promise( (resolve, reject) => {
-            aMgr.login().then(token => {
-                processTokenOnLogin(token);
-                resolve(token.access_token);
-            }).catch( (e) => {
-                gbLoginInProgress = false;
-                sessionStorage.removeItem("asdk_loggingIn");
-                // eslint-disable-next-line no-console
-                console.log(e);
-                reject(e);
-            })
+      if( this.bUsePopupForRestOfSession ) {
+        //this.adjustConfigInfo();
+        return new Promise( (resolve, reject) => {
+          this.authMgr.login().then(token => {
+            this.bLoginInProgress = false;
+            this.processTokenOnLogin(token);
+            resolve(token.access_token);
+          }).catch( (e) => {
+            this.bLoginInProgress = false;
+            sessionStorage.removeItem("asdk_loggingIn");
+            // eslint-disable-next-line no-console
+            console.log(e);
+            reject(e);
           });
-        }
-      });
-      */
-      //this.userManagerConfig.client_id = clientID;
-      //this.userManager.signinRedirect();
-
+        });
+      } else {
+        //this.adjustConfigInfo();
+        this.authMgr.loginRedirect();
+      }
     });
     
+  };
 
 
-  }
+  /**
+   * Silent or visible login based on login status
+   */
+  loginIfNecessary = (bEmbedded:boolean=false) => {
+    this.setIsEmbedded(bEmbedded);
+    if( !this.bLoginInProgress ) {
+      this.scservice.getServerConfig().then(() => {
+        this.initConfig(false);
+        this.updateLoginStatus();
+        if( this.bLoggedIn ) {
+          this.fireTokenAvailable(null);
+        } else {
+          return this.login(false);
+        }  
+      });  
+    }
+  };
 
-  verifyHasTokenOauth() {
-
-  }
-
-
-  setToken(token: any) {
+  setToken = (token: any) => {
     const authToken = token.token_type + " " + token.access_token;
     sessionStorage.setItem("oauthUser", authToken);
     return authToken;
-  }
+  };
 
-  logoutOuath() {
+  logout = () => {
     sessionStorage.removeItem("oauthUser");
     const tokenInfo = this.getCurrentTokens();
     if( tokenInfo && tokenInfo.access_token ) {
@@ -354,7 +365,7 @@ export class UserService {
       }
     }
 
-  }
+  };
 
 
 

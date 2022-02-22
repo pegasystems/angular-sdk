@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { GetLoginStatusService } from "../../../_messages/get-login-status.service";
+import { UserService } from "../../../_services/user.service";
 import { ChangeDetectorRef } from "@angular/core";
 import { Subscription, Observable } from 'rxjs';
 import { ProgressSpinnerService } from "../../../_messages/progress-spinner.service";
@@ -14,7 +14,11 @@ import { Title } from '@angular/platform-browser';
 import { ServerConfigService } from 'src/app/_services/server-config.service';
 import { compareSdkPCoreVersions } from 'src/app/_helpers/versionHelpers';
 
-
+declare global {
+  interface Window {
+    myLoadMashup: Function;
+  }
+}
 
 @Component({
   selector: 'app-navigation',
@@ -43,7 +47,7 @@ export class NavigationComponent implements OnInit {
 
 
 
-  constructor(private glsservice: GetLoginStatusService,
+  constructor(private uservice: UserService,
               private cdRef: ChangeDetectorRef,
               private snackBar: MatSnackBar,
               private settingsDialog: MatDialog,
@@ -86,6 +90,7 @@ export class NavigationComponent implements OnInit {
 
   initialize() {
 
+/*
     if (sessionStorage.getItem("userFullName")) {
       // if have a userName, then have already logged in
       this.bLoggedIn$ = true;
@@ -97,7 +102,6 @@ export class NavigationComponent implements OnInit {
       this.getPConnectAndUpdate();
 
      }
-
 
     this.subscription = this.glsservice.getMessage().subscribe(
         message => {
@@ -128,7 +132,17 @@ export class NavigationComponent implements OnInit {
         }
 
     );
+  */
 
+    // Add event listener for when logged in and constellation bootstrap is loaded
+    document.addEventListener("ConstellationReady", () => {
+      this.bLoggedIn$ = true;
+      // start the portal
+      this.startMashup();
+    });
+  
+    /* Login if needed (and indicate this is an embedded scenario) */
+    this.uservice.loginIfNecessary(true);
   }
 
 
@@ -174,7 +188,7 @@ export class NavigationComponent implements OnInit {
     });
   }
 
-
+/*
   getPConnectAndUpdate() {
     let sConfig = sessionStorage.getItem("bootstrapConfig");
 
@@ -219,7 +233,7 @@ export class NavigationComponent implements OnInit {
       }
 
       // import bootstrap-shell from /dist
-      import(/* webpackIgnore: true */ `${sContentServer}/bootstrap-shell.js`).then((bootstrapShell) => {
+      import(/* webpackIgnore: true *//* `${sContentServer}/bootstrap-shell.js`).then((bootstrapShell) => {
 
         this.pConnectUpdate(oConfig, bootstrapShell);
       });
@@ -264,7 +278,7 @@ export class NavigationComponent implements OnInit {
         });
 
         // Change to reflect new use of arg in the callback:
-        const { props /*, domContainerID = null */ } = renderObj;
+        const { props /*, domContainerID = null *//* } = renderObj;
 
         // makes sure Angular tracks these changes
         this.ngZone.run(() => {
@@ -326,15 +340,108 @@ export class NavigationComponent implements OnInit {
 
     });
   }
+  */
+
+  startMashup() {
+
+    window.PCore.onPCoreReady( (renderObj) => {
+      // Check that we're seeing the PCore version we expect
+      compareSdkPCoreVersions();
+
+      if (!this.PCore$) {
+        this.PCore$ = window.PCore;
+      }
+
+      // Need to register the callback function for PCore.registerComponentCreator
+      //  This callback is invoked if/when you call a PConnect createComponent
+      window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+        // debugger;
+
+        return c11nEnv;
+
+        // REACT implementaion:
+        // const PConnectComp = createPConnectComponent();
+        // return (
+        //     <PConnectComp {
+        //       ...{
+        //         ...c11nEnv,
+        //         ...c11nEnv.getPConnect().getConfigProps(),
+        //         ...c11nEnv.getPConnect().getActions(),
+        //         additionalProps
+        //       }}
+        //     />
+        //   );
+      });
+
+      // Change to reflect new use of arg in the callback:
+      const { props /*, domContainerID = null */ } = renderObj;
+
+      // makes sure Angular tracks these changes
+      this.ngZone.run(() => {
+        this.pConn$ = props.getPConnect();
+
+        this.bHasPConnect$ = true;
+        this.bPConnectLoaded$ = true;
+
+        sessionStorage.setItem("pCoreUsage", "AngularSDKMashup");
+      });
+
+      //
+      // so don't have multiple subscriptions, unsubscribe first
+      //
+      this.PCore$.getPubSubUtils().unsubscribe(
+        this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
+        "cancelAssignment"
+      );
+
+      this.PCore$.getPubSubUtils().unsubscribe(
+        "assignmentFinished",
+        "assignmentFinished"
+      );
+
+      this.PCore$.getPubSubUtils().unsubscribe(
+        "showWork",
+        "showWork"
+      );
 
 
+      //
+      // now subscribe
+      //
+      this.PCore$.getPubSubUtils().subscribe(
+        this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
+        () => { this.cancelAssignment() },
+        "cancelAssignment"
+      );
 
+      this.PCore$.getPubSubUtils().subscribe(
+        "assignmentFinished",
+        () => { this.assignmentFinished() },
+        "assignmentFinished"
+      );
 
+      this.PCore$.getPubSubUtils().subscribe(
+        "showWork",
+        () => { this.showWork() },
+        "showWork"
+      );
 
+    } );
+
+    this.scservice.selectPortal()
+    .then( () => {
+      const thePortal = this.scservice.getAppPortal();
+      window.myLoadMashup("app-root", false);   // this is defined in bootstrap shell that's been loaded already
+    })
+
+  }
 
   logOff() {
-    this.glsservice.sendMessage("LoggedOff");
-
+    this.uservice.logout();
+    // Reload the page to kick off the login
+    setTimeout(()=>{
+      window.location.reload();
+    }, 500);
   }
 
 }

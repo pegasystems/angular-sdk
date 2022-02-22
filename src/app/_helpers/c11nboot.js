@@ -12,9 +12,10 @@ export const constellationInit = (scservice, authConfig, tokenInfo, authTokenUpd
   // constellationConfig.appAlias = "";
   constellationBootConfig.customRendering = true;
   constellationBootConfig.restServerUrl = scservice.getSdkConfigServer().infinityRestServerUrl;
+  // Removed /constellation/ from sdkContentServerUrl
   constellationBootConfig.staticContentServerUrl = `${
     scservice.getSdkConfigServer().sdkContentServerUrl
-  }/constellation/`;
+  }/`;
   // NOTE: Needs a trailing slash! So add one if not provided
   if (constellationBootConfig.staticContentServerUrl.slice(-1) !== '/') {
     constellationBootConfig.staticContentServerUrl = `${constellationBootConfig.staticContentServerUrl}/`;
@@ -47,39 +48,21 @@ export const constellationInit = (scservice, authConfig, tokenInfo, authTokenUpd
   import(
     /* webpackIgnore: true */ `${constellationBootConfig.staticContentServerUrl}bootstrap-shell.js`
   ).then((bootstrapShell) => {
-    /*
     // NOTE: once this callback is done, we lose the ability to access loadMashup.
     //  So, create a reference to it
     window.myLoadMashup = bootstrapShell.loadMashup;
 
     // For experimentation, save a reference to loadPortal, too!
     window.myLoadPortal = bootstrapShell.loadPortal;
-    */
 
-    bootstrapShell.bootstrapWithAuthHeader(constellationBootConfig, 'shell').then(() => {
+    bootstrapShell.bootstrapWithAuthHeader(constellationBootConfig, 'app-root').then(() => {
       // eslint-disable-next-line no-console
       console.log('Bootstrap successful!');
-      /* Don't believe this is still relevant
-      // If logging in via oauth...it creates its own window
-      if (window.myWindow) {
-        window.myWindow.close();
-      }
-      */
-     /* Confirm PCore is ready...else we may haev to move to a PCoreReady handler */
-        // With React, temporarily turn off dynamical load components.
-        //  Seems to have issue with TypeScript
-        // eslint-disable-next-line no-undef
-        //PCore.setBehaviorOverride('dynamicLoadComponents', false);
 
-        // Setup listener for the reauth event
-        // eslint-disable-next-line no-undef
-        PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, authFullReauth, "authFullReauth");
+      PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, authFullReauth, "authFullReauth");
 
-      /* Try to eliminate the need for this event */
-      /*
-      const event = new CustomEvent('ConstellationReady', {});
+      const event = new CustomEvent('ConstellationReady', {detail: {authFullReauth} });
       document.dispatchEvent(event);
-      */
     })
     .catch( e => {
       // Assume error caught is because token is not valid and attempt a full reauth
@@ -116,19 +99,16 @@ export const constellationTerm = () => {
   window.location.reload();
 };
 
-// Code that sets up use of Constellation once it's been loaded and ready
-  /** Not relevant for Angular-SDK 
 
-document.addEventListener('ConstellationReady', () => {
-  // With React, temporarily turn off dynamical load components.
-  //  Seems to have issue with TypeScript
-  // eslint-disable-next-line no-undef
-  PCore.setBehaviorOverride('dynamicLoadComponents', false);
+// Code that sets up use of Constellation once it's been loaded and ready
+document.addEventListener('ConstellationReady', (e) => {
+
 
   // Setup listener for the reauth event
   // eslint-disable-next-line no-undef
-  PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, authFullReauth, "authFullReauth");
+  //PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, e.detail.authFullReauth, "authFullReauth");
 
+  /*
   // Element with id="pega-here" is where the React SDK React entry point for
   //  the Pega embedded/portal will be placed.
   const replaceMe = document.getElementById('pega-here');
@@ -181,7 +161,8 @@ document.addEventListener('ConstellationReady', () => {
     replacement.innerHTML = 'Injecting React root here!';
     replaceMe.replaceWith(replacement);
   }
+  */
+  
 
 });
 
-  */
