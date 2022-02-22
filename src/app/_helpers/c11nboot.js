@@ -61,7 +61,7 @@ export const constellationInit = (scservice, authConfig, tokenInfo, authTokenUpd
 
       PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, authFullReauth, "authFullReauth");
 
-      const event = new CustomEvent('ConstellationReady', {detail: {authFullReauth} });
+      const event = new CustomEvent('ConstellationReady' /*, {detail: {authFullReauth}}*/ );
       document.dispatchEvent(event);
     })
     .catch( e => {

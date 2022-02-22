@@ -20,17 +20,10 @@ export class CaseService {
   getCaseTypes() {
     var caseParams = new HttpParams();
     var caseHeaders = new HttpHeaders();
-    const encodedUser = sessionStorage.getItem("encodedUser");
 
     this.caseTypeUrl = this.scservice.getBaseUrl() + endpoints.API + endpoints.CASETYPES;
 
-    if (sessionStorage.getItem("loginType") === "BASIC") {
-      caseHeaders = caseHeaders.append('Authorization', 'Basic ' + encodedUser);
-    }
-    else {
-      // OAUTH
-      caseHeaders = caseHeaders.append('Authorization',  sessionStorage.getItem("oauthUser"));
-    }
+    caseHeaders = caseHeaders.append('Authorization',  sessionStorage.getItem("authHdr"));
 
     caseHeaders = caseHeaders.append('Content-Type', "application/json");
 

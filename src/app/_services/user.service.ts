@@ -82,7 +82,7 @@ export class UserService {
     return tokens;
   };
 
-  isRedirectInProgress = () => {
+  isLoginInProgress = () => {
     return this.bLoginInProgress;
   }
 
@@ -108,7 +108,7 @@ export class UserService {
       // This is used on page reload to load the token from sessionStorage and carry on
       token = this.getCurrentTokens();
     }
-    this.setToken(token);
+    this.setAuthHdr(token);
   
     this.updateLoginStatus();
   
@@ -342,14 +342,14 @@ export class UserService {
     }
   };
 
-  setToken = (token: any) => {
+  setAuthHdr = (token: any) => {
     const authToken = token.token_type + " " + token.access_token;
-    sessionStorage.setItem("oauthUser", authToken);
+    sessionStorage.setItem("authHdr", authToken);
     return authToken;
   };
 
   logout = () => {
-    sessionStorage.removeItem("oauthUser");
+    sessionStorage.removeItem("authHdr");
     const tokenInfo = this.getCurrentTokens();
     if( tokenInfo && tokenInfo.access_token ) {
       if( window.PCore ) {

@@ -106,17 +106,10 @@ export class ServerConfigService {
       const userAccessGroup = this.PCore.getEnvironmentInfo().getAccessGroup();
       const dataPageName = "D_OperatorAccessGroups";
       const serverUrl = this.getBaseUrl();
-      const encodedUser = sessionStorage.getItem("encodedUser");
-      let fetchHeaders = {};
+     let fetchHeaders = {};
 
 
-      if (sessionStorage.getItem("loginType") === "BASIC") {
-        fetchHeaders["Authorization"] = 'Basic ' + encodedUser
-      }
-      else {
-        // OAUTH
-        fetchHeaders["Authorization"] = sessionStorage.getItem("oauthUser");
-      }
+      fetchHeaders["Authorization"] = sessionStorage.getItem("authHdr");
   
       fetchHeaders["Content-Type"] = "application/json";
   

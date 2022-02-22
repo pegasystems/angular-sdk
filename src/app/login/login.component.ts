@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
 
       const authConfig = this.scservice.getSdkConfigAuth();
       const configClientID = authConfig.portalClientId;
-      const redirectInProcess = this.uservice.isRedirectInProgress();
+      const redirectInProcess = this.uservice.isLoginInProgress();
       const tokenInfo = this.uservice.getCurrentTokens();
 
       if (tokenInfo) {
