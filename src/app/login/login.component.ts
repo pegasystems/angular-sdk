@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+/*
     this.scservice.getServerConfig().then(() => {
 
       this.oAuthResponseSubscription = this.oarservice.getMessage().subscribe(message => {
@@ -65,44 +66,42 @@ export class LoginComponent implements OnInit {
         }
   
       });
+*/
+  this.oAuthResponseSubscription = this.oarservice.getMessage().subscribe(message => {
+    
+    if (message.token) { 
+      this.loadFromOAuth(message.token);
+    }
+  });
+
+  this.scservice.getServerConfig().then(() => {
 
 
       const authConfig = this.scservice.getSdkConfigAuth();
       const configClientID = authConfig.portalClientId;
-      const redirectInProcess = sessionStorage.getItem("redirectInProcess");
+      const redirectInProcess = this.uservice.isLoginInProgress();
+      const tokenInfo = this.uservice.getCurrentTokens();
 
-      if (configClientID != "") {
+      if (tokenInfo) {
         this.bShowLogin$ = false;
       }
       else {
         this.bShowLogin$ = true;
       }
 
-      if (configClientID != "" && !redirectInProcess) {
-        sessionStorage.setItem("redirectInProcess", "true");
-        sessionStorage.setItem("clientID", configClientID);
+      this.loginType$ = "OAUTH";
 
-        // have client ID in config, so redirect to pega login screen
-        this.loginType$ = "OAUTH";
-
-        setTimeout(() => {
-          this.attemptLogin();
-        });
-        
-
-      }
-      else {
-        this.initLogin();
-        
-      }
-
-      
-
-
+      if( !redirectInProcess ) {
+        if( !tokenInfo ) {
+          setTimeout(() => {
+            this.attemptLogin();
+          });        
+        } else {
+          this.initLogin();
+          this.uservice.loginIfNecessary();
+        }
+      }     
     });
-
-
-
     
   }
 
@@ -149,9 +148,9 @@ export class LoginComponent implements OnInit {
       }
       else {
         this.dservice.getDataPage("D_OperatorID", operatorParams).subscribe(
-          response => {
+          response1 => {
     
-            let operator: any = response.body;
+            let operator: any = response1.body;
             sessionStorage.setItem("loginType", this.loginType$);
             sessionStorage.setItem("userFullName", operator.pyUserName);
             sessionStorage.setItem("userAccessGroup", operator.pyAccessGroup);
@@ -161,17 +160,17 @@ export class LoginComponent implements OnInit {
             // get access group info, so can get operator portal.
             // portal stored in localStorage and used for "loadPortal"
             this.dservice.getDataPage("D_OperatorAccessGroups", {}).subscribe(
-              response => {
+              response2 => {
     
-                let operAG: any = response.body;
+                let operAG: any = response2.body;
     
                 sessionStorage.setItem("userPortal", this.getPortal(sessionStorage.getItem("userAccessGroup"), operAG.pxResults));
     
                 this.dservice.getDataPage("D_pxBootstrapConfig", {}).subscribe(
-                  response => {
+                  response3 => {
                     this.psservice.sendMessage(false);
           
-                    let myConfig : any = response.body;
+                    let myConfig : any = response3.body;
         
                     sessionStorage.setItem("bootstrapConfig", myConfig.pyConfigJSON);
         
@@ -182,15 +181,14 @@ export class LoginComponent implements OnInit {
                             
                     let sError = "Errors getting config: " + err.message;
                     let snackBarRef = this.snackBar.open(sError, "Ok");
+                    this.uservice.login();
                   }
                 );
               }
             )
-    
-            
-    
-    
-    
+          },
+          err => {
+            this.uservice.login();
           });
 
       }
@@ -200,15 +198,6 @@ export class LoginComponent implements OnInit {
     //});
 
  
-  }
-
-  hasToken() {
-
-
-    return this.uservice.verifyHasTokenOauth();
-
-
-
   }
 
   getPortal(sAccessGroup, arAccessGroups) {
@@ -235,80 +224,7 @@ export class LoginComponent implements OnInit {
 
   attemptLogin() {
 
-    sessionStorage.setItem("loginType", this.loginType$);
-
-    if (this.loginType$ === "BASIC") {
-      this.psservice.sendMessage(true);
-
-      this.uservice.login(this.loginData.userName, this.loginData.password).subscribe(
-        response => {
-          if (response.status == 200) {
-            let operatorParams = new HttpParams()
-  
-            this.dservice.getDataPage("D_OperatorID", operatorParams).subscribe(
-              response => {
-  
-                
-  
-                let operator: any = response.body;
-                sessionStorage.setItem("loginType", this.loginType$);
-                sessionStorage.setItem("userFullName", operator.pyUserName);
-                sessionStorage.setItem("userAccessGroup", operator.pyAccessGroup);
-                sessionStorage.setItem("userWorkGroup", operator.pyWorkGroup);
-                sessionStorage.setItem("userWorkBaskets", JSON.stringify(operator.pyWorkBasketList));
-                
-                this.dservice.getDataPage("D_pxBootstrapConfig",{}).subscribe(
-                  response => {
-
-                    this.psservice.sendMessage(false);
-  
-                    let myConfig : any = response.body;
-  
-                    sessionStorage.setItem("bootstrapConfig", myConfig.pyConfigJSON);
-  
-                    this.glsservice.sendMessage("LoggedIn");
-  
-                  },
-                  err => {
-                    this.psservice.sendMessage(false);
-                    
-                    let sError = "Errors getting config: " + err.message;
-                    let snackBarRef = this.snackBar.open(sError, "Ok");
-                  }
-                );
-    
-                
-              },
-              err => {
-                this.psservice.sendMessage(false);
-  
-                let sError = "Errors getting data page: " + err.message;
-                let snackBarRef = this.snackBar.open(sError, "Ok");
-              }
-            );
-  
-  
-  
-            
-          }
-        },
-        err => {
-  
-          let snackBarRef = this.snackBar.open(err.message, "Ok");
-          this.glsservice.sendMessage("LoggedOut");
-          sessionStorage.clear();
-        }
-      );
-
-    }
-    else if (this.loginType$ === "OAUTH") {
-
-        this.clientID$ = sessionStorage.getItem("clientID");
-        this.uservice.loginOauth(this.clientID$);
-
-
-    }
-
+    this.uservice.login();
     
   }
 

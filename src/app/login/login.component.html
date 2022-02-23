@@ -23,9 +23,6 @@
           </div>
           <div *ngIf="loginType$ == 'OAUTH'">
             <form class="pega-login-form" (submit)=doLogin()>
-                <mat-form-field class="pega-login-full-width">
-                  <input matInput placeholder="Client ID" [value]="clientID$" id="clientID" type="text" [formControl]="clientIDControl" (change)="clientIDChanged($event)">
-                </mat-form-field>
             </form>
 
           </div>

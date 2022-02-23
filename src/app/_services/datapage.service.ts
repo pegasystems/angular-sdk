@@ -25,15 +25,8 @@ export class DatapageService {
     this.dataPageUrl = this.scservice.getBaseUrl() + endpoints.API + endpoints.DATA;
 
     let dataHeaders = new HttpHeaders();
-    const encodedUser = sessionStorage.getItem("encodedUser");
 
-    if (sessionStorage.getItem("loginType") === "BASIC") {
-      dataHeaders = dataHeaders.append('Authorization', 'Basic ' + encodedUser);
-    }
-    else {
-      // OAUTH
-      dataHeaders = dataHeaders.append('Authorization',  sessionStorage.getItem("oauthUser"));
-    }
+    dataHeaders = dataHeaders.append('Authorization',  sessionStorage.getItem("authHdr"));
     
     dataHeaders = dataHeaders.append('Content-Type', "application/json");
 
