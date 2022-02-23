@@ -22,7 +22,6 @@
     "make-mashup-dir": "cd ./dist && mkdir -p prerequisite",
     "build-angularsdk": "rimraf ./dist && npm run build && npm run copy-extra && npm run copy-index && npm run make-mashup-dir && npm run copy-core",
     "prod-build-angularsdk": "rimraf ./dist && npm run prod-build && npm run copy-extra && npm run copy-index && npm run make-mashup-dir && npm run copy-core && npm run compress-angularsdk",
-    "start": "ng serve",
     "start-angularsdk": "lite-server --baseDir='./dist'",
     "start-https-angularsdk": "lite-server --baseDir='./dist' -c bs-config-https.json"
   },
