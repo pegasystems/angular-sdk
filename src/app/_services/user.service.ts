@@ -70,9 +70,10 @@ export class UserService {
 
   isLoginExpired = () => {
     let bExpired = true;
-    const sLoginStart = sessionStorage.get("asdk_loggingIn");
+    const sLoginStart = sessionStorage.getItem("asdk_loggingIn");
     if( sLoginStart !== null ) {
-        bExpired = (new Date()).getTime() - parseInt(sLoginStart, 10) > 60000;
+      const currTime = Date.now();
+      bExpired = currTime - parseInt(sLoginStart, 10) > 60000;
     }
     return bExpired;
   };
@@ -110,8 +111,6 @@ export class UserService {
   
     // bLoggedIn is getting updated in updateLoginStatus
     this.bLoggedIn = true;
-    this.bLoginInProgress = false;
-    sessionStorage.removeItem("asdk_loggingIn");
     this.forcePopupForReauths(true);
 
     const sSI = sessionStorage.getItem("asdk_CI");
@@ -147,14 +146,15 @@ export class UserService {
     sessionStorage.setItem("asdk_TI", JSON.stringify(token));  
     const authToken = token.token_type + " " + token.access_token;
     sessionStorage.setItem("authHdr", authToken);
+    this.bLoginInProgress = false;
+    sessionStorage.removeItem("asdk_loggingIn");
+    this.updateLoginStatus();
   }
   
 
   processTokenOnLogin = ( token ) => {
     this.updateTokens(token);
     if( window.PCore ) {
-      this.bLoginInProgress = false;
-      sessionStorage.removeItem("asdk_loggingIn");
       window.PCore.getAuthUtils().setTokens(token);
     } else {
       this.fireTokenAvailable(token, false);
@@ -302,7 +302,7 @@ export class UserService {
 
       this.bLoginInProgress = true;
       // Needed so a redirect to login screen and back will know we are still in process of logging in
-      sessionStorage.setItem("asdk_loggingIn", `${new Date().getTime()}`);
+      sessionStorage.setItem("asdk_loggingIn", `${Date.now()}`);
 
       if( this.bUsePopupForRestOfSession ) {
         //this.adjustConfigInfo();
@@ -337,7 +337,7 @@ export class UserService {
         this.initConfig(false);
         this.updateLoginStatus();
         if( this.bLoggedIn ) {
-          this.fireTokenAvailable(null);
+          this.fireTokenAvailable(this.getCurrentTokens());
         } else {
           return this.login();
         }  
