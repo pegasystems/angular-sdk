@@ -126,6 +126,7 @@ import { CaseHistoryComponent } from './_components/_widgets/case-history/case-h
 import { ServerConfigService } from './_services/server-config.service';
 import { NarrowWideFormComponent } from './_components/_templates/narrow-wide-form/narrow-wide-form.component';
 import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-form/wide-narrow-form.component';
+import { WideNarrowPageComponent } from './_components/_templates/wide-narrow-page/wide-narrow-page.component';
 import { SimpleTableComponent } from './_components/_templates/simple-table/simple-table.component';
 import { ReferenceComponent } from './_components/reference/reference.component';
 
@@ -216,6 +217,7 @@ import { ReferenceComponent } from './_components/reference/reference.component'
     CaseHistoryComponent,
     NarrowWideFormComponent,
     WideNarrowFormComponent,
+    WideNarrowPageComponent,
     SimpleTableComponent,
     ReferenceComponent
   ],
