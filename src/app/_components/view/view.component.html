@@ -4,6 +4,7 @@
         <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-default-form>
         <app-narrow-wide-form *ngSwitchCase="'NarrowWideForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-narrow-wide-form>
         <app-wide-narrow-form *ngSwitchCase="'WideNarrowForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-wide-narrow-form>
+        <app-wide-narrow-page *ngSwitchCase="'WideNarrowPage'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-wide-narrow-page>
         <app-one-column *ngSwitchCase="'OneColumn'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-one-column>
         <app-one-column-page *ngSwitchCase="'OneColumnPage'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-one-column-page>
         <app-two-column *ngSwitchCase="'TwoColumn'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-two-column>
@@ -24,7 +25,7 @@
                         <app-flow-container *ngSwitchCase="'FlowContainer'" [pConn$]="kid.getPConnect()"></app-flow-container>
                         <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
                         <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="kid.getPConnect()"></app-view-container>
-                        <div  *ngSwitchDefault >View Missing: {{kid.getPConnect().getComponentName()}}</div>
+                        <div  *ngSwitchDefault >View Missing (displayOnlyFA): {{kid.getPConnect().getComponentName()}}</div>
                     </div>
                 </div>
             </div>
@@ -39,7 +40,7 @@
                         <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
                         <app-app-shell *ngSwitchCase="'AppShell'" [pConn$]="kid.getPConnect()"></app-app-shell>
                         <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="kid.getPConnect()"></app-view-container>
-                        <div  *ngSwitchDefault >View Missing: {{kid.getPConnect().getComponentName()}}</div>
+                        <div  *ngSwitchDefault >View Missing (displayAll): {{kid.getPConnect().getComponentName()}}</div>
                     </div>
     
     

@@ -306,6 +306,12 @@ export class FlowContainerComponent implements OnInit {
     //  a different operator. So, see if there are any assignments for
     //  the current operator
     let bAssignmentsForThisOperator = false;
+
+    // Bail if there is no assignmentsList
+    if (!assignmentsList) {
+      return hasAssignments;
+    }
+
     for (const assignment of assignmentsList) {
       if (assignment["assigneeInfo"]["ID"] === thisOperator) {
         bAssignmentsForThisOperator = true;

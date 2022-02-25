@@ -1,0 +1,6 @@
+<div [ngSwitch]="this.thePConnType">
+  <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="this.pConn$" [formGroup$]="formGroup$"></app-view-container>
+  <!-- NOTE: when we get the view, we want to render it as a wide-narrow-form -->
+  <app-wide-narrow-form *ngSwitchCase="'View'" [pConn$]="this.pConn$" [formGroup$]="formGroup$"></app-wide-narrow-form>
+  <div *ngSwitchDefault>WideNarrowPage missing: {{this.pConn$.getComponentName()}}</div>
+</div>
