@@ -3,6 +3,7 @@ import { ProgressSpinnerService } from "../../_messages/progress-spinner.service
 import { ErrorMessagesService } from "../../_messages/error-messages.service";
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Utils } from '../../_helpers/utils';
+import { ReferenceComponent } from '../reference/reference.component';
 
 @Component({
   selector: 'app-assignment-card',
@@ -23,12 +24,18 @@ export class AssignmentCardComponent implements OnInit {
   constructor(private utils: Utils) { }
 
   ngOnInit(): void {
+    // Children may contain 'reference' component, so we need to
+    //  normalize them
+    this.arChildren$ = ReferenceComponent.normalizePConnArray(this.arChildren$);
 
   }
 
   ngOnChanges(data: any) {
+    // Children may contain 'reference' component, so we need to
+    //  normalize them
+    this.arChildren$ = ReferenceComponent.normalizePConnArray(this.arChildren$);
 
-    
+
   }
 
   onActionButtonClick(oData: any) {

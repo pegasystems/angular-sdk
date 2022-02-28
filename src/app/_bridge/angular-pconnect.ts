@@ -214,6 +214,8 @@ export class AngularPConnectService {
 
     const compType = inComp.constructor.name;
 
+    console.log(`registerAndSubscribeComponent: ${compType}`);
+
     if (undefined !== inComp.bridgeComponentID) {
       console.error( `OLD SCHOOL: ${compType}`);
     }

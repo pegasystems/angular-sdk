@@ -16,9 +16,13 @@ export class TwoColumnComponent implements OnInit {
   arChildren$: Array<any>;
 
 
-  constructor() { }
+  constructor() {
+    debugger;
+   }
 
   ngOnInit() {
+    debugger;
+
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
     this.arChildren$ = this.pConn$.getChildren();
     

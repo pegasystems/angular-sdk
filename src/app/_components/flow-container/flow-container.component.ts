@@ -307,7 +307,7 @@ export class FlowContainerComponent implements OnInit {
     //  the current operator
     let bAssignmentsForThisOperator = false;
 
-    // Bail if there is no assignmentsList
+    // Bail if no assignments list
     if (!assignmentsList) {
       return hasAssignments;
     }
