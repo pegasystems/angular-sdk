@@ -129,7 +129,7 @@ import { WideNarrowFormComponent } from './_components/_templates/wide-narrow-fo
 import { WideNarrowPageComponent } from './_components/_templates/wide-narrow-page/wide-narrow-page.component';
 import { SimpleTableComponent } from './_components/_templates/simple-table/simple-table.component';
 import { ReferenceComponent } from './_components/reference/reference.component';
-
+import { OneColumnTabComponent } from './_components/_templates/one-column-tab/one-column-tab.component';
 
 @NgModule({
   declarations: [
@@ -219,7 +219,8 @@ import { ReferenceComponent } from './_components/reference/reference.component'
     WideNarrowFormComponent,
     WideNarrowPageComponent,
     SimpleTableComponent,
-    ReferenceComponent
+    ReferenceComponent,
+    OneColumnTabComponent
   ],
   imports: [
     BrowserModule,

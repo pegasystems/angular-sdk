@@ -1,5 +1,5 @@
 <div>
-    <h2>{{configProps$.label}}</h2>
+    <h2 class="psdk-case-history-title">{{configProps$.label}}</h2>
     <table mat-table [dataSource]="repeatList$">
 
         <ng-container *ngFor="let dCol of fields$" [matColumnDef]="dCol.fieldName" >

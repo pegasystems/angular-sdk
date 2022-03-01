@@ -1,5 +1,5 @@
 <div class="psdk-view-container-top" id={{buildName$}}>
-    <!-- <h3 *ngIf="title$ != ''">{{title$}}</h3> -->
+    <h3 *ngIf="title$ !== ''">{{title$}}</h3>
     <div [ngSwitch]="templateName$">
         <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="createdViewPConn$"></app-default-form>
         <app-narrow-wide-form *ngSwitchCase="'NarrowWideForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-narrow-wide-form>
