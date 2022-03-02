@@ -213,11 +213,9 @@ export class AuthService {
 
   initConfig = (bInit) => {
     const sdkConfigAuth = this.scservice.getSdkConfigAuth();
-    //const authConfig = this.scservice.getSdkConfigAuth();
-    const pegaUrl = this.scservice.getSdkConfigServer().infinityRestServerUrl;
+    const sdkConfigServer = this.scservice.getSdkConfigServer();
+    const pegaUrl = sdkConfigServer.infinityRestServerUrl;
     const currPath = location.pathname;
-    // const bPortalLogin = currPath.includes("/portal");
-    // const bEmbeddedLogin = currPath.includes("/embedded");
   
     // Construct default OAuth endpoints (if not explicitly specified)
     if (pegaUrl) {
@@ -246,6 +244,9 @@ export class AuthService {
       authService: sdkConfigAuth.authService,
       useLocking: true
     };
+    if( sdkConfigServer.appAlias ) {
+      authConfig.appAlias = sdkConfigServer.appAlias;
+    }
     if( 'silentTimeout' in sdkConfigAuth ) {
       authConfig.silentTimeout = sdkConfigAuth.silentTimeout;
     }
@@ -278,15 +279,6 @@ export class AuthService {
       sessionStorage.setItem('asdk_CI', JSON.stringify(authConfig));
     }
     this.authMgr = new PegaAuth('asdk_CI');
-
-    // Checking for ?code=
-    if( this.authMgr && window.location.href.indexOf("?code") !== -1 ) {
-      this.authRedirectCallback(window.location.href, (token)=> {
-        // Already would be fired in authRedirectCallback
-        //this.fireTokenAvailable(token, false);
-        location.href = location.pathname;
-      });
-    }
 
     this.bConfigInitialized = true;
   };
@@ -336,6 +328,14 @@ export class AuthService {
       sessionStorage.setItem("asdk_appName", appName);
     }
     this.setIsEmbedded(isEmbedded);
+    if( window.location.href.indexOf("?code") !== -1 ) {
+      // initialize authMgr
+      this.initConfig(false);
+      this.authRedirectCallback(window.location.href, ()=> {
+        window.location.href = window.location.pathname;
+      });
+      return;
+    }
     if( !deferLogin && (!this.bLoginInProgress || this.isLoginExpired()) ) {
       this.scservice.getServerConfig().then(() => {
         this.initConfig(false);
