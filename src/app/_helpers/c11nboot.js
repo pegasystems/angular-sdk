@@ -1,3 +1,5 @@
+let gbC11NBootstrapInProgress = false;
+
 
 /**
  * Initiate the process to get the Constellation bootstrap shell loaded and initialized
@@ -7,18 +9,21 @@
 export const constellationInit = (scservice, authConfig, tokenInfo, authTokenUpdated, authFullReauth) => {
   // eslint-disable-next-line sonarjs/prefer-object-literal
   const constellationBootConfig = {};
+  const sdkConfigServer = scservice.getSdkConfigServer();
 
   // Set up constellationConfig with data that bootstrapWithAuthHeader expects
   // constellationConfig.appAlias = "";
   constellationBootConfig.customRendering = true;
-  constellationBootConfig.restServerUrl = scservice.getSdkConfigServer().infinityRestServerUrl;
+  constellationBootConfig.restServerUrl = sdkConfigServer.infinityRestServerUrl;
   // Removed /constellation/ from sdkContentServerUrl
-  constellationBootConfig.staticContentServerUrl = `${
-    scservice.getSdkConfigServer().sdkContentServerUrl
-  }/`;
+  constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/`;
   // NOTE: Needs a trailing slash! So add one if not provided
   if (constellationBootConfig.staticContentServerUrl.slice(-1) !== '/') {
     constellationBootConfig.staticContentServerUrl = `${constellationBootConfig.staticContentServerUrl}/`;
+  }
+  // If appAlias specified, use it
+  if( sdkConfigServer.appAlias ) {
+    constellationBootConfig.appAlias = sdkConfigServer.appAlias;
   }
 
   // Pass in auth info to Constellation
@@ -43,11 +48,15 @@ export const constellationInit = (scservice, authConfig, tokenInfo, authTokenUpd
   // Turn off dynamic load components (should be able to do it here instead of after load?)
   constellationBootConfig.dynamicLoadComponents = false;
 
+  if( gbC11NBootstrapInProgress ) {
+    return;
+  } else {
+    gbC11NBootstrapInProgress = true;
+  }
+
   // Note that staticContentServerUrl already ends with a slash (see above), so no slash added.
   // In order to have this import succeed and to have it done with the webpackIgnore magic comment tag.  See:  https://webpack.js.org/api/module-methods/
-  import(
-    /* webpackIgnore: true */ `${constellationBootConfig.staticContentServerUrl}bootstrap-shell.js`
-  ).then((bootstrapShell) => {
+  import(/* webpackIgnore: true */ `${constellationBootConfig.staticContentServerUrl}bootstrap-shell.js`).then((bootstrapShell) => {
     // NOTE: once this callback is done, we lose the ability to access loadMashup.
     //  So, create a reference to it
     window.myLoadMashup = bootstrapShell.loadMashup;
@@ -58,6 +67,7 @@ export const constellationInit = (scservice, authConfig, tokenInfo, authTokenUpd
     bootstrapShell.bootstrapWithAuthHeader(constellationBootConfig, 'app-root').then(() => {
       // eslint-disable-next-line no-console
       console.log('Bootstrap successful!');
+      gbC11NBootstrapInProgress = false;
 
       PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, authFullReauth, "authFullReauth");
 
@@ -67,18 +77,9 @@ export const constellationInit = (scservice, authConfig, tokenInfo, authTokenUpd
     .catch( e => {
       // Assume error caught is because token is not valid and attempt a full reauth
       // eslint-disable-next-line no-console
-      console.log(e);
+      console.error(`Constellation JS Engine bootstrap failed. ${e}`);
+      gbC11NBootstrapInProgress = false;
       authFullReauth();
-      /*
-      // clear any cached tokens
-      logout().then(() => {
-        // Get current url and just load it again
-        // eslint-disable-next-line no-restricted-globals
-        const currRef = location.href
-        // eslint-disable-next-line no-restricted-globals
-        location.href = currRef;
-      })
-      */
     })
   });
   /* Ends here */

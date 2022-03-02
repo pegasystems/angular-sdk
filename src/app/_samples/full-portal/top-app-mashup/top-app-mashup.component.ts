@@ -10,7 +10,7 @@ import { UpdateWorklistService } from '../../../_messages/update-worklist.servic
 import { NgZone } from '@angular/core';
 import { ServerConfigService } from '../../../_services/server-config.service';
 import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
-import { UserService } from '../../../_services/user.service';
+import { AuthService } from '../../../_services/auth.service';
 
 
 declare global {
@@ -83,7 +83,7 @@ export class TopAppMashupComponent implements OnInit {
 
 
 
-  constructor(private uservice: UserService,
+  constructor(private aservice: AuthService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private settingsDialog: MatDialog,
@@ -158,7 +158,8 @@ export class TopAppMashupComponent implements OnInit {
     });
   
     /* Login if needed */
-    this.uservice.loginIfNecessary(false);
+    const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
+    this.aservice.loginIfNecessary(sAppName, false);
   }
 
   startPortal() {

@@ -18,12 +18,7 @@ import { Server } from 'http';
 
 
 
-export class UserService {
-
-  authUrl: string;
-
-  //authUrl = endpoints.BASEURL + endpoints.AUTH;
-  //oAuthJSO : any = null;
+export class AuthService {
 
   authMgr: any;
 
@@ -164,7 +159,7 @@ export class UserService {
   // Adjust client id and redirectUri based on embedded an popup login status
   adjustConfigInfo = () => {
     const sdkConfigAuth = this.scservice.getSdkConfigAuth();
-    const sSI = sessionStorage.getItem("rsdk_CI");
+    const sSI = sessionStorage.getItem("asdk_CI");
     let authConfig = null;
     if( sSI != null ) {
       try {
@@ -176,7 +171,7 @@ export class UserService {
     authConfig.clientId = this.bEmbeddedLogin ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
     authConfig.redirectUri = this.bEmbeddedLogin || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup ?
       `${window.location.origin}/auth.html` : `${window.location.origin}${window.location.pathname}`;
-    sessionStorage.setItem("rsdk_CI", JSON.stringify(authConfig));
+    sessionStorage.setItem("asdk_CI", JSON.stringify(authConfig));
     this.authMgr.reloadConfig();
   }
 
@@ -212,7 +207,9 @@ export class UserService {
     // Not removing the authMgr structure itself...as it can be leveraged on next login
   };
 
-  
+  authIsEmbedded = () => {
+    return sessionStorage.getItem("asdk_embedded") === "1";
+  };  
 
   initConfig = (bInit) => {
     const sdkConfigAuth = this.scservice.getSdkConfigAuth();
@@ -330,9 +327,16 @@ export class UserService {
   /**
    * Silent or visible login based on login status
    */
-  loginIfNecessary = (bEmbedded:boolean=false) => {
-    this.setIsEmbedded(bEmbedded);
-    if( !this.bLoginInProgress || this.isLoginExpired() ) {
+  loginIfNecessary = (appName, isEmbedded:boolean=false, deferLogin=false) => {
+    // If embedded status of page changed...clearAuthMgr
+    const currEmbedded = this.authIsEmbedded();
+    const currAppName = sessionStorage.getItem("asdk_appName");
+    if( appName !== currAppName || isEmbedded !== currEmbedded) {
+      this.clearAuthMgr();
+      sessionStorage.setItem("asdk_appName", appName);
+    }
+    this.setIsEmbedded(isEmbedded);
+    if( !deferLogin && (!this.bLoginInProgress || this.isLoginExpired()) ) {
       this.scservice.getServerConfig().then(() => {
         this.initConfig(false);
         this.updateLoginStatus();
