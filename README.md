@@ -74,7 +74,7 @@ Please refer to the **Angular SDK Guide** provided in the Marketplace download f
 
     4.3 Build without clean and install and enable live reload (compiles and reloads the page whenever a project file is saved during development; assumes npm install has already been run)
    ```
-   $ ng serve
+   $ npm run ng serve
    ```
 
 5. **Production build and start**

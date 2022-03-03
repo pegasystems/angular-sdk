@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { endpoints,loginBoxType} from './endpoints';
 import PegaAuth from '../_helpers/auth';
-import { constellationInit } from '../_helpers/c11nboot';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { interval } from "rxjs/internal/observable/interval";
-import { ThrowStmt } from '@angular/compiler';
+import { CompileShallowModuleMetadata, ThrowStmt } from '@angular/compiler';
 import { OAuthResponseService } from '../_messages/oauth-response.service';
 import { ServerConfigService } from './server-config.service';
 import { Server } from 'http';
+import { timeStamp } from 'console';
 
-
+declare const PCore;
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +25,8 @@ export class AuthService {
   bConfigInitialized: boolean = false;
   bEmbeddedLogin: boolean = sessionStorage.getItem("asdk_embedded") === "1";
   bLoggedIn: boolean = false;
-  bLoginInProgress: boolean = sessionStorage.getItem("asdk_loggingIn") !== null;
   bUsePopupForRestOfSession: boolean = false;
-
+  gbC11NBootstrapInProgress: boolean = false;
 
   constructor(private http: HttpClient,
               private scservice: ServerConfigService,
@@ -35,7 +34,6 @@ export class AuthService {
 
     
     this.scservice.getServerConfig().then(() => {
-      this.initConfig(false);
     });
   };
 
@@ -87,12 +85,102 @@ export class AuthService {
   };
 
   isLoginInProgress = () => {
-    return this.bLoginInProgress;
+    const bLoggingIn:boolean = sessionStorage.getItem("asdk_loggingIn") !== null;
+    return bLoggingIn;
   }
 
   updateLoginStatus = () => {
     this.bLoggedIn = this.getCurrentTokens() !== null;
   };
+
+
+
+/**
+ * Initiate the process to get the Constellation bootstrap shell loaded and initialized
+ * @param {Object} authConfig
+ * @param {Object} tokenInfo
+ */
+constellationInit = (authConfig:any, tokenInfo:any) => {
+  // eslint-disable-next-line sonarjs/prefer-object-literal
+  const constellationBootConfig:any = {};
+  const sdkConfigServer = this.scservice.getSdkConfigServer();
+
+  // Set up constellationConfig with data that bootstrapWithAuthHeader expects
+  // constellationConfig.appAlias = "";
+  constellationBootConfig.customRendering = true;
+  constellationBootConfig.restServerUrl = sdkConfigServer.infinityRestServerUrl;
+  // Removed /constellation/ from sdkContentServerUrl
+  constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/`;
+  // NOTE: Needs a trailing slash! So add one if not provided
+  if (constellationBootConfig.staticContentServerUrl.slice(-1) !== '/') {
+    constellationBootConfig.staticContentServerUrl = `${constellationBootConfig.staticContentServerUrl}/`;
+  }
+  // If appAlias specified, use it
+  if( sdkConfigServer.appAlias ) {
+    constellationBootConfig.appAlias = sdkConfigServer.appAlias;
+  }
+
+  // Pass in auth info to Constellation
+  constellationBootConfig.authInfo = {
+    authType: "OAuth2.0",
+    tokenInfo,
+    // Set whether we want constellation to try to do a full re-Auth or not ()
+    // true doesn't seem to be working in SDK scenario so always passing false for now
+    popupReauth: false /* !authIsEmbedded() */,
+    client_id: authConfig.clientId,
+    authentication_service: authConfig.authService,
+    redirect_uri: authConfig.redirectUri,
+    endPoints: {
+        authorize: authConfig.authorizeUri,
+        token: authConfig.tokenUri,
+        revoke: authConfig.revokeUri
+    },
+    // TODO: setup callback so we can update own storage
+    onTokenRetrieval: this.updateTokens.bind(this)
+  }
+
+  // Turn off dynamic load components (should be able to do it here instead of after load?)
+  constellationBootConfig.dynamicLoadComponents = false;
+
+  if( this.gbC11NBootstrapInProgress ) {
+    return;
+  } else {
+    this.gbC11NBootstrapInProgress = true;
+  }
+
+  // Note that staticContentServerUrl already ends with a slash (see above), so no slash added.
+  // In order to have this import succeed and to have it done with the webpackIgnore magic comment tag.  See:  https://webpack.js.org/api/module-methods/
+  import(/* webpackIgnore: true */ `${constellationBootConfig.staticContentServerUrl}bootstrap-shell.js`).then((bootstrapShell) => {
+    // NOTE: once this callback is done, we lose the ability to access loadMashup.
+    //  So, create a reference to it
+    window.myLoadMashup = bootstrapShell.loadMashup;
+
+    // For experimentation, save a reference to loadPortal, too!
+    window.myLoadPortal = bootstrapShell.loadPortal;
+
+    bootstrapShell.bootstrapWithAuthHeader(constellationBootConfig, 'app-root').then(() => {
+      // eslint-disable-next-line no-console
+      console.log('Bootstrap successful!');
+      this.gbC11NBootstrapInProgress = false;
+
+      PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, this.fullReauth.bind(this), "authFullReauth");
+
+      const event = new CustomEvent('ConstellationReady' /*, {detail: {authFullReauth}}*/ );
+      document.dispatchEvent(event);
+    })
+    .catch( e => {
+      // Assume error caught is because token is not valid and attempt a full reauth
+      // eslint-disable-next-line no-console
+      console.error(`Constellation JS Engine bootstrap failed. ${e}`);
+      this.gbC11NBootstrapInProgress = false;
+      this.fullReauth();
+    })
+  })
+  .catch( e => {
+    console.error(`Failed to import bootsratp-shell.js. ${e}`);
+  });
+  /* Ends here */
+};
   
   
   fireTokenAvailable = (token, bFire=true) => {
@@ -110,7 +198,7 @@ export class AuthService {
 
     const sSI = sessionStorage.getItem("asdk_CI");
     let authConfig = null;
-    if( sSI ) {
+    if( sSI !== null ) {
       try {
           authConfig = JSON.parse(sSI);
       } catch(e) {
@@ -131,7 +219,7 @@ export class AuthService {
     */
     // Code that sets up use of Constellation once it's been loaded and ready
     if( !window.PCore ) {
-      constellationInit(this.scservice, authConfig, token, this.updateTokens.bind(this), this.fullReauth.bind(this) );
+      this.constellationInit( authConfig, token );
     }
 
   };
@@ -141,8 +229,8 @@ export class AuthService {
     sessionStorage.setItem("asdk_TI", JSON.stringify(token));  
     const authToken = token.token_type + " " + token.access_token;
     sessionStorage.setItem("authHdr", authToken);
-    this.bLoginInProgress = false;
     sessionStorage.removeItem("asdk_loggingIn");
+    console.log("updateTokens(tkn): clearing loggingIn");
     this.updateLoginStatus();
   }
   
@@ -155,22 +243,18 @@ export class AuthService {
       this.fireTokenAvailable(token, false);
     }
   };
-  
-  // Adjust client id and redirectUri based on embedded an popup login status
-  adjustConfigInfo = () => {
-    const sdkConfigAuth = this.scservice.getSdkConfigAuth();
+
+  updateRedirectUri = (sRedirectUri) => {
     const sSI = sessionStorage.getItem("asdk_CI");
     let authConfig = null;
-    if( sSI != null ) {
+    if( sSI !== null ) {
       try {
           authConfig = JSON.parse(sSI);
       } catch(e) {
         // do nothing
       }
     }
-    authConfig.clientId = this.bEmbeddedLogin ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
-    authConfig.redirectUri = this.bEmbeddedLogin || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup ?
-      `${window.location.origin}/auth.html` : `${window.location.origin}${window.location.pathname}`;
+    authConfig.redirectUri = sRedirectUri;
     sessionStorage.setItem("asdk_CI", JSON.stringify(authConfig));
     this.authMgr.reloadConfig();
   }
@@ -200,9 +284,10 @@ export class AuthService {
       sessionStorage.removeItem("asdk_CI");
     }
     sessionStorage.removeItem("asdk_TI");
+    sessionStorage.removeItem("authHdr");
     sessionStorage.removeItem("asdk_loggingIn");
+    console.log("clearAuthMgr(): clearing loggingIn")
     this.bLoggedIn = false;
-    this.bLoginInProgress = false;
     this.forcePopupForReauths(bFullReauth);
     // Not removing the authMgr structure itself...as it can be leveraged on next login
   };
@@ -211,7 +296,7 @@ export class AuthService {
     return sessionStorage.getItem("asdk_embedded") === "1";
   };  
 
-  initConfig = (bInit) => {
+  initAuthMgr = (bInit) => {
     const sdkConfigAuth = this.scservice.getSdkConfigAuth();
     const sdkConfigServer = this.scservice.getSdkConfigServer();
     const pegaUrl = sdkConfigServer.infinityRestServerUrl;
@@ -260,7 +345,7 @@ export class AuthService {
     //  sessionStorage and get other endpoints updates.
     // Doing this as sessionIndex might have been added to this storage structure
     let sSI = sessionStorage.getItem("asdk_CI");
-    if( sSI ) {
+    if( sSI !== null ) {
       try {
           const oSI = JSON.parse(sSI);
           if( oSI.authorizeUri !== authConfig.authorizeUri ||
@@ -284,35 +369,63 @@ export class AuthService {
   };
 
 
-  login = () => {
+  // TODO: See if we still need such a solution to keep trying for stuff to be loaded
+  // Was needed when we were trying to invoke this as source file loaded (before SdkConfigAccessReady event)
+  getAuthMgr = ( bInit ) => {
+    return new Promise( (resolve) => {
+      let idNextCheck = null;
+      const fnCheckForAuthMgr = () => {
+        if( PegaAuth && !this.authMgr ) {
+          this.initAuthMgr( bInit );
+        }
+        if(this.authMgr) {
+          if( idNextCheck ) {
+            clearInterval(idNextCheck);
+          }
+          return resolve(this.authMgr);
+        }
+      }
+      idNextCheck = setInterval(fnCheckForAuthMgr, 500);
+    });
+  };
+
+
+  login = (bFullReauth:boolean=false) => {
 
     this.scservice.getServerConfig().then(() => {
-      this.initConfig(true);
-
-      this.bLoginInProgress = true;
       // Needed so a redirect to login screen and back will know we are still in process of logging in
       sessionStorage.setItem("asdk_loggingIn", `${Date.now()}`);
+      console.log("loggingIn: setting time");
 
-      if( this.bUsePopupForRestOfSession ) {
-        //this.adjustConfigInfo();
-        return new Promise( (resolve, reject) => {
-          this.authMgr.login().then(token => {
-            this.processTokenOnLogin(token);
-            resolve(token.access_token);
-          }).catch( (e) => {
-            this.bLoginInProgress = false;
-            sessionStorage.removeItem("asdk_loggingIn");
-            // eslint-disable-next-line no-console
-            console.log(e);
-            reject(e);
+      this.getAuthMgr(!bFullReauth).then( (aMgr:any) => {
+        // aMgr will always be same as this.authMgr
+        const bPortalLogin = !this.authIsEmbedded();
+
+        if( bPortalLogin && !bFullReauth ) {
+          // update redirect uri to be the root
+          this.updateRedirectUri(`${window.location.origin}${window.location.pathname}`);
+          this.authMgr.loginRedirect();
+          // Don't have token til after the redirect
+          return Promise.resolve(undefined);
+        } else {
+          this.updateRedirectUri(`${window.location.origin}/auth.html`);
+          return new Promise( (resolve, reject) => {
+            this.authMgr.login().then(token => {
+              this.processTokenOnLogin(token);
+              resolve(token.access_token);
+            }).catch( (e) => {
+              sessionStorage.removeItem("asdk_loggingIn");
+              console.log("login(): clearing loggingIn SS")
+              // eslint-disable-next-line no-console
+              console.log(e);
+              reject(e);
+            });
           });
-        });
-      } else {
-        //this.adjustConfigInfo();
-        this.authMgr.loginRedirect();
-      }
+        }
+      });
+
     });
-    
+      
   };
 
 
@@ -330,29 +443,40 @@ export class AuthService {
     this.setIsEmbedded(isEmbedded);
     if( window.location.href.indexOf("?code") !== -1 ) {
       // initialize authMgr
-      this.initConfig(false);
+      this.initAuthMgr(false);
       this.authRedirectCallback(window.location.href, ()=> {
+        sessionStorage.removeItem("asdk_loggingIn");
+        console.log("loginIfNecessary: clearing loggingIn");
         window.location.href = window.location.pathname;
       });
       return;
     }
-    if( !deferLogin && (!this.bLoginInProgress || this.isLoginExpired()) ) {
-      this.scservice.getServerConfig().then(() => {
-        this.initConfig(false);
-        this.updateLoginStatus();
+    if( !deferLogin && (!this.isLoginInProgress() || this.isLoginExpired()) ) {
+      this.getAuthMgr(false).then(() => {
+       this.updateLoginStatus();
         if( this.bLoggedIn ) {
           this.fireTokenAvailable(this.getCurrentTokens());
         } else {
           return this.login();
         }  
-      });  
+      })
     }
   };
 
+
   fullReauth = () => {
-    // Don't want to do a full clear of authMgr as will loose sessionIndex.  Rather just clear the tokens
-    this.clearAuthMgr(true);
-    this.login();
+    const bHandleHere = true; // Other alternative is to raise an event and have someone else handle it
+
+    if( bHandleHere ) {
+      // Don't want to do a full clear of authMgr as will loose sessionIndex.  Rather just clear the tokens
+      this.clearAuthMgr(true);
+      this.login(true);
+    } else {
+      // Create and dispatch the SdkLoggedIn event to trigger constellationInit
+      // detail will be callback function to call once a new token structure is obtained
+      const event = new CustomEvent('SdkFullReauth', { detail: this.processTokenOnLogin.bind(this) });
+      document.dispatchEvent(event);
+    }
   };
 
   logout = () => {
