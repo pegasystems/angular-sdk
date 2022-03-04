@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ChangeDetectorRef } from "@angular/core";
 import { AngularPConnectService } from "../../_bridge/angular-pconnect"
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
-import { UserService } from '../../_services/user.service';
+import { AuthService } from '../../_services/auth.service';
 import { interval } from "rxjs/internal/observable/interval";
 import { Utils } from "../../_helpers/utils";
 import { NgZone } from '@angular/core';
@@ -50,7 +50,7 @@ export class NavbarComponent implements OnInit {
   constructor(private angularPConnect: AngularPConnectService, 
               private chRef: ChangeDetectorRef,
               private psService: ProgressSpinnerService,
-              private uservice: UserService,
+              private aservice: AuthService,
               private ngZone: NgZone,
               private utils: Utils) {
 
@@ -195,7 +195,7 @@ export class NavbarComponent implements OnInit {
 
   navPanelLogoutClick() {
 
-    this.uservice.logout();
+    this.aservice.logout();
     // Reload the page to kick off the login
     setTimeout(()=>{
       window.location.reload();

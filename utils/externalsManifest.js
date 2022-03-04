@@ -119,8 +119,8 @@ CopyWebpackExternalsManifest.prototype.apply = function (compiler) {
     // for now, get the bootstrap-shell from src,
     // create a bootstrap-shell and bootstrap-shell-mashup
 
-    const bootDest = path.join(`${distDir}`, "bootstrap-shell.js");
-    const sdkDest = path.join(`${distDir}`, "sdk-config.json");
+    const bootDest = path.join(`${distDir}/constellation`, "bootstrap-shell.js");
+    const sdkDest = path.join(`${distDir}/constellation`, "sdk-config.json");
 
     //const bootMashupDest = path.join(`${distDir}`, "../bootstrap-shell-mashup.js");
 

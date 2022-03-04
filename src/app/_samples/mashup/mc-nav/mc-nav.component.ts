@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { UserService } from "../../../_services/user.service";
+import { AuthService } from "../../../_services/auth.service";
 import { ChangeDetectorRef } from "@angular/core";
 import { Subscription, Observable } from 'rxjs';
 import { ProgressSpinnerService } from "../../../_messages/progress-spinner.service";
@@ -50,7 +50,7 @@ export class MCNavComponent implements OnInit {
 
   bootstrapShell: any;
 
-  constructor(private uservice: UserService,
+  constructor(private aservice: AuthService,
               private cdRef: ChangeDetectorRef,
               private snackBar: MatSnackBar,
               private settingsDialog: MatDialog,
@@ -124,7 +124,8 @@ export class MCNavComponent implements OnInit {
     });
   
     /* Login if needed (and indicate this is an embedded scenario) */
-    this.uservice.loginIfNecessary(true);
+    const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
+    this.aservice.loginIfNecessary(sAppName, true);
   }
 
   startMashup() {
@@ -186,7 +187,7 @@ export class MCNavComponent implements OnInit {
 
 
   logOff() {
-    this.uservice.logout();
+    this.aservice.logout();
     // Reload the page to kick off the login
     setTimeout(()=>{
       window.location.reload();

@@ -28,7 +28,7 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
+              "src/auth.html",
               {
                 "glob": "mdi.svg",
                 "input": "./node_modules/@mdi/angular-material",
@@ -42,17 +42,27 @@
               {
                 "glob": "bootstrap-shell.js",
                 "input": "./constellation/",
-                "output": "./"
+                "output": "./constellation"
               },
               {
                 "glob": "lib_asset.json",
                 "input": "./constellation/",
-                "output": "./"
+                "output": "./constellation"
               },
               {
                 "glob": "constellation-core.*.*",
                 "input": "./constellation/",
-                "output": "./prerequisite"
+                "output": "./constellation/prerequisite"
+              },
+              {
+                "glob": "*.*",
+                "input": "./src/assets/",
+                "output": "./constellation/assets"
+              },
+              {
+                "glob": "*.*",
+                "input": "./src/assets/icons/",
+                "output": "./constellation/assets/icons"
               }
             ],
             "styles": [

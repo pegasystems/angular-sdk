@@ -83,7 +83,6 @@ import { AssignmentCardComponent } from './_components/assignment-card/assignmen
 import { MultiStepComponent } from './_components/multi-step/multi-step.component';
 
 import { NavigationComponent } from './_samples/simple-portal/navigation/navigation.component';
-import { LoginComponent } from './login/login.component';
 import { SideBarComponent } from './_samples/simple-portal/side-bar/side-bar.component';
 import { MainContentComponent } from './_samples/simple-portal/main-content/main-content.component';
 
@@ -130,6 +129,7 @@ import { WideNarrowPageComponent } from './_components/_templates/wide-narrow-pa
 import { SimpleTableComponent } from './_components/_templates/simple-table/simple-table.component';
 import { ReferenceComponent } from './_components/reference/reference.component';
 import { OneColumnTabComponent } from './_components/_templates/one-column-tab/one-column-tab.component';
+import { AuthService } from './_services/auth.service';
 
 @NgModule({
   declarations: [
@@ -175,7 +175,6 @@ import { OneColumnTabComponent } from './_components/_templates/one-column-tab/o
     AssignmentCardComponent,
     MultiStepComponent,
     NavigationComponent,
-    LoginComponent,
     SideBarComponent,
     MainContentComponent,
     BundleSwatchComponent,
@@ -264,7 +263,7 @@ import { OneColumnTabComponent } from './_components/_templates/one-column-tab/o
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'auto'} },
     { provide: APP_BASE_HREF, useValue: '/'},
-    Utils, ServerConfigService
+    Utils, ServerConfigService, AuthService
   ],
   bootstrap: [AppComponent]
 })

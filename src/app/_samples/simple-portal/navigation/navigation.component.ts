@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { UserService } from "../../../_services/user.service";
+import { AuthService } from "../../../_services/auth.service";
 import { ChangeDetectorRef } from "@angular/core";
 import { Subscription, Observable } from 'rxjs';
 import { ProgressSpinnerService } from "../../../_messages/progress-spinner.service";
@@ -47,7 +47,7 @@ export class NavigationComponent implements OnInit {
 
 
 
-  constructor(private uservice: UserService,
+  constructor(private aservice: AuthService,
               private cdRef: ChangeDetectorRef,
               private snackBar: MatSnackBar,
               private settingsDialog: MatDialog,
@@ -98,13 +98,14 @@ export class NavigationComponent implements OnInit {
     });
   
     /* Login if needed (and indicate this is a portal scenario) */
-    this.uservice.loginIfNecessary(false);
+    //const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
+    this.aservice.loginIfNecessary("simpleportal", false);
   }
 
 
   showWork() {
 
-      this.bootstrapShell.loadMashup('app-root', false);
+      window.myLoadMashup('app-root', false);
 
 
       // update the worklist
@@ -235,7 +236,7 @@ export class NavigationComponent implements OnInit {
   }
 
   logOff() {
-    this.uservice.logout();
+    this.aservice.logout();
     // Reload the page to kick off the login
     setTimeout(()=>{
       window.location.reload();

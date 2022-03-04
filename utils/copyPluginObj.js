@@ -10,7 +10,7 @@ const EXT_MAIN = "main-es5.js";
 
 const externalLibsDistFile = {};
 const distPath = path.resolve(__dirname, "./../dist/");
-const iconPath = path.resolve(__dirname, "./../dist/icons/");
+const iconPath = path.resolve(__dirname, "./../dist/constellation/assets/icons/");
 
 const cosmosDist = path.resolve(
   __dirname,

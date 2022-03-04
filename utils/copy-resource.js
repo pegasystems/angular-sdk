@@ -4,18 +4,18 @@ const cpObj = {
     patterns: [
         {
             from: "src/assets/**/*.*",
-            to: "dist/",
+            to: "dist/constellation/",
             transformPath(from) {
                 return from.replace(`src${path.sep}`, "");;
             }
         },
         {
             from: "node_modules/constellationui-cli/src/bootstrap-shell.js",
-            to: "dist/bootstrap-shell.js"
+            to: "dist/constellation/bootstrap-shell.js"
         },
         {
             from: "node_modules/constellationui-cli/src/bootstrap-shell.js",
-            to: "dist/bootstrap-shell-mashup.js",
+            to: "dist/constellation/bootstrap-shell-mashup.js",
             transform(content){
                 return content.toString().replace(/(export)[\s\S]*(\})/g, "")
             }
