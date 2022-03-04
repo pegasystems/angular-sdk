@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { endpoints,loginBoxType} from './endpoints';
 import PegaAuth from '../_helpers/auth';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { interval } from "rxjs/internal/observable/interval";
-import { CompileShallowModuleMetadata, ThrowStmt } from '@angular/compiler';
 import { OAuthResponseService } from '../_messages/oauth-response.service';
 import { ServerConfigService } from './server-config.service';
-import { Server } from 'http';
-import { timeStamp } from 'console';
 
 declare const PCore;
 
@@ -28,8 +22,7 @@ export class AuthService {
   bUsePopupForRestOfSession: boolean = false;
   gbC11NBootstrapInProgress: boolean = false;
 
-  constructor(private http: HttpClient,
-              private scservice: ServerConfigService,
+  constructor(private scservice: ServerConfigService,
               private oarservice: OAuthResponseService) { 
 
     
@@ -101,6 +94,13 @@ export class AuthService {
  * @param {Object} tokenInfo
  */
 constellationInit = (authConfig:any, tokenInfo:any) => {
+  /*
+  // Safety check (should no longer be necessary)
+  const bLoginRedirectCodePage = window.location.href.indexOf("?code") !== -1;
+  if( bLoginRedirectCodePage ) {
+    return;
+  }
+  */
   // eslint-disable-next-line sonarjs/prefer-object-literal
   const constellationBootConfig:any = {};
   const sdkConfigServer = this.scservice.getSdkConfigServer();
@@ -110,7 +110,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
   constellationBootConfig.customRendering = true;
   constellationBootConfig.restServerUrl = sdkConfigServer.infinityRestServerUrl;
   // Removed /constellation/ from sdkContentServerUrl
-  constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/`;
+  constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/constellation/`;
   // NOTE: Needs a trailing slash! So add one if not provided
   if (constellationBootConfig.staticContentServerUrl.slice(-1) !== '/') {
     constellationBootConfig.staticContentServerUrl = `${constellationBootConfig.staticContentServerUrl}/`;
@@ -174,6 +174,15 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
       console.error(`Constellation JS Engine bootstrap failed. ${e}`);
       this.gbC11NBootstrapInProgress = false;
       this.fullReauth();
+      /*
+      if( this.isLoginInProgress() ) {
+        // This flag should be reset prior to invoking constellationInit
+        console.log(`Login in progress just prior to fullReauth....so abandoning full reauth.`);
+      } else {
+//        this.fullReauth();
+       console.log(`Login not in progress so would have been invoking full reAuth. loginRedirectCodePage: ${bLoginRedirectCodePage}`);
+      }
+      */
     })
   })
   .catch( e => {
@@ -183,7 +192,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
 };
   
   
-  fireTokenAvailable = (token, bFire=true) => {
+  fireTokenAvailable = (token, bLoadC11N=true) => {
 
     if( !token ) {
       // This is used on page reload to load the token from sessionStorage and carry on
@@ -207,9 +216,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
     }
 
     // Fire event which indicates the token has changed
-    if( bFire ) {
-        this.oarservice.sendMessage(token);
-    }
+    this.oarservice.sendMessage(token);
 
     // Was firing an event to boot constellation, but thinking might be better to just do that here.
     /*
@@ -218,7 +225,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
     document.dispatchEvent(event);
     */
     // Code that sets up use of Constellation once it's been loaded and ready
-    if( !window.PCore ) {
+    if( !window.PCore && bLoadC11N ) {
       this.constellationInit( authConfig, token );
     }
 
@@ -230,17 +237,17 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
     const authToken = token.token_type + " " + token.access_token;
     sessionStorage.setItem("authHdr", authToken);
     sessionStorage.removeItem("asdk_loggingIn");
-    console.log("updateTokens(tkn): clearing loggingIn");
+    //console.log("updateTokens(tkn): clearing loggingIn");
     this.updateLoginStatus();
   }
   
 
-  processTokenOnLogin = ( token ) => {
+  processTokenOnLogin = ( token, bLoadC11N=true ) => {
     this.updateTokens(token);
     if( window.PCore ) {
       window.PCore.getAuthUtils().setTokens(token);
     } else {
-      this.fireTokenAvailable(token, false);
+      this.fireTokenAvailable(token, bLoadC11N );
     }
   };
 
@@ -267,7 +274,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
   
     this.authMgr.getToken(code).then( token => {
       if( token && token.access_token ) {
-        this.processTokenOnLogin(token);
+        this.processTokenOnLogin(token, false);
         if( fnLoggedInCB ) {
             fnLoggedInCB( token );
         }
@@ -286,7 +293,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
     sessionStorage.removeItem("asdk_TI");
     sessionStorage.removeItem("authHdr");
     sessionStorage.removeItem("asdk_loggingIn");
-    console.log("clearAuthMgr(): clearing loggingIn")
+    //console.log("clearAuthMgr(): clearing loggingIn")
     this.bLoggedIn = false;
     this.forcePopupForReauths(bFullReauth);
     // Not removing the authMgr structure itself...as it can be leveraged on next login
@@ -395,7 +402,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
     this.scservice.getServerConfig().then(() => {
       // Needed so a redirect to login screen and back will know we are still in process of logging in
       sessionStorage.setItem("asdk_loggingIn", `${Date.now()}`);
-      console.log("loggingIn: setting time");
+      //console.log("loggingIn: setting time");
 
       this.getAuthMgr(!bFullReauth).then( (aMgr:any) => {
         // aMgr will always be same as this.authMgr
@@ -411,13 +418,13 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
           this.updateRedirectUri(`${window.location.origin}/auth.html`);
           return new Promise( (resolve, reject) => {
             this.authMgr.login().then(token => {
-              this.processTokenOnLogin(token);
+              this.processTokenOnLogin(token, true);
               resolve(token.access_token);
             }).catch( (e) => {
               sessionStorage.removeItem("asdk_loggingIn");
-              console.log("login(): clearing loggingIn SS")
+              //console.log("login(): clearing loggingIn SS")
               // eslint-disable-next-line no-console
-              console.log(e);
+              console.error(`Error caught during login: ${e}`);
               reject(e);
             });
           });
@@ -441,16 +448,21 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
       sessionStorage.setItem("asdk_appName", appName);
     }
     this.setIsEmbedded(isEmbedded);
+
+    // If this is the login redirect with auth code
     if( window.location.href.indexOf("?code") !== -1 ) {
       // initialize authMgr
       this.initAuthMgr(false);
+      sessionStorage.removeItem("asdk_loggingIn");
+      //console.log("loginIfNecessary: clearing loggingIn");
       this.authRedirectCallback(window.location.href, ()=> {
-        sessionStorage.removeItem("asdk_loggingIn");
-        console.log("loginIfNecessary: clearing loggingIn");
+        //sessionStorage.removeItem("asdk_loggingIn");
+        console.log("loginIfNecessary: clearing loggingIn (commented out)");
         window.location.href = window.location.pathname;
       });
       return;
     }
+    // If not login redirect with auth code
     if( !deferLogin && (!this.isLoginInProgress() || this.isLoginExpired()) ) {
       this.getAuthMgr(false).then(() => {
        this.updateLoginStatus();
