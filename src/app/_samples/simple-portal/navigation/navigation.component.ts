@@ -160,6 +160,11 @@ export class NavigationComponent implements OnInit {
       window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
         // debugger;
 
+        // experiment with returning a PConnect that has deferenced the
+        //  referenced View if the c11n is a 'reference' component
+        const compType = c11nEnv.getPConnect().getComponentName();
+        console.log( `navigation - registerComponentCreator c11nEnv type: ${compType}`);        
+        
         return c11nEnv;
 
         // REACT implementaion:

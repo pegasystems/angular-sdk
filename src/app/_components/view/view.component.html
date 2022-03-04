@@ -43,10 +43,10 @@
                         <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
                         <app-app-shell *ngSwitchCase="'AppShell'" [pConn$]="kid.getPConnect()"></app-app-shell>
                         <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="kid.getPConnect()"></app-view-container>
+                        <!-- <app-view *ngSwitchCase="'View'" [pConn$]="kid.getPConnect()"></app-view> -->
+                        <!-- <app-reference *ngSwitchCase="'reference'" [pConn$]="kid.getPConnect()"></app-reference> -->
                         <div  *ngSwitchDefault >View Missing (displayAll): {{kid.getPConnect().getComponentName()}}</div>
                     </div>
-    
-    
                 </div>
             </ng-template>
 

@@ -5,9 +5,10 @@ import { NgZone } from '@angular/core';
 import { interval } from "rxjs/internal/observable/interval";
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
 import { Utils } from '../../_helpers/utils';
+import { ReferenceComponent } from '../reference/reference.component';
 
 //
-// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with 
+// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
 // Redux and creation/update of Redux containers and PConnect.  Modifying this code could have undesireable results and
 // is totally at your own risk.
 //
@@ -47,16 +48,16 @@ export class ViewContainerComponent implements OnInit {
   angularPConnectData: any = null;
 
   PCore$: any;
-  
 
-  constructor(private angularPConnect: AngularPConnectService, 
+
+  constructor(private angularPConnect: AngularPConnectService,
               private psService: ProgressSpinnerService,
               private ngZone: NgZone,
-              private utils: Utils) { 
+              private utils: Utils) {
 
   }
 
- 
+
 
   ngOnInit() {
 
@@ -69,14 +70,16 @@ export class ViewContainerComponent implements OnInit {
     }
 
 
-    
+
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     // Then, continue on with other initialization
 
 //    this.configProps$ = this.pConn$.getConfigProps();
-    this.arChildren$ = this.pConn$.getChildren();
+    // children may have a 'reference' so normalize the children array
+    this.arChildren$ = ReferenceComponent.normalizePConnArray( this.pConn$.getChildren() );
+
     this.buildName$ = this.buildName();
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
     this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
@@ -93,14 +96,14 @@ export class ViewContainerComponent implements OnInit {
 
     this.dispatchObject = this.prepareDispatchObject();
 
-   
+
     // TODO: Plan is to rename window.constellationCore to window.pega (or similar)
     //    And expose less via ui-bootstrap.js
     this.state = {
       dispatchObject: this.dispatchObject,
       // PCore is defined in pxBootstrapShell - eventually will be exported in place of constellationCore
       /* eslint-disable-next-line no-undef */
-      
+
       visible: !this.PCore$["checkIfSemanticURL"]()
     };
 
@@ -121,7 +124,7 @@ export class ViewContainerComponent implements OnInit {
             ? CONTAINER_TYPE.MULTIPLE
             : CONTAINER_TYPE.SINGLE
       });
-  
+
       if (mode === CONTAINER_TYPE.MULTIPLE && limit) {
         /* NOTE: setContainerLimit use is temporary. It is a non-public, unsupported API. */
         this.PCore$.getContainerUtils().setContainerLimit(`${APP.APP}/${name}`, limit);
@@ -145,7 +148,7 @@ export class ViewContainerComponent implements OnInit {
   }
 
   ngOnDestroy() {
-  
+
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
     }
@@ -168,7 +171,7 @@ export class ViewContainerComponent implements OnInit {
 
 
 
-  } 
+  }
 
 
   updateSelf() {
@@ -177,13 +180,14 @@ export class ViewContainerComponent implements OnInit {
     const newState = this.angularPConnect.getState();
 
     if (this.arChildren$ == null) {
-      this.arChildren$ = this.pConn$.getChildren();
+      // children may have a 'reference' so normalize the children array
+      this.arChildren$ = ReferenceComponent.normalizePConnArray( this.pConn$.getChildren() );
 
 
     }
 
     const bShowLoading: boolean = this.angularPConnect.getComponentProp(this,"loadingInfo");
-   
+
 
     // routingInfo was added as component prop in populateAdditionalProps
     let routingInfo = this.angularPConnect.getComponentProp(this,"routingInfo");
@@ -241,15 +245,41 @@ export class ViewContainerComponent implements OnInit {
           //  Note that we're now using the newly created View's PConnect in the
           //  ViewContainer HTML template to guide what's rendered similar to what
           //  the Nebula/Constellation return of React.Fragment does
-          
+
           this.ngZone.run(() => {
 
-            this.createdViewPConn$ = newComp;
-            const newConfigProps = newComp.getConfigProps();
-            this.templateName$ = ('template' in newConfigProps) ? newConfigProps["template"] : "";
-            this.title$ = ('title' in newConfigProps) ? newConfigProps["title"] : "";
-            // update children with new view's children
-            this.arChildren$ = newComp.getChildren();
+            if (newComp.getComponentName() === 'reference') {
+              // When newComp is a reference, we want to de-reference
+              //  it (to get the View) and then use that View to get the
+              //  template, title, children, etc.
+              // debugger;
+
+              const theDereferencedView = ReferenceComponent.normalizePConn(newComp);
+              const newConfigProps = theDereferencedView.getConfigProps();
+
+              // children may have a 'reference' so normalize the children array
+              // debugger;
+              const theDereferencedViewChildren = ReferenceComponent.normalizePConnArray(theDereferencedView.getChildren());
+              this.templateName$ = ('template' in newConfigProps) ? newConfigProps["template"] : "";
+              this.title$ = ('title' in newConfigProps) ? newConfigProps["title"] : "";
+              this.arChildren$ = theDereferencedViewChildren;
+              this.createdViewPConn$ = theDereferencedView;
+
+            } else {
+              // old style when newComp is NOT a 'reference'
+              // debugger;
+
+              console.error(`ViewContainer has a newComp that is NOT a reference!`)
+
+              this.createdViewPConn$ = newComp;
+              const newConfigProps = newComp.getConfigProps();
+              this.templateName$ = ('template' in newConfigProps) ? newConfigProps["template"] : "";
+              this.title$ = ('title' in newConfigProps) ? newConfigProps["title"] : "";
+              // update children with new view's children
+              // children may have a 'reference' so normalize the children array
+              this.arChildren$ = ReferenceComponent.normalizePConnArray(newComp.getChildren());
+              }
+
 
 
           });
@@ -277,7 +307,7 @@ export class ViewContainerComponent implements OnInit {
   }
 
   buildName(): string {
-    
+
     let sContext = this.pConn$.getContextName();
     let sName = this.pConn$.getContainerName();
 

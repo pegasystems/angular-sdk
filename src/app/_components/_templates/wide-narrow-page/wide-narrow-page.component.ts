@@ -25,6 +25,9 @@ export class WideNarrowPageComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // normalize the pConn$ in case the incoming pConn$ is a 'reference'
+    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     // turn off spinner
@@ -58,7 +61,7 @@ export class WideNarrowPageComponent implements OnInit {
   }
 
   updateSelf() {
-    console.log(`WideNarrowPage: updateSelf`);
+    // console.log(`WideNarrowPage: updateSelf`);
 
     this.thePConnType = this.pConn$.getComponentName();
     

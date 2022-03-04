@@ -175,6 +175,11 @@ export class TopAppMashupComponent implements OnInit {
       window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
         // debugger;
 
+        // experiment with returning a PConnect that has deferenced the
+        //  referenced View if the c11n is a 'reference' component
+        const compType = c11nEnv.getPConnect().getComponentName();
+        // console.log( `top-app-mashup: startPortal - registerComponentCreator c11nEnv type: ${compType}`);        
+
         return c11nEnv;
 
         // REACT implementaion:
@@ -299,6 +304,11 @@ export class TopAppMashupComponent implements OnInit {
       //  This callback is invoked if/when you call a PConnect createComponent
       window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
         // debugger;
+
+        // experiment with returning a PConnect that has deferenced the
+        //  referenced View if the c11n is a 'reference' component
+        const compType = c11nEnv.getPConnect().getComponentName();
+        console.log( `top-app-mashup: doSubscribe - registerComponentCreator c11nEnv type: ${compType}`);        
 
         return c11nEnv;
 

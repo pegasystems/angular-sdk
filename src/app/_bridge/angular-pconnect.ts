@@ -30,6 +30,9 @@ export class AngularPConnectService {
    */
   private componentPropsArr: Array<Object> = [];
 
+  /* Used to toggle some class-wide logging */
+  private static bLogging = false;
+
 
   constructor(private psService: ProgressSpinnerService,
               private erService: ErrorMessagesService,
@@ -213,6 +216,10 @@ export class AngularPConnectService {
     }
 
     const compType = inComp.constructor.name;
+
+    if (AngularPConnectService.bLogging) {
+      console.log(`registerAndSubscribeComponent: ${compType}`);
+    }
 
     if (undefined !== inComp.bridgeComponentID) {
       console.error( `OLD SCHOOL: ${compType}`);
