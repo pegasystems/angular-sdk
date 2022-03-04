@@ -4,9 +4,10 @@ import { getAllFields } from '../_templates/utils';
 import { AngularPConnectService } from "../../_bridge/angular-pconnect";
 import { throwError } from 'rxjs';
 import { Utils } from "../../_helpers/utils";
+import { ReferenceComponent } from '../reference/reference.component';
 
 //
-// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with 
+// WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
 // Redux and creation/update of Redux containers and PConnect.  Modifying this code could have undesireable results and
 // is totally at your own risk.
 //
@@ -39,12 +40,8 @@ export class ViewComponent implements OnInit {
 
     // Then, continue on with other initialization
 
-    this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    this.arChildren$ = this.pConn$.getChildren();
-    this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
-    this.title$ = ('title' in this.configProps$) ? this.configProps$["title"] : "";
+    this.updateSelf();
 
-  
   }
 
   // Callback passed when subscribing to store change
@@ -52,7 +49,7 @@ export class ViewComponent implements OnInit {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
+
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
       this.updateSelf();
@@ -64,10 +61,16 @@ export class ViewComponent implements OnInit {
   }
 
   updateSelf() {
+
+    // normalize this.pConn$ in case it contains a 'reference'
+    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    this.arChildren$ = this.pConn$.getChildren();
     this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
     this.title$ = ('title' in this.configProps$) ? this.configProps$["title"] : "";
+    // children may have a 'reference' so normalize the children array
+    this.arChildren$ = ReferenceComponent.normalizePConnArray( this.pConn$.getChildren() );
+    // was:  this.arChildren$ = this.pConn$.getChildren();
 
   }
 

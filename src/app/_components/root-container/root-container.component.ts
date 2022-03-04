@@ -6,6 +6,7 @@ import { interval } from "rxjs/internal/observable/interval";
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
 import { NgZone } from '@angular/core';
 import { Utils} from '../../_helpers/utils';
+import { ReferenceComponent } from '../reference/reference.component';
 
 //
 // WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
@@ -201,15 +202,26 @@ export class RootContainerComponent implements OnInit {
           setTimeout(() => {
             // makes sure Angular tracks these changes
             this.ngZone.run(() => {
-              this.pConn$ = rootObject.getPConnect();
-              this.componentName$ = this.pConn$.getComponentName();
+              // the new rootObject may be a 'reference'. So,
+              //  normalize it to get the referencedView if that's the case
+              const theNewPConn = ReferenceComponent.normalizePConn(rootObject.getPConnect());
+              // update ComponentName$ before we update pConn$ to make sure they're in sync
+              //  when rendering...
+              this.componentName$ = theNewPConn.getComponentName();
+
+              this.pConn$ = theNewPConn;
+              // this.pConn$ = rootObject.getPConnect();
+
+              console.log(`RootContainer updated pConn$ to be: ${this.componentName$}`);
             });
           });
 
         }
       }
 
-    } else if (renderingMode == noPortalMode) {
+    } else if (renderingMode === noPortalMode) {
+      console.log(`RootContainer: renderingMode === noPortalMode: ${noPortalMode}`);
+
       // bootstrap loadMashup resolves to here
 
       let arChildren = this.pConn$.getChildren()

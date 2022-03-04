@@ -1,6 +1,8 @@
+import { Reference } from '@angular/compiler/src/render3/r3_ast';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Form } from '@angular/forms';
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
+import { ReferenceComponent } from '../../reference/reference.component';
 
 
 
@@ -43,6 +45,8 @@ export class CaseSummaryComponent implements OnInit {
 
   initComponent() {
 
+    // dereference the View in case the incoming pConn$ is a 'reference'
+    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$)
 
     // Then, continue on with other initialization
 
@@ -57,13 +61,13 @@ export class CaseSummaryComponent implements OnInit {
 
   }
 
-  
+
   // Callback passed when subscribing to store change
   onStateChange() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
+
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
       this.updateSelf();
@@ -81,8 +85,8 @@ export class CaseSummaryComponent implements OnInit {
 
   }
 
-  generatePrimaryAndSecondaryFields() {
 
+  generatePrimaryAndSecondaryFields() {
 
     this.primaryFields$ = [];
     this.secondaryFields$ = [];
@@ -96,7 +100,7 @@ export class CaseSummaryComponent implements OnInit {
       let kid = oField.getPConnect();
       this.secondaryFields$.push(kid.resolveConfigProps(kid.getRawMetadata()));
     }
-    
+
   }
 
 
