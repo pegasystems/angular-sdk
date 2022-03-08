@@ -44,7 +44,9 @@ function getFiledWidth(field, label) {
 export const getContext = (thePConn) => {
   const contextName = thePConn.getContextName();
   const pageReference = thePConn.getPageReference();
-  let { referenceList } = thePConn.getStateProps().config;
+  // 8.7 change = referenceList may now be in top-level of state props, 
+  //  not always in config of state props
+  let { referenceList } = thePConn.getStateProps()?.config || thePConn.getStateProps();
   const pageReferenceForRows = referenceList.startsWith(".")
     ? `${pageReference}.${referenceList.substring(1)}`
     : referenceList;
