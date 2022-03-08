@@ -483,6 +483,11 @@ export class FlowContainerComponent implements OnInit {
      if (this.caseMessages$ || !this.hasAssignments()) {
        this.bHasCaseMessages$ = true;
        this.checkSvg$  = this.utils.getImageSrc("check", this.PCore$.getAssetLoader().getStaticServerUrl());
+       // Temp fix for 8.7 change: confirmationNote no longer coming through in caseMessages$.
+       // So, if we get here and caseMessages$ is empty, use default value in DX API response
+       if (!this.caseMessages$) {
+         this.caseMessages$ = "Thank you! The next step in this case has been routed appropriately.";
+       }
 
         // publish this "assignmentFinished" for mashup, need to get approved as a standard
         this.PCore$.getPubSubUtils().publish(
