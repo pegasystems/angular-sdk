@@ -2,6 +2,7 @@
 
   <div *ngIf="!bHasCaseMessages$; else show_messages">
     <h2 *ngIf="!todo_showTodo$">{{containerName$}}</h2>
+    <h5 *ngIf="instructionText$ !== ''">{{instructionText$}}</h5>
     <div *ngIf="todo_showTodo$">
       <app-todo [pConn$]="todo_pConn$" [caseInfoID$]="todo_caseInfoID$" [datasource$]="todo_datasource$" [showTodoList$]="todo_showTodoList$"
         [headerText$]="todo_headerText$" [type$]="todo_type$" [context$]="todo_context$" ></app-todo>
