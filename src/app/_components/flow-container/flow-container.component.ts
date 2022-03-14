@@ -32,6 +32,7 @@ export class FlowContainerComponent implements OnInit {
   itemKey$: string = "";
 
   containerName$: string;
+  instructionText$: string;
   workID$: string;
   currentCaseID$: string;
   buildName$: string;
@@ -289,6 +290,7 @@ export class FlowContainerComponent implements OnInit {
     //this.containerName$ = oWorkMeta["name"];
     if (bLoadChildren && oWorkData) {
       this.containerName$ = this.getActiveViewLabel() || oWorkData.caseInfo.assignments[0].name;
+      this.instructionText$ = oWorkData.caseInfo.assignments[0].instructions;
     }
 
 
@@ -571,6 +573,7 @@ export class FlowContainerComponent implements OnInit {
                     let oWorkData = oWorkItem.getDataObject();
 
                     this.containerName$ = this.getActiveViewLabel() || oWorkData.caseInfo.assignments[0].name;
+                    this.instructionText$ = oWorkData.caseInfo.assignments[0].instructions;
                   });
 
 
