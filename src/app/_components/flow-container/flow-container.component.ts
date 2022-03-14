@@ -3,6 +3,7 @@ import { ChangeDetectorRef } from "@angular/core";
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
 import { ErrorMessagesService } from "../../_messages/error-messages.service";
 import { ResetPConnectService } from "../../_messages/reset-pconnect.service";
+import { ReferenceComponent } from "../reference/reference.component";
 import { interval } from "rxjs/internal/observable/interval";
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AngularPConnectService } from "../../_bridge/angular-pconnect";
@@ -448,7 +449,9 @@ export class FlowContainerComponent implements OnInit {
           }
 
           let kid = this.pConn$.getChildren()[0];
-          let todoKid = kid.getPConnect().getChildren()[0];
+
+          // kid.getPConnect() can be a Reference component. So normalize it just in case
+          let todoKid = ReferenceComponent.normalizePConn(kid.getPConnect()).getChildren()[0];
 
           this.todo_pConn$ = todoKid.getPConnect();
 
