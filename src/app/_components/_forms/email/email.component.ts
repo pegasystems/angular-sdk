@@ -47,7 +47,8 @@ export class EmailComponent implements OnInit {
     // Then, continue on with other initialization
 
     // call updateSelf when initializing
-    this.updateSelf();
+    //this.updateSelf();
+    this.checkAndUpdate();
      
     
     if (null != this.formGroup$) {
@@ -77,6 +78,10 @@ export class EmailComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
+    this.checkAndUpdate();
+  }
+
+  checkAndUpdate() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );

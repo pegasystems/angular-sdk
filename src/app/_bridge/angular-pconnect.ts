@@ -368,11 +368,9 @@ export class AngularPConnectService {
     //console.log( `AngularPConnect component ${compID} - ${inComp.constructor.name} - shouldComponentUpdate: ${bRet}`);
 
     if (bRet) {
-
-      // console.log("current props: " + currentPropsAsStr);
-      // console.log("incoming props: " + incomingPropsAsStr);
-      // console.log(`    ${inComp.constructor.name}: shouldComponentUpdate returning: ${bRet}, compId: ${compID}` );
-
+       //console.log(`******* ${inComp.constructor.name}: shouldComponentUpdate returning: ${bRet}, compId: ${compID}` );
+       //console.log("current props: " + currentPropsAsStr);
+       //console.log("incoming props: " + incomingPropsAsStr)
       //console.log( `    Updating with componentProps for ${inComp.constructor.name}: ${JSON.stringify(this.componentPropsArr[compID])}`);
        //console.log( `          and validateMessage: ${inComp.validateMessage}`);
     }

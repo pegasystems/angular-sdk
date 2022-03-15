@@ -53,7 +53,8 @@ export class TextInputComponent implements OnInit {
     // Then, continue on with other initialization
 
     // call updateSelf when initializing
-    this.updateSelf();
+   // this.updateSelf();
+    this.checkAndUpdate();
      
 
 
@@ -87,13 +88,17 @@ export class TextInputComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
+    this.checkAndUpdate();
+  }
+
+  checkAndUpdate() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
   
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
-        this.updateSelf();      
+      this.updateSelf();
     }
   }
 

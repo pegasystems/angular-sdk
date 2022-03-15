@@ -32,7 +32,8 @@ export class UserReferenceComponent implements OnInit {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
-    this.updateSelf();
+    //this.updateSelf();
+    this.checkAndUpdate();
   }
 
   ngOnDestroy() {
@@ -41,6 +42,10 @@ export class UserReferenceComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
+    this.checkAndUpdate();
+  }
+
+  checkAndUpdate() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );

@@ -33,7 +33,8 @@ export class WideNarrowPageComponent implements OnInit {
     // turn off spinner
     //this.psService.sendMessage(false);
 
-    this.updateSelf();
+    //this.updateSelf();
+    this.checkAndUpdate();
   }
 
 
@@ -46,18 +47,18 @@ export class WideNarrowPageComponent implements OnInit {
 
 
   onStateChange() {
+    this.checkAndUpdate();
+  }
 
-    // Should always check the bridge to see if the component should update itself (re-render)
+  checkAndUpdate() {
+    // Should always check the bridge to see if the component should
+    // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-
+  
     // ONLY call updateSelf when the component should update
-    //    AND removing the "gate" that was put there since shouldComponentUpdate
-    //      should be the real "gate"
     if (bUpdateSelf) {
-      this.updateSelf()
-
+      this.updateSelf();
     }
-
   }
 
   updateSelf() {
