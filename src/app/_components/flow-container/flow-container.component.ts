@@ -134,6 +134,7 @@ export class FlowContainerComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
     }
@@ -168,7 +169,10 @@ export class FlowContainerComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
+    this.checkAndUpdate();
+  }
 
+  checkAndUpdate() {
     // Should always check the bridge to see if the component should update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
 
@@ -199,9 +203,6 @@ export class FlowContainerComponent implements OnInit {
 
 
     }
-
-
-
   }
 
   getTodoVisibilty() {

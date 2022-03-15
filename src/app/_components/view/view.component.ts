@@ -40,16 +40,26 @@ export class ViewComponent implements OnInit {
 
     // Then, continue on with other initialization
 
-    this.updateSelf();
+    // const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
+
+    // // ONLY call updateSelf when the component should update
+    // if (bUpdateSelf) {
+    //   this.updateSelf();
+    // }
+    this.checkAndUpdate();
 
   }
 
   // Callback passed when subscribing to store change
   onStateChange() {
+    this.checkAndUpdate();
+  }
+
+  checkAndUpdate() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-
+  
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
       this.updateSelf();
@@ -57,10 +67,15 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnChanges() {
-    this.updateSelf();
+    //this.updateSelf();
   }
 
   updateSelf() {
+
+    if (this.angularPConnect.getComponentID(this) === undefined) {
+      return;
+    }
+
 
     // normalize this.pConn$ in case it contains a 'reference'
     this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
@@ -71,6 +86,13 @@ export class ViewComponent implements OnInit {
     // children may have a 'reference' so normalize the children array
     this.arChildren$ = ReferenceComponent.normalizePConnArray( this.pConn$.getChildren() );
     // was:  this.arChildren$ = this.pConn$.getChildren();
+
+    // debug
+    // let  kidList: string = "";
+    // for (let i in this.arChildren$) {
+    //   kidList = kidList.concat(this.arChildren$[i].getPConnect().getComponentName()).concat(",");
+    // }
+    //console.log("-->view update: " + this.angularPConnect.getComponentID(this) + ", template: " + this.templateName$ + ", kids: " + kidList);
 
   }
 
@@ -109,6 +131,7 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
     }

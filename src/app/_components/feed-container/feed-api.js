@@ -570,7 +570,7 @@ export default FeedApi;
 //             const replies = pConnect.getValue(".replies");
 //             if (undefined === replies) {
 //               // Nebula/Constellation changed to have an Activity component that has a .replies property
-//               console.log( `--> QUASAR need to fix: FeedApi: getValue(".replies"): ${replies}`);
+//               console.log( `-->  need to fix: FeedApi: getValue(".replies"): ${replies}`);
 //             } else {
 //               // Quasar-specific workaround. Nebula/Constellation has Activity object with .replies prop
 //               //  Note that the reply gets created and put in the db but the UI isn't properly
