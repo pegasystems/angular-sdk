@@ -179,6 +179,7 @@ export class ViewContainerComponent implements OnInit {
 
 
   updateSelf() {
+    //   *** DON'T call updateSelf in ngInit!!  ***
 
     // Don't need to get new store use the one we have
     const newState = this.angularPConnect.getState();
