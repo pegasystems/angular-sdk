@@ -272,8 +272,6 @@ export class TodoComponent implements OnInit {
 
     this.psService.sendMessage(true);
 
-    console.log(">> go: " + JSON.stringify(options));
-
     this.pConn$.getActionsApi().openAssignment(id, classname, options).then(() => {});
 
   }
