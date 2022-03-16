@@ -544,6 +544,8 @@ export class FlowContainerComponent implements OnInit {
                   let { context } = rootView.config;
                   let config = { meta: rootView };
 
+                  this.todo_context$ = currentItem.context;
+
                   config["options"] = {
                     context: currentItem.context,
                     pageReference: context || localPConn.getPageReference(),

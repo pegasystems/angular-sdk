@@ -262,6 +262,7 @@ export class TodoComponent implements OnInit {
     if (sTarget === "workarea") {
       options["isActionFromToDoList"] = true;
       options["target"] = "";
+      options["context"] = this.context$;
     }
     else {
       options["isActionFromToDoList"] = false;
