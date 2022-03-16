@@ -144,6 +144,11 @@ export class ViewContainerComponent implements OnInit {
       sessionStorage.setItem("hasViewContainer", "true");
     }
 
+    // cannot call checkAndUpdate becasue first time through, will call updateSelf and that is incorrect (causes issues).
+    // however, need angularPConnect to be initialized with currentProps for future updates, so calling shouldComponentUpdate directly
+    // without checking to update here in init, will initialize and this is correct
+    this.angularPConnect.shouldComponentUpdate( this );
+
 
   }
 
