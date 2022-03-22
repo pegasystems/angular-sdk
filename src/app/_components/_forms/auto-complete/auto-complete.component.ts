@@ -44,6 +44,7 @@ export class AutoCompleteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('In component');
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
     this.controlName$ = this.angularPConnect.getComponentID(this);
