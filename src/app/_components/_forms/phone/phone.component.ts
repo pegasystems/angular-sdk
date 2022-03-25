@@ -3,7 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Utils } from "../../../_helpers/utils";
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
 import { interval } from "rxjs/internal/observable/interval";
-
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 @Component({
   selector: 'app-phone',
   templateUrl: './phone.component.html',
@@ -15,7 +15,11 @@ export class PhoneComponent implements OnInit {
   @Input() formGroup$: FormGroup;
 
   configProps$ : Object;
-
+  separateDialCode = true;
+	SearchCountryField = SearchCountryField;
+	CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
   label$: string = "";
   value$: number;
   bRequired$: boolean = false;
@@ -33,6 +37,9 @@ export class PhoneComponent implements OnInit {
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
+  phoneForm = new FormGroup({
+		phone: new FormControl(undefined, [Validators.required])
+	});
 
   constructor(private angularPConnect: AngularPConnectService,
               private cdRef: ChangeDetectorRef, 
@@ -183,3 +190,4 @@ export class PhoneComponent implements OnInit {
     return errMessage;
   }
 }
+

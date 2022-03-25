@@ -1,4 +1,4 @@
-<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
+<!-- <div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
   <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
     <mat-form-field class="psdk-full-width" >
       <mat-label>{{label$}}</mat-label>
@@ -8,8 +8,49 @@
       <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>      
+  <form #f="ngForm" [formGroup]="phoneForm">
+    <ngx-intl-tel-input
+      [enableAutoCountrySelect]="true"
+      [enablePlaceholder]="true"
+      [searchCountryFlag]="true"
+      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+      [selectFirstCountry]="false"
+      [selectedCountryISO]="CountryISO.India"
+      [maxLength]="15"
+      [phoneValidation]="true"
+      [inputId]="my-input-id"
+      name="phone"
+      formControlName="phone"
+    ></ngx-intl-tel-input>
+  </form>
 </div>
 <ng-template #noEdit>
   <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
-</ng-template>
+</ng-template> -->
 
+<form #f="ngForm" [formGroup]="formGroup$">
+  <div class="psdk-full-width">
+    <ngx-intl-tel-input
+    [cssClass]="'custom'"
+    [preferredCountries]="preferredCountries"
+    [enableAutoCountrySelect]="true"
+    [enablePlaceholder]="true"
+    [searchCountryFlag]="true"
+    [searchCountryField]="[
+      SearchCountryField.Iso2,
+      SearchCountryField.Name
+    ]"
+    [selectFirstCountry]="false"
+    [selectedCountryISO]="CountryISO.India"
+    [maxLength]="15"
+    [phoneValidation]="true"
+    [separateDialCode]="true"
+    [formControlName]="controlName$" 
+    [value]="value$"
+    >
+    </ngx-intl-tel-input>
+  </div>
+</form>
+<ng-template #noEdit>
+  <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
+</ng-template> 

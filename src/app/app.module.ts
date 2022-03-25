@@ -130,6 +130,7 @@ import { SimpleTableComponent } from './_components/_templates/simple-table/simp
 import { ReferenceComponent } from './_components/reference/reference.component';
 import { OneColumnTabComponent } from './_components/_templates/one-column-tab/one-column-tab.component';
 import { AuthService } from './_services/auth.service';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 @NgModule({
   declarations: [
@@ -259,6 +260,7 @@ import { AuthService } from './_services/auth.service';
     MatTooltipModule,
     MatDialogModule,
     MatStepperModule,
+    NgxIntlTelInputModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'auto'} },
