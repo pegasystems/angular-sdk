@@ -85,6 +85,11 @@ export class AppShellComponent implements OnInit {
 
       this.showDismissErrorMessages(this.errorMessage);
     });
+
+    // cannot call checkAndUpdate becasue first time through, will call updateSelf and that is incorrect (causes issues).
+    // however, need angularPConnect to be initialized with currentProps for future updates, so calling shouldComponentUpdate directly
+    // without checking to update here in init, will initialize and this is correct
+    this.angularPConnect.shouldComponentUpdate( this );
   
   }
 
@@ -101,14 +106,17 @@ export class AppShellComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
+    this.checkAndUpdate();
+  }
+
+  checkAndUpdate() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
   
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
-      // Call method for the component to update itself when available
-      this.updateSelf(); 
+      this.updateSelf();
     }
   }
 
