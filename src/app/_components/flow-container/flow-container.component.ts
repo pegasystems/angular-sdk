@@ -243,16 +243,27 @@ export class FlowContainerComponent implements OnInit {
         type: containerType
       });
 
-      containerMgr.addContainerItem({
-        semanticURL: "",
-        key: this.pConn$.getValue("key"),
-        flowName: this.pConn$.getValue("flowName"),
-        caseViewMode: "perform",
-        data: this.pConn$.getDataObject(baseContext),
-        containerType
-      });
+/* remove commented out code when update React/WC
+*** instead of getting values here to pass to addContainerItem, we call the function below "addContainerItem"
+*** which comes from flow container helpers in Nebula
+*/
+      // containerMgr.addContainerItem({
+      //   semanticURL: "",
+      //   key: this.pConn$.getValue("key"),
+      //   flowName: this.pConn$.getValue("flowName"),
+      //   caseViewMode: "perform",
+      //   data: this.pConn$.getDataObject(baseContext),
+      //   containerType
+      // });
+
+      this.addContainerItem(this.pConn$);
     }
   }
+
+  
+
+
+
 
   initComponent( bLoadChildren: boolean) {
 
@@ -433,6 +444,11 @@ export class FlowContainerComponent implements OnInit {
       setTimeout(() => {
 
         this.ngZone.run(() => {
+
+/*
+*** renove this commmented out code when React/WC is updated
+*** this code is replace with the call to "getToDoAssigments" funciton below
+
           const assignmentsList = localPConn.getValue(
             CASE_CONSTS.D_CASE_ASSIGNMENTS_RESULTS
           );
@@ -445,18 +461,31 @@ export class FlowContainerComponent implements OnInit {
           locaAssignmentsList.push(localAssignment);
 
           const caseActions = localPConn.getValue(CASE_CONSTS.CASE_INFO_ACTIONS);
+*/
+        
+          const todoAssignments = this.getToDoAssignments(this.pConn$);
 
-          if (caseActions) {
-            this.todo_caseInfoID$ = localPConn.getValue(CASE_CONSTS.CASE_INFO_ID);
-            this.todo_datasource$ = { source: locaAssignmentsList };
+          if (todoAssignments && todoAssignments.length > 0) {
+            this.todo_caseInfoID$ = this.pConn$.getValue(CASE_CONSTS.CASE_INFO_ID);
+            this.todo_datasource$ = { source: todoAssignments };
           }
 
-          let kid = this.pConn$.getChildren()[0];
+
+  /* remove this commented out code when update React/WC */
+          //let kid = this.pConn$.getChildren()[0];
 
           // kid.getPConnect() can be a Reference component. So normalize it just in case
-          let todoKid = ReferenceComponent.normalizePConn(kid.getPConnect()).getChildren()[0];
+  //        let todoKid = ReferenceComponent.normalizePConn(kid.getPConnect()).getChildren()[0];
 
-          this.todo_pConn$ = todoKid.getPConnect();
+  //        this.todo_pConn$ = todoKid.getPConnect();
+
+
+  /* code change here to note for React/WC  */
+          // todo now needs pConn to open the work item on click "go"
+          this.todo_pConn$ = this.pConn$;
+
+          // still needs the context of the original work item
+          this.todo_context$ = localPConn.getContextName();
 
           this.todo_showTodo$ = true;
 
@@ -629,5 +658,96 @@ export class FlowContainerComponent implements OnInit {
 
   }
 
+
+
+  // helpers - copyied from flow container helpers.js
+
+  addContainerItem(pConnect) {
+    // copied from flow container helper.js
+    const containerManager = pConnect.getContainerManager();
+    const contextName = pConnect.getContextName(); // here we will get parent context name, as flow container is child of view container
+    const caseViewMode = pConnect.getValue("context_data.caseViewMode");
+   
+    let key;
+    let flowName;
+  
+    if(caseViewMode !== "review") {
+      const target = contextName.substring(0, contextName.lastIndexOf("_"));
+      const activeContainerItemID = this.PCore$.getContainerUtils().getActiveContainerItemName(target);
+      const containerItemData = this.PCore$.getContainerUtils().getContainerItemData(target, activeContainerItemID);
+  
+      if(containerItemData) {
+        ({ key, flowName } = containerItemData);
+      }
+    }
+  
+    containerManager.addContainerItem({
+      semanticURL: "",
+      key,
+      flowName,
+      caseViewMode: "perform",
+      resourceType: "ASSIGNMENT",
+      data: pConnect.getDataObject(contextName)
+    });
+  }
+
+  showTodo(pConnect) {
+    const caseViewMode = pConnect.getValue("context_data.caseViewMode");
+    return caseViewMode !== "perform";
+  }
+
+  getChildCaseAssignments(pConnect) {
+    const childCases = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.CHILD_ASSIGNMENTS);
+    let allAssignments = [];
+    if (childCases && childCases.length > 0) {
+      childCases.forEach(({ assignments = [], Name }) => {
+        const childCaseAssignments = assignments.map((assignment) => ({
+          ...assignment,
+          caseName: Name
+        }));
+        allAssignments = allAssignments.concat(childCaseAssignments);
+      });
+    }
+    return allAssignments;
+  }
+
+  getActiveCaseActionName(pConnect) {
+    const caseActions = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.CASE_INFO_ACTIONS);
+    const activeActionID = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.ACTIVE_ACTION_ID);
+    const activeAction = caseActions.find(
+      (action) => action.ID === activeActionID
+    );
+    return activeAction?.name || "";
+  }
+
+  getToDoAssignments(pConnect) {
+    const caseActions = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.CASE_INFO_ACTIONS);
+    const assignmentLabel = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.ASSIGNMENT_LABEL);
+    const assignments =
+      pConnect.getValue(this.PCore$.getConstants().CASE_INFO.D_CASE_ASSIGNMENTS_RESULTS) || [];
+    const childCasesAssignments = this.getChildCaseAssignments(pConnect) || [];
+    let childCasesAssignmentsCopy = JSON.parse(
+      JSON.stringify(childCasesAssignments)
+    );
+  
+    childCasesAssignmentsCopy = childCasesAssignmentsCopy.map((assignment) => {
+      assignment.isChild = true;
+      return assignment;
+    });
+  
+    const todoAssignments = [...assignments, ...childCasesAssignmentsCopy];
+    let todoAssignmentsCopy = JSON.parse(JSON.stringify(todoAssignments));
+  
+    if (caseActions && !this.showTodo(pConnect)) {
+      todoAssignmentsCopy = todoAssignmentsCopy.map((assignment) => {
+        assignment.name = this.getActiveCaseActionName(pConnect) || assignmentLabel;
+        return assignment;
+      });
+    }
+  
+    return todoAssignmentsCopy;
+  }
+
+   // helpers end
 
 }

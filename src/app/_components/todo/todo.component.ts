@@ -263,6 +263,7 @@ export class TodoComponent implements OnInit {
       options["isActionFromToDoList"] = true;
       options["target"] = "";
       options["context"] = this.context$;
+      options["isChild"] = undefined;
     }
     else {
       options["isActionFromToDoList"] = false;
