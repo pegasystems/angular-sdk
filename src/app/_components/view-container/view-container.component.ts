@@ -33,6 +33,10 @@ export class ViewContainerComponent implements OnInit {
   context$: string;
   title$: string = "";
 
+  viewPConn$: any;
+
+  isViewContainer$: boolean = true;
+
   // JA - created object is now a View with a Template
   //  Use its PConnect to render the CaseView; DON'T replace this.pConn$
   createdViewPConn$ : any;
@@ -69,7 +73,7 @@ export class ViewContainerComponent implements OnInit {
       this.displayOnlyFA$ = false;
     }
 
-
+    //debugger;
 
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
@@ -254,25 +258,41 @@ export class ViewContainerComponent implements OnInit {
           this.ngZone.run(() => {
 
             if (newComp.getComponentName() === 'reference') {
+
+              // if a refernece, it will de reference to a "view"
+              // so hand this off to the "View" component to do that
+              this.isViewContainer$ = false;
+              this.viewPConn$ = newComp;
+
+
+              /*
+              ***  this commmented out code should be removed, once we test out that
+              ***  handing off refernce to View component always works
+               */
+
               // When newComp is a reference, we want to de-reference
               //  it (to get the View) and then use that View to get the
               //  template, title, children, etc.
-              // debugger;
+
+              /*
 
               const theDereferencedView = ReferenceComponent.normalizePConn(newComp);
               const newConfigProps = theDereferencedView.getConfigProps();
 
-              // children may have a 'reference' so normalize the children array
-              // debugger;
+              // children may have a 'reference' so normalize the children arra
+               
               const theDereferencedViewChildren = ReferenceComponent.normalizePConnArray(theDereferencedView.getChildren());
               this.templateName$ = ('template' in newConfigProps) ? newConfigProps["template"] : "";
               this.title$ = ('title' in newConfigProps) ? newConfigProps["title"] : "";
               this.arChildren$ = theDereferencedViewChildren;
               this.createdViewPConn$ = theDereferencedView;
+              */
+              
 
-            } else {
+            } 
+            else {
               // old style when newComp is NOT a 'reference'
-              // debugger;
+              this.isViewContainer$ = true;
 
               console.error(`ViewContainer has a newComp that is NOT a reference!`)
 

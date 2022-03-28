@@ -19,6 +19,7 @@
         <app-list-view *ngSwitchCase="'ListView'" [pConn$]="pConn$" [bInForm$]="true"></app-list-view>
         <app-simple-table *ngSwitchCase="'SimpleTable'" [pConn$]="pConn$"></app-simple-table>
         <app-one-column-tab *ngSwitchCase="'OneColumnTab'" [pConn$]="pConn$" [formGroup$]="formGroup$"></app-one-column-tab>
+        <app-case-view *ngSwitchCase="'CaseView'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-case-view>
         <div *ngSwitchDefault>
             <!-- show something to let us know we got an unknown templateName$ -->
             <h4 *ngIf="templateName$ !== ''">View template not recognized: [{{templateName$}}]</h4>

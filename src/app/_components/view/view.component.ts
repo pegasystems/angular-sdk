@@ -68,6 +68,7 @@ export class ViewComponent implements OnInit {
 
   ngOnChanges() {
     //this.updateSelf();
+    this.checkAndUpdate();
   }
 
   updateSelf() {
@@ -76,6 +77,7 @@ export class ViewComponent implements OnInit {
       return;
     }
 
+    //debugger;
 
     // normalize this.pConn$ in case it contains a 'reference'
     this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
