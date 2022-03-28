@@ -176,13 +176,14 @@ export class CaseViewComponent implements OnInit {
         }
       }
   
+    
   
   
       this.caseTabs$  = this.mainTabs
       .getPConnect()
       .getChildren()
       .map((child, i) => {
-        const config = child.getPConnect().getRawMetadata().config;
+        const config = child.getPConnect().resolveConfigProps(child.getPConnect().getRawMetadata()).config;
         return { name: config.label || "No label specified in config", id: i };
       });
     }

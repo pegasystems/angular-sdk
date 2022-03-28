@@ -25,8 +25,9 @@ export class WideNarrowPageComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     // normalize the pConn$ in case the incoming pConn$ is a 'reference'
-    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+    //this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
