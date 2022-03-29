@@ -3,7 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Utils } from "../../../_helpers/utils";
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
 import { interval } from "rxjs/internal/observable/interval";
-
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 @Component({
   selector: 'app-phone',
   templateUrl: './phone.component.html',
@@ -39,6 +39,14 @@ export class PhoneComponent implements OnInit {
               private utils: Utils) {   
 
   }
+  separateDialCode = false;
+	SearchCountryField = SearchCountryField;
+	CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+	phoneForm = new FormGroup({
+		phone: new FormControl(undefined)
+	});
+  afterBlur: boolean;
 
   ngOnInit(): void {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
@@ -131,7 +139,11 @@ export class PhoneComponent implements OnInit {
     
     if (this.configProps$["readOnly"] != null) {
       this.bReadonly$ = this.utils.getBooleanValue(this.configProps$["readOnly"]);
-    } 
+    }
+    
+    if (this.bReadonly$) {
+      this.phoneForm.setValue({ phone: this.value$ });
+    }
 
     this.componentReference = this.pConn$.getStateProps().value;
 
@@ -149,9 +161,15 @@ export class PhoneComponent implements OnInit {
   }
 
   fieldOnChange(event: any) {
-  
-    this.angularPConnectData.actions.onChange(this, event);
-
+    if(this.formGroup$.controls[this.controlName$].value) {
+      const eventObj = {
+        target: {
+          value: this.formGroup$.controls[this.controlName$].value.e164Number,
+        }
+      };
+      this.afterBlur = true;
+      this.angularPConnectData.actions.onChange(this, eventObj);
+    }
   }
 
   fieldOnClick(event: any) {
@@ -180,7 +198,7 @@ export class PhoneComponent implements OnInit {
     }
     else if (this.fieldControl.errors) {
 
-      errMessage = this.fieldControl.errors.toString();
+      errMessage = 'Invalid Phone';
 
     }
 

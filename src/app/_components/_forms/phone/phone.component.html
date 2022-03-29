@@ -1,15 +1,31 @@
 <div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
-  <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
-    <mat-form-field class="psdk-full-width" >
-      <mat-label>{{label$}}</mat-label>
-      <input matInput  [placeholder]="" type="tel" [value]="value$" [required]="bRequired$" 
-      [formControlName]="controlName$" 
-      (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)" >
-      <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
-  </div>      
+  <form #f="ngForm" [formGroup]="formGroup$">
+    <div class="psdk-full-width">
+      <ngx-intl-tel-input [cssClass]="'custom'"
+        [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+        [selectedCountryISO]="CountryISO.UnitedStates" [maxLength]="15"
+        [phoneValidation]="true" [separateDialCode]="true" (change)="fieldOnChange($event, ngForm)" (blur)="fieldOnBlur($event)"
+        [numberFormat]="PhoneNumberFormat.National" [formControlName]="controlName$" >
+      </ngx-intl-tel-input>
+      <mat-error *ngIf="fieldControl.invalid && afterBlur">{{getErrorMessage()}}</mat-error>
+    </div>
+  </form>
 </div>
 <ng-template #noEdit>
-  <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
+  <form #f="ngForm" [formGroup]="phoneForm">
+    <div class="psdk-full-width" [hidden]="true">
+      <ngx-intl-tel-input [maxLength]="15" [numberFormat]="PhoneNumberFormat.National" name="phone"
+      formControlName="phone">
+      </ngx-intl-tel-input>
+    </div>
+  </form>
+  <div class="psdk-label-infix-readonly">
+    <span class="psdk-label-wrapper-readonly"> 
+      <label class="phone-label-readonly">Phone number</label>
+    </span>
+    <div class="psdk-data-readonly">
+      <label>{{f.form?.value?.phone?.internationalNumber}}</label>
+    </div>
+  </div>
 </ng-template>
-
