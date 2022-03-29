@@ -33,6 +33,8 @@ export class AssignmentComponent implements OnInit {
   workID$: string;
   currentCaseID$: string;
 
+  bIsRefComponent: boolean = false;
+
   templateName$: string;
 
   arMainButtons$: Array<any>;
@@ -90,6 +92,8 @@ export class AssignmentComponent implements OnInit {
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     this.initComponent();
+
+    this.angularPConnect.shouldComponentUpdate( this );
   }
 
   ngOnDestroy() {
@@ -102,6 +106,10 @@ export class AssignmentComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
+    this.checkAndUpdate();
+  }
+
+  checkAndUpdate() {
     // Should always check the bridge to see if the component should update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
 
@@ -120,20 +128,17 @@ export class AssignmentComponent implements OnInit {
 
       }
     }
-
-
-
  }
 
   ngOnChanges() {
-    // debugger;
+
+    this.bIsRefComponent = this.checkIfRefComponent(this.pConn$);
 
     // pConn$ may be a 'reference' component, so normalize it
     this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
-    // If arChildren$ is null, it means that the pConn$ passed in was a
-    //  'reference' so we need to get the children of the normalized pConn
-    if (!this.arChildren$) {
+    //  If 'reference' so we need to get the children of the normalized pConn
+    if (this.bIsRefComponent) {
       this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
     }
 
@@ -141,16 +146,24 @@ export class AssignmentComponent implements OnInit {
 
   }
 
+  checkIfRefComponent(thePConn: any):boolean {
+    let bReturn = false;
+    if (thePConn && thePConn.getComponentName() == "reference") {
+      bReturn = true;
+    }
+
+    return bReturn;
+  }
 
   initComponent() {
-    // debugger;
+
+    this.bIsRefComponent = this.checkIfRefComponent(this.pConn$);
 
     // pConn$ may be a 'reference' component, so normalize it
     this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
-    // If arChildren$ is null, it means that the pConn$ passed in was a
-    //  'reference' so we need to get the children of the normalized pConn
-    if (!this.arChildren$) {
+    // If 'reference' so we need to get the children of the normalized pConn
+    if (this.bIsRefComponent) {
       this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
     }
 

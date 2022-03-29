@@ -99,6 +99,9 @@ export class ModalViewContainerComponent implements OnInit {
 
     const { CONTAINER_TYPE, PUB_SUB_EVENTS } = this.PCore$.getConstants();
 
+
+    this.angularPConnect.shouldComponentUpdate( this );
+
   }
 
   ngOnChanges(): void {
@@ -144,6 +147,10 @@ export class ModalViewContainerComponent implements OnInit {
 
 
   }
+
+
+
+
 
   // updateSelf
   updateSelf(): void { 
