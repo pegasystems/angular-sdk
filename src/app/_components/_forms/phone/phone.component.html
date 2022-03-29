@@ -5,7 +5,7 @@
         [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
         [selectedCountryISO]="CountryISO.UnitedStates" [maxLength]="15"
-        [phoneValidation]="true" [separateDialCode]="true" (change)="fieldOnChange($event, ngForm)" (blur)="fieldOnBlur($event)"
+        [phoneValidation]="true" [separateDialCode]="true" (change)="fieldOnChange($event)" (blur)="fieldOnBlur($event)"
         [numberFormat]="PhoneNumberFormat.National" [formControlName]="controlName$" >
       </ngx-intl-tel-input>
       <mat-error *ngIf="fieldControl.invalid && afterBlur">{{getErrorMessage()}}</mat-error>
