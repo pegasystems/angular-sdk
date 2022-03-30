@@ -1,5 +1,5 @@
 <div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
-  <form #f="ngForm" [formGroup]="formGroup$">
+  <div #f="ngForm" [formGroup]="formGroup$">
     <div class="psdk-full-width">
       <ngx-intl-tel-input [cssClass]="'custom'"
         [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
@@ -10,16 +10,16 @@
       </ngx-intl-tel-input>
       <mat-error *ngIf="fieldControl.invalid && afterBlur">{{getErrorMessage()}}</mat-error>
     </div>
-  </form>
+  </div>
 </div>
 <ng-template #noEdit>
-  <form #f="ngForm" [formGroup]="phoneForm">
+  <div #f="ngForm" [formGroup]="phoneForm">
     <div class="psdk-full-width" [hidden]="true">
       <ngx-intl-tel-input [maxLength]="15" [numberFormat]="PhoneNumberFormat.National" name="phone"
       formControlName="phone">
       </ngx-intl-tel-input>
     </div>
-  </form>
+  </div>
   <div class="psdk-label-infix-readonly">
     <span class="psdk-label-wrapper-readonly"> 
       <label class="phone-label-readonly">Phone number</label>
