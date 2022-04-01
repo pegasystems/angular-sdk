@@ -365,13 +365,18 @@ export class AngularPConnectService {
       inComp.validateMessage = (incomingProps.validatemessage === undefined) ? "" : this.utils.htmlDecode(incomingProps.validatemessage);
     }
 
+    if (bRet && compID === undefined) {
+      bRet = false;
+    }
+
     //console.log( `AngularPConnect component ${compID} - ${inComp.constructor.name} - shouldComponentUpdate: ${bRet}`);
+    //console.log("current props: " + currentPropsAsStr);
 
     if (bRet) {
        //console.log(`******* ${inComp.constructor.name}: shouldComponentUpdate returning: ${bRet}, compId: ${compID}` );
        //console.log("current props: " + currentPropsAsStr);
        //console.log("incoming props: " + incomingPropsAsStr)
-      //console.log( `    Updating with componentProps for ${inComp.constructor.name}: ${JSON.stringify(this.componentPropsArr[compID])}`);
+       //console.log( `    Updating with componentProps for ${inComp.constructor.name}: ${JSON.stringify(this.componentPropsArr[compID])}`);
        //console.log( `          and validateMessage: ${inComp.validateMessage}`);
     }
     // else if (inComp.constructor.name.indexOf("View") >= 0 || inComp.constructor.name.indexOf("Root") >= 0) {

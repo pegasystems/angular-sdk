@@ -22,6 +22,7 @@ export class ViewComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
   @Input() displayOnlyFA$ : boolean;
+  //@Input() updateToken$: number;
 
   angularPConnectData: any = { };
 
@@ -37,6 +38,8 @@ export class ViewComponent implements OnInit {
 
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
+
+    console.log("^^^ create view:" + JSON.stringify(this.pConn$.getConfigProps()));
 
     // Then, continue on with other initialization
 
@@ -66,9 +69,12 @@ export class ViewComponent implements OnInit {
     }
   }
 
-  ngOnChanges() {
-    //this.updateSelf();
+  ngOnChanges(data: any) {
+
+
     this.checkAndUpdate();
+  
+    
   }
 
   updateSelf() {

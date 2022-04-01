@@ -6,6 +6,7 @@ import { interval } from "rxjs/internal/observable/interval";
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
 import { Utils } from '../../_helpers/utils';
 import { ReferenceComponent } from '../reference/reference.component';
+import { ConstantPool } from '@angular/compiler';
 
 //
 // WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
@@ -64,6 +65,7 @@ export class ViewContainerComponent implements OnInit {
 
 
   ngOnInit() {
+
 
     if (this.PCore$ == null) {
       this.PCore$ = window.PCore;
@@ -148,11 +150,11 @@ export class ViewContainerComponent implements OnInit {
       sessionStorage.setItem("hasViewContainer", "true");
     }
 
+
     // cannot call checkAndUpdate becasue first time through, will call updateSelf and that is incorrect (causes issues).
     // however, need angularPConnect to be initialized with currentProps for future updates, so calling shouldComponentUpdate directly
     // without checking to update here in init, will initialize and this is correct
     this.angularPConnect.shouldComponentUpdate( this );
-
 
   }
 

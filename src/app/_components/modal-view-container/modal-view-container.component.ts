@@ -41,6 +41,9 @@ export class ModalViewContainerComponent implements OnInit {
   updateModalSub: Subscription;
   oCaseInfo: Object = {};
 
+  // for causing a change on assignment
+  updateToken$: number = 0;
+
   routingInfoRef: Object = {};
 
   // created object is now a View with a Template
@@ -140,7 +143,7 @@ export class ModalViewContainerComponent implements OnInit {
     else if (this.bShowModal$) {
       // right now onlu get one updated when initial diaplay.  So, once modal is up
       // let fall through and do a check with "compareCaseInfoIsDifferent" until fixed
-      this.updateSelf();
+      //this.updateSelf();
     }
 
 
@@ -265,6 +268,9 @@ export class ModalViewContainerComponent implements OnInit {
   
               // save off itemKey to be used for finishAssignment, etc.
               this.itemKey$ = key;  
+
+              // cause a change for assignment
+              this.updateToken$ = new Date().getTime();
             });
   
           }

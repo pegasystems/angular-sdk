@@ -2,14 +2,14 @@
 <div *ngIf="bShowModal$ && bShowAsModal$" class="psdk-dialog-background ">
     <div class="psdk-modal-view-container-top" id={{buildName$}}>
         <h3 *ngIf="title$ != ''">{{title$}}</h3>
-        <app-assignment [pConn$]="createdViewPConn$" [formGroup$]="formGroup$" [arChildren$]="arChildren$" [itemKey$]="itemKey$" [isCreateStage$]="true"></app-assignment>
+        <app-assignment [pConn$]="createdViewPConn$" [formGroup$]="formGroup$" [arChildren$]="arChildren$" [itemKey$]="itemKey$" [isCreateStage$]="true" [updateToken$]="updateToken$"></app-assignment>
     </div>
 </div>
 
 <div *ngIf="bShowModal$ && !bShowAsModal$">
     <div id={{buildName$}}>
         <h3 *ngIf="title$ != ''">{{title$}}</h3>
-        <app-assignment [pConn$]="createdViewPConn$" [formGroup$]="formGroup$" [arChildren$]="arChildren$" [itemKey$]="itemKey$" [isCreateStage$]="true"></app-assignment>
+        <app-assignment [pConn$]="createdViewPConn$" [formGroup$]="formGroup$" [arChildren$]="arChildren$" [itemKey$]="itemKey$" [isCreateStage$]="true" [updateToken$]="updateToken$"></app-assignment>
     </div>
 </div>
 

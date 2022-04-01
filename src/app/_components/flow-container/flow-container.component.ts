@@ -447,7 +447,7 @@ export class FlowContainerComponent implements OnInit {
 
 /*
 *** renove this commmented out code when React/WC is updated
-*** this code is replace with the call to "getToDoAssigments" funciton below
+*** this code is replace with the call to "getToDoAssigments" function below
 
           const assignmentsList = localPConn.getValue(
             CASE_CONSTS.D_CASE_ASSIGNMENTS_RESULTS
