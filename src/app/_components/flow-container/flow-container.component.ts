@@ -585,9 +585,15 @@ export class FlowContainerComponent implements OnInit {
                     parentPageReference: localPConn.getPageReference()
                   };
 
-                  // add more data to pConnect
-                  let configObject = this.PCore$.createPConnect(config);
-
+                  const configObject = this.PCore$.createPConnect(config);
+                  // 8.7 - config might be a Reference component so, need to normalize it to get
+                  //  the View if it is a Reference component. And need to pass in the getPConnect
+                  //  to have normalize do a c11Env createComponent (that makes sure options.hasForm
+                  //  is passed along to all the component's children)
+                  const normalizedConfigObject = ReferenceComponent.normalizePConn(configObject.getPConnect());
+                  // We want the children to be the PConnect itself, not the result of calling getPConnect(),
+                  //  So need to get the PConnect of the normalized component we just created...
+                  const normalizedConfigObjectAsPConnect = normalizedConfigObject.getComponent();
 
 
                   // makes sure Angular tracks these changes
@@ -597,7 +603,7 @@ export class FlowContainerComponent implements OnInit {
                     // what comes back now in configObject is the children of the flowContainer
 
                     this.arChildren$ = new Array();
-                    this.arChildren$.push(configObject);
+                    this.arChildren$.push(normalizedConfigObjectAsPConnect);
 
                     this.psService.sendMessage(false);
 

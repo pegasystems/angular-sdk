@@ -127,7 +127,7 @@ export class ReferenceComponent implements OnInit {
       returnObj = true;
       thePConnType = inPConn.getPConnect().getComponentName();
    } else {
-      // inPConn is an object wih the PConnect function, so we want
+      // inPConn is an object with the PConnect function, so we want
       //  to return any referenced view as the object containing the
       //  the c11n function
       returnObj = false;
@@ -163,11 +163,11 @@ export class ReferenceComponent implements OnInit {
       return inPConnArray;
     }
 
-    const theDererencedArray = inPConnArray.map((child) => {
+    const theDerefencedArray = inPConnArray.map((child) => {
       return ReferenceComponent.normalizePConn(child);
     });
 
-    return theDererencedArray;
+    return theDerefencedArray;
   }
 
 }
