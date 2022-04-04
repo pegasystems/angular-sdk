@@ -39,8 +39,6 @@ export class ViewComponent implements OnInit {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
-    console.log("^^^ create view:" + JSON.stringify(this.pConn$.getConfigProps()));
-
     // Then, continue on with other initialization
 
     // const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
