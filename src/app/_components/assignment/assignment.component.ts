@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
 import { ErrorMessagesService } from "../../_messages/error-messages.service";
 import { Action } from 'rxjs/internal/scheduler/Action';
@@ -25,8 +25,11 @@ export class AssignmentComponent implements OnInit {
   @Input() arChildren$: Array<any>;
   @Input() itemKey$: string;
   @Input() isCreateStage$: boolean;
+  @Input() updateToken$: number;
 
   configProps$ : Object;
+
+  newPConn$: any;
 
 
   containerName$: string;
@@ -34,6 +37,7 @@ export class AssignmentComponent implements OnInit {
   currentCaseID$: string;
 
   bIsRefComponent: boolean = false;
+  bInitialized: boolean = false;
 
   templateName$: string;
 
@@ -94,6 +98,8 @@ export class AssignmentComponent implements OnInit {
     this.initComponent();
 
     this.angularPConnect.shouldComponentUpdate( this );
+
+    this.bInitialized = true;
   }
 
   ngOnDestroy() {
@@ -120,7 +126,8 @@ export class AssignmentComponent implements OnInit {
 
       let loadingInfo;
       try {
-        loadingInfo = this.pConn$.getLoadingStatus();
+        //loadingInfo = this.pConn$.getLoadingStatus();
+        loadingInfo = this.newPConn$.getLoadingStatus();
 
         this.psService.sendMessage(loadingInfo);
       }
@@ -130,17 +137,29 @@ export class AssignmentComponent implements OnInit {
     }
  }
 
-  ngOnChanges() {
+  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+
+    if (this.bInitialized) {
+      this.updateChanges();
+    }
+
+  }
+
+  updateChanges() {
 
     this.bIsRefComponent = this.checkIfRefComponent(this.pConn$);
 
-    // pConn$ may be a 'reference' component, so normalize it
-    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+    this.ngZone.run(() => {
+      // pConn$ may be a 'reference' component, so normalize it
+      //this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+      this.newPConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
-    //  If 'reference' so we need to get the children of the normalized pConn
-    if (this.bIsRefComponent) {
-      this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
-    }
+      //  If 'reference' so we need to get the children of the normalized pConn
+      if (this.bIsRefComponent) {
+        //this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
+        this.arChildren$ = ReferenceComponent.normalizePConnArray(this.newPConn$.getChildren());
+      }
+    });
 
     this.createButtons();
 
@@ -160,11 +179,13 @@ export class AssignmentComponent implements OnInit {
     this.bIsRefComponent = this.checkIfRefComponent(this.pConn$);
 
     // pConn$ may be a 'reference' component, so normalize it
-    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+    //this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+    this.newPConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
     // If 'reference' so we need to get the children of the normalized pConn
     if (this.bIsRefComponent) {
-      this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
+      //this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
+      this.arChildren$ = ReferenceComponent.normalizePConnArray(this.newPConn$.getChildren());
     }
 
     // prevent re-intializing with flowContainer update unless an action is taken
@@ -172,7 +193,8 @@ export class AssignmentComponent implements OnInit {
     this.bHasNavigation$ = false;
 
 
-    this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
+    //this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
+    this.configProps$ = this.newPConn$.resolveConfigProps(this.newPConn$.getConfigProps());
 
     let activeActionLabel: string = "";
     let { getPConnect } = this.arChildren$[0].getPConnect();
@@ -180,10 +202,17 @@ export class AssignmentComponent implements OnInit {
     this.templateName$ = this.configProps$["template"];
 
     // create pointers to functions
+    /*
     let containerMgr = this.pConn$.getContainerManager();
     let actionsAPI = this.pConn$.getActionsApi();
     let baseContext = this.pConn$.getContextName();
     let acName = this.pConn$.getContainerName();
+    */
+
+    let containerMgr = this.newPConn$.getContainerManager();
+    let actionsAPI = this.newPConn$.getActionsApi();
+    let baseContext = this.newPConn$.getContextName();
+    let acName = this.newPConn$.getContainerName();
 
     // for now, in general this should be overridden by updateSelf(), and not be blank
     if (this.itemKey$ === "") {
@@ -191,7 +220,8 @@ export class AssignmentComponent implements OnInit {
     }
 
 
-    this.pConn$.isBoundToState();
+    //this.pConn$.isBoundToState();
+    this.newPConn$.isBoundToState();
 
     this.init = false;
 
@@ -210,7 +240,8 @@ export class AssignmentComponent implements OnInit {
 
   createButtons() {
 
-    let oData = this.pConn$.getDataObject();
+    //let oData = this.pConn$.getDataObject();
+    let oData = this.newPConn$.getDataObject();
 
     // inside
     // get fist kid, get the name and displa
@@ -319,9 +350,14 @@ export class AssignmentComponent implements OnInit {
     // to re-initialize
     // this.bReInit =true;
 
-
+    /*
     let baseContext = this.pConn$.getContextName();
     let acName = this.pConn$.getContainerName();
+    let itemID = baseContext.concat("/").concat(acName);
+    */
+
+    let baseContext = this.newPConn$.getContextName();
+    let acName = this.newPConn$.getContainerName();
     let itemID = baseContext.concat("/").concat(acName);
 
 
@@ -342,6 +378,7 @@ export class AssignmentComponent implements OnInit {
 
             navigatePromise
               .then(() => {
+                this.updateChanges();
                 this.psService.sendMessage(false);
               })
               .catch(() => {
@@ -418,10 +455,11 @@ export class AssignmentComponent implements OnInit {
 
             finishPromise
               .then(() => {
-                //this.psService.sendMessage(false);
+                this.psService.sendMessage(false);
+                this.updateChanges();
               })
               .catch(() => {
-                //this.psService.sendMessage(false);
+                this.psService.sendMessage(false);
               });
           }
           else {

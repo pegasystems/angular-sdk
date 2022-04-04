@@ -22,6 +22,7 @@ export class ViewComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
   @Input() displayOnlyFA$ : boolean;
+  //@Input() updateToken$: number;
 
   angularPConnectData: any = { };
 
@@ -66,9 +67,12 @@ export class ViewComponent implements OnInit {
     }
   }
 
-  ngOnChanges() {
-    //this.updateSelf();
+  ngOnChanges(data: any) {
+
+
     this.checkAndUpdate();
+  
+    
   }
 
   updateSelf() {

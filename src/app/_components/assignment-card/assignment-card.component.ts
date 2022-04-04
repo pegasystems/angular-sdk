@@ -17,6 +17,7 @@ export class AssignmentCardComponent implements OnInit {
   @Input() arMainButtons$: Array<any>;
   @Input() arSecondaryButtons$: Array<any>;
   @Input() arChildren$: Array<any>;
+  @Input() updateToken$: number;
 
   @Output() ActionButtonClick: EventEmitter<any> = new EventEmitter();
 
