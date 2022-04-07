@@ -153,24 +153,41 @@ export class FileUtilityComponent implements OnInit {
     if (files.length > 0) {
       this.lu_bLoading$ = true;
     }
+    
+
+    const uploadedFiles = [];
 
     for (let file of files) {
       attachmentUtils
-      .uploadAttachmentAndLinkToCase(
+      .uploadAttachment(
         file,
-        caseID,
         this.onUploadProgress,
         this.errorHandler,
         this.pConn$.getContextName()
       )
-      .then(() => {
-        this.refreshAttachments(file.ID);
+      .then((fileResponse) => {
+
+        if (fileResponse.type === "File") {
+          attachmentUtils.linkAttachmentsToCase(
+            caseID,
+            [ fileResponse ],
+            "File",
+            this.pConn$.getContextName()
+          )
+          .then((attachments) => {
+            this.refreshAttachments(file.ID);
+          })
+          .catch(console.error);
+        }
       })
       .catch(console.error);
+
+
     }
 
-    // reset the list
-    this.arFiles$ = [];
+    this.arFileList$ = [];
+
+
 
   }
 
