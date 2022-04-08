@@ -52,7 +52,7 @@ export class TextComponent implements OnInit {
 
 
     // call updateSelf when initializing
-    this.updateSelf();
+    this.checkAndUpdate();
 
     
   }
@@ -65,7 +65,16 @@ export class TextComponent implements OnInit {
     }
   } 
 
-
+  checkAndUpdate() {
+    // Should always check the bridge to see if the component should
+    // update itself (re-render)
+    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
+  
+    // ONLY call updateSelf when the component should update
+    if (bUpdateSelf) {
+      this.updateSelf();
+    }
+  }
 
 
   // updateSelf
@@ -110,14 +119,7 @@ export class TextComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
-    // Should always check the bridge to see if the component should
-    // update itself (re-render)
-    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
-    // ONLY call updateSelf when the component should update
-    if (bUpdateSelf) {
-      this.updateSelf();
-    }
+    this.checkAndUpdate();
   }
 
 

@@ -39,6 +39,7 @@ export class AttachmentComponent implements OnInit {
 
   att_valueRef: any;
   att_categoryName: string;
+  att_id: string;
 
 
   // For interaction with AngularPConnect
@@ -62,11 +63,25 @@ export class AttachmentComponent implements OnInit {
 
 
     //let configProps: any = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    this.updateSelf();
+    this.checkAndUpdate();
 
   }
 
+
+  checkAndUpdate() {
+    // Should always check the bridge to see if the component should
+    // update itself (re-render)
+    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
+  
+    // ONLY call updateSelf when the component should update
+    if (bUpdateSelf) {
+      this.updateSelf();
+    }
+  }
+
   ngOnDestroy(): void {
+
+    this.att_id = "";
 
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
@@ -77,19 +92,7 @@ export class AttachmentComponent implements OnInit {
 
   // Callback passed when subscribing to store change
   onStateChange() {
-    // Should always check the bridge to see if the component should update itself (re-render)
-    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-
-    // ONLY call updateSelf when the component should update
-    //    AND removing the "gate" that was put there since shouldComponentUpdate
-    //      should be the real "gate"
-    if (bUpdateSelf) {
-
-        this.updateSelf();
-    }
-
-
-
+    this.checkAndUpdate();
   }
 
 
@@ -144,7 +147,8 @@ export class AttachmentComponent implements OnInit {
           this.pConn$.attachmentsInfo = {
             type: "File",
             attachmentFieldName: this.att_valueRef,
-            category: this.att_categoryName
+            category: this.att_categoryName,
+            ID: this.att_id
           };
         }
   
@@ -247,6 +251,8 @@ export class AttachmentComponent implements OnInit {
 
       this.bLoading$ = true;
 
+      myFiles[0].ID = undefined;
+
       this.PCore$.getAttachmentUtils()
         .uploadAttachment(
           myFiles[0],
@@ -256,6 +262,7 @@ export class AttachmentComponent implements OnInit {
         )
         .then((fileRes) => {
           
+          this.att_id = fileRes.ID;
 
           this.pConn$.attachmentsInfo = {
             type: "File",
