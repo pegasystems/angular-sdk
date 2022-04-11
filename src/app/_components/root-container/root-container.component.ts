@@ -220,7 +220,7 @@ export class RootContainerComponent implements OnInit {
       }
 
     } else if (renderingMode === noPortalMode) {
-      console.log(`RootContainer: renderingMode === noPortalMode: ${noPortalMode}`);
+      // console.log(`RootContainer: renderingMode === noPortalMode: ${noPortalMode}`);
 
       // bootstrap loadMashup resolves to here
 
