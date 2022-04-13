@@ -137,11 +137,26 @@ export class ReferenceComponent implements OnInit {
     if (thePConnType === 'reference') {
 
       if (returnObj) {
-        return inPConn.getPConnect().getReferencedViewPConnect();
+        //  WAS...
+        // const theRefViewPConn = inPConn.getPConnect().getReferencedViewPConnect();
+        // Now: ALWAYS calling createFullReferencedViewFromRef to have options, PageReference, etc.
+        //  set correctly in the C11nEnv (PConnect) object
+        // debugger;
+        let theRefViewPConn = this.createFullReferencedViewFromRef(inPConn.getPConnect());
+        // now return its PConnect
+        theRefViewPConn = theRefViewPConn.getComponent();
+
+        // const theFullReference = theRefViewPConn.getPConnect().getFullReference();
+        // console.log(`theFullReference: ${theFullReference}`);
+
+        return theRefViewPConn;
       } else {
         const theFullRefView = this.createFullReferencedViewFromRef(inPConn);
 
-          return theFullRefView;
+        // console.log(`created theFullRefView full reference: ${theFullRefView.getFullReference()}`);
+        // debugger;
+
+        return theFullRefView;
       }
     } else {
       return inPConn;

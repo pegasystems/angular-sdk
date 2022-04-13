@@ -146,7 +146,7 @@ export class MCNavComponent implements OnInit {
         // experiment with returning a PConnect that has deferenced the
         //  referenced View if the c11n is a 'reference' component
         const compType = c11nEnv.getPConnect().getComponentName();
-        console.log( `mc-nav - registerComponentCreator c11nEnv type: ${compType}`);        
+        // console.log( `mc-nav - registerComponentCreator c11nEnv type: ${compType}`);        
 
         return c11nEnv;
 
