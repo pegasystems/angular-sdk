@@ -3,7 +3,6 @@ import { ProgressSpinnerService } from "../../_messages/progress-spinner.service
 import { ErrorMessagesService } from "../../_messages/error-messages.service";
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { ActionSequence } from 'protractor';
-import { ThrowStmt } from '@angular/compiler';
 import { interval } from "rxjs/internal/observable/interval";
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AngularPConnectService } from "../../_bridge/angular-pconnect";

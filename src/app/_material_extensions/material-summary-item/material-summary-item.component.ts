@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Utf8AsciiBinaryEncoding } from 'crypto';
 import { Utils } from "../../_helpers/utils";
 
 @Component({

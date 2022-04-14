@@ -17,7 +17,7 @@ export class OAuthResponseService {
   }
 
   clearMessage() {
-      this.subject.next();
+      this.subject.next(undefined);
   }
 
   getMessage(): Observable<any> {
