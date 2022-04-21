@@ -4,7 +4,7 @@
 
 The **Angular SDK** provides Pega customers with a bridge from the Pega **Constellation JavaScript Engine** (part of the Pega Infinity&trade; product) to the Angular bridge and components in this repository.
 
-Many of the components in this SDK are built using [Angular Material components](https://material.angular.io/) - open source components that integrate seamlessly with Angular.
+Many of the components in this SDK are built using [Angular Material components](https://material.angular.io/) - open-source components that integrate seamlessly with Angular.
 
 Note: The Angular SDK is offered in early adopter mode. It is built on the new and modernized UI technology stack (the Constellation JavaScript Engine and Constellation JavaScript API). Currently offering a limited feature set, the Angular SDK is likely not yet suitable for production applications.
 
@@ -45,7 +45,7 @@ Please refer to the **Angular SDK Guide** provided in the Marketplace download f
     * The **authConfig** section contains values for the information you obtained earlier from OAuth: the Client ID, endpoints, etc.<br><br>
       * **Note:** it is **required** that you configure a value for **authConfig.mashupClientSecret**.
       * Navigate to Records / Security / OAuth 2.0 Client Registration landing page and open the `MediaCoOauthNoLogin` record
-      * Click the **Regenerate Client Secret** button, download the Client Credentials (as the ClientID and Secret values will be needed) and save the record.
+      * Click the **Regenerate Client Secret** button, download the Client Credentials (as the ClientID and Secret values will be needed), and save the record.
       * Then, use the generated **Client Secret** value as the value for**authConfig.mashupClientSecret**. (The ClientID value should remain unchanged.)
       <br><br>
    * The **serverConfig** section contains values related to the Pega Infinity server and SDK Content Server.
@@ -126,7 +126,7 @@ Note that the examples above are for the default configuration. If you change th
 
 The **APIHeadersAllowed** record on your Infinity server (found in Security | Cross Origin Resource Sharing) may need to be updated to allow the Angular SDK calls to Pega REST APIs and DX APIs to interact with Infinity.
 
-For the **APIHeadersAllowed** CORS record, please confirm of update the record as follows:
+For the **APIHeadersAllowed** CORS record, please confirm or update the record as follows:
 
 * **Allowed methods**
   * **All 5 methods** should be checked:
@@ -146,7 +146,7 @@ For the **APIHeadersAllowed** CORS record, please confirm of update the record a
 
 ### Runtime Error: net::ERR_CERT_INVALID
 
-Browsers are becoming much less tolerant with local, self-signed certificates or when no local, self-signed certificate exists. If you don’t have a trusted self-signed certificate and launch your application, you may see a blank screen accompanied by an error similar to this in your JS console:
+Browsers are less tolerant of local, self-signed certificates or when no local, self-signed certificate exists. If you don’t have a trusted self-signed certificate and launch your application, you may see a blank screen accompanied by an error similar to this in your JS console:
 
 POST https://localhost:1080/prweb/PRRestService/oauth2/v1/token **net::ERR_CERT_INVALID**
 
@@ -207,12 +207,12 @@ If you configure your installation to have the Angular SDK static content served
 
 If the `MediaCo` app was imported to your Infinity server, a `MediaCoOAuth` OAuth 2.0 Client Registration record will have been imported as well. That record's clientId is currently referenced within sdk-config.json.  However, you can create your own OAuth 2.0 Client Registration record using the following procedure:
    * Create a new "Security/OAuth 2.0 Client Registration" record for your app
-   * You might name it the same name as your applicaion
+   * You might name it the same name as your application
    * Specify "Public" for the type of client (as browser apps are not able to prevent any "Client secret" from being compromised)
    * Select "Authorization Code" for the Grant type
    * Add a RedirectURI value based on the url used to access the deployed Angular SDK (e.g., http://localhost:3500/auth.html)
    * Enable the "Enable proof code for pkce" option
-   * Set the "Access token lifetime" for how long you want the logged in session to last.  Pega does not presently support the ability to referesh the token (for Public clients), so the user will have to reauthenticate again after this interval.
+   * Set the "Access token lifetime" for how long you want the logged-in session to last.  Pega does not presently support the ability to refresh the token (for Public clients), so the user will have to reauthenticate again after this interval.
    * Enter the appropriate values within **sdk-config.json**
 
 <br>
@@ -259,7 +259,7 @@ subjectAltName = @alt_names
 DNS.1   = localhost
    ```
 
-Step 3: Create a Certificate Signing Request (will be prompted for a pass phrase for new key)
+Step 3: Create a Certificate Signing Request (will be prompted for a passphrase for the new key)
 
    ```
    $ openssl req -new -sha256 -out private.csr -in private.key -config ssl.conf
@@ -280,7 +280,7 @@ Step 6: Create a pem file from crt
    ```
    $ openssl x509 -in private.crt -out private.pem -outform PEM
    ```
-Step 7: Run webpack server with arguments to use the keys (assumes private.pem and private.key are in root project directory).  May need to close prior open instances of browser (if previously accessed prior insecure localhost)
+Step 7: Run webpack server with arguments to use the keys (assumes private.pem and private.key are in the root project directory).  May need to close prior open instances of browser (if previously accessed prior insecure localhost)
 
    ```
    $ npm run localhostsecure
