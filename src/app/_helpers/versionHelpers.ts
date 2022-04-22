@@ -7,7 +7,7 @@
 
 declare const PCore;
 
-export const sdkVersion = "8.7";
+export const sdkVersion = "8.8";
 
 export function compareSdkPCoreVersions() {
 

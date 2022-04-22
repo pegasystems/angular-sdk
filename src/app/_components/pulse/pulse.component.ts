@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-pulse',

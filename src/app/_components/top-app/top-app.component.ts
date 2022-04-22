@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChangeDetectorRef } from "@angular/core";
 import { interval } from "rxjs/internal/observable/interval";
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Subscribable, Subscription } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { compareSdkPCoreVersions } from 'src/app/_helpers/versionHelpers';

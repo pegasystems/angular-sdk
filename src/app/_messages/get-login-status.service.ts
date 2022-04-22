@@ -13,7 +13,7 @@ export class GetLoginStatusService {
   }
 
   clearMessage() {
-      this.subject.next();
+      this.subject.next(undefined);
   }
 
   getMessage(): Observable<any> {
