@@ -48,7 +48,7 @@
     "google-libphonenumber": "^3.2.27",
     "intl-tel-input": "^17.0.3",
     "md5-file": "^5.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.3",
     "ncp": "^2.0.0",
     "ngx-bootstrap": "^6.2.0",
     "ngx-intl-tel-input": "^3.1.3",
