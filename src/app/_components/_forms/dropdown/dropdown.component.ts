@@ -139,8 +139,12 @@ export class DropdownComponent implements OnInit {
 
     this.componentReference = this.pConn$.getStateProps().value;
 
-    this.options$ = this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject());
-
+    const optionsList = this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject());
+    optionsList.unshift({key: 'Select', value: 'Select...'});
+    this.options$ = optionsList;
+    if (this.value$ === '' && !this.bReadonly$) {
+      this.value$ = 'Select';
+    }
     // trigger display of error message with field control
     if (null != this.angularPConnectData.validateMessage && "" != this.angularPConnectData.validateMessage) {
       let timer = interval(100).subscribe(() => {
@@ -164,7 +168,9 @@ export class DropdownComponent implements OnInit {
   }
 
   fieldOnChange(event: any) {
- 
+    if (event?.value === 'Select') {
+      event.value = '';
+    }
     this.angularPConnectData.actions.onChange(this, event);
 
   }
