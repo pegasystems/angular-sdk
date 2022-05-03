@@ -2,11 +2,12 @@
 
 # Angular SDK
 
-The **Angular SDK** provides Pega customers with a bridge from the Pega **Constellation JavaScript Engine** (part of the Pega Infinity&trade; product) to the Angular bridge and components in this repository.
+The **Angular SDK** provides Pega customers with the ability to build DX components that connect Pega’s ConstellationJS Engine APIs with a design system other than Pega Cosmos.
 
-Many of the components in this SDK are built using [Angular Material components](https://material.angular.io/) - open source components that integrate seamlessly with Angular.
+The Angular SDK differs from out-of-the-box Cosmos React because it provides and demonstrates the use of a design system that is not the Pega **Cosmos React** design system. The alternative design system used in this Angular SDK is 
+ [Angular Material](https://material.angular.io/) - open-source components that integrate seamlessly with Angular.
 
-Note: The Angular SDK is offered in early adopter mode. It is built on the new and modernized UI technology stack (the Constellation JavaScript Engine and Constellation JavaScript API). Currently offering a limited feature set, the Angular SDK is likely not yet suitable for production applications.
+The Angular SDK is built on a new and modernized UI technology stack (the Constellation JavaScript Engine and Constellation JavaScript API).  Many additional SDK features are planned for 2022 to expand the scope of supported use cases.
 
 <br>
 
@@ -14,11 +15,17 @@ Note: The Angular SDK is offered in early adopter mode. It is built on the new a
 
 ## Pega Infinity Server and Constellation-enabled Application
 
-The Angular SDK assumes that you have access to a Pega Infinity server (8.6.1 GA) running an application that is configured to run using the Constellation UI service. The sample application can be found in the Angular SDK download associated with this repo that is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk)
+This **8.6 version** Angular SDK assumes that you have access to a Pega Infinity server (**8.6.1+ GA**) running an application that is configured to run using the Constellation UI service.
 
-We provide a sample application - **MediaCo** - to licensed Pega Infinity customers that is configured as a Constellation application.
+The **MediaCo** sample application is already configured as a Constellation application and can be found in the Angular SDK download associated with this repo which is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk). The OAuth 2.0 Client Registration records associated with the **MediaCo** application are available in the same Angular SDK download.
 
-Please refer to the **Angular SDK Guide** provided in the Marketplace download for steps to prepare your Infinity server and node environment for steps in the next section.
+The **Angular SDK** has been tested with:
+- node 14.18.*
+- npm 6.14.*
+
+Future updates to the SDK will support more recent LTS versions of node as Constellation supports them.
+
+**Before** installing and running the SDK code, please refer to the **Angular SDK Guide** provided in the Marketplace download for steps to prepare your Infinity server and node environment so you can proceed with the steps in the next section.
 
 <br>
 
@@ -33,17 +40,20 @@ Please refer to the **Angular SDK Guide** provided in the Marketplace download f
     $ cd <kit location>
 
     (This next step is strongly recommended if you have a node_modules directory installed from an earlier version of the kit)
-    $ rm node_modules
+    $ rm -rf node_modules
 
     $ npm install
     ```
 
 ### **Configure** the Angular SDK
 
-2. Edit **sdk-config.js** and, if necessary, update the values that will be used
+See the **Angular SDK Guide** in the Marketplace download for more complete documentation about the configuration of the Angular SDK via the **sdk-config.json** file.
 
-    * The **authConfig** section contains values for the information you obtained earlier from OAuth: the Client ID, endpoints, etc.<br><br>
-      * **Note:** it is **required** that you configure a value for **authConfig.mashupClientSecret**.
+2. Edit **sdk-config.json** and, if necessary, update the values that will be used
+    * The **authConfig** section contains values for the information you obtained earlier from OAuth: the Client ID, endpoints, etc.
+    The default **sdk-config.json** file is set up to use the **MediaCoOauth** and **MediaCoOauthNoLogin** records that are included with the Angular SDK Marketplace download.
+    <br><br>
+      * **Note:** it is **required** that you configure a value for **authConfig.mashupClientSecret**. The **/embedded** use _**will not work**_ until the correct `mashupClientSecret` is provided.
       * Navigate to Records / Security / OAuth 2.0 Client Registration landing page and open the `MediaCoOauthNoLogin` record
       * Click the **Regenerate Client Secret** button, download the Client Credentials (as the ClientID and Secret values will be needed) and save the record.
       * Then, use the generated **Client Secret** value as the value for**authConfig.mashupClientSecret**. (The ClientID value should remain unchanged.)
@@ -51,7 +61,7 @@ Please refer to the **Angular SDK Guide** provided in the Marketplace download f
    * The **serverConfig** section contains values related to the Pega Infinity server and SDK Content Server.
    <br><br>
 
-3. Obtain the necessary Constellation files (ex: bootstrap-shell, lib_asset, constellation-core) that need to be installed to enable the SDK to connect to the Constellation UI Service. Licensed and authorized Pega clients can access these files from the SDK download at https://community.pega.com/marketplace/components/angular-sdk or from a Pega representative. Instructions for installing these files can be found in **constellation/__Install-constellation-files.md**
+3. Obtain the necessary Constellation files (ex: bootstrap-shell, lib_asset, constellation-core) that need to be installed to enable the SDK to connect to the Constellation UI Service. These files are available in the SDK download at https://community.pega.com/marketplace/components/angular-sdk. Instructions for installing these files can be found in **constellation/__Install-constellation-files.md**
 
 
 ### **Run** the application
@@ -74,7 +84,7 @@ Please refer to the **Angular SDK Guide** provided in the Marketplace download f
 
     4.3 Build without clean and install and enable live reload (compiles and reloads the page whenever a project file is saved during development; assumes npm install has already been run)
    ```
-   $ ng serve
+   $ npm run ng serve
    ```
 
 5. **Production build and start**
