@@ -12,13 +12,13 @@
     <div>
         <ul class="psdk-nav-ul-middle">
             <li class="psdk-nav-li-middle">
-                <button mat-button (click)="navPanelCreateButtonClick()" style="width: 100%; text-align: left; padding: 1rem 0rem;">
+                <button id="create-button" mat-button (click)="navPanelCreateButtonClick()" style="width: 100%; text-align: left; padding: 1rem 0rem;">
                     <img  class="psdk-nav-svg-icon" src="{{navExpandCollapse$}}" >
                     <span class="psdk-nav-button-span">Create</span>
                 </button>
                 <div *ngIf="bShowCaseTypes$" style="padding-left: 40px;">
                     <div *ngFor="let caseType of caseTypes$" style="display:flex">
-                        <button mat-button 
+                        <button mat-button id="create-case"
                         (click)="navPanelCreateCaseType(caseType.pyClassName, caseType.pyFlowType);">{{caseType.pyLabel}}</button>
                     </div>
                 </div>

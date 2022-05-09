@@ -18,7 +18,7 @@ export class CheckBoxComponent implements OnInit {
   label$: string = "";
   value$: any = "";
   caption$: string = "";
-
+  testId: string = "";
 
 
   showLabel$ : boolean = false;
@@ -112,7 +112,7 @@ export class CheckBoxComponent implements OnInit {
     if (this.configProps$["value"] != undefined) {
       this.value$ = this.configProps$["value"];
     }
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
 
     this.caption$ = this.configProps$["caption"];

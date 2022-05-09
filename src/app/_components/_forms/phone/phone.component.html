@@ -1,7 +1,7 @@
 <div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
   <div #f="ngForm" [formGroup]="formGroup$">
     <div class="psdk-full-width">
-      <ngx-intl-tel-input [cssClass]="'custom'"
+      <ngx-intl-tel-input [cssClass]="'custom'" [attr.data-test-id]="testId"
         [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
         [selectedCountryISO]="CountryISO.UnitedStates" [maxLength]="15"

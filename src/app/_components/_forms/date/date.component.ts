@@ -28,7 +28,7 @@ export class DateComponent implements OnInit {
   fieldControl = new FormControl('', null);
   // Used with AngularPConnect
   angularPConnectData: any = {};
-
+  testId: string = "";
   constructor(private angularPConnect: AngularPConnectService,
               private cdRef: ChangeDetectorRef,
               private utils: Utils) {
@@ -107,7 +107,7 @@ export class DateComponent implements OnInit {
         this.value$ = new Date(sDateValue);
       }
     }
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
 
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError

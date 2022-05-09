@@ -30,7 +30,7 @@ export class DateTimeComponent implements OnInit {
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
-
+  testId: string = "";
   constructor(private angularPConnect: AngularPConnectService,
     private cdRef: ChangeDetectorRef,
     private utils: Utils) {
@@ -90,7 +90,7 @@ export class DateTimeComponent implements OnInit {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
     this.label$ = this.configProps$["label"];
-
+    this.testId = this.configProps$["testId"];
     if (this.configProps$["value"] != undefined) {
       const value = this.configProps$["value"];
       this.value$ = value ? value.replace("Z", "") : value;;

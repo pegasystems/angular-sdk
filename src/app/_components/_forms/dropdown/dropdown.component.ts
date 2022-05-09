@@ -35,7 +35,7 @@ export class DropdownComponent implements OnInit {
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
-
+  testId: string = "";
 
   constructor(private angularPConnect: AngularPConnectService,
               private cdRef: ChangeDetectorRef,
@@ -106,7 +106,7 @@ export class DropdownComponent implements OnInit {
       this.value$ = this.configProps$["value"];
     }
   
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
 
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError

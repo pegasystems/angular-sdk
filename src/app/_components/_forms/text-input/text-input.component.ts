@@ -26,7 +26,7 @@ export class TextInputComponent implements OnInit {
   bDisabled$: boolean = false;
   bVisible$: boolean = true;
   controlName$: string;
-
+  testId: string = "";
   bHasForm$: boolean = true;
 
   componentReference: string = "";
@@ -115,6 +115,7 @@ export class TextInputComponent implements OnInit {
       this.value$ = this.configProps$["value"];
     }
   
+    this.testId = this.configProps$["testId"];
 
     this.label$ = this.configProps$["label"];
     this.componentReference = this.pConn$.getStateProps().value;
