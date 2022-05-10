@@ -55,3 +55,5 @@ constellation/*
 # localhost cert files
 /private.*
 /ssl.conf
+test-results/
+playwright-report/
