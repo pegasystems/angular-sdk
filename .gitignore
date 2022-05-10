@@ -57,3 +57,5 @@ constellation/*
 /ssl.conf
 test-results/
 playwright-report/
+
+.angular
