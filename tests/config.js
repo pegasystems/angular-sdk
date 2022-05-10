@@ -8,6 +8,14 @@ const config = {
           username: "rep@mediaco",
           password: "pega",
         },
+        manager: {
+          username: 'manager@mediaco',
+          password: 'pega'
+        },
+        tech: {
+          username: 'tech@mediaco',
+          password: 'pega'
+        }
       },
     },
     testsetting: {
