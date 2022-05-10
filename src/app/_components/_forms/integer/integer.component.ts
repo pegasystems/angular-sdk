@@ -27,7 +27,7 @@ export class IntegerComponent implements OnInit {
   bHasForm$: boolean = true;
 
   componentReference: string = "";
-  
+  testId: string;
 
   fieldControl = new FormControl('', null); 
 
@@ -98,7 +98,7 @@ export class IntegerComponent implements OnInit {
 
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
     let nValue = this.configProps$["value"];
     if (nValue) {

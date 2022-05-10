@@ -32,7 +32,7 @@ export class TextAreaComponent implements OnInit {
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
-  
+  testId: string;
 
   constructor(private angularPConnect: AngularPConnectService,
               private cdRef: ChangeDetectorRef,
@@ -101,7 +101,7 @@ export class TextAreaComponent implements OnInit {
     if (this.configProps$["value"] != undefined) {
       this.value$ = this.configProps$["value"];
     }
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
 
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError

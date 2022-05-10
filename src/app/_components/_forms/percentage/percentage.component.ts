@@ -25,7 +25,7 @@ export class PercentageComponent implements OnInit {
   fieldControl = new FormControl('', null); 
   // Used with AngularPConnect
   angularPConnectData: any = {};
-
+  testId: string;
   constructor(private angularPConnect: AngularPConnectService, 
               private cdRef: ChangeDetectorRef,
               private utils: Utils) {   
@@ -85,7 +85,7 @@ export class PercentageComponent implements OnInit {
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
     let nValue = this.configProps$["value"];
     if (nValue) {

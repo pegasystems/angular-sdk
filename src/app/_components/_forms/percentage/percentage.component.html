@@ -4,7 +4,7 @@
         <mat-label>{{label$}}</mat-label>
         <!-- <span matPrefix>% &nbsp;</span> -->
         <input matInput  [placeholder]="" type="number" step=".01" [value]="value$" [required]="bRequired$" 
-        [formControlName]="controlName$" 
+        [formControlName]="controlName$" [attr.data-test-id]="testId"
         (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)" >
         <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>

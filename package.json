@@ -24,7 +24,9 @@
     "prod-build-angularsdk": "rimraf ./dist && npm run prod-build && npm run copy-extra && npm run copy-index && npm run make-mashup-dir && npm run copy-core && npm run compress-angularsdk",
     "start": "npm run copy-extra && ng serve",
     "start-angularsdk": "lite-server --baseDir='./dist'",
-    "start-https-angularsdk": "lite-server --baseDir='./dist' -c bs-config-https.json"
+    "start-https-angularsdk": "lite-server --baseDir='./dist' -c bs-config-https.json",
+    "test": "playwright test --headed --project=chromium",
+    "test-report": "playwright show-report"
   },
   "private": true,
   "dependencies": {
@@ -68,6 +70,7 @@
     "@angular/cli": "^11.2.13",
     "@angular/compiler-cli": "^11.2.14",
     "@angular/language-service": "^11.2.14",
+    "@playwright/test": "^1.21.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^13.9.4",

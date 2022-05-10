@@ -2,7 +2,7 @@
   <div [formGroup]="formGroup$">
     <div *ngIf="bVisible$"  >
       <mat-form-field class="psdk-full-width">
-        <textarea matInput rows="5" [placeholder]="label$" type="text"
+        <textarea matInput rows="5" [placeholder]="label$" type="text" [attr.data-test-id]="testId"
         [value]="value$" 
         [required]="bRequired$"
         [disabled]="bDisabled$"

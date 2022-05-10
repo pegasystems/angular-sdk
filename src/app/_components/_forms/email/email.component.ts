@@ -32,7 +32,7 @@ export class EmailComponent implements OnInit {
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
-
+  testId: string;
   constructor(private angularPConnect: AngularPConnectService,
               private cdRef: ChangeDetectorRef,
               private utils: Utils) {   
@@ -97,7 +97,7 @@ export class EmailComponent implements OnInit {
 
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
 
     if (this.configProps$["value"] != undefined) {

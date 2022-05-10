@@ -27,7 +27,7 @@ export class PhoneComponent implements OnInit {
   bHasForm$: boolean = true;
 
   componentReference: string = "";
-  
+  testId: string;
 
   fieldControl = new FormControl('', null); 
 
@@ -107,7 +107,7 @@ export class PhoneComponent implements OnInit {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
     this.label$ = this.configProps$["label"];
-
+    this.testId = this.configProps$["testId"];
     if (this.configProps$["value"] != undefined) {
       this.value$ = this.configProps$["value"];
     }

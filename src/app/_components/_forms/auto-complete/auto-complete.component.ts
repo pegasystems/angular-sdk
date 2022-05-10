@@ -29,7 +29,7 @@ export class AutoCompleteComponent implements OnInit {
   options$: Array<any>;
 
   componentReference: string = "";
-  
+  testId: string;
 
   fieldControl = new FormControl('', null); 
 
@@ -108,7 +108,7 @@ export class AutoCompleteComponent implements OnInit {
       this.value$ = this.configProps$["value"];
     }
   
-
+    this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
 
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError

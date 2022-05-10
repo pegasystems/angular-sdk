@@ -3,7 +3,8 @@
       <mat-form-field class="psdk-full-width" >
         <mat-label>{{label$}}</mat-label>
         <input 
-          matInput 
+          matInput
+          [attr.data-test-id]="testId" 
           [placeholder]="" 
           type="datetime-local" 
           [value]="value$"

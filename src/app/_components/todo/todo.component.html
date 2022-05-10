@@ -1,7 +1,7 @@
 <div class="psdk-todo">
     <div class="psdk-todo-header">
         <div *ngIf= "showTodoList$" class="psdk-avatar">{{this.currentUserInitials$}}</div>
-        <div class="psdk-todo-text ">{{headerText$}}</div>
+        <div id="worklist" class="psdk-todo-text ">{{headerText$}}</div>
         <div *ngIf= "showTodoList$" class="psdk-assignment-count">{{assignmentCount$}}</div>
     </div>
     <br><br>
