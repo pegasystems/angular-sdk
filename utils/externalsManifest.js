@@ -124,18 +124,18 @@ CopyWebpackExternalsManifest.prototype.apply = function (compiler) {
 
     //const bootMashupDest = path.join(`${distDir}`, "../bootstrap-shell-mashup.js");
 
-    fse
-      .copy(
-        path.join(`${__dirname}`, "../constellation/bootstrap-shell.js"),
-        `${bootDest}`
-      )
-      .then(() => {
-        console.log("Successfully Added boostrap-shell");
-
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // fse
+    //   .copy(
+    //     path.join(`${__dirname}`, "../constellation/bootstrap-shell.js"),
+    //     `${bootDest}`
+    //   )
+    //   .then(() => {
+    //     console.log("Successfully Added bootstrap-shell");
+    //
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
 
       fse
       .copy(

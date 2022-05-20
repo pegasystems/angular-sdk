@@ -61,8 +61,6 @@ See the **Angular SDK Guide** in the Marketplace download for more complete docu
    * The **serverConfig** section contains values related to the Pega Infinity server and SDK Content Server.
    <br><br>
 
-3. Obtain the necessary Constellation files (ex: bootstrap-shell, lib_asset, constellation-core) that need to be installed to enable the SDK to connect to the Constellation UI Service. These files are available in the SDK download at https://community.pega.com/marketplace/components/angular-sdk. Instructions for installing these files can be found in **constellation/__Install-constellation-files.md**
-
 
 ### **Run** the application
 
