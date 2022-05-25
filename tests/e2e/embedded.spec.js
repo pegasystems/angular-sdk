@@ -24,7 +24,7 @@ test.describe("E2E test", () => {
 
     const suffix = page.locator('input[data-test-id="56E6DDD1CB6CEC596B433440DFB21C17"]');
     await suffix.click();
-    await page.locator('mat-option[ng-reflect-value="Jr"]').click();
+    await page.locator('mat-option:has-text("Jr")').click();
 
     const emailInput = page.locator('input[data-test-id="CE8AE9DA5B7CD6C3DF2929543A9AF92D"]');
     await emailInput.click();
@@ -50,7 +50,7 @@ test.describe("E2E test", () => {
 
     const state = page.locator('mat-select[data-test-id="46A2A41CC6E552044816A2D04634545D"]');
     await state.click();
-    await page.locator('mat-option[ng-reflect-value="MA"]').click();
+    await page.locator('mat-option:has-text("MA")').click();
 
     const postalCodeInput = page.locator('input[data-test-id="572ED696F21038E6CC6C86BB272A3222"]');
     await postalCodeInput.click();

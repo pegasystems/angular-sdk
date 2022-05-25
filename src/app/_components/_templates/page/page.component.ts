@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ThrowStmt } from '@angular/compiler';
 import { ProgressSpinnerService } from "../../../_messages/progress-spinner.service";
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
 
