@@ -3,7 +3,6 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Utils } from "../../../_helpers/utils";
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
 import { interval } from "rxjs/internal/observable/interval";
-import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
