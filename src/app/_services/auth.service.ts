@@ -346,6 +346,9 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
       authConfig.userIdentifier = sdkConfigAuth.mashupUserIdentifier;
       authConfig.password = sdkConfigAuth.mashupPassword;
     }
+    if( sdkConfigAuth.iframeLoginUI ){
+      authConfig.iframeLoginUI = true;
+    }
   
     // Check if sessionStorage exists (and if so if for same authorize endpoint).  Otherwise, assume
     //  sessionStorage is out of date (user just edited endpoints).  Else, logout required to clear
