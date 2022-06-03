@@ -40,18 +40,28 @@
                 "output": "./"
               },
               {
-                "glob": "bootstrap-shell.js",
-                "input": "./constellation/",
+                "glob": "bootstrap-shell.*",
+                "input": "./node_modules/@pega/constellationjs/dist/",
+                "output": "./constellation"
+              },
+              {
+                "glob": "bootstrap-shell.*.*",
+                "input": "./node_modules/@pega/constellationjs/dist/",
                 "output": "./constellation"
               },
               {
                 "glob": "lib_asset.json",
-                "input": "./constellation/",
+                "input": "./node_modules/@pega/constellationjs/dist/",
                 "output": "./constellation"
               },
               {
+                "glob": "constellation-core.*",
+                "input": "./node_modules/@pega/constellationjs/dist/",
+                "output": "./constellation/prerequisite"
+              },
+              {
                 "glob": "constellation-core.*.*",
-                "input": "./constellation/",
+                "input": "./node_modules/@pega/constellationjs/dist/",
                 "output": "./constellation/prerequisite"
               },
               {
