@@ -171,7 +171,7 @@ test.describe('E2E test', () => {
 
     await page.locator('button:has-text("submit")').click();
 
-    await page.locator('text=Resolved').click();
+    await page.locator('text=RESOLVED-COMPLETED').click();
   }, 10000);
 });
 
