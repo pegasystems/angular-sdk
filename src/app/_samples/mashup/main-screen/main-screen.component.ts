@@ -39,7 +39,7 @@ export class MainScreenComponent implements OnInit {
       this.PCore$ = window.PCore;
     }
 
-    this.cableInfo$ = "../constellation/assets/cableinfo.png";
+    this.cableInfo$ = "constellation/assets/cableinfo.png";
 
     // first
  
