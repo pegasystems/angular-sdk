@@ -35,7 +35,7 @@ jobs:
       - uses: "finnp/create-file-action@master"
         env:
           FILE_NAME: "constellation/constellation-core.placeholder.js"
-          FILE_DATA: "// placeholder for constellaiton-core.js"
+          FILE_DATA: "// placeholder for constellation-core.js"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
