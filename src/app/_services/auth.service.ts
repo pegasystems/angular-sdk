@@ -186,7 +186,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
     })
   })
   .catch( e => {
-    console.error(`Failed to import bootsratp-shell.js. ${e}`);
+    console.error(`Failed to import bootstrap-shell.js. ${e}`);
   });
   /* Ends here */
 };

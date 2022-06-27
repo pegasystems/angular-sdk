@@ -58,7 +58,8 @@ Future updates to the SDK will support more recent LTS versions of node as Const
    * The **serverConfig** section contains values related to the Pega Infinity server and SDK Content Server.
    <br><br>
 
-3. Obtain the necessary Constellation files (ex: bootstrap-shell, lib_asset, constellation-core) that need to be installed to enable the SDK to connect to the Constellation UI Service. Licensed and authorized Pega clients can access these files from the SDK download at https://community.pega.com/marketplace/components/angular-sdk or from a Pega representative. Instructions for installing these files can be found in **constellation/__Install-constellation-files.md**
+3. Edit the **package.json** file's dependency for **[@pega/constellationjs](https://www.npmjs.com/package/@pega/constellationjs)** with the **tag name** that is appropriate for the Pega Infinity version that your application is running. For example, Infinity 8.7.1 uses the tag "**SDK-8.7.1**", Infinity 8.7.2 uses the tag "**SDK-8.7.2**", etc. You must **always** use the appropriate Constellation files that match your Infinity deployment. Please check your Infinity version and choose the correct version.
+<br><br>
 
 
 ### **Run** the application
