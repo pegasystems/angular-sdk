@@ -33,7 +33,7 @@ export class ListViewComponent implements OnInit {
 
   @Input() pConn$: any;
   @Input() bInForm$: boolean = false;
-
+  @Input() payload;
 
   repeatList$: MatTableDataSource<any>;
   fields$ : Array<any>;
@@ -134,7 +134,7 @@ export class ListViewComponent implements OnInit {
     this.searchIcon$ = this.utils.getImageSrc("search", this.PCore$.getAssetLoader().getStaticServerUrl());
 
     // returns a promise
-    const workListData = this.PCore$.getDataApiUtils().getData(refList, {});
+    const workListData = this.PCore$.getDataApiUtils().getData(refList, this.payload);
 
 
 

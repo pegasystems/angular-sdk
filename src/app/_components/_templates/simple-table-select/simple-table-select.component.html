@@ -1,0 +1,8 @@
+<div>
+    <div *ngIf="isSearchable else listView">
+        <app-promoted-filters [formGroup$]="formGroup$" [pConn$]=pConn$ [viewName]=viewName [filters]=filters [listViewProps]=listViewProps [pageClass]=pageClass></app-promoted-filters>
+    </div>
+    <ng-template #listView>
+        <app-list-view [pConn$]="pConn$"></app-list-view>
+    </ng-template>
+</div>
