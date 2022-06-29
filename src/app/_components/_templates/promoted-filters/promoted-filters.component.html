@@ -1,0 +1,24 @@
+<div>
+    <div>{{listViewProps.title}}</div>
+    <div *ngIf="showFilters">
+        <div *ngFor="let kid of processedFilters">
+            <div [ngSwitch]="kid.getPConnect().getComponentName()">
+                <app-text-input  *ngSwitchCase="'TextInput'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-text-input>
+                <app-currency  *ngSwitchCase="'Currency'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-currency>
+                <div  *ngSwitchDefault >Region  wants component not yet available: {{kid.getPConnect().getComponentName()}}</div>
+            </div>  
+        </div>
+    </div>
+    
+    <div>
+        <button key='1' type='button' (click)="clearFilterData()" data-testid='clear' mat-raised-button color="secondary">
+            {{localizedVal('Clear', localeCategory)}}
+        </button>
+        <button style="float: 'right'" key='2' type='submit' (click)="getFilterData()" data-testid='search' mat-raised-button color="primary">
+            {{localizedVal('Search', localeCategory)}}
+        </button>
+    </div>
+    <div *ngIf="showTable">
+        <app-list-view [pConn$]="pConn$" [payload]="payload"></app-list-view>
+    </div>
+</div>
