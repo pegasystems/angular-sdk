@@ -131,6 +131,9 @@ import { ReferenceComponent } from './_components/reference/reference.component'
 import { OneColumnTabComponent } from './_components/_templates/one-column-tab/one-column-tab.component';
 import { AuthService } from './_services/auth.service';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { DataReferenceComponent } from './_components/_templates/data-reference/data-reference.component';
+import { SimpleTableSelectComponent } from './_components/_templates/simple-table-select/simple-table-select.component';
+import { PromotedFiltersComponent } from './_components/_templates/promoted-filters/promoted-filters.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -219,7 +222,10 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     WideNarrowPageComponent,
     SimpleTableComponent,
     ReferenceComponent,
-    OneColumnTabComponent
+    OneColumnTabComponent,
+    DataReferenceComponent,
+    SimpleTableSelectComponent,
+    PromotedFiltersComponent
   ],
   imports: [
     BrowserModule,

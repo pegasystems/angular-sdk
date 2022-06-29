@@ -1,0 +1,8 @@
+<div *ngIf="childrenToRender && childrenToRender.length > 0">
+    <div *ngFor="let kid of childrenToRender">
+        <div [ngSwitch]="kid.getPConnect().getComponentName()">
+            <app-dropdown  *ngSwitchCase="'Dropdown'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-dropdown>
+            <app-simple-table-select *ngSwitchCase="'SimpleTableSelect'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-simple-table-select>
+        </div>
+    </div>
+</div>

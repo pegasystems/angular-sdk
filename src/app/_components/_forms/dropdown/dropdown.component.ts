@@ -140,7 +140,7 @@ export class DropdownComponent implements OnInit {
     this.componentReference = this.pConn$.getStateProps().value;
 
     const optionsList = this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject());
-    optionsList.unshift({key: 'Select', value: 'Select...'});
+    optionsList?.unshift({key: 'Select', value: 'Select...'});
     this.options$ = optionsList;
     if (this.value$ === '' && !this.bReadonly$) {
       this.value$ = 'Select';
