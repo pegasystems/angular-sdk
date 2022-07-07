@@ -17,7 +17,7 @@ The Angular SDK is built on a new and modernized UI technology stack (the Conste
 
 This **8.6 version** Angular SDK assumes that you have access to a Pega Infinity server (**8.6.1+ GA**) running an application that is configured to run using the Constellation UI service.
 
-The **MediaCo** sample application is already configured as a Constellation application and can be found in the Angular SDK download associated with this repo which is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk). The OAuth 2.0 Client Registration records associated with the **MediaCo** application are available in the same Angular SDK download.
+The **MediaCo** sample application is already configured as a Constellation application and can be found in the Angular SDK download associated with this repo which is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk). The OAuth 2.0 Client Registration records associated with the **MediaCo** application are available in the same Angular SDK download. For more information about the MediaCo sample application, see [MediaCo sample application](https://docs.pega.com/dx-sdks/mediaco-sample-application).
 
 The **Angular SDK** has been tested with:
 - node 14.18.*
@@ -61,7 +61,7 @@ See the **Angular SDK Guide** in the Marketplace download for more complete docu
    * The **serverConfig** section contains values related to the Pega Infinity server and SDK Content Server.
    <br><br>
 
-3. Edit the **package.json** file's dependency for **[@pega/constellationjs](https://www.npmjs.com/package/@pega/constellationjs)** with the **tag name** that is appropriate for the Pega Infinity version that your application is running. For example, Infinity 8.6.3 uses the tag "**SDK-8.6.3**", Infinity 8.6.4 uses the tag "**SDK-8.6.4**", etc. You must **always** use the appropriate Constellation files that match your Infinity deployment. Please check your Infinity version and choose the correct version.
+3. Edit the **package.json** file's dependency for **[@pega/constellationjs](https://www.npmjs.com/package/@pega/constellationjs)** with the **tag name** that is appropriate for the Pega Infinity version that your application is running. For example, Infinity 8.6.3 uses the tag "**SDK-8.6.3**", Infinity 8.6.4 uses the tag "**SDK-8.6.4**", etc. You must **always** use the appropriate Constellation files that match your Infinity deployment. 
 <br><br>
 
 
@@ -111,11 +111,11 @@ See the **Angular SDK Guide** in the Marketplace download for more complete docu
 
 6. **Embedded** (formerly known as Mashup)
 
-    6.1 Access **http://localhost:3500/embedded** or **https://localhost:3500/embedded** (if run start-https was used)
+    6.1 Access **http://localhost:3500/embedded** or **https://localhost:3500/embedded** (if ```run start-https``` is used)
 
 7.  **Portal**
 
-    7.1 Access **http://localhost:3500/portal** or **https://localhost:3500/portal** (if run start-https was used)
+    7.1 Access **http://localhost:3500/portal** or **https://localhost:3500/portal** (if ```run start-https``` is used)
 
     **If you see a blank page**, check your JavaScript console to see if you have encountered a net::ERR_CERT_INVALID error. If you encounter this error, see the troubleshooting section below: **Runtime Error: net::ERR_CERT_INVALID**. Due to browser interactions during login, it can be easier to find and fix this error using the Portal URL.
 
@@ -129,7 +129,7 @@ Note that the examples above are for the default configuration. If you change th
 <br>
 
 
-> **NOTE**: These setup tips are abstracted from the Angular SDK Guide that is available to licensed Pega Infinity clients at https://community.pega.com/marketplace/components/angular-sdk.
+> **NOTE**: These setup tips are abstracted from the Angular SDK Guide that is available to licensed Pega Infinity clients at https://community.pega.com/marketplace/components/angular-sdk. For more information about troubleshooting, see [Troubleshooting the DX SDKs](https://docs.pega.com/dx-sdks/troubleshooting-dx-sdks).
 
 <br>
 
@@ -190,21 +190,21 @@ To ensure that the application is redirected to the proper page after authentica
 
 The MediaCoOauth and MediaCoOauthNoLogin records that are included with the MediaCo sample application include the necessary redirect URIs for the default configuration:
 
-* http://localhost:3500/auth.html and https://localhost:3500/auth.html for the Portal use case
+* http://localhost:3500/portal and https://localhost:3500/portal for the Portal use case
 
-*	http://localhost:3500/mashup/auth.html and https://localhost:3500/mashup/auth.html for the Embedded use case
+*	http://localhost:3500/embedded and https://localhost:3500/embedded for the Embedded use case
 
 If you configure your installation to have the Angular SDK static content served from a different **host:port** than the default, you should add new Redirect URIs to the list:
 
 * In the **Supported grant types** section add the following URLs to the list of redirect URLs by clicking on the + sign. (Note that the default port is 3500.)
 
-  * http://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/auth.html (for the portal use case)
+  * http://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/portal (for the portal use case)
 
-  * https://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/auth.html (for the portal use case)
+  * https://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/portal (for the portal use case)
 
-  * http://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/mashup/auth.html
+  * http://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/embedded
 
-  * https://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/mashup/auth.html
+  * https://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/embedded
 
   * Note that entries are needed for either **http** or **https** depending on how you access your Angular SDK server
 
@@ -241,7 +241,7 @@ Step 1: Create a private key
    ```
 
 
-Step 2: Create a Certificate configuration text file named ssl.conf within the root project directory.   Use the following (or adjusted content to reflect your location and desired organization):
+Step 2: Create a Certificate configuration text file named ssl.conf within the root project directory. Use the following (or adjusted content to reflect your location and desired organization):
    ```
 [ req ]
 default_bits       = 4096
@@ -314,7 +314,7 @@ This project is licensed under the terms of the **Apache 2** license.
 
 We welcome contributions to the Angular SDK project.
 
-Refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are interested in helping.
+Refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are interested in contributing to the project.
 
 <br>
 
@@ -323,5 +323,8 @@ Refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are in
 
 ## Additional Resources
 
-* __Angular__: https://angular.io/
-* __Angular Material__: https://material.angular.io/
+* [Angular](https://angular.io/)
+* [Angular Material](https://material.angular.io/)
+* [DX SDK Documentation](https://docs.pega.com/dx-sdks/dx-sdks)
+* [Troubleshooting the DX SDKs](https://docs.pega.com/dx-sdks/troubleshooting-dx-sdks)
+* [MediaCo sample application](https://docs.pega.com/dx-sdks/mediaco-sample-application)
