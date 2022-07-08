@@ -241,7 +241,7 @@ The MediaCoOauth and MediaCoOauthNoLogin records that are included with the Medi
 
 * http://localhost:3500/portal and https://localhost:3500/portal for the Portal use case
 
-*	http://localhost:3500/embedded and https://localhost:3500/embedded for the Embedded use case
+*	http://localhost:3500/auth.html and https://localhost:3500/auth.html for the Embedded use case
 
 If you configure your installation to have the Angular SDK static content served from a different **host:port** than the default, you should add new Redirect URIs to the list:
 
@@ -251,9 +251,9 @@ If you configure your installation to have the Angular SDK static content served
 
   * https://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/portal (for the portal use case)
 
-  * http://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/embedded
+  * http://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/auth.html
 
-  * https://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/embedded
+  * https://\<**host name or IP address of Angular SDK server**>:<**port you’re using**>/auth.html
 
   * Note that entries are needed for either **http** or **https** depending on how you access your Angular SDK server
 
