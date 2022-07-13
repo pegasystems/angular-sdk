@@ -109,7 +109,6 @@ export class ListViewComponent implements OnInit {
       this.PCore$ = window.PCore;
     }
 
-    const componentConfig = this.pConn$.getComponentConfig();
     this.configProps = this.pConn$.getConfigProps();
 
     this.bShowSearch$ = this.utils.getBooleanValue(this.configProps.globalSearch);
@@ -128,45 +127,56 @@ export class ListViewComponent implements OnInit {
     this.arFilterMainButtons$.push({ actionID: "submit", jsAction: "submit", name: "Submit"});
     this.arFilterSecondaryButtons$.push({ actionID: "cancel", jsAction: "cancel", name: "Cancel"});
 
-
-    const refList = this.configProps.referenceList;
-
     this.searchIcon$ = this.utils.getImageSrc("search", this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.getListData();
+  }
 
-    // returns a promise
-    const workListData = this.PCore$.getDataApiUtils().getData(refList, this.payload);
+  getListData() {
+    const componentConfig = this.pConn$.getComponentConfig();
+    if (this.configProps) {
+      const refList = this.configProps?.referenceList;
 
-
-
-    this.bShowFilterPopover$ = false;
-
-    workListData.then( (workListJSON: Object) => {
-
-      // don't update these fields until we return from promise
-      this.fields$ = this.configProps.presets[0].children[0].children;
-      // this is an unresovled version of this.fields$, need unresolved, so can get the property reference
-      let columnFields = componentConfig.presets[0].children[0].children;
-
-      const tableDataResults = workListJSON["data"].data;
-
-      this.displayedColumns$ = this.getDisplayColums(columnFields);
-      this.fields$ = this.updateFields(this.fields$, this.displayedColumns$);
-
-      this.updatedRefList = this.updateData(tableDataResults, this.fields$);
-
-      this.repeatList$ = new MatTableDataSource(this.updatedRefList);
-      this.repeatList$.filterPredicate = this.customFilterPredicate.bind(this);
-
-      // keeping an original copy to get back after possible sorts, filters and groupBy
-      this.repeatListData = this.repeatList$.data.slice();
-
-      this.repeatList$.paginator = this.paginator;
-      this.repeatList$.sort = this.sort;
+      // returns a promise
+      const workListData = this.PCore$.getDataApiUtils().getData(refList, this.payload);
       
-    });
+      this.bShowFilterPopover$ = false;
 
+      workListData.then( (workListJSON: Object) => {
 
+        // don't update these fields until we return from promise
+        this.fields$ = this.configProps.presets[0].children[0].children;
+        // this is an unresovled version of this.fields$, need unresolved, so can get the property reference
+        let columnFields = componentConfig.presets[0].children[0].children;
 
+        const tableDataResults = workListJSON["data"].data;
+
+        this.displayedColumns$ = this.getDisplayColums(columnFields);
+        this.fields$ = this.updateFields(this.fields$, this.displayedColumns$);
+
+        this.updatedRefList = this.updateData(tableDataResults, this.fields$);
+
+        this.repeatList$ = new MatTableDataSource(this.updatedRefList);
+        this.repeatList$.filterPredicate = this.customFilterPredicate.bind(this);
+
+        // keeping an original copy to get back after possible sorts, filters and groupBy
+        this.repeatListData = this.repeatList$.data.slice();
+
+        this.repeatList$.paginator = this.paginator;
+        this.repeatList$.sort = this.sort;
+        
+      });
+    }
+    
+  }
+
+  ngOnChanges(changes) {
+    if (changes && changes.payload) {
+      const currentPayloadVal = changes.payload?.currentValue;
+      const previousPayloadVal = changes.payload?.previousValue;
+      if (currentPayloadVal !== previousPayloadVal) {
+        this.getListData();
+      }
+    }
   }
 
 
