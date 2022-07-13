@@ -112,7 +112,11 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
   // Removed /constellation/ from sdkContentServerUrl
   constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/constellation/`;
   // NOTE: Needs a trailing slash! So add one if not provided
-  if (constellationBootConfig.staticContentServerUrl.slice(-1) !== '/') {
+  if( !sdkConfigServer.sdkContentServerUrl.endsWith('/') ) {
+    sdkConfigServer.sdkContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/`;
+  }
+  constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}constellation/`;
+  if( !constellationBootConfig.staticContentServerUrl.endsWith('/') ) {
     constellationBootConfig.staticContentServerUrl = `${constellationBootConfig.staticContentServerUrl}/`;
   }
   // If appAlias specified, use it
@@ -163,7 +167,19 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
       console.log('Bootstrap successful!');
       this.gbC11NBootstrapInProgress = false;
 
-      PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, this.fullReauth.bind(this), "authFullReauth");
+      // Setup listener for the reauth event
+      if( tokenInfo ) {
+        // eslint-disable-next-line no-undef
+        PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, this.fullReauth.bind(this), "authFullReauth");
+      } else {
+        // customReauth event introduced with 8.8
+        // eslint-disable-next-line no-undef
+        const sEvent = PCore.getConstants().PUB_SUB_EVENTS.EVENT_CUSTOM_REAUTH;
+        if( sEvent ) {
+          // eslint-disable-next-line no-undef
+          PCore.getPubSubUtils().subscribe(sEvent, this.fullReauth.bind(this), "doReauth");
+        }
+      }
 
       const event = new CustomEvent('ConstellationReady' /*, {detail: {authFullReauth}}*/ );
       document.dispatchEvent(event);
@@ -326,13 +342,18 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
       sdkConfigAuth.authService = "pega";
     }
 
+    // Construct path to redirect uri
+    let sRedirectUri=`${window.location.origin}${window.location.pathname}`;
+    const nLastPathSep = sRedirectUri.lastIndexOf("/");
+    sRedirectUri = `${sRedirectUri.substring(0,nLastPathSep+1)}auth.html`
+  
     const authConfig:any = {
       clientId: this.bEmbeddedLogin ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
       authorizeUri: sdkConfigAuth.authorize,
       tokenUri: sdkConfigAuth.token,
       revokeUri: sdkConfigAuth.revoke,
       redirectUri: this.bEmbeddedLogin || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup ?
-        `${window.location.origin}/auth.html` : `${window.location.origin}${window.location.pathname}`,
+      sRedirectUri : `${window.location.origin}${window.location.pathname}`,
       authService: sdkConfigAuth.authService,
       useLocking: true
     };
@@ -418,7 +439,11 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
           // Don't have token til after the redirect
           return Promise.resolve(undefined);
         } else {
-          this.updateRedirectUri(`${window.location.origin}/auth.html`);
+          // Construct path to redirect uri
+          let sRedirectUri=`${window.location.origin}${window.location.pathname}`;
+          const nLastPathSep = sRedirectUri.lastIndexOf("/");
+          sRedirectUri = `${sRedirectUri.substring(0,nLastPathSep+1)}auth.html`
+          this.updateRedirectUri(sRedirectUri);
           return new Promise( (resolve, reject) => {
             this.authMgr.login().then(token => {
               this.processTokenOnLogin(token, true);
