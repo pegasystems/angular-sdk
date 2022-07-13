@@ -353,7 +353,7 @@ constellationInit = (authConfig:any, tokenInfo:any) => {
       tokenUri: sdkConfigAuth.token,
       revokeUri: sdkConfigAuth.revoke,
       redirectUri: this.bEmbeddedLogin || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup ?
-      sRedirectUri : `${window.location.origin}${window.location.pathname}`,
+        sRedirectUri : `${window.location.origin}${window.location.pathname}`,
       authService: sdkConfigAuth.authService,
       useLocking: true
     };
