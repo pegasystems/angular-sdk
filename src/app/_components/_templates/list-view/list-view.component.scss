@@ -139,3 +139,12 @@
   tr.mat-row {
     cursor: pointer;
   }
+
+.psdk-no-records {
+  height: 56px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-top: none;
+}

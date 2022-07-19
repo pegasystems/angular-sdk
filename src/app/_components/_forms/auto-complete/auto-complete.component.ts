@@ -30,13 +30,14 @@ export class AutoCompleteComponent implements OnInit {
 
   componentReference: string = "";
   testId: string;
-
+  listType: string;
   fieldControl = new FormControl('', null); 
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
-
-
+  displayValue: string;
+  PCore$: any;
+  columns = [];
   constructor(private angularPConnect: AngularPConnectService, 
               private cdRef: ChangeDetectorRef,
               private utils: Utils) { 
@@ -48,6 +49,9 @@ export class AutoCompleteComponent implements OnInit {
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
     this.controlName$ = this.angularPConnect.getComponentID(this);
 
+    if (!this.PCore$) {
+      this.PCore$ = window.PCore;
+    }
     // Then, continue on with other initialization
 
     // call updateSelf when initializing
@@ -105,12 +109,19 @@ export class AutoCompleteComponent implements OnInit {
 
 
     if (this.configProps$["value"] != undefined) {
-      this.value$ = this.configProps$["value"];
+      const index = this.options$?.findIndex(element => element.key === this.configProps$["value"]);
+      this.value$ = index > -1 ? this.options$[index].value : this.configProps$["value"];
     }
   
     this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
-
+    this.listType = this.configProps$["listType"];
+    const displayMode = this.configProps$["displayMode"];
+    const datasource = this.configProps$["datasource"];
+    const columns = this.configProps$["columns"];
+    if (columns) {
+      this.columns = this.preProcessColumns(columns);
+    }
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       if (this.configProps$["required"] != null) {
@@ -140,8 +151,27 @@ export class AutoCompleteComponent implements OnInit {
     } 
 
     this.componentReference = this.pConn$.getStateProps().value;
+    if (this.listType === 'associated') {
+      this.options$ = this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject());
+    }
+    
+    if (!displayMode && this.listType !== 'associated') {
+      const workListData = this.PCore$.getDataApiUtils().getData(datasource, {});
 
-    this.options$ = this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject());
+      workListData.then((workListJSON: Object) => {
+        const optionsData: Array<any> = [];
+        const results = workListJSON['data'].data;
+        const displayColumn = this.getDisplayFieldsMetaData(this.columns);
+        results?.forEach(element => {
+          const obj = {
+            key: element.pyGUID || element[displayColumn.primary],
+            value: element[displayColumn.primary]?.toString(),
+          };
+          optionsData.push(obj);
+        });
+        this.options$ = optionsData;
+      });
+    }
 
     // trigger display of error message with field control
     if (null != this.angularPConnectData.validateMessage && "" != this.angularPConnectData.validateMessage) {
@@ -155,6 +185,29 @@ export class AutoCompleteComponent implements OnInit {
     } 
 
   }
+
+  getDisplayFieldsMetaData(columnList) {
+    const displayColumns = columnList.filter(col => col.display === 'true');
+    const metaDataObj: any = { key: '', primary: '', secondary: [] };
+    const keyCol = columnList.filter(col => col.key === 'true');
+    metaDataObj.key = keyCol.length > 0 ? keyCol[0].value : 'auto';
+    for (let index = 0; index < displayColumns.length; index += 1) {
+      if (displayColumns[index].primary === 'true') {
+        metaDataObj.primary = displayColumns[index].value;
+      } else {
+        metaDataObj.secondary.push(displayColumns[index].value);
+      }
+    }
+    return metaDataObj;
+  };
+
+  preProcessColumns(columnList) {
+    return columnList?.map(col => {
+      const tempColObj = { ...col };
+      tempColObj.value = col.value && col.value.startsWith('.') ? col.value.substring(1) : col.value;
+      return tempColObj;
+    });
+  };
 
 
   isSelected(buttonValue:string): boolean {
@@ -185,9 +238,17 @@ export class AutoCompleteComponent implements OnInit {
   }
 
   fieldOnBlur(event: any) {
+    let key = '';
+    if (event?.target?.value) {
+      const index = this.options$?.findIndex(element => element.value === event.target.value);
+      key = index > -1 ? key = this.options$[index].key : event.target.value;
+    }
+    
+    const eve = {
+      value: key
+    };
     // PConnect wants to use eventHandler for onBlur
-    this.angularPConnectData.actions.onBlur(this, event);
-
+    this.angularPConnectData.actions.onChange(this, eve);
 
   }
 
