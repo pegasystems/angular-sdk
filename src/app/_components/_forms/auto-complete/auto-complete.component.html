@@ -6,8 +6,8 @@
       [value]="value$" [required]="bRequired$" [matAutocomplete]="auto"
       (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)">
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionChanged($event)" >
-        <mat-option *ngFor="let opt of options$" [value]="opt.key">
-          <span>{{opt.key}}</span><span *ngIf="opt?.value"> -- ({{opt.value}})</span>
+        <mat-option *ngFor="let opt of options$" [value]="opt.value">
+          <span>{{opt.value}}</span>
         </mat-option>
       </mat-autocomplete>
       <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>

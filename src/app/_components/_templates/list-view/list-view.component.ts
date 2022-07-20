@@ -96,7 +96,8 @@ export class ListViewComponent implements OnInit {
 
   arFilterMainButtons$: Array<any> = [];
   arFilterSecondaryButtons$: Array<any> = [];
-
+  selectionMode: string;
+  singleSelectionMode: boolean;
   constructor(private psService: ProgressSpinnerService,
               private utils: Utils) { 
 
@@ -123,6 +124,7 @@ export class ListViewComponent implements OnInit {
     this.filterOnSvgIcon$ = this.utils.getImageSrc("filter-on", this.PCore$.getAssetLoader().getStaticServerUrl());
     this.groupBySvgIcon$ = this.utils.getImageSrc("row", this.PCore$.getAssetLoader().getStaticServerUrl());
 
+    this.selectionMode = this.configProps.selectionMode;
 
     this.arFilterMainButtons$.push({ actionID: "submit", jsAction: "submit", name: "Submit"});
     this.arFilterSecondaryButtons$.push({ actionID: "cancel", jsAction: "cancel", name: "Cancel"});
@@ -154,6 +156,10 @@ export class ListViewComponent implements OnInit {
         this.fields$ = this.updateFields(this.fields$, this.displayedColumns$);
 
         this.updatedRefList = this.updateData(tableDataResults, this.fields$);
+        if (this.selectionMode === 'single' && this.updatedRefList?.length > 0) {
+          this.displayedColumns$?.unshift('select');
+          this.singleSelectionMode = true;
+        }
 
         this.repeatList$ = new MatTableDataSource(this.updatedRefList);
         this.repeatList$.filterPredicate = this.customFilterPredicate.bind(this);
@@ -239,6 +245,11 @@ export class ListViewComponent implements OnInit {
     if (this.repeatList$.paginator) {
       this.repeatList$.paginator.firstPage();
     }
+  }
+
+  fieldOnChange(row) {
+    const value = row?.pyGUID;
+    this.pConn$?.getListActions?.()?.setSelectedRows([{'pyGUID': value}]);
   }
 
   rowClick(row) {

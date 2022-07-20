@@ -1,11 +1,21 @@
 <div>
     <div>{{listViewProps.title}}</div>
-    <div *ngIf="showFilters">
+    <div *ngIf="showFilters" class="psdk-grid-filter">
         <div *ngFor="let kid of processedFilters">
             <div [ngSwitch]="kid.getPConnect().getComponentName()">
                 <app-text-input  *ngSwitchCase="'TextInput'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-text-input>
                 <app-currency  *ngSwitchCase="'Currency'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-currency>
-                <div  *ngSwitchDefault >Region  wants component not yet available: {{kid.getPConnect().getComponentName()}}</div>
+                <app-percentage  *ngSwitchCase="'Percentage'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-percentage>
+                <app-email  *ngSwitchCase="'Email'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-email>
+                <app-integer  *ngSwitchCase="'Integer'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-integer>
+                <app-decimal  *ngSwitchCase="'Decimal'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-decimal>
+                <app-check-box  *ngSwitchCase="'Checkbox'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-check-box>
+                <app-date-time  *ngSwitchCase="'DateTime'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-date-time>
+                <app-date  *ngSwitchCase="'Date'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-date>
+                <app-time  *ngSwitchCase="'Time'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-time>
+                <app-text-area  *ngSwitchCase="'TextArea'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-text-area>
+                <app-url  *ngSwitchCase="'URL'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-url>
+                <div  *ngSwitchDefault >Promoted filters  wants component not yet available: {{kid.getPConnect().getComponentName()}}</div>
             </div>  
         </div>
     </div>
