@@ -1,5 +1,5 @@
 <div class="psdk-data-readonly">
-  <strong>simple-table-component</strong> not complete in the Angular SDK. This is a work in progress.
+  <div *ngIf="!requestedReadOnlyMode"><strong>simple-table-component</strong> not complete in the Angular SDK. This is a work in progress.</div>
   <div *ngIf="requestedReadOnlyMode">
     Table is readOnly.
   </div>

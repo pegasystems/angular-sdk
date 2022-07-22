@@ -68,19 +68,19 @@ export class SimpleTableComponent implements OnInit {
       showLabel, 
       referenceList = [],     // if referenceList not in configProps$, default to empy list 
       renderMode, 
-      children: [ {children: resolvedFields} ] // destructure children into an array var: "resolvedFields"
+      children, // destructure children into an array var: "resolvedFields"
+      presets
     } = this.configProps$;
 
+    const resolvedFields = children?.[0]?.children || presets?.[0].children?.[0].children;
     // get raw config as @P and other annotations are processed and don't appear in the resolved config.
     //  Destructure "raw" children into array var: "rawFields"
     //  NOTE: when config.listType == "associated", the property can be found in either
     //    config.value (ex: "@P .DeclarantChoice") or
     //    config.datasource (ex: "@ASSOCIATED .DeclarantChoice")
     //  Neither of these appear in the resolved (this.configProps$)
-    const {
-      children: [{ children: rawFields }]
-    } = rawMetadata.config;
-
+    const rawConfig = rawMetadata?.config;
+    const rawFields =  rawConfig?.children?.[0]?.children || rawConfig?.presets?.[0].children?.[0]?.children;
     // At this point, fields has resolvedFields and rawFields we can use
 
     // console.log("SimpleTable resolvedFields:");

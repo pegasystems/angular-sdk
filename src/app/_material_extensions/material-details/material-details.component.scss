@@ -25,14 +25,8 @@
     }
 
     .psdk-details-fields-label {
-        word-break: break-word;
-        grid-column-start: 1;
-        grid-row-start: 1;
-        max-width: max-content;
-        font-size: 0.8125rem;
-        font-weight: 400;
-        color: rgba(0,0,0,0.8);
-        font-family: "Open Sans";
+        color: rgba(0, 0, 0, 0.54);
+        margin: 8px 0px;
     }
 
     .psdk-details-fields-value {
@@ -41,10 +35,8 @@
         grid-row-start: 1;
     }
 
-    span.psdk-details-text-style {
-        font-size: 0.8125rem;
+    span.psdk-details-text-style { 
         font-weight: 400;
-        font-family: "Open Sans";
     }
 
     span.psdk-details-status-style {
@@ -58,4 +50,16 @@
         height: calc(0.5rem * 2.5);
         padding: 0 0.5rem;
         text-transform: uppercase;
+    }
+
+    .psdk-grid-filter {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        column-gap: calc(2 * 0.5rem);
+        row-gap: calc(2 * 0.5rem);
+        align-items: start;
+    }
+
+    .psdk-csf-primary-field-value {
+        margin: 8px 0;
     }
