@@ -41,6 +41,8 @@ export class DataReferenceComponent implements OnInit {
     propName: String = ""
     firstChildPConnect;
     children;
+    displaySingleRef: boolean;
+    displayMultiRef: boolean;
     ngOnInit(): void {
         if (!this.PCore$) {
             this.PCore$ = window.PCore;
@@ -197,13 +199,11 @@ export class DataReferenceComponent implements OnInit {
                 property: this.propName
             });
             if (!this.canBeChangedInReviewMode && this.isDisplayModeEnabled && this.selectionMode === SELECTION_MODE.SINGLE) {
-                console.log('In SingleRef');
-                return null;
+                this.displaySingleRef = true;
             }
 
             if (this.isDisplayModeEnabled && this.selectionMode === SELECTION_MODE.MULTI) {
-                console.log('In multiRef');
-                return null;
+                this.displayMultiRef = true;
             }
 
             // In the case of a datasource with parameters you cannot load the dropdown before the parameters

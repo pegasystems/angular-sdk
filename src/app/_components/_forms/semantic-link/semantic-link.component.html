@@ -1,0 +1,4 @@
+<div style = "display: flex;" *ngIf = "displayMode === 'LABELS_LEFT' || (!displayMode && label$ !== undefined)">
+    <div>{{label$}}</div>
+    <div>{{value$}}</div>
+</div>

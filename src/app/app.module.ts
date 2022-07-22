@@ -134,6 +134,9 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { DataReferenceComponent } from './_components/_templates/data-reference/data-reference.component';
 import { SimpleTableSelectComponent } from './_components/_templates/simple-table-select/simple-table-select.component';
 import { PromotedFiltersComponent } from './_components/_templates/promoted-filters/promoted-filters.component';
+import { SingleReferenceReadonlyComponent } from './_components/_templates/single-reference-readonly/single-reference-readonly.component';
+import { SemanticLinkComponent } from './_components/_forms/semantic-link/semantic-link.component';
+import { MultiReferenceReadonlyComponent } from './_components/_templates/multi-reference-readonly/multi-reference-readonly.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -225,7 +228,10 @@ import { PromotedFiltersComponent } from './_components/_templates/promoted-filt
     OneColumnTabComponent,
     DataReferenceComponent,
     SimpleTableSelectComponent,
-    PromotedFiltersComponent
+    PromotedFiltersComponent,
+    SingleReferenceReadonlyComponent,
+    SemanticLinkComponent,
+    MultiReferenceReadonlyComponent
   ],
   imports: [
     BrowserModule,
