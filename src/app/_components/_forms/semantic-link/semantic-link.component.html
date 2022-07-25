@@ -1,0 +1,6 @@
+<div *ngIf = "displayMode === 'LABELS_LEFT' || (!displayMode && label$ !== undefined)">
+    <div class="psdk-grid-filter">
+        <div class="psdk-label">{{label$}}</div>
+        <div class="psdk-value">{{value$}}</div>
+    </div>
+</div>

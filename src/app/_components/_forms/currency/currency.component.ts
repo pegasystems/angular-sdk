@@ -102,13 +102,7 @@ export class CurrencyComponent implements OnInit {
     this.testId = this.configProps$["testId"];
     this.label$ = this.configProps$["label"];
     let nValue = this.configProps$["value"];
-    if (nValue) {
-      if (typeof(nValue) == "string") {
-        nValue = parseFloat(nValue);
-      }
-      this.value$ = nValue;
-    }
-
+    this.value$ = nValue && typeof(nValue) == "string" ? parseFloat(nValue) : nValue;
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       if (this.configProps$["required"] != null) {
