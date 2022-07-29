@@ -47,7 +47,7 @@ Future updates to the SDK will support more recent LTS versions of node as Const
 
 ### **Configure** the Angular SDK
 
-2. Edit **sdk-config.js** and, if necessary, update the values that will be used
+2. Edit **sdk-config.js** and, if necessary, update the values that will be used. For more information about the attributes in the **sdk-config.json** file, see [Configuring the sdk-config.json file](https://docs.pega.com/dx-sdks/configuring-sdk-configjson-file)
 
     * The **authConfig** section contains values for the information you obtained earlier from OAuth: the Client ID, endpoints, etc.<br><br>
       * **Note:** it is **required** that you configure a value for **authConfig.mashupClientSecret**.
