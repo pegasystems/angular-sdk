@@ -10,6 +10,7 @@ import { Utils } from "../../../_helpers/utils";
 
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
+const SELECTION_MODE = { SINGLE: 'single', MULTI: 'multi' };
 
 export class Group {
   level = 0;
@@ -98,6 +99,7 @@ export class ListViewComponent implements OnInit {
   arFilterSecondaryButtons$: Array<any> = [];
   selectionMode: string;
   singleSelectionMode: boolean;
+  multiSelectionMode: boolean;
   constructor(private psService: ProgressSpinnerService,
               private utils: Utils) { 
 
@@ -156,9 +158,12 @@ export class ListViewComponent implements OnInit {
         this.fields$ = this.updateFields(this.fields$, this.displayedColumns$);
 
         this.updatedRefList = this.updateData(tableDataResults, this.fields$);
-        if (this.selectionMode === 'single' && this.updatedRefList?.length > 0) {
+        if (this.selectionMode === SELECTION_MODE.SINGLE && this.updatedRefList?.length > 0) {
           this.displayedColumns$?.unshift('select');
           this.singleSelectionMode = true;
+        } else if (this.selectionMode === SELECTION_MODE.MULTI && this.updatedRefList?.length > 0) {
+          this.displayedColumns$?.unshift('select');
+          this.multiSelectionMode = true;
         }
 
         this.repeatList$ = new MatTableDataSource(this.updatedRefList);
@@ -250,6 +255,12 @@ export class ListViewComponent implements OnInit {
   fieldOnChange(row) {
     const value = row?.pyGUID;
     this.pConn$?.getListActions?.()?.setSelectedRows([{'pyGUID': value}]);
+  }
+
+  onCheckboxClick(row, event) {
+    const value = row?.pyGUID;
+    const checked = event?.checked;
+    this.pConn$?.getListActions()?.setSelectedRows([{'pyGUID': value, $selected: checked}]);
   }
 
   rowClick(row) {
