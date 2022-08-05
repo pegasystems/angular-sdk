@@ -105,13 +105,22 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": true
             }
           }
         },
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "angularsdk:build",
+            "browserTarget": "angularsdk:build:development",
             "port": 3500
           },
           "configurations": {
