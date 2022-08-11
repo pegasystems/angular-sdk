@@ -40,7 +40,7 @@
     "@angular/router": "^11.2.14",
     "@mdi/angular-material": "^5.0.45",
     "@mdi/svg": "^5.0.45",
-    "@pega/constellationjs": "SDK-8.6.4",
+    "@pega/constellationjs": "SDK-8.6.5",
     "core-js": "^2.6.12",
     "dayjs": "^1.10.5",
     "downloadjs": "^1.4.7",
