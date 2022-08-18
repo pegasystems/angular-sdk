@@ -50,7 +50,7 @@ export class NavbarComponent implements OnInit {
   constructor(private angularPConnect: AngularPConnectService, 
               private chRef: ChangeDetectorRef,
               private psService: ProgressSpinnerService,
-              private aservice: AuthService,
+              private aService: AuthService,
               private ngZone: NgZone,
               private utils: Utils) {
 
@@ -195,7 +195,7 @@ export class NavbarComponent implements OnInit {
 
   navPanelLogoutClick() {
 
-    this.aservice.logout();
+    this.aService.logout();
     // Reload the page to kick off the login
     setTimeout(()=>{
       window.location.reload();

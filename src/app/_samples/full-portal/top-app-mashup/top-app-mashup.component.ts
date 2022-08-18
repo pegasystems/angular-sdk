@@ -83,7 +83,7 @@ export class TopAppMashupComponent implements OnInit {
 
 
 
-  constructor(private aservice: AuthService,
+  constructor(private aService: AuthService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private settingsDialog: MatDialog,
@@ -151,15 +151,20 @@ export class TopAppMashupComponent implements OnInit {
     });
 
     // Add event listener for when logged in and constellation bootstrap is loaded
-    document.addEventListener("ConstellationReady", () => {
+    document.addEventListener("SdkConstellationReady", () => {
       this.bLoggedIn$ = true;
       // start the portal
       this.startPortal();
     });
+
+    // Add event listener for when logged out
+    document.addEventListener("SdkLoggedOut", () => {
+      this.bLoggedIn$ = false;
+    });
   
     /* Login if needed */
     const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    this.aservice.loginIfNecessary(sAppName, false);
+    this.aService.loginIfNecessary(sAppName, false);
   }
 
   startPortal() {

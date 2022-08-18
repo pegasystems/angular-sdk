@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { endpoints } from './endpoints';
 import { ServerConfigService } from './server-config.service';
+import { Utils } from "../_helpers/utils";
 
 
 @Injectable({
@@ -10,11 +11,11 @@ import { ServerConfigService } from './server-config.service';
 export class DatapageService {
 
   constructor(private http: HttpClient,
-              private scservice: ServerConfigService) { }
-
+              private scService: ServerConfigService) {}
+  
 
   //dataPageUrl = endpoints.BASEURL + endpoints.DATA;
-  //dataPageUrl = this.scservice.getBaseUrl() + endpoints.API + endpoints.DATA;
+  //dataPageUrl = this.scService.getBaseUrl() + endpoints.API + endpoints.DATA;
   dataPageUrl: string;
 
   pxResults: Object;
@@ -22,11 +23,11 @@ export class DatapageService {
 
   getDataPage(id, dpParams) {
 
-    this.dataPageUrl = this.scservice.getBaseUrl() + endpoints.API + endpoints.DATA;
+    this.dataPageUrl = this.scService.getBaseUrl() + endpoints.API + endpoints.DATA;
 
     let dataHeaders = new HttpHeaders();
 
-    dataHeaders = dataHeaders.append('Authorization',  sessionStorage.getItem("authHdr"));
+    dataHeaders = dataHeaders.append('Authorization',  Utils.sdkGetAuthHeader());
     
     dataHeaders = dataHeaders.append('Content-Type', "application/json");
 

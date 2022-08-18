@@ -410,4 +410,8 @@ export class Utils {
     }
   }
 
+  static sdkGetAuthHeader(): string {
+    return sessionStorage.getItem("asdk_AH");
+  }
+
 }
