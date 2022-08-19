@@ -197,11 +197,10 @@ export class MCNavComponent implements OnInit {
 
 
   logOff() {
-    this.aService.logout();
-    // Reload the page to kick off the login
-    setTimeout(()=>{
+    this.aService.logout().then(() => {
+      // Reload the page to kick off the login
       window.location.reload();
-    }, 500);
+    });
   }
 
 }

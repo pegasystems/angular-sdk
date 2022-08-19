@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Utils } from "../_helpers/utils";
+import { endpoints } from '../_services/endpoints';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class ServerConfigService {
         })
         .then ( (data) => {
             this.sdkConfig = data;
+            this.fixupConfigSettings();
             return Promise.resolve(this.sdkConfig);
         }).catch(err => {
             console.error("Fetch for sdk-config.js failed.");
@@ -38,6 +40,22 @@ export class ServerConfigService {
         });
     } else {
       return Promise.resolve(this.sdkConfig);
+    }
+  }
+
+  // Adjust any settings like setting up defaults or making sure URIs have a trailing slash
+  fixupConfigSettings() {
+    const oServerConfig = this.sdkConfig["serverConfig"];
+    // If not present, then use current root path
+    oServerConfig.sdkContentServerUrl = oServerConfig.sdkContentServerUrl || window.location.origin;
+    // Needs a trailing slash so add one if not there
+    if( !oServerConfig.sdkContentServerUrl.endsWith('/') ) {
+      oServerConfig.sdkContentServerUrl = `${oServerConfig.sdkContentServerUrl}/`;
+    }    
+    console.log(`Using sdkContentServerUrl: ${this.sdkConfig["serverConfig"].sdkContentServerUrl}`);
+
+    if( !oServerConfig.infinityRestServerUrl.endsWith('/') ) {
+      oServerConfig.infinityRestServerUrl = `${oServerConfig.infinityRestServerUrl}/`;
     }
   }
 
@@ -107,14 +125,14 @@ export class ServerConfigService {
     const dataPageName = "D_OperatorAccessGroups";
     const serverUrl = this.getBaseUrl();
     const appAlias = this.getSdkConfigServer().appAlias;
-    const appAliasPath = appAlias ? `/app/${appAlias}` : '';
+    const appAliasPath = appAlias ? `app/${appAlias}/` : '';
     let fetchHeaders = {};
 
     fetchHeaders["Authorization"] = Utils.sdkGetAuthHeader();
   
     fetchHeaders["Content-Type"] = "application/json";
   
-      await fetch ( `${serverUrl}${appAliasPath}/api/v1/data/${dataPageName}`,
+      await fetch ( `${serverUrl}${appAliasPath}${endpoints.API}${endpoints.DATA}/${dataPageName}`,
         {
           method: 'GET',
           headers: fetchHeaders

@@ -112,15 +112,7 @@ export class AuthService {
     constellationBootConfig.customRendering = true;
     constellationBootConfig.restServerUrl = sdkConfigServer.infinityRestServerUrl;
     // Removed /constellation/ from sdkContentServerUrl
-    constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/constellation/`;
-    // NOTE: Needs a trailing slash! So add one if not provided
-    if( !sdkConfigServer.sdkContentServerUrl.endsWith('/') ) {
-      sdkConfigServer.sdkContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/`;
-    }
     constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}constellation/`;
-    if( !constellationBootConfig.staticContentServerUrl.endsWith('/') ) {
-      constellationBootConfig.staticContentServerUrl = `${constellationBootConfig.staticContentServerUrl}/`;
-    }
     // If appAlias specified, use it
     if( sdkConfigServer.appAlias ) {
       constellationBootConfig.appAlias = sdkConfigServer.appAlias;
@@ -179,7 +171,7 @@ export class AuthService {
           const sEvent = PCore.getConstants().PUB_SUB_EVENTS.EVENT_CUSTOM_REAUTH;
           if( sEvent ) {
             // eslint-disable-next-line no-undef
-            PCore.getPubSubUtils().subscribe(sEvent, this.fullReauth.bind(this), "doReauth");
+            PCore.getPubSubUtils().subscribe(sEvent, this.authCustomReauth.bind(this), "doReauth");
           }
         }
 
@@ -309,7 +301,7 @@ export class AuthService {
     // Remove any local storage for the user
     // Remove any local storage for the user
     if( !this.gbCustomAuth ) {
-      sessionStorage.removeItem('rsdk_AH');
+      sessionStorage.removeItem('asdk_AH');
     }
     if( !bFullReauth ) {
       sessionStorage.removeItem("asdk_CI");
@@ -330,15 +322,11 @@ export class AuthService {
   initAuthMgr = (bInit) => {
     const sdkConfigAuth = this.scService.getSdkConfigAuth();
     const sdkConfigServer = this.scService.getSdkConfigServer();
-    let pegaUrl = sdkConfigServer.infinityRestServerUrl;
+    const pegaUrl = sdkConfigServer.infinityRestServerUrl;
     const currPath = location.pathname;
   
     // Construct default OAuth endpoints (if not explicitly specified)
     if (pegaUrl) {
-      // Cope with trailing slash being present
-      if (!pegaUrl.endsWith('/')) {
-        pegaUrl += '/';
-      }
       if (!sdkConfigAuth.authorize) {
         sdkConfigAuth.authorize = `${pegaUrl}PRRestService/oauth2/v1/authorize`;
       }
@@ -545,6 +533,14 @@ export class AuthService {
       sessionStorage.setItem("asdk_appName", appName);
     }
     this.setNoMainRedirect(noMainRedirect);
+    // If custom auth no need to do any OAuth logic
+    if( this.gbCustomAuth ) {
+      if( !window.PCore ) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        this.constellationInit( null, null );
+      }
+      return;
+    }
 
     // If this is the login redirect with auth code
     if( window.location.href.indexOf("?code") !== -1 ) {
@@ -592,13 +588,14 @@ export class AuthService {
     return new Promise<void>((resolve) => {
       const fnClearAndResolve = () => {
         this.clearAuthMgr();
-  
+
         const event = new Event('SdkLoggedOut');
         document.dispatchEvent(event);
   
         resolve();
       };
       if( this.gbCustomAuth ) {
+        sessionStorage.removeItem("rsdk_AH");
         fnClearAndResolve();
         return;
       }
