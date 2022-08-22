@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
-const config = require('../config');
-const common = require('../common');
+const config = require('../../config');
+const common = require('../../common');
 
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:3500/portal');

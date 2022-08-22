@@ -25,7 +25,8 @@
     "start": "npm run copy-extra && ng serve",
     "start-angularsdk": "lite-server --baseDir='./dist'",
     "start-https-angularsdk": "lite-server --baseDir='./dist' -c bs-config-https.json",
-    "test": "playwright test --headed --project=chromium",
+    "test": "node playwright-message.js && playwright test --project=chromium MediaCo/portal MediaCo/embedded",
+    "test:headed": "playwright test --headed --project=chromium MediaCo/portal MediaCo/embedded",
     "test-report": "playwright show-report"
   },
   "private": true,
