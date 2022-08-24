@@ -51,7 +51,7 @@ export const endpoints = {
     PULSE_V2: "/v2/messages",
     ROUTING: "mashup",
     MEDIACO: "MediaCo",
-    API: "/api",
+    API: "api",
 
     EMBEDDED: "embedded",
     EMBEDDEDHTML: "embedded.html",

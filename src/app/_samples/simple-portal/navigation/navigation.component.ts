@@ -47,7 +47,7 @@ export class NavigationComponent implements OnInit {
 
 
 
-  constructor(private aservice: AuthService,
+  constructor(private aService: AuthService,
               private cdRef: ChangeDetectorRef,
               private snackBar: MatSnackBar,
               private settingsDialog: MatDialog,
@@ -91,15 +91,20 @@ export class NavigationComponent implements OnInit {
   initialize() {
 
     // Add event listener for when logged in and constellation bootstrap is loaded
-    document.addEventListener("ConstellationReady", () => {
+    document.addEventListener("SdkConstellationReady", () => {
       this.bLoggedIn$ = true;
       // start the portal
       this.startMashup();
     });
-  
+
+    // Add event listener for when logged out
+    document.addEventListener("SdkLoggedOut", () => {
+      this.bLoggedIn$ = false;
+    });
+
     /* Login if needed (and indicate this is a portal scenario) */
     //const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    this.aservice.loginIfNecessary("simpleportal", false);
+    this.aService.loginIfNecessary("simpleportal", false);
   }
 
 
@@ -241,11 +246,10 @@ export class NavigationComponent implements OnInit {
   }
 
   logOff() {
-    this.aservice.logout();
-    // Reload the page to kick off the login
-    setTimeout(()=>{
+    this.aService.logout().then(() => {
+      // Reload the page to kick off the login
       window.location.reload();
-    }, 500);
+    });
   }
 
 }
