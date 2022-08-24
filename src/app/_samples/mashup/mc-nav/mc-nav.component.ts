@@ -58,7 +58,7 @@ export class MCNavComponent implements OnInit {
               private rpcservice: ResetPConnectService,
               private uwservice: UpdateWorklistService,
               private dservice: DatapageService,
-              private titleServide: Title,
+              private titleService: Title,
               private scservice: ServerConfigService,
               private utils: Utils) { }
 
@@ -82,7 +82,7 @@ export class MCNavComponent implements OnInit {
       this.PCore$ = window.PCore;
     }
 
-    this.titleServide.setTitle("Media Co");
+    this.titleService.setTitle("Media Co");
 
     sessionStorage.clear();
 
@@ -128,7 +128,26 @@ export class MCNavComponent implements OnInit {
       this.bLoggedIn$ = false;
     });
 
-    /* Login if needed (and indicate this is an embedded scenario) */
+    const sdkConfigAuth = this.scservice.getSdkConfigAuth();
+  
+    if( !sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === "Basic" ) {
+      // Service package to use custom auth with Basic
+      const sB64 = window.btoa(`${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}`);
+      this.aService.setAuthHeader( `Basic ${sB64}`);
+    }
+
+    if( !sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === "BasicTO" ) {
+      const now = new Date();
+      const expTime = new Date( now.getTime() + 5*60*1000);
+      let sISOTime = `${expTime.toISOString().split(".")[0]}Z`;
+      const regex = /[-:]/g;
+      sISOTime = sISOTime.replace(regex,"");
+      // Service package to use custom auth with Basic
+      const sB64 = window.btoa(`${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}:${sISOTime}`);
+      this.aService.setAuthHeader( `Basic ${sB64}`);
+    }
+
+    // Login if needed, without doing an initial main window redirect
     const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
     this.aService.loginIfNecessary(sAppName, true);
   }

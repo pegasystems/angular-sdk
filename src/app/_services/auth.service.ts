@@ -118,23 +118,27 @@ export class AuthService {
       constellationBootConfig.appAlias = sdkConfigServer.appAlias;
     }
 
-    // Pass in auth info to Constellation
-    constellationBootConfig.authInfo = {
-      authType: "OAuth2.0",
-      tokenInfo,
-      // Set whether we want constellation to try to do a full re-Auth or not ()
-      // true doesn't seem to be working in SDK scenario so always passing false for now
-      popupReauth: false /* !authNoRedirect() */,
-      client_id: authConfig.clientId,
-      authentication_service: authConfig.authService,
-      redirect_uri: authConfig.redirectUri,
-      endPoints: {
-          authorize: authConfig.authorizeUri,
-          token: authConfig.tokenUri,
-          revoke: authConfig.revokeUri
-      },
-      // TODO: setup callback so we can update own storage
-      onTokenRetrieval: this.updateTokens.bind(this)
+    if( tokenInfo ) {
+      // Pass in auth info to Constellation
+      constellationBootConfig.authInfo = {
+        authType: "OAuth2.0",
+        tokenInfo,
+        // Set whether we want constellation to try to do a full re-Auth or not ()
+        // true doesn't seem to be working in SDK scenario so always passing false for now
+        popupReauth: false /* !authNoRedirect() */,
+        client_id: authConfig.clientId,
+        authentication_service: authConfig.authService,
+        redirect_uri: authConfig.redirectUri,
+        endPoints: {
+            authorize: authConfig.authorizeUri,
+            token: authConfig.tokenUri,
+            revoke: authConfig.revokeUri
+        },
+        // TODO: setup callback so we can update own storage
+        onTokenRetrieval: this.updateTokens.bind(this)
+      }
+    } else {
+      constellationBootConfig.authorizationHeader = this.getAuthHeader();    
     }
 
     // Turn off dynamic load components (should be able to do it here instead of after load?)
