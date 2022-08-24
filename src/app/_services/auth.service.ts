@@ -44,8 +44,8 @@ export class AuthService {
     }
   };
 
-  setNoMainRedirect = ( bEmbedded ) => {
-    if( bEmbedded ) {
+  setNoMainRedirect = ( bNoInitialRedirect ) => {
+    if( bNoInitialRedirect ) {
       this.forcePopupForReauths(true);
       sessionStorage.setItem("asdk_noRedirect", "1");
       this.bNoInitialRedirect = true;
@@ -488,9 +488,9 @@ export class AuthService {
 
       const aMgr = this.getAuthMgr(!bFullReauth);
       // aMgr will always be same as this.authMgr
-      const bPortalLogin = !this.authNoRedirect();
+      const bMainRedirect = !this.authNoRedirect();
 
-      if( bPortalLogin && !bFullReauth ) {
+      if( bMainRedirect && !bFullReauth ) {
         // update redirect uri to be the root
         this.updateRedirectUri(`${window.location.origin}${window.location.pathname}`);
         this.authMgr.loginRedirect();
