@@ -1,8 +1,6 @@
 @import "../../../_shared/styles.scss";
 
 .psdk-user-reference {
-    display: flex;
-    flex-direction: row;
     font-size: 0.8rem;
     color: $app-neutral-color;
 }
@@ -16,6 +14,11 @@
 
 .psdk-top-pad {
     padding-top: 10px;
+}
+
+.psdk-full-width {
+    width: 100%;
+    padding-left: 0.625rem;
 }
 
 
