@@ -25,7 +25,7 @@
             <app-auto-complete  *ngSwitchCase="'AutoComplete'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-auto-complete>
             <app-repeating-structures *ngSwitchCase="'Table'" [pConn$]="kid.getPConnect()"></app-repeating-structures>
             <app-app-announcement *ngSwitchCase="'AppAnnouncement'" [pConn$]="kid.getPConnect()"></app-app-announcement>
-            <app-user-reference *ngSwitchCase="'UserReference'" [pConn$]="kid.getPConnect()"></app-user-reference>
+            <app-user-reference *ngSwitchCase="'UserReference'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-user-reference>
             <app-file-utility *ngSwitchCase="'FileUtility'" [pConn$]="kid.getPConnect()"></app-file-utility>
             <app-attachment *ngSwitchCase="'Attachment'" [pConn$]="kid.getPConnect()"></app-attachment>
             <div  *ngSwitchDefault >DefaultForm wants component not yet available: {{kid.getPConnect().getComponentName()}}</div>
