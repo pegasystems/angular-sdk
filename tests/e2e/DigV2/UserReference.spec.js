@@ -41,7 +41,7 @@ test.describe("E2E test", () => {
     );
     await complexFieldsCaseBtn.click();
 
-    /** Selecting Embedded Data from the Category dropdown */
+    /** Selecting User Reference from the Category dropdown */
     const selectedCategory = page.locator(
       'mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]'
     );
