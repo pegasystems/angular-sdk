@@ -60,9 +60,13 @@ export class ReferenceComponent implements OnInit {
 
     const referenceConfig = { ...inPConn.getComponentConfig() } || {};
 
-    delete referenceConfig?.name;
-    delete referenceConfig?.type;
-    delete referenceConfig?.visibility;
+    // Since SDK-A implements Reference as static methods and we don't rely on 
+    //  the Reference component's handling of the visibility prop, we leave it in
+    //  (and also leaving the others in for now) so the referenced View can act on
+    //  the visibility prop. (The following 3 lines were carried over from React SDK)
+    // delete referenceConfig?.name;
+    // delete referenceConfig?.type;
+    // delete referenceConfig?.visibility;
 
     const viewMetadata = inPConn.getReferencedView();
 
@@ -111,7 +115,7 @@ export class ReferenceComponent implements OnInit {
 
   // STATIC method that other components can call to normalize
   //  a pConn object that might be a 'reference'. If the incoming
-  //  pConn is a reference, return its deferenced View PConnect's
+  //  pConn is a reference, return its dereferenced View PConnect's
   //  getPConnect. Otherwise, return the passed in pConn unchanged
   //  inPConn = a PConn object (ex: { getPConnect()} )
   static normalizePConn(inPConn: any) {
@@ -178,11 +182,11 @@ export class ReferenceComponent implements OnInit {
       return inPConnArray;
     }
 
-    const theDerefencedArray = inPConnArray.map((child) => {
+    const theDereferencedArray = inPConnArray.map((child) => {
       return ReferenceComponent.normalizePConn(child);
     });
 
-    return theDerefencedArray;
+    return theDereferencedArray;
   }
 
 }

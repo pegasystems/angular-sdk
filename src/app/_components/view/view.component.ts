@@ -87,6 +87,11 @@ export class ViewComponent implements OnInit {
     this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
+
+    // NOTE: this.configProps$['visibility'] is used in view.component.ts such that
+    //  the View will only be rendered when this.configProps$['visibility'] is false.
+    //  It WILL render if true or undefined.
+
     this.templateName$ = ('template' in this.configProps$) ? this.configProps$["template"] : "";
     this.title$ = ('title' in this.configProps$) ? this.configProps$["title"] : "";
     // children may have a 'reference' so normalize the children array
