@@ -1,4 +1,4 @@
-<div class="ng-view-top">
+<div *ngIf="configProps$['visibility'] !== false" class="ng-view-top">
     <h3 *ngIf="title$ !== ''">{{title$}}</h3>
     <div [ngSwitch]="templateName$">
         <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-default-form>
