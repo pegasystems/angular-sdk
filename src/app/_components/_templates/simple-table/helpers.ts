@@ -140,7 +140,7 @@ export const buildMetaForListView = (
 };
 
 export const buildFieldsForTable = (configFields, fields, bReadOnly) => {
-  const fieldDefs = configFields.map((field, index) => {
+  const fieldDefs = configFields?.map((field, index) => {
     return {
       type: "text",
       label: fields[index].config.label || fields[index].config.caption,

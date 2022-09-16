@@ -1,10 +1,13 @@
 <div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
-  <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
+  <div [formGroup]="formGroup$" *ngIf="bVisible$">
+    <!-- <input  [placeholder]="" type="text" [value]="value$" [required]="bRequired$" [attr.data-test-id]="testId"
+    [formControlName]="controlName$" 
+    (change)="fieldOnChange($event)" (click)="fieldOnClick($event)" (blur)="fieldOnBlur($event)"> -->
     <mat-form-field class="psdk-full-width" >
       <mat-label>{{label$}}</mat-label>
       <input matInput  [placeholder]="" type="text" [value]="value$" [required]="bRequired$" [attr.data-test-id]="testId"
       [formControlName]="controlName$" 
-      (change)="fieldOnChange($event)" (click)="fieldOnClick($event)"  (blur)="fieldOnBlur($event)" >
+      (change)="fieldOnChange($event)" (click)="fieldOnClick($event)" (blur)="fieldOnBlur($event)">
       <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>

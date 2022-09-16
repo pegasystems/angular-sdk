@@ -1,19 +1,17 @@
-<div class="psdk-data-readonly">
-  <div *ngIf="!requestedReadOnlyMode"><strong>simple-table-component</strong> not complete in the Angular SDK. This is a work in progress.</div>
-  <div *ngIf="!requestedReadOnlyMode">
-    You have requested an editable table which is not yet supported. Displaying in a modified readOnly mode.
-  </div>
+<div *ngIf="fieldGroupProps else table">
+  <app-field-group-template [configProps$]="fieldGroupProps" [pConn$]="pConn$" [formGroup$]="formGroup$"></app-field-group-template>
 </div>
-
-<div class="simple-table-wrapper">
-  <table mat-table [dataSource]="rowData" class="mat-elevation-z8">
-
-    <ng-container *ngFor="let dCol of processedFields" [matColumnDef]="dCol.config.name">
-      <th mat-header-cell *matHeaderCellDef> {{ dCol.config.label }}</th>
-      <td mat-cell *matCellDef="let element"> {{ element[dCol.config.name] }} </td>
-    </ng-container>
+<ng-template #table>
+  <div class="simple-table-wrapper">
+    <table mat-table [dataSource]="rowData" class="mat-elevation-z8">
   
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
+      <ng-container *ngFor="let dCol of processedFields" [matColumnDef]="dCol.config.name">
+        <th mat-header-cell *matHeaderCellDef> {{ dCol.config.label }}</th>
+        <td mat-cell *matCellDef="let element"> {{ element[dCol.config.name] }} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</ng-template>

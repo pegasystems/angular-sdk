@@ -137,6 +137,10 @@ import { PromotedFiltersComponent } from './_components/_templates/promoted-filt
 import { SingleReferenceReadonlyComponent } from './_components/_templates/single-reference-readonly/single-reference-readonly.component';
 import { SemanticLinkComponent } from './_components/_forms/semantic-link/semantic-link.component';
 import { MultiReferenceReadonlyComponent } from './_components/_templates/multi-reference-readonly/multi-reference-readonly.component';
+import { FieldGroupTemplateComponent } from './_components/_templates/field-group-template/field-group-template.component';
+import { FieldGroupListComponent } from './_components/_templates/field-group-list/field-group-list.component';
+import { FieldGroupUtils } from './_helpers/field-group-utils';
+import { MdInputBlurEventDirective } from './_directives/md-input-blur-event.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -231,7 +235,10 @@ import { MultiReferenceReadonlyComponent } from './_components/_templates/multi-
     PromotedFiltersComponent,
     SingleReferenceReadonlyComponent,
     SemanticLinkComponent,
-    MultiReferenceReadonlyComponent
+    MultiReferenceReadonlyComponent,
+    FieldGroupTemplateComponent,
+    FieldGroupListComponent,
+    MdInputBlurEventDirective
   ],
   imports: [
     BrowserModule,
@@ -276,7 +283,7 @@ import { MultiReferenceReadonlyComponent } from './_components/_templates/multi-
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'auto'} },
     { provide: APP_BASE_HREF, useValue: '/'},
-    Utils, ServerConfigService, AuthService
+    Utils, ServerConfigService, AuthService, FieldGroupUtils
   ],
   bootstrap: [AppComponent]
 })

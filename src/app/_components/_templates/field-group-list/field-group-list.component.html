@@ -1,0 +1,9 @@
+<div>{{name}}</div>
+<div>
+    <div *ngFor="let field of fields">
+        <div class="psdk-grid-filter">
+            <div class="psdk-details-fields-label">{{field.label}}</div>
+            <div style="margin: 8px 0px;">{{field.value}}</div>
+        </div>
+    </div>
+</div>

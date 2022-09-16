@@ -21,11 +21,11 @@ export class SimpleTableComponent implements OnInit {
   processedFields: Array<any> = [];
   requestedReadOnlyMode: boolean = false;
   readOnlyMode: boolean = false;
-
+  editableMode: boolean;
   // Used with AngularPConnect
   angularPConnectData: any = {};
-  
-
+  PCore$: any;
+  fieldGroupProps: any;
   constructor( private angularPConnect: AngularPConnectService, 
                private utils: Utils ) {
 
@@ -35,7 +35,9 @@ export class SimpleTableComponent implements OnInit {
 
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
-
+    if (!this.PCore$) {
+      this.PCore$ = window.PCore;
+    }
     // Then, continue on with other initialization
 
     // call updateSelf when initializing
@@ -55,7 +57,8 @@ export class SimpleTableComponent implements OnInit {
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-
+    // console.log('this.configProps$ simpleTable', this.configProps$);
+    // console.log('SimpleTableComponent this.configProps$', this.configProps$);
     // NOTE: getConfigProps() has each child.config with datasource and value undefined
     //  but getRawMetadata() has each child.config with datasource and value showing their unresolved values (ex: "@P thePropName")
     //  We need to use the prop name as the "glue" to tie the Angular Material table dataSource, displayColumns and data together.
@@ -69,8 +72,18 @@ export class SimpleTableComponent implements OnInit {
       referenceList = [],     // if referenceList not in configProps$, default to empy list 
       renderMode, 
       children, // destructure children into an array var: "resolvedFields"
-      presets
+      presets,
+      multiRecordDisplayAs
     } = this.configProps$;
+    let { contextClass } = this.configProps$;
+    if (!contextClass){
+      let listName = this.pConn$.getComponentConfig().referenceList;
+      listName = this.PCore$.getAnnotationUtils().getPropertyName(listName);
+      contextClass = this.pConn$.getFieldMetadata(listName)?.pageClass;
+    }
+    if(multiRecordDisplayAs === "fieldGroup") {
+      this.fieldGroupProps = {...this.configProps$, contextClass};
+    }
 
     const resolvedFields = children?.[0]?.children || presets?.[0].children?.[0].children;
     // get raw config as @P and other annotations are processed and don't appear in the resolved config.
@@ -99,11 +112,13 @@ export class SimpleTableComponent implements OnInit {
 
     this.requestedReadOnlyMode = (renderMode === "ReadOnly");
     this.readOnlyMode = renderMode === "ReadOnly";
-  
+    this.editableMode = renderMode === 'Editable';
+    // const showAddRowButton = !this.readOnlyMode && !hideAddRow;
+    // const showDeleteButton = !this.readOnlyMode && !hideDeleteRow;
 
     // TEMPORARILY show all tables as read only
     if (!this.readOnlyMode) {
-      console.warn(`SimpleTable: currently not editable. Displaying requested editable table as READ ONLY!`);
+      // console.warn(`SimpleTable: currently not editable. Displaying requested editable table as READ ONLY!`);
       this.readOnlyMode = true;
     }
 
@@ -123,7 +138,7 @@ export class SimpleTableComponent implements OnInit {
     // Here, we use the "name" field in fieldDefs since that has the assoicated property
     //  (if one exists for the field). If no "name", use "cellRenderer" (typically get DELETE_ICON)
     //  for our columns.
-    this.displayedColumns = fieldDefs.map( (field) => {
+    this.displayedColumns = fieldDefs?.map( (field) => {
       return field.name ? field.name : field.cellRenderer;
     });
 
@@ -136,7 +151,7 @@ export class SimpleTableComponent implements OnInit {
 
     this.processedFields = [];
 
-    this.processedFields = resolvedFields.map( (field, i) => {
+    this.processedFields = resolvedFields?.map( (field, i) => {
       field.config["name"] = this.displayedColumns[i];  // .config["value"].replace(/ ./g,"_");   // replace space dot with underscore
       return field;
     })
@@ -155,17 +170,20 @@ export class SimpleTableComponent implements OnInit {
     for (var row of referenceList) {
       let dataForRow: Object = {};
 
-      for ( var col of this.displayedColumns ) {
-        const colKey: string = col;
-
-        const theProcessedField = this.getFieldFromFieldArray(colKey, this.processedFields);
-
-        const theVal = this.getRowValue(row, colKey, theProcessedField);
-        
-        dataForRow[colKey] = theVal;
+      if (this.displayedColumns && this.displayedColumns.length > 0) {
+        for ( var col of this.displayedColumns ) {
+          const colKey: string = col;
+  
+          const theProcessedField = this.getFieldFromFieldArray(colKey, this.processedFields);
+  
+          const theVal = this.getRowValue(row, colKey, theProcessedField);
+          
+          dataForRow[colKey] = theVal;
+        }
+  
+        this.rowData.push(dataForRow);
       }
-
-      this.rowData.push(dataForRow);
+      
     }
 
     // These are the data structures referred to in the html file.
