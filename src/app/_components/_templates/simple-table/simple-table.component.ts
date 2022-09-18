@@ -1,20 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Input } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { Utils } from "../../../_helpers/utils";
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
-import { getContext, populateRowKey, buildFieldsForTable } from './helpers';
-
+import { getContext, populateRowKey, buildFieldsForTable } from "./helpers";
+import { DatapageService } from "src/app/_services/datapage.service";
 
 @Component({
-  selector: 'app-simple-table',
-  templateUrl: './simple-table.component.html',
-  styleUrls: ['./simple-table.component.scss']
+  selector: "app-simple-table",
+  templateUrl: "./simple-table.component.html",
+  styleUrls: ["./simple-table.component.scss"],
 })
 export class SimpleTableComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
 
-  configProps$ : any;
+  bVisible$: boolean = true;
+
+  configProps$: any;
 
   displayedColumns: string[] = [];
   rowData: Array<any> = [];
@@ -26,13 +28,13 @@ export class SimpleTableComponent implements OnInit {
   angularPConnectData: any = {};
   PCore$: any;
   fieldGroupProps: any;
-  constructor( private angularPConnect: AngularPConnectService, 
-               private utils: Utils ) {
+  constructor(
+    private angularPConnect: AngularPConnectService,
+    private utils: Utils,
+    private dataPageService: DatapageService
+  ) {}
 
-   }
-
-   ngOnInit(): void {
-
+  ngOnInit(): void {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
     if (!this.PCore$) {
@@ -40,37 +42,48 @@ export class SimpleTableComponent implements OnInit {
     }
     // Then, continue on with other initialization
 
-    // call updateSelf when initializing
-    this.updateSelf();
-
+    // call checkAndUpdate when initializing
+    this.checkAndUpdate();
   }
 
   ngOnDestroy(): void {
-
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
     }
-  } 
+  }
 
+  checkAndUpdate() {
+    // Should always check the bridge to see if the component should
+    // update itself (re-render)
+    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate(this);
+
+    // ONLY call updateSelf when the component should update
+    if (bUpdateSelf) {
+      this.updateSelf();
+    }
+  }
 
   // updateSelf
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    // console.log('this.configProps$ simpleTable', this.configProps$);
-    // console.log('SimpleTableComponent this.configProps$', this.configProps$);
+    
+    if (this.configProps$["visibility"] != null) {
+      this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
+    }
+
     // NOTE: getConfigProps() has each child.config with datasource and value undefined
     //  but getRawMetadata() has each child.config with datasource and value showing their unresolved values (ex: "@P thePropName")
     //  We need to use the prop name as the "glue" to tie the Angular Material table dataSource, displayColumns and data together.
     //  So, in the code below, we'll use the unresolved config.value (but replacing the space with an underscore to keep things happy)
     const rawMetadata = this.pConn$.getRawMetadata();
-    
+
     // Adapted from Nebula
-    const { 
-      label, 
-      showLabel, 
-      referenceList = [],     // if referenceList not in configProps$, default to empy list 
-      renderMode, 
+    const {
+      label,
+      showLabel,
+      referenceList = [], // if referenceList not in configProps$, default to empy list
+      renderMode,
       children, // destructure children into an array var: "resolvedFields"
       presets,
       multiRecordDisplayAs
@@ -93,7 +106,7 @@ export class SimpleTableComponent implements OnInit {
     //    config.datasource (ex: "@ASSOCIATED .DeclarantChoice")
     //  Neither of these appear in the resolved (this.configProps$)
     const rawConfig = rawMetadata?.config;
-    const rawFields =  rawConfig?.children?.[0]?.children || rawConfig?.presets?.[0].children?.[0]?.children;
+    const rawFields = rawConfig?.children?.[0]?.children || rawConfig?.presets?.[0].children?.[0]?.children;
     // At this point, fields has resolvedFields and rawFields we can use
 
     // console.log("SimpleTable resolvedFields:");
@@ -103,14 +116,12 @@ export class SimpleTableComponent implements OnInit {
 
     // start of from Nebula
     // get context name and referenceList which will be used to prepare config of PConnect
-    const { contextName, referenceListStr, pageReferenceForRows } = getContext(
-      this.pConn$
-    );
+    const { contextName, referenceListStr, pageReferenceForRows } = getContext(this.pConn$);
 
     // This gives up the "properties" we need to map to row/column values later
     // const processedData = populateRowKey(referenceList);
 
-    this.requestedReadOnlyMode = (renderMode === "ReadOnly");
+    this.requestedReadOnlyMode = renderMode === "ReadOnly";
     this.readOnlyMode = renderMode === "ReadOnly";
     this.editableMode = renderMode === 'Editable';
     // const showAddRowButton = !this.readOnlyMode && !hideAddRow;
@@ -121,7 +132,6 @@ export class SimpleTableComponent implements OnInit {
       // console.warn(`SimpleTable: currently not editable. Displaying requested editable table as READ ONLY!`);
       this.readOnlyMode = true;
     }
-
 
     // Nebula has other handling for isReadOnlyMode but has Cosmos-specific code
     //  so ignoring that for now...
@@ -145,55 +155,27 @@ export class SimpleTableComponent implements OnInit {
     // console.log(`SimpleTable displayedColumns:`);
     // console.log(this.displayedColumns);
 
-    // And now we can process the resolvedFields to add in the "name" 
+    // And now we can process the resolvedFields to add in the "name"
     //  from from the fieldDefs. This "name" is the value that
     //  we'll share to connect things together in the table.
 
     this.processedFields = [];
 
-    this.processedFields = resolvedFields?.map( (field, i) => {
-      field.config["name"] = this.displayedColumns[i];  // .config["value"].replace(/ ./g,"_");   // replace space dot with underscore
+    this.processedFields = resolvedFields.map((field, i) => {
+      field.config["name"] = this.displayedColumns[i]; // .config["value"].replace(/ ./g,"_");   // replace space dot with underscore
       return field;
-    })
+    });
 
-    // console.log("SimpleTable processedFields:");
-    // console.log(this.processedFields);
-
-
-    // The referenceList prop has the JSON data for each row to be displayed
-    //  in the table. So, iterate over referenceList to create the dataRows that
-    //  we're using as the table's dataSource
-
-    // re-initialize rowData each time we re-build it
-    this.rowData = [];
-
-    for (var row of referenceList) {
-      let dataForRow: Object = {};
-
-      if (this.displayedColumns && this.displayedColumns.length > 0) {
-        for ( var col of this.displayedColumns ) {
-          const colKey: string = col;
-  
-          const theProcessedField = this.getFieldFromFieldArray(colKey, this.processedFields);
-  
-          const theVal = this.getRowValue(row, colKey, theProcessedField);
-          
-          dataForRow[colKey] = theVal;
-        }
-  
-        this.rowData.push(dataForRow);
-      }
-      
-    }
+    this.generateRowsData();
 
     // These are the data structures referred to in the html file.
     //  These are the relationships that make the table work
-    //  displayedColumns: key/value pairs where key is order of column and 
+    //  displayedColumns: key/value pairs where key is order of column and
     //    value is the property shown in that column. Ex: 1: "FirstName"
     //  processedFields: key/value pairs where each key is order of column
     //    and each value is an object of more detailed information about that
     //    column.
-    //  rowData: array of each row's key/value pairs. Inside each row, 
+    //  rowData: array of each row's key/value pairs. Inside each row,
     //    each key is an entry in displayedColumns: ex: "FirstName": "Charles"
     //    Ex: { 1: {config: {label: "First Name", readOnly: true: name: "FirstName"}}, type: "TextInput" }
     //    The "type" indicates the type of component that should be used for editing (when editing is enabled)
@@ -207,50 +189,41 @@ export class SimpleTableComponent implements OnInit {
     // console.log(this.processedFields);
     // console.log("SimpleTable rowData:");
     // console.log(this.rowData);
-
   }
 
   // Callback passed when subscribing to store change
   onStateChange() {
-    // Should always check the bridge to see if the component should
-    // update itself (re-render)
-    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
-    // ONLY call updateSelf when the component should update
-    if (bUpdateSelf) {
-      this.updateSelf();
-    }
+    this.checkAndUpdate();
   }
 
   // return the value that should be shown as the contents for the given row data
   //  of the given row field
-  getRowValue( inRowData: Object, inColKey: string, inRowField: any  ): any {
-
+  getRowValue(inRowData: Object, inColKey: string, inRowField: any): any {
     // See what data (if any) we have to display
-    const refKeys: Array<string> = inColKey.split('.');
+    const refKeys: Array<string> = inColKey.split(".");
     let valBuilder = inRowData;
-    for ( var key of refKeys) {
+    for (var key of refKeys) {
       valBuilder = valBuilder[key];
-    }    
+    }
 
     if (this.requestedReadOnlyMode || inRowField?.config?.readOnly) {
       // Show the requested data as a readOnly entry in the table.
       return valBuilder;
-    } else { 
+    } else {
       const thePlaceholder = inRowField?.config?.placeholder ? inRowField.config.placeholder : "";
       const theEditComponent = inRowField.type ? inRowField.type : "not specified";
       // For, display (readonly), the initial value (if there is one - otherwise, try placeholder)
       //  and which component should be used for editing
-      return `${ (valBuilder !== "") ? valBuilder: thePlaceholder} (edit with ${theEditComponent})`;
+      return `${valBuilder !== "" ? valBuilder : thePlaceholder} (edit with ${theEditComponent})`;
     }
   }
   // return the field from the incoming fields array that has "name" of
   //  requested field
-  getFieldFromFieldArray ( inFieldName: string, inFieldArray: Array<any>) : Object {
+  getFieldFromFieldArray(inFieldName: string, inFieldArray: Array<any>): Object {
     let objRet = {};
 
     for (var field of inFieldArray) {
-      if ( field?.config?.name === inFieldName) {
+      if (field?.config?.name === inFieldName) {
         objRet = field;
         break;
       }
@@ -259,4 +232,32 @@ export class SimpleTableComponent implements OnInit {
     return objRet;
   }
 
+  generateRowsData() {
+    const { dataPageName, referenceList } = this.configProps$;
+    const context = this.pConn$.getContextName();
+    // if dataPageName property value exists then make a datapage fetch call and get the list of data.
+    if (dataPageName) {
+      this.dataPageService.getDataPageData(dataPageName, context).then((listData) => {
+        const data = this.formatRowsData(listData);
+        this.rowData = data;
+      });
+    } else {
+      // The referenceList prop has the JSON data for each row to be displayed
+      //  in the table. So, iterate over referenceList to create the dataRows that
+      //  we're using as the table's dataSource
+      const data = this.formatRowsData(referenceList);
+      this.rowData = data;
+    }
+  }
+
+  formatRowsData(data) {
+    return data.map((item) => {
+      return this.displayedColumns.reduce((dataForRow, colKey) => {
+        const theProcessedField = this.getFieldFromFieldArray(colKey, this.processedFields);
+        dataForRow[colKey] = this.getRowValue(item, colKey, theProcessedField);
+
+        return dataForRow;
+      }, {});
+    });
+  }
 }
