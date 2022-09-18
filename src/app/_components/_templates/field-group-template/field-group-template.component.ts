@@ -66,13 +66,6 @@ export class FieldGroupTemplateComponent implements OnInit {
                 this.updateSelf();
             }
         }
-        // if (changes && changes.pConn$) {
-        //     const pConn$ = changes.pConn$;
-        //     if (props.currentValue !== props.previousValue) {
-        //         this.configProps$ = props.currentValue;
-        //         this.updateSelf();
-        //     }
-        // }
     }
 
     updateSelf() {

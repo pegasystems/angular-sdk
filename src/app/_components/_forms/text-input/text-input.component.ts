@@ -108,7 +108,6 @@ export class TextInputComponent implements OnInit {
 
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    // console.log('this.configProps$123', this.configProps$);
 
     if (this.configProps$["value"] != undefined) {
       this.value$ = this.configProps$["value"];
@@ -194,7 +193,7 @@ export class TextInputComponent implements OnInit {
   }
 
   fieldOnBlur(event: any) {
-    console.log('event1', event);
+    console.log('event fieldOnBlur', event);
     // PConnect wants to use eventHandler for onBlur
     this.angularPConnectData.actions.onBlur(this, event);
 
