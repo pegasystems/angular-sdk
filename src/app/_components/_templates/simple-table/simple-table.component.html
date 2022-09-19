@@ -7,6 +7,7 @@
   </div>
   
   <div class="simple-table-wrapper">
+    <h3 *ngIf="label" className="label">{{label}} <span class="results-count">{{rowData.length}} results</span></h3>
     <table mat-table [dataSource]="rowData" class="mat-elevation-z8">
   
       <ng-container *ngFor="let dCol of processedFields" [matColumnDef]="dCol.config.name">
