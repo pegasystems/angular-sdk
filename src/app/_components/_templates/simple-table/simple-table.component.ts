@@ -23,6 +23,7 @@ export class SimpleTableComponent implements OnInit {
   processedFields: Array<any> = [];
   requestedReadOnlyMode: boolean = false;
   readOnlyMode: boolean = false;
+  label: string = "";
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
@@ -64,7 +65,7 @@ export class SimpleTableComponent implements OnInit {
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    
+
     if (this.configProps$["visibility"] != null) {
       this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
     }
@@ -83,7 +84,11 @@ export class SimpleTableComponent implements OnInit {
       renderMode,
       children, // destructure children into an array var: "resolvedFields"
       presets,
+      labelProp,
+      propertyLabel,
     } = this.configProps$;
+
+    this.label = labelProp || propertyLabel;
 
     const resolvedFields = children?.[0]?.children || presets?.[0].children?.[0].children;
     // get raw config as @P and other annotations are processed and don't appear in the resolved config.
