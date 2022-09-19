@@ -56,14 +56,11 @@ export class SimpleTableComponent implements OnInit {
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    
+
     if (this.configProps$["visibility"] != null) {
       this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
     }
 
-
-
-    // Adapted from Nebula
     const { multiRecordDisplayAs } = this.configProps$;
     let { contextClass } = this.configProps$;
     if (!contextClass) {
