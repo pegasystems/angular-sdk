@@ -12,10 +12,10 @@ import { Utils } from "../../../_helpers/utils";
 export class FieldGroupTemplateComponent implements OnInit {
 
     constructor(private angularPConnect: AngularPConnectService,
-                private utils: Utils,
-                private fieldGroupUtils: FieldGroupUtils) { }
+        private utils: Utils,
+        private fieldGroupUtils: FieldGroupUtils) { }
 
-    @Input() configProps$ : any;
+    @Input() configProps$: any;
     @Input() pConn$: any;
     @Input() formGroup$: FormGroup;
     angularPConnectData: any = {};
@@ -28,7 +28,7 @@ export class FieldGroupTemplateComponent implements OnInit {
     children: any;
     PCore$: any;
     menuIconOverride$: any;
-    prevRefLength:  number;
+    prevRefLength: number;
     ngOnInit(): void {
         if (!this.PCore$) {
             this.PCore$ = window.PCore;
@@ -52,7 +52,7 @@ export class FieldGroupTemplateComponent implements OnInit {
         if (bUpdateSelf) {
             this.updateSelf();
         }
-    
+
     }
 
     ngOnChanges(changes) {
@@ -87,7 +87,7 @@ export class FieldGroupTemplateComponent implements OnInit {
                 }
                 let children: any = [];
                 this.referenceList?.map((item, index) => {
-                    children.push({id: index, name: `${this.heading} ${index + 1}`, children: this.fieldGroupUtils.buildView(this.pConn$, index, lookForChildInConfig)})
+                    children.push({ id: index, name: `${this.heading} ${index + 1}`, children: this.fieldGroupUtils.buildView(this.pConn$, index, lookForChildInConfig) })
                 });
                 this.children = children;
             }

@@ -1,7 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { element } from 'protractor';
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
-import { FieldGroupUtils } from '../../../_helpers/field-group-utils';
 
 @Component({
     selector: 'app-field-group-list',
@@ -14,7 +11,7 @@ export class FieldGroupListComponent implements OnInit {
 
     fields: any = [];
 
-    ngOnInit(): void { 
+    ngOnInit(): void {
     }
 
     ngOnChanges(changes) {
@@ -24,7 +21,7 @@ export class FieldGroupListComponent implements OnInit {
                 this.fields = [];
                 for (const label in this.item) {
                     if (label !== 'classID') {
-                        this.fields.push({ label, value: this.item[label] || '---'});
+                        this.fields.push({ label, value: this.item[label] || '---' });
                     }
                 }
             }

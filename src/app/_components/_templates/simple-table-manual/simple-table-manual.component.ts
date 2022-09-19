@@ -27,12 +27,12 @@ export class SimpleTableManualComponent implements OnInit {
   // Used with AngularPConnect
   angularPConnectData: any = {};
   PCore$: any;
-
+  label: string = "";
   constructor(
     private angularPConnect: AngularPConnectService,
     private utils: Utils,
     private dataPageService: DatapageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
@@ -67,7 +67,7 @@ export class SimpleTableManualComponent implements OnInit {
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    
+
     if (this.configProps$["visibility"] != null) {
       this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
     }
@@ -86,10 +86,14 @@ export class SimpleTableManualComponent implements OnInit {
       renderMode,
       children, // destructure children into an array var: "resolvedFields"
       presets,
-      multiRecordDisplayAs
+      labelProp,
+      propertyLabel,
     } = this.configProps$;
+
+    this.label = labelProp || propertyLabel;
+
     let { contextClass } = this.configProps$;
-    if (!contextClass){
+    if (!contextClass) {
       let listName = this.pConn$.getComponentConfig().referenceList;
       listName = this.PCore$.getAnnotationUtils().getPropertyName(listName);
       contextClass = this.pConn$.getFieldMetadata(listName)?.pageClass;
@@ -145,7 +149,7 @@ export class SimpleTableManualComponent implements OnInit {
     // Here, we use the "name" field in fieldDefs since that has the assoicated property
     //  (if one exists for the field). If no "name", use "cellRenderer" (typically get DELETE_ICON)
     //  for our columns.
-    this.displayedColumns = fieldDefs?.map( (field) => {
+    this.displayedColumns = fieldDefs?.map((field) => {
       return field.name ? field.name : field.cellRenderer;
     });
 
