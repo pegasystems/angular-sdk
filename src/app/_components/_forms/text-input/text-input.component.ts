@@ -109,7 +109,6 @@ export class TextInputComponent implements OnInit {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
-
     if (this.configProps$["value"] != undefined) {
       this.value$ = this.configProps$["value"];
     }
@@ -177,13 +176,11 @@ export class TextInputComponent implements OnInit {
 
 
   fieldOnChange(event: any) {
- 
     this.angularPConnectData.actions.onChange(this, event);
-
   }
 
   fieldOnClick(event: any) {
- 
+
   }
 
   fieldOnBlur(event: any) {
