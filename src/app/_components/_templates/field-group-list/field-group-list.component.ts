@@ -10,7 +10,7 @@ import { FieldGroupUtils } from '../../../_helpers/field-group-utils';
 })
 export class FieldGroupListComponent implements OnInit {
     @Input() item;
-    @Input() name;
+    @Input() heading;
 
     fields: any = [];
 
@@ -24,7 +24,7 @@ export class FieldGroupListComponent implements OnInit {
                 this.fields = [];
                 for (const label in this.item) {
                     if (label !== 'classID') {
-                        this.fields.push({ label, value: this.item[label] });
+                        this.fields.push({ label, value: this.item[label] || '---'});
                     }
                 }
             }

@@ -1,6 +1,6 @@
 <div *ngIf="readonlyMode else editable">
     <div *ngFor="let item of referenceList; let i = index">
-        <app-field-group-list [item]="item" [name]="heading"></app-field-group-list>
+        <app-field-group-list [item]="item" heading="{{heading}} {{i+1}}"></app-field-group-list>
     </div>
 </div>
 <ng-template #editable>
