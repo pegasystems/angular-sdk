@@ -176,24 +176,14 @@ export class TextInputComponent implements OnInit {
 
 
   fieldOnChange(event: any) {
-    console.log('event fieldOnChange', event);
     this.angularPConnectData.actions.onChange(this, event);
-
-    const eve = {
-      value: event.target.value,
-    };
-    
-    this.angularPConnectData.actions.onBlur(this, eve);
-    // this.angularPConnectData.actions.onBlur(this, event);
-
   }
 
   fieldOnClick(event: any) {
-    console.log('event fieldOnClick', event);
+
   }
 
   fieldOnBlur(event: any) {
-    console.log('event fieldOnBlur', event);
     // PConnect wants to use eventHandler for onBlur
     this.angularPConnectData.actions.onBlur(this, event);
 

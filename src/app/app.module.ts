@@ -140,7 +140,6 @@ import { MultiReferenceReadonlyComponent } from './_components/_templates/multi-
 import { FieldGroupTemplateComponent } from './_components/_templates/field-group-template/field-group-template.component';
 import { FieldGroupListComponent } from './_components/_templates/field-group-list/field-group-list.component';
 import { FieldGroupUtils } from './_helpers/field-group-utils';
-import { MdInputBlurEventDirective } from './_directives/md-input-blur-event.directive';
 import { SimpleTableManualComponent } from './_components/_templates/simple-table-manual/simple-table-manual.component';
 @NgModule({
   declarations: [
@@ -239,7 +238,6 @@ import { SimpleTableManualComponent } from './_components/_templates/simple-tabl
     MultiReferenceReadonlyComponent,
     FieldGroupTemplateComponent,
     FieldGroupListComponent,
-    MdInputBlurEventDirective,
     SimpleTableManualComponent
   ],
   imports: [

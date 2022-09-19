@@ -28,6 +28,7 @@ export class FieldGroupTemplateComponent implements OnInit {
     children: any;
     PCore$: any;
     menuIconOverride$: any;
+    prevRefLength:  number;
     ngOnInit(): void {
         if (!this.PCore$) {
             this.PCore$ = window.PCore;
@@ -55,7 +56,6 @@ export class FieldGroupTemplateComponent implements OnInit {
     }
 
     ngOnChanges(changes) {
-        // console.log('changes', changes);
         if (changes && changes.configProps$) {
             const props = changes.configProps$;
             if (props.currentValue !== props.previousValue) {
@@ -69,9 +69,7 @@ export class FieldGroupTemplateComponent implements OnInit {
     }
 
     updateSelf() {
-        
         this.label = this.configProps$['label'];
-        // console.log('this.configProps$', this.configProps$);
         const renderMode = this.configProps$['renderMode'];
         const displayMode = this.configProps$['displayMode'];
         this.readonlyMode = renderMode === 'ReadOnly' || displayMode === 'LABELS_LEFT';
@@ -82,19 +80,19 @@ export class FieldGroupTemplateComponent implements OnInit {
         this.pageReference = `${this.pConn$.getPageReference()}${resolvedList}`;
         this.pConn$.setReferenceList(resolvedList);
         this.referenceList = this.configProps$['referenceList'];
-        if (!this.readonlyMode) {
-            if (this.referenceList?.length === 0) {
-                this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList?.length, this.pageReference);
+        if (this.prevRefLength != this.referenceList.length) {
+            if (!this.readonlyMode) {
+                if (this.referenceList?.length === 0) {
+                    this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList?.length, this.pageReference);
+                }
+                let children: any = [];
+                this.referenceList?.map((item, index) => {
+                    children.push({id: index, name: `${this.heading} ${index + 1}`, children: this.fieldGroupUtils.buildView(this.pConn$, index, lookForChildInConfig)})
+                });
+                this.children = children;
             }
-            let memoisedChildren: any = [];
-            this.referenceList?.map((item, index) => {
-                memoisedChildren.push({id: index, name: `${this.heading} ${index + 1}`, children: this.fieldGroupUtils.buildView(this.pConn$, index, lookForChildInConfig)})
-            });
-            this.children = memoisedChildren;
-            // console.log('MemoisedChildren', memoisedChildren);
-            // console.log('formGroup$', this.formGroup$);
         }
-        
+        this.prevRefLength = this.referenceList.length;
     }
 
     addFieldGroupItem() {
@@ -102,7 +100,6 @@ export class FieldGroupTemplateComponent implements OnInit {
     };
 
     deleteFieldGroupItem(index) {
-        console.log('index', index, this.pageReference);
         this.pConn$.getListActions().deleteEntry(index, this.pageReference);
     };
 }
