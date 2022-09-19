@@ -4,6 +4,7 @@ import { Utils } from "../../../_helpers/utils";
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
 import { getContext, populateRowKey, buildFieldsForTable } from "./helpers";
 import { DatapageService } from "src/app/_services/datapage.service";
+import { FieldGroupUtils } from '../../../_helpers/field-group-utils';
 
 @Component({
   selector: 'app-simple-table-manual',
@@ -21,18 +22,28 @@ export class SimpleTableManualComponent implements OnInit {
   displayedColumns: string[] = [];
   rowData: Array<any> = [];
   processedFields: Array<any> = [];
+  fieldDefs: Array<any> = [];
   requestedReadOnlyMode: boolean = false;
   readOnlyMode: boolean = false;
   editableMode: boolean;
   // Used with AngularPConnect
   angularPConnectData: any = {};
   PCore$: any;
+  menuIconOverride$: string;
+  pageReference: string;
+  referenceList: any;
+  contextClass: any;
+  showAddRowButton: boolean;
+  prevRefLength: number;
+  elementsData = [];
+  rawFields: any;
   label: string = "";
   constructor(
     private angularPConnect: AngularPConnectService,
     private utils: Utils,
-    private dataPageService: DatapageService
-  ) { }
+    private dataPageService: DatapageService,
+    private fieldGroupUtils: FieldGroupUtils
+  ) {}
 
   ngOnInit(): void {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
@@ -41,7 +52,7 @@ export class SimpleTableManualComponent implements OnInit {
       this.PCore$ = window.PCore;
     }
     // Then, continue on with other initialization
-
+    this.menuIconOverride$ = this.utils.getImageSrc('trash', this.PCore$.getAssetLoader().getStaticServerUrl());
     // call checkAndUpdate when initializing
     this.checkAndUpdate();
   }
@@ -86,19 +97,24 @@ export class SimpleTableManualComponent implements OnInit {
       renderMode,
       children, // destructure children into an array var: "resolvedFields"
       presets,
+      allowTableEdit,
       labelProp,
       propertyLabel,
     } = this.configProps$;
 
     this.label = labelProp || propertyLabel;
 
+    const hideAddRow = allowTableEdit === false ? true : false;
+    const hideDeleteRow = allowTableEdit === false ? true : false;
     let { contextClass } = this.configProps$;
-    if (!contextClass) {
+    this.referenceList = referenceList;
+    if (!contextClass){
       let listName = this.pConn$.getComponentConfig().referenceList;
       listName = this.PCore$.getAnnotationUtils().getPropertyName(listName);
       contextClass = this.pConn$.getFieldMetadata(listName)?.pageClass;
     }
-
+    this.contextClass = contextClass;
+    
     const resolvedFields = children?.[0]?.children || presets?.[0].children?.[0].children;
     // get raw config as @P and other annotations are processed and don't appear in the resolved config.
     //  Destructure "raw" children into array var: "rawFields"
@@ -108,16 +124,17 @@ export class SimpleTableManualComponent implements OnInit {
     //  Neither of these appear in the resolved (this.configProps$)
     const rawConfig = rawMetadata?.config;
     const rawFields = rawConfig?.children?.[0]?.children || rawConfig?.presets?.[0].children?.[0]?.children;
+    this.rawFields = rawFields;
     // At this point, fields has resolvedFields and rawFields we can use
-
-    // console.log("SimpleTable resolvedFields:");
-    // console.log( resolvedFields );
-    // console.log("SimpleTable rawFields:");
-    // console.log( rawFields );
 
     // start of from Nebula
     // get context name and referenceList which will be used to prepare config of PConnect
     const { contextName, referenceListStr, pageReferenceForRows } = getContext(this.pConn$);
+
+    const resolvedList = this.fieldGroupUtils.getReferenceList(this.pConn$);
+    this.pageReference = `${this.pConn$.getPageReference()}${resolvedList}`;
+    this.pConn$.setReferenceList(resolvedList);
+    
 
     // This gives up the "properties" we need to map to row/column values later
     // const processedData = populateRowKey(referenceList);
@@ -125,14 +142,8 @@ export class SimpleTableManualComponent implements OnInit {
     this.requestedReadOnlyMode = renderMode === "ReadOnly";
     this.readOnlyMode = renderMode === "ReadOnly";
     this.editableMode = renderMode === 'Editable';
-    // const showAddRowButton = !this.readOnlyMode && !hideAddRow;
-    // const showDeleteButton = !this.readOnlyMode && !hideDeleteRow;
-
-    // TEMPORARILY show all tables as read only
-    if (!this.readOnlyMode) {
-      // console.warn(`SimpleTable: currently not editable. Displaying requested editable table as READ ONLY!`);
-      this.readOnlyMode = true;
-    }
+    this.showAddRowButton = !this.readOnlyMode && !hideAddRow;
+    const showDeleteButton = !this.readOnlyMode && !hideDeleteRow;
 
     // Nebula has other handling for isReadOnlyMode but has Cosmos-specific code
     //  so ignoring that for now...
@@ -142,20 +153,17 @@ export class SimpleTableManualComponent implements OnInit {
     //  Nebula does). It will also have the "label", and "meta" contains the original,
     //  unchanged config info. For now, much of the info here is carried over from
     //  Nebula and we may not end up using it all.
-    const fieldDefs = buildFieldsForTable(rawFields, resolvedFields, this.readOnlyMode);
+    this.fieldDefs = buildFieldsForTable(rawFields, resolvedFields, showDeleteButton);
 
     // end of from Nebula
 
     // Here, we use the "name" field in fieldDefs since that has the assoicated property
     //  (if one exists for the field). If no "name", use "cellRenderer" (typically get DELETE_ICON)
     //  for our columns.
-    this.displayedColumns = fieldDefs?.map((field) => {
+    this.displayedColumns = this.fieldDefs?.map( (field) => {
       return field.name ? field.name : field.cellRenderer;
     });
-
-    // console.log(`SimpleTable displayedColumns:`);
-    // console.log(this.displayedColumns);
-
+  
     // And now we can process the resolvedFields to add in the "name"
     //  from from the fieldDefs. This "name" is the value that
     //  we'll share to connect things together in the table.
@@ -167,7 +175,15 @@ export class SimpleTableManualComponent implements OnInit {
       return field;
     });
 
-    this.generateRowsData();
+    if (this.prevRefLength !== this.referenceList?.length) {
+      if (this.editableMode) {
+        this.buildElementsForTable();
+      } else {
+        this.generateRowsData();
+      }
+    }
+    
+    this.prevRefLength = this.referenceList?.length;
 
     // These are the data structures referred to in the html file.
     //  These are the relationships that make the table work
@@ -183,13 +199,6 @@ export class SimpleTableManualComponent implements OnInit {
     //
     //  Note that the "property" shown in the column ("FirstName" in the above examples) is what
     //  ties the 3 data structures together.
-
-    // console.log("SimpleTable displayedColumns:");
-    // console.log(this.displayedColumns);
-    // console.log("SimpleTable processedFields:");
-    // console.log(this.processedFields);
-    // console.log("SimpleTable rowData:");
-    // console.log(this.rowData);
   }
 
   // Callback passed when subscribing to store change
@@ -199,38 +208,14 @@ export class SimpleTableManualComponent implements OnInit {
 
   // return the value that should be shown as the contents for the given row data
   //  of the given row field
-  getRowValue(inRowData: Object, inColKey: string, inRowField: any): any {
+  getRowValue(inRowData: Object, inColKey: string): any {
     // See what data (if any) we have to display
     const refKeys: Array<string> = inColKey.split(".");
     let valBuilder = inRowData;
     for (var key of refKeys) {
       valBuilder = valBuilder[key];
     }
-
-    if (this.requestedReadOnlyMode || inRowField?.config?.readOnly) {
-      // Show the requested data as a readOnly entry in the table.
-      return valBuilder;
-    } else {
-      const thePlaceholder = inRowField?.config?.placeholder ? inRowField.config.placeholder : "";
-      const theEditComponent = inRowField.type ? inRowField.type : "not specified";
-      // For, display (readonly), the initial value (if there is one - otherwise, try placeholder)
-      //  and which component should be used for editing
-      return `${valBuilder !== "" ? valBuilder : thePlaceholder} (edit with ${theEditComponent})`;
-    }
-  }
-  // return the field from the incoming fields array that has "name" of
-  //  requested field
-  getFieldFromFieldArray(inFieldName: string, inFieldArray: Array<any>): Object {
-    let objRet = {};
-
-    for (var field of inFieldArray) {
-      if (field?.config?.name === inFieldName) {
-        objRet = field;
-        break;
-      }
-    }
-
-    return objRet;
+    return valBuilder;
   }
 
   generateRowsData() {
@@ -250,15 +235,47 @@ export class SimpleTableManualComponent implements OnInit {
       this.rowData = data;
     }
   }
-
+  
   formatRowsData(data) {
-    return data.map((item) => {
+    return data?.map((item) => {
       return this.displayedColumns.reduce((dataForRow, colKey) => {
-        const theProcessedField = this.getFieldFromFieldArray(colKey, this.processedFields);
-        dataForRow[colKey] = this.getRowValue(item, colKey, theProcessedField);
-
+        dataForRow[colKey] = this.getRowValue(item, colKey);
         return dataForRow;
       }, {});
     });
+  }
+
+  addRecord() {
+    this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length, this.pageReference);
+  };
+
+  deleteRecord(index) {
+    this.pConn$.getListActions().deleteEntry(index, this.pageReference);
+  };
+
+  buildElementsForTable() {
+    const context = this.pConn$.getContextName();
+    const eleData: any = [];
+    this.referenceList.forEach((element, index) => {
+      const data: any = [];
+      this.rawFields?.forEach(item => {
+        const referenceListData = this.fieldGroupUtils.getReferenceList(this.pConn$);
+        const isDatapage = referenceListData.startsWith('D_');
+        const pageReferenceValue = isDatapage ? `${referenceListData}[${index}]` : `${this.pConn$.getPageReference()}${referenceListData.substring(referenceListData.lastIndexOf('.'))}[${index}]`;
+        const config = {
+          meta: item,
+          options: {
+            context,
+            pageReference: pageReferenceValue,
+            referenceList: referenceListData,
+            hasForm: true
+          }
+        };
+        const view = this.PCore$.createPConnect(config);
+        data.push(view);
+      });
+      eleData.push(data);
+    });
+    this.elementsData = eleData;
   }
 }
