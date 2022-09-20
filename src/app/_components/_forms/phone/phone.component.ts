@@ -4,6 +4,7 @@ import { Utils } from "../../../_helpers/utils";
 import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
 import { interval } from "rxjs/internal/observable/interval";
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { handleEvent } from '../../../_helpers/event-util';
 @Component({
   selector: 'app-phone',
   templateUrl: './phone.component.html',
@@ -162,13 +163,17 @@ export class PhoneComponent implements OnInit {
 
   fieldOnChange(event: any) {
     if(this.formGroup$.controls[this.controlName$].value) {
+      const actionsApi = this.pConn$?.getActionsApi();
+      const propName = this.pConn$?.getStateProps().value;
+      const value = this.formGroup$.controls[this.controlName$].value.e164Number;
       const eventObj = {
         target: {
-          value: this.formGroup$.controls[this.controlName$].value.e164Number,
+          value: value,
         }
       };
       this.afterBlur = true;
       this.angularPConnectData.actions.onChange(this, eventObj);
+      handleEvent(actionsApi, "blur", propName, value);
     }
   }
 
