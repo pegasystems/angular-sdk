@@ -270,7 +270,7 @@ export class AttachmentComponent implements OnInit {
             category: this.att_categoryName,
             ID: fileRes.ID
           };
-          this.pConn$.attachmentsInfo = this.PCore$.getPCoreVersion()?.includes('8.8') ? [reqObj] : reqObj;
+          this.pConn$.attachmentsInfo = this.PCore$.getPCoreVersion()?.includes('8.7') ? reqObj : [reqObj];
 
           const fieldName = this.pConn$.getStateProps().value;
           const context = this.pConn$.getContextName();
