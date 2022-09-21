@@ -2,10 +2,10 @@
   "name": "angularsdk",
   "version": "0.0.0",
   "scripts": {
-    "build:prod": "npm run prod-build-angularsdk",
+    "build:prod": "npm run lint && npm run prod-build-angularsdk",
     "build:prod:ci": "npm run clean && npm install && npm run build:prod",
-    "build:dev": "npm run build-angularsdk",
-    "build:dev:ci": "npm run clean && npm install && npm run lint && npm run build:dev",
+    "build:dev": "npm run lint && npm run build-angularsdk",
+    "build:dev:ci": "npm run clean && npm install && npm run build:dev",
     "lint": "eslint --color --cache --cache-location node_modules/.cache/eslint/ src",
     "lint:fix": "eslint --fix --color --cache --cache-location node_modules/.cache/eslint/ src",
     "start-dev": "http-server ./dist --port 3500 --cors --proxy http://localhost:3500?",
