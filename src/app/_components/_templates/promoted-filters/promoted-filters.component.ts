@@ -122,7 +122,7 @@ export class PromotedFiltersComponent implements OnInit {
     const changes = this.PCore$.getFormUtils().getChanges(this.transientItemID);
     const formValues = {};
     Object.keys(changes).forEach((key) => {
-      if (key !== 'context_data') {
+      if (!['context_data', 'pageInstructions'].includes(key)) {
         formValues[key] = changes[key];
       }
     });
