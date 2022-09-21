@@ -1,5 +1,5 @@
 
-/* eslint-disable sonarjs/cognitive-complexity */
+ 
 const FeedApi = (pConnect) => {
   const {
     invokeRestApi,

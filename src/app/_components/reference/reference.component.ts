@@ -86,7 +86,7 @@ export class ReferenceComponent implements OnInit {
       }
     };
 
-    // eslint-disable-next-line no-console
+     
     if (ReferenceComponent.bLogging) {
       console.log( `Reference: about to call createComponent with pageReference: context: ${theResolvedConfigProps["context"]}`);
     }

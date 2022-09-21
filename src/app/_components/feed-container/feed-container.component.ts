@@ -629,7 +629,7 @@ export class FeedContainerComponent implements OnInit {
         isReply: null,
         contextName: this.pConn$.getContextName(),
         likedBy: bLikedByMe,
-        messageID: messageID
+        messageID
       };
     }
     else {
@@ -638,7 +638,7 @@ export class FeedContainerComponent implements OnInit {
         isReply: true,
         contextName: this.pConn$.getContextName(),
         likedBy: bLikedByMe,
-        messageID: messageID
+        messageID
       };
     }
 

@@ -108,7 +108,7 @@ export class ViewContainerComponent implements OnInit {
     this.state = {
       dispatchObject: this.dispatchObject,
       // PCore is defined in pxBootstrapShell - eventually will be exported in place of constellationCore
-      /* eslint-disable-next-line no-undef */
+       
 
       visible: !this.PCore$["checkIfSemanticURL"]()
     };

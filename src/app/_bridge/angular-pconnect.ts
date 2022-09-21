@@ -10,6 +10,7 @@ import { Utils } from "../_helpers/utils";
 @Injectable({
   providedIn: 'root'
 })
+// eslint-disable-next-line import/prefer-default-export
 export class AngularPConnectService {
 
   /**
@@ -98,7 +99,7 @@ export class AngularPConnectService {
     let compProps: any = {};
     let addProps = {};
 
-    if (null === inComp) {
+    if (inComp === null) {
       console.error( `AngularPConnect: getComponentProps called with bad component: ${inComp}`);
     }
 
@@ -159,7 +160,7 @@ export class AngularPConnectService {
   public getComponentProp(inComp = null, inProp = "" ) {
     let propVal;
 
-    if (null === inComp) {
+    if (inComp === null) {
       console.error( `AngularPConnect: getComponentProp called with bad component: ${inComp}`);
     }
 
@@ -179,7 +180,7 @@ export class AngularPConnectService {
    * This is the full set of properties that are tracked in Redux for this component.
    */
   public getCurrentCompleteProps(inComp = null) {
-    if (null === inComp) {
+    if (inComp === null) {
       console.error( `AngularPConnect: getCurrentCompleteProps called with bad component: ${inComp}`);
     }
     return this.componentPropsArr[inComp.angularPConnectData.compID]
@@ -210,7 +211,7 @@ export class AngularPConnectService {
       actions: null
     }
 
-    if ((null === inComp) || (null === inCallback)) {
+    if ((inComp === null) || (inCallback === null)) {
       console.error(`AngularPConnect: bad call to registerAndSubscribe: inComp: ${inComp} inCallback: ${inCallback}`);
       return returnObject;
     }
@@ -347,7 +348,7 @@ export class AngularPConnectService {
     if (undefined !== inComp.angularPConnectData) {
       inComp.angularPConnectData.validateMessage = (incomingProps.validatemessage === undefined) ? "" : this.utils.htmlDecode(incomingProps.validatemessage);
 
-      if ("" != inComp.angularPConnectData.validateMessage) {
+      if (inComp.angularPConnectData.validateMessage != "") {
         // if have a validate message, turn off spinner
         let timer = interval(100).subscribe(() => {
           this.psService.sendMessage(false);

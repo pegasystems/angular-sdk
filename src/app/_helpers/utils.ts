@@ -10,6 +10,7 @@ dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
 
 @Injectable()
+// eslint-disable-next-line import/prefer-default-export
 export class Utils {
 
   lastControlID: number = 0;
@@ -79,7 +80,7 @@ export class Utils {
     let listType = configProps.listType;
     let arReturn: Array<any>;
 
-    if (null != listType) {
+    if (listType != null) {
       switch (listType.toLowerCase()) {
         case "associated":
           // data source should be an array
@@ -89,6 +90,7 @@ export class Utils {
           break;
         case "datapage":
           // get data page
+          // eslint-disable-next-line no-case-declarations
           let dataPage = configProps.datasource;
           if (dataObject[dataPage]) {
             alert("need to handle data page");

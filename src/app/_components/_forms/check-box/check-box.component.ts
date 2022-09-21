@@ -62,7 +62,7 @@ export class CheckBoxComponent implements OnInit {
     //this.updateSelf();
     this.checkAndUpdate();
 
-    if (null != this.formGroup$) {
+    if (this.formGroup$ != null) {
       // add control to formGroup
       this.formGroup$.addControl(this.controlName$, this.fieldControl);
       this.fieldControl.setValue(this.value$);
@@ -77,7 +77,7 @@ export class CheckBoxComponent implements OnInit {
 
   ngOnDestroy(): void {
 
-    if (null != this.formGroup$) {
+    if (this.formGroup$ != null) {
       this.formGroup$.removeControl(this.controlName$);
     }
 

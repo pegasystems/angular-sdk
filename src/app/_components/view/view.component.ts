@@ -17,6 +17,7 @@ import { ReferenceComponent } from '../reference/reference.component';
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss']
 })
+// eslint-disable-next-line import/prefer-default-export
 export class ViewComponent implements OnInit {
 
   @Input() pConn$: any;
@@ -122,6 +123,7 @@ export class ViewComponent implements OnInit {
       switch( this.templateName$ ) {
         case "CaseSummary":
           allFields = getAllFields(getPConnect);
+          // eslint-disable-next-line no-case-declarations
           const unresFields = {
             primaryFields: allFields[0],
             secondaryFields: allFields[1]

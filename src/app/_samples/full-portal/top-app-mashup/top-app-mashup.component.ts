@@ -276,7 +276,7 @@ export class TopAppMashupComponent implements OnInit {
 
     }
     else {
-      if (null != this.spinnerTimer) {
+      if (this.spinnerTimer != null) {
         this.spinnerTimer.unsubscribe();
         this.spinnerTimer = null;
       }

@@ -10,6 +10,7 @@ import { handleEvent } from '../../../_helpers/event-util';
   templateUrl: './phone.component.html',
   styleUrls: ['./phone.component.scss']
 })
+// eslint-disable-next-line import/prefer-default-export
 export class PhoneComponent implements OnInit {
 
   @Input() pConn$: any;
@@ -40,6 +41,7 @@ export class PhoneComponent implements OnInit {
               private utils: Utils) {   
 
   }
+
   separateDialCode = false;
 	SearchCountryField = SearchCountryField;
 	CountryISO = CountryISO;
@@ -47,6 +49,7 @@ export class PhoneComponent implements OnInit {
 	phoneForm = new FormGroup({
 		phone: new FormControl(undefined)
 	});
+
   afterBlur: boolean;
 
   ngOnInit(): void {
@@ -61,7 +64,7 @@ export class PhoneComponent implements OnInit {
     this.checkAndUpdate();
      
     
-    if (null != this.formGroup$) {
+    if (this.formGroup$ != null) {
       // add control to formGroup
       this.formGroup$.addControl(this.controlName$, this.fieldControl);
       this.fieldControl.setValue(this.value$);
@@ -76,7 +79,7 @@ export class PhoneComponent implements OnInit {
 
   ngOnDestroy(): void {
 
-    if (null != this.formGroup$) {
+    if (this.formGroup$ != null) {
       this.formGroup$.removeControl(this.controlName$);
     }
 
@@ -149,7 +152,7 @@ export class PhoneComponent implements OnInit {
     this.componentReference = this.pConn$.getStateProps().value;
 
     // trigger display of error message with field control
-    if (null != this.angularPConnectData.validateMessage && "" != this.angularPConnectData.validateMessage) {
+    if (this.angularPConnectData.validateMessage != null && this.angularPConnectData.validateMessage != "") {
       let timer = interval(100).subscribe(() => {
         this.fieldControl.setErrors({'message': true});
         this.fieldControl.markAsTouched();
@@ -168,7 +171,7 @@ export class PhoneComponent implements OnInit {
       const value = this.formGroup$.controls[this.controlName$].value.e164Number;
       const eventObj = {
         target: {
-          value: value,
+          value,
         }
       };
       this.afterBlur = true;
