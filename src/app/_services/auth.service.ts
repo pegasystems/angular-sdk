@@ -103,7 +103,7 @@ export class AuthService {
       return;
     }
     */
-    // eslint-disable-next-line sonarjs/prefer-object-literal
+     
     const constellationBootConfig:any = {};
     const sdkConfigServer = this.scService.getSdkConfigServer();
 
@@ -161,20 +161,20 @@ export class AuthService {
       window.myLoadPortal = bootstrapShell.loadPortal;
 
       bootstrapShell.bootstrapWithAuthHeader(constellationBootConfig, 'app-root').then(() => {
-        // eslint-disable-next-line no-console
+         
         console.log('Bootstrap successful!');
         this.gbC11NBootstrapInProgress = false;
 
         // Setup listener for the reauth event
         if( tokenInfo ) {
-          // eslint-disable-next-line no-undef
+           
           PCore.getPubSubUtils().subscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_FULL_REAUTH, this.fullReauth.bind(this), "authFullReauth");
         } else {
           // customReauth event introduced with 8.8
-          // eslint-disable-next-line no-undef
+           
           const sEvent = PCore.getConstants().PUB_SUB_EVENTS.EVENT_CUSTOM_REAUTH;
           if( sEvent ) {
-            // eslint-disable-next-line no-undef
+             
             PCore.getPubSubUtils().subscribe(sEvent, this.authCustomReauth.bind(this), "doReauth");
           }
         }
@@ -185,7 +185,7 @@ export class AuthService {
       })
       .catch( e => {
         // Assume error caught is because token is not valid and attempt a full reauth
-        // eslint-disable-next-line no-console
+         
         console.error(`Constellation JS Engine bootstrap failed. ${e}`);
         this.gbC11NBootstrapInProgress = false;
         this.fullReauth();
@@ -510,7 +510,7 @@ export class AuthService {
           }).catch( (e) => {
             sessionStorage.removeItem("asdk_loggingIn");
             //console.log("login(): clearing loggingIn SS")
-            // eslint-disable-next-line no-console
+             
             console.error(`Error caught during login: ${e}`);
             reject(e);
           });
@@ -540,13 +540,14 @@ export class AuthService {
     // If custom auth no need to do any OAuth logic
     if( this.gbCustomAuth ) {
       if( !window.PCore ) {
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+         
         this.constellationInit( null, null );
       }
       return;
     }
 
     // If this is the login redirect with auth code
+    // eslint-disable-next-line @typescript-eslint/prefer-includes
     if( window.location.href.indexOf("?code") !== -1 ) {
       // initialize authMgr
       this.initAuthMgr(false);
@@ -609,7 +610,7 @@ export class AuthService {
               window.PCore.getAuthUtils().revokeTokens().then(() => {
                   fnClearAndResolve();
               }).catch(err => {
-                  // eslint-disable-next-line no-console
+                   
                   console.log("Error:",err?.message);
               });
           } else {

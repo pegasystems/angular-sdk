@@ -54,7 +54,7 @@ export class DropdownComponent implements OnInit {
     //this.updateSelf();
     this.checkAndUpdate();
     
-    if (null != this.formGroup$) {
+    if (this.formGroup$ != null) {
       // add control to formGroup
       this.formGroup$.addControl(this.controlName$, this.fieldControl);
       this.fieldControl.setValue(this.value$);
@@ -69,7 +69,7 @@ export class DropdownComponent implements OnInit {
 
   ngOnDestroy(): void {
 
-    if (null != this.formGroup$) {
+    if (this.formGroup$ != null) {
       this.formGroup$.removeControl(this.controlName$);
     }
 
@@ -146,7 +146,7 @@ export class DropdownComponent implements OnInit {
       this.value$ = 'Select';
     }
     // trigger display of error message with field control
-    if (null != this.angularPConnectData.validateMessage && "" != this.angularPConnectData.validateMessage) {
+    if (this.angularPConnectData.validateMessage != null && this.angularPConnectData.validateMessage != "") {
       let timer = interval(100).subscribe(() => {
         this.fieldControl.setErrors({'message': true});
         this.fieldControl.markAsTouched();

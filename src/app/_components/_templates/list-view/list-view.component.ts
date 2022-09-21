@@ -1,4 +1,5 @@
-
+/* eslint-disable max-classes-per-file */
+/* eslint-disable import/prefer-default-export */
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -42,14 +43,14 @@ export class ListViewComponent implements OnInit {
   tempList: MatTableDataSource<any>;
 
   displayedColumns$ = Array<string>();
-  groupByColumns$: string[] = [];
+  groupByColumns$: Array<string> = [];
 
 
   configProps: any;
 
   updatedRefList: any;
 
-  repeatListData: any[];
+  repeatListData: Array<any>;
 
   searchIcon$: string;
 
@@ -209,7 +210,7 @@ export class ListViewComponent implements OnInit {
 
 
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Array<string>>) {
     moveItemInArray(this.displayedColumns$, event.previousIndex, event.currentIndex);
   }
 
@@ -783,6 +784,7 @@ export class ListViewComponent implements OnInit {
 
 
   }
+  
   _unGroupBy(event, columnData) {
     //event.stopPropagation();
     this.checkGroupByColumn(columnData.config.name, false);
@@ -809,13 +811,13 @@ export class ListViewComponent implements OnInit {
     }
   }
 
-  addGroups(data: any[], groupByColumns: string[]): any[] {
+  addGroups(data: Array<any>, groupByColumns: Array<string>): Array<any> {
     const rootGroup = new Group();
     rootGroup.expanded = true;
     return this.getSublevel(data, 0, groupByColumns, rootGroup);
   }
 
-  getSublevel(data: any[], level: number, groupByColumns: string[], parent: Group): any[] {
+  getSublevel(data: Array<any>, level: number, groupByColumns: Array<string>, parent: Group): Array<any> {
     if (level >= groupByColumns.length) {
       return data;
     }
@@ -849,6 +851,7 @@ export class ListViewComponent implements OnInit {
     const seen = {};
     return a.filter((item) => {
       const k = key(item);
+      // eslint-disable-next-line no-return-assign, no-prototype-builtins
       return seen.hasOwnProperty(k) ? false : (seen[k] = true);
     });
   }

@@ -301,7 +301,7 @@ export class AttachmentComponent implements OnInit {
 
 
         })
-        // eslint-disable-next-line no-unused-vars
+         
         .catch((error) => {
           // just catching the rethrown error at uploadAttachment
           // to handle Unhandled rejections
