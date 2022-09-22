@@ -264,13 +264,14 @@ export class AttachmentComponent implements OnInit {
           
           this.att_id = fileRes.ID;
 
-          this.pConn$.attachmentsInfo = {
+          const reqObj = {
             type: "File",
             attachmentFieldName: this.att_valueRef,
             category: this.att_categoryName,
-            ID: fileRes.ID    // 8.7 - ID is at the top-level now.
+            ID: fileRes.ID
           };
-  
+          this.pConn$.attachmentsInfo = this.PCore$.getPCoreVersion()?.includes('8.7') ? reqObj : [reqObj];
+
           const fieldName = this.pConn$.getStateProps().value;
           const context = this.pConn$.getContextName();
   
