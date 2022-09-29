@@ -1,4 +1,7 @@
-<div>
+<div *ngIf="showSimpleTableManual">
+    <app-simple-table [formGroup$]="formGroup$" [pConn$]=pConn$></app-simple-table>
+</div>
+<div *ngIf="!showSimpleTableManual">
     <div *ngIf="isSearchable else listView">
         <app-promoted-filters [formGroup$]="formGroup$" [pConn$]=pConn$ [viewName]=viewName [filters]=filters [listViewProps]=listViewProps [pageClass]=pageClass></app-promoted-filters>
     </div>

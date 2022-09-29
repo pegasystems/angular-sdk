@@ -64,7 +64,7 @@ export class ReferenceComponent implements OnInit {
     //  the Reference component's handling of the visibility prop, we leave it in
     //  (and also leaving the others in for now) so the referenced View can act on
     //  the visibility prop. (The following 3 lines were carried over from React SDK)
-    // delete referenceConfig?.name;
+    delete referenceConfig?.name;
     // delete referenceConfig?.type;
     // delete referenceConfig?.visibility;
 

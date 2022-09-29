@@ -100,6 +100,7 @@ export class ListViewComponent implements OnInit {
   selectionMode: string;
   singleSelectionMode: boolean;
   multiSelectionMode: boolean;
+  rowID: any;
   constructor(private psService: ProgressSpinnerService,
               private utils: Utils) { 
 
@@ -113,7 +114,7 @@ export class ListViewComponent implements OnInit {
     }
 
     this.configProps = this.pConn$.getConfigProps();
-
+    this.rowID = this.configProps?.referenceType === 'Case' ? 'pyID' : 'pyGUID';
     this.bShowSearch$ = this.utils.getBooleanValue(this.configProps.globalSearch);
     this.bColumnReorder$ = this.utils.getBooleanValue(this.configProps.reorderFields);
     this.bGrouping$ = this.utils.getBooleanValue(this.configProps.grouping);
@@ -253,14 +254,14 @@ export class ListViewComponent implements OnInit {
   }
 
   fieldOnChange(row) {
-    const value = row?.pyGUID;
-    this.pConn$?.getListActions?.()?.setSelectedRows([{'pyGUID': value}]);
+    const value = row[this.rowID];
+    this.pConn$?.getListActions?.()?.setSelectedRows([{[this.rowID]: value}]);
   }
 
   onCheckboxClick(row, event) {
-    const value = row?.pyGUID;
+    const value = row[this.rowID];
     const checked = event?.checked;
-    this.pConn$?.getListActions()?.setSelectedRows([{'pyGUID': value, $selected: checked}]);
+    this.pConn$?.getListActions()?.setSelectedRows([{[this.rowID]: value, $selected: checked}]);
   }
 
   rowClick(row) {

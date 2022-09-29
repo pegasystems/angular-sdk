@@ -131,13 +131,13 @@
                     <ng-container *ngIf="singleSelectionMode" matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let row">
-                            <mat-radio-button [value]="row.pyGUID" (change)="fieldOnChange(row)"></mat-radio-button>
+                            <mat-radio-button [value]="row[rowID]" (change)="fieldOnChange(row)"></mat-radio-button>
                         </td>
                     </ng-container>
                     <ng-container *ngIf="multiSelectionMode" matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let row">
-                            <mat-checkbox [value]="row.pyGUID" (change)="onCheckboxClick(row, $event)"></mat-checkbox>
+                            <mat-checkbox [value]="row[rowID]" (change)="onCheckboxClick(row, $event)"></mat-checkbox>
                         </td>
                     </ng-container>
                     <ng-container *ngFor="let dCol of fields$" [matColumnDef]="dCol.config.name" >

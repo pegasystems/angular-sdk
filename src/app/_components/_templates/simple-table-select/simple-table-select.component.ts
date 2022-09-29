@@ -70,28 +70,30 @@ export class SimpleTableSelectComponent implements OnInit {
         const isMultiSelectMode = selectionMode === MULTI;
         if (isMultiSelectMode && this.renderMode === 'ReadOnly') {
             this.showSimpleTableManual = true;
-        }
-        const pageReference = this.pConn$.getPageReference();
-        let referenceProp = isMultiSelectMode ? selectionList.substring(1) : pageReference.substring(pageReference.lastIndexOf('.') + 1);
-        // Replace here to use the context name instead
-        let contextPageReference = null;
-        if (this.dataRelationshipContext !== null && selectionMode === 'single') {
-            referenceProp = this.dataRelationshipContext;
-            contextPageReference = pageReference.concat('.').concat(referenceProp);
-        }
-        const { datasource: { parameters: fieldParameters = {} } = {}, pageClass } = isMultiSelectMode
-            ? this.pConn$.getFieldMetadata(`@P .${referenceProp}`)
-            : this.pConn$.getCurrentPageFieldMetadata(contextPageReference);
-        this.pageClass = pageClass;
-        const compositeKeys: Array<any> = [];
-        Object.values(fieldParameters).forEach((param: any) => {
-            if (this.isSelfReferencedProperty(param, referenceProp)) {
-                compositeKeys.push(param.substring(param.lastIndexOf('.') + 1));
+        } else {
+            const pageReference = this.pConn$.getPageReference();
+            let referenceProp = isMultiSelectMode ? selectionList.substring(1) : pageReference.substring(pageReference.lastIndexOf('.') + 1);
+            // Replace here to use the context name instead
+            let contextPageReference = null;
+            if (this.dataRelationshipContext !== null && selectionMode === 'single') {
+                referenceProp = this.dataRelationshipContext;
+                contextPageReference = pageReference.concat('.').concat(referenceProp);
             }
-        });
+            const metadata = isMultiSelectMode ? this.pConn$.getFieldMetadata(`@P .${referenceProp}`) : this.pConn$.getCurrentPageFieldMetadata(contextPageReference);
 
-        this.processFiltrers(theConfigProps, compositeKeys);
+            const { datasource: { parameters: fieldParameters = {} } = {}, pageClass } = metadata;
 
+            this.pageClass = pageClass;
+            const compositeKeys: Array<any> = [];
+            Object.values(fieldParameters).forEach((param: any) => {
+                if (this.isSelfReferencedProperty(param, referenceProp)) {
+                    compositeKeys.push(param.substring(param.lastIndexOf('.') + 1));
+                }
+            });
+
+            this.processFiltrers(theConfigProps, compositeKeys);
+        }
+        
     }
 
     processFiltrers(theConfigProps, compositeKeys) {
