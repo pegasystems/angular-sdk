@@ -5,6 +5,7 @@
                 <app-dropdown  *ngSwitchCase="'Dropdown'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-dropdown>
                 <app-auto-complete  *ngSwitchCase="'AutoComplete'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-auto-complete>
                 <app-simple-table-select *ngSwitchCase="'SimpleTableSelect'" [formGroup$]="formGroup$" [pConn$]="kid.getPConnect()"></app-simple-table-select>
+                <app-semantic-link *ngSwitchCase="'SemanticLink'" [pConn$]="kid.getPConnect()"></app-semantic-link>
             </div>
         </div>
     </div>

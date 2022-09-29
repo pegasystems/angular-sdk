@@ -47,7 +47,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div class="psdk-no-records" id='no-records' *ngIf="referenceList?.length === 0">No Records Found.</div>
+        <div class="psdk-no-records" id='no-records' *ngIf="editableMode && referenceList?.length === 0">No Records Found.</div>
+        <div class="psdk-no-records" id='no-records' *ngIf="readOnlyMode && rowData?.length === 0">No Records Found.</div>
     </div>
     <button *ngIf="showAddRowButton" mat-button color="primary" style="font-size: 16px;" (click)="addRecord()">+ Add</button>
 </ng-container>
