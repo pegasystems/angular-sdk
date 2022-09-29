@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export class FieldGroupUtils {
 
   /**
@@ -49,7 +50,7 @@ export class FieldGroupUtils {
         hasForm: true
       }
     };
-    // eslint-disable-next-line no-undef
+     
     const view = window.PCore.createPConnect(config);
     if (pConn.getConfigProps()?.displayMode === 'LABELS_LEFT') {
       view.getPConnect()?.setInheritedProp('displayMode', 'LABELS_LEFT');

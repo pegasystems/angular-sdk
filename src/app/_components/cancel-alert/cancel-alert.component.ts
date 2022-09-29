@@ -8,6 +8,7 @@ import { ErrorMessagesService } from '../../_messages/error-messages.service';
   templateUrl: './cancel-alert.component.html',
   styleUrls: ['./cancel-alert.component.scss']
 })
+// eslint-disable-next-line import/prefer-default-export
 export class CancelAlertComponent implements OnInit {
 
   @Input() pConn$: any;
@@ -89,6 +90,7 @@ export class CancelAlertComponent implements OnInit {
     switch(sAction) {
       case "save":
         this.psService.sendMessage(true);
+        // eslint-disable-next-line no-case-declarations
         const savePromise = actionsAPI.saveAndClose(this.itemKey);
         savePromise
           .then(() => {
@@ -113,6 +115,7 @@ export class CancelAlertComponent implements OnInit {
       case "delete" :
         this.psService.sendMessage(true);
 
+        // eslint-disable-next-line no-case-declarations
         const deletePromise = actionsAPI.deleteCaseInCreateStage(this.itemKey);
 
         deletePromise

@@ -11,6 +11,7 @@ import { FieldGroupUtils } from '../../../_helpers/field-group-utils';
   templateUrl: './simple-table-manual.component.html',
   styleUrls: ['./simple-table-manual.component.scss']
 })
+// eslint-disable-next-line import/prefer-default-export
 export class SimpleTableManualComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
@@ -19,7 +20,7 @@ export class SimpleTableManualComponent implements OnInit {
 
   configProps$: any;
 
-  displayedColumns: string[] = [];
+  displayedColumns: Array<string> = [];
   rowData: Array<any> = [];
   processedFields: Array<any> = [];
   fieldDefs: Array<any> = [];
@@ -80,6 +81,7 @@ export class SimpleTableManualComponent implements OnInit {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
     if (this.configProps$["visibility"] != null) {
+      // eslint-disable-next-line no-multi-assign
       this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
     }
 

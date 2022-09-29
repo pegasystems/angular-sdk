@@ -26,6 +26,7 @@ function getFiledWidth(field, label) {
       width = 182;
       break;
     case "Checkbox":
+       
       // eslint-disable-next-line no-case-declarations
       const text = document.createElement("span");
       document.body.appendChild(text);
