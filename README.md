@@ -4,7 +4,7 @@
 
 The **Angular SDK** provides Pega customers with the ability to build DX components that connect Pega’s ConstellationJS Engine APIs with a design system other than Pega Cosmos.
 
-The Angular SDK differs from out-of-the-box Cosmos React because it provides and demonstrates the use of a design system that is not the Pega **Cosmos React** design system. The alternative design system used in this Angular SDK is 
+The Angular SDK differs from out-of-the-box Constellation design system because it provides and demonstrates the use of a design system that is not the Pega **Constellation** design system. The alternative design system used in this Angular SDK is 
  [Angular Material](https://material.angular.io/) - open-source components that integrate seamlessly with Angular.
 
 The Angular SDK is built on a new and modernized UI technology stack (the Constellation JavaScript Engine and Constellation JavaScript API). Many additional SDK features are planned for 2022 to expand the scope of supported use cases.
@@ -13,17 +13,17 @@ The Angular SDK is built on a new and modernized UI technology stack (the Conste
 
 # Prerequisites
 
-## Pega Infinity Server and Constellation-enabled Application
+## Pega Infinity Server and Constellation architecture-enabled Application
 
 This **8.7 version** of the Angular SDK assumes that you have access to a Pega Infinity server (**8.7.0+ GA**) running an application that is configured to run using the Constellation UI service.
 
-The **MediaCo** sample application is already configured as a Constellation application and can be found in the Angular SDK download associated with this repo which is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk). The OAuth 2.0 Client Registration records associated with the **MediaCo** application are available in the same Angular SDK download. For more information about the MediaCo sample application, see [MediaCo sample application](https://docs.pega.com/dx-sdks/mediaco-sample-application).
+The **MediaCo** sample application is already configured as a Constellation architecture-based application and can be found in the Angular SDK download associated with this repo which is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk). The OAuth 2.0 Client Registration records associated with the **MediaCo** application are available in the same Angular SDK download. For more information about the MediaCo sample application, see [MediaCo sample application](https://docs.pega.com/constellation-sdks/mediaco-sample-application).
 
 The **Angular SDK** has been tested with:
 - node 14.18.*
 - npm 6.14.*
 
-Future updates to the SDK will support more recent LTS versions of node as Constellation supports them.
+Future updates to the SDK will support more recent LTS versions of node as the Constellation architecture supports them.
 
 **Before** installing and running the SDK code, refer to the **Angular SDK Guide** provided in the Marketplace download for steps to prepare your Infinity server and node environment so you can proceed with the steps in the next section.
 
@@ -47,7 +47,7 @@ Future updates to the SDK will support more recent LTS versions of node as Const
 
 ### **Configure** the Angular SDK
 
-2. Edit **sdk-config.js** and, if necessary, update the values that will be used. For more information about the attributes in the **sdk-config.json** file, see [Configuring the sdk-config.json file](https://docs.pega.com/dx-sdks/configuring-sdk-configjson-file)
+2. Edit **sdk-config.js** and, if necessary, update the values that will be used. For more information about the attributes in the **sdk-config.json** file, see [Configuring the sdk-config.json file](https://docs.pega.com/constellation-sdks/configuring-sdk-configjson-file)
 
     * The **authConfig** section contains values for the information you obtained earlier from OAuth: the Client ID, endpoints, etc.<br><br>
       * **Note:** it is **required** that you configure a value for **authConfig.mashupClientSecret**.
@@ -58,7 +58,7 @@ Future updates to the SDK will support more recent LTS versions of node as Const
    * The **serverConfig** section contains values related to the Pega Infinity server and SDK Content Server.
    <br><br>
 
-3. Edit the **package.json** file's dependency for **[@pega/constellationjs](https://www.npmjs.com/package/@pega/constellationjs)** with the **tag name** that is appropriate for the Pega Infinity version that your application is running. For example, Infinity 8.7.1 uses the tag "**SDK-8.7.1**", Infinity 8.7.2 uses the tag "**SDK-8.7.2**", etc. You must **always** use the appropriate Constellation files that match your Infinity deployment.
+3. Edit the **package.json** file's dependency for **[@pega/constellationjs](https://www.npmjs.com/package/@pega/constellationjs)** with the **tag name** that is appropriate for the Pega Infinity version that your application is running. For example, Infinity 8.7.1 uses the tag "**SDK-8.7.1**", Infinity 8.7.2 uses the tag "**SDK-8.7.2**", etc. You must **always** use the appropriate Constellation architecture files that match your Infinity deployment.
 <br><br>
 
 
@@ -178,7 +178,7 @@ You can test both **Portal** and **Embedded** scenarios by executing the followi
 <br>
 
 
-> **NOTE**: These setup tips are abstracted from the Angular SDK Guide that is available at [https://community.pega.com/media/angular-sdk-user-guide-87](https://community.pega.com/media/angular-sdk-user-guide-87). For more information about troubleshooting, see [Troubleshooting the DX SDKs](https://docs.pega.com/dx-sdks/troubleshooting-dx-sdks).
+> **NOTE**: These setup tips are abstracted from the Angular SDK Guide that is available at [https://community.pega.com/media/angular-sdk-user-guide-87](https://community.pega.com/media/angular-sdk-user-guide-87). For more information about troubleshooting, see [Troubleshooting the Constellation SDKs](https://docs.pega.com/constellation-sdks/troubleshooting-constellation-sdks).
 
 <br>
 
@@ -373,6 +373,6 @@ Refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are in
 ## Additional Resources
 * [Angular](https://angular.io/)
 * [Angular Material](https://material.angular.io/)
-* [DX SDK Documentation](https://docs.pega.com/dx-sdks/dx-sdks)
-* [Troubleshooting the DX SDKs](https://docs.pega.com/dx-sdks/troubleshooting-dx-sdks)
-* [MediaCo sample application](https://docs.pega.com/dx-sdks/mediaco-sample-application)
+* [Constellation SDK Documentation](https://docs.pega.com/constellation-sdks/constellation-sdks)
+* [Troubleshooting the Constellation SDKs](https://docs.pega.com/constellation-sdks/troubleshooting-constellation-sdks)
+* [MediaCo sample application](https://docs.pega.com/constellation-sdks/mediaco-sample-application)
