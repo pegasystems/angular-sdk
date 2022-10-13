@@ -8,7 +8,6 @@ import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
   templateUrl: "./simple-table.component.html",
   styleUrls: ["./simple-table.component.scss"],
 })
-// eslint-disable-next-line import/prefer-default-export
 export class SimpleTableComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;

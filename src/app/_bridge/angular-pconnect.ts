@@ -10,7 +10,6 @@ import { Utils } from "../_helpers/utils";
 @Injectable({
   providedIn: 'root'
 })
-// eslint-disable-next-line import/prefer-default-export
 export class AngularPConnectService {
 
   /**

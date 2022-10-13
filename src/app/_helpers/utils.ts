@@ -10,7 +10,6 @@ dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
 
 @Injectable()
-// eslint-disable-next-line import/prefer-default-export
 export class Utils {
 
   lastControlID: number = 0;

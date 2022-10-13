@@ -8,7 +8,6 @@ import { ErrorMessagesService } from '../../_messages/error-messages.service';
   templateUrl: './cancel-alert.component.html',
   styleUrls: ['./cancel-alert.component.scss']
 })
-// eslint-disable-next-line import/prefer-default-export
 export class CancelAlertComponent implements OnInit {
 
   @Input() pConn$: any;

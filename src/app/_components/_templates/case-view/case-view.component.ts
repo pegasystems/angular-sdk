@@ -30,7 +30,7 @@ export class CaseViewComponent implements OnInit {
   caseClass$: string = "";
   id$: string = "";
   status$: string = "";  
-  caseTabs$: Array<any>;
+  caseTabs$: Array<any> = [];
   svgCase$: string;
   tabData$: any;
 
@@ -51,9 +51,10 @@ export class CaseViewComponent implements OnInit {
 
   constructor(private cdRef: ChangeDetectorRef,
               private angularPConnect: AngularPConnectService,
-              private utils: Utils) { }
+              private utils: Utils) { }           
 
   ngOnInit(): void {
+
 
     if (!this.PCore$) {
       this.PCore$ = window.PCore;
@@ -170,21 +171,31 @@ export class CaseViewComponent implements OnInit {
         if (kidPConn.getRawMetadata().name == "Tabs") {
           this.mainTabs = kid;
           this.mainTabData = this.mainTabs.getPConnect().getChildren();
-          
-          // default
-          this.tabData$ = this.mainTabData[0].getPConnect().getRawMetadata();
         }
       }
   
-    
-  
-  
-      this.caseTabs$  = this.mainTabs
+      this.mainTabs
       .getPConnect()
       .getChildren()
-      .map((child, i) => {
+      .forEach((child, i) => {
         const config = child.getPConnect().resolveConfigProps(child.getPConnect().getRawMetadata()).config;
-        return { name: config.label || "No label specified in config", id: i };
+        let { label, inheritedProps, visibility }  = config;
+        //For some tabs, "label" property is not avaialable in theTabCompConfig, so will get them from inheritedProps
+        if(!label){
+          inheritedProps.forEach((inheritedProp:any) => {
+            if(inheritedProp.prop === 'label'){
+              label = inheritedProp.value;
+            }
+          });
+        }
+        // We'll display the tabs when either visibility property doesn't exist or is true(if exists)
+        if( visibility === undefined || visibility === true){
+          this.caseTabs$.push({ name: label, id: i });
+          // To make first visible tab display at the beginning
+          if(!this.tabData$){
+            this.tabData$ = { type: "DeferLoad", config: child.getPConnect().getRawMetadata().config };
+          }
+        }
       });
     }
 
