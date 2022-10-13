@@ -1,6 +1,6 @@
 
 
-<div class="psdk-case-view">
+<div class="psdk-case-view" id="case-view">
   <div *ngIf="!displayOnlyFA$" class="psdk-case-view-info">
 
 
@@ -43,7 +43,7 @@
       <app-case-summary [pConn$]="caseSummaryPConn$"></app-case-summary> 
     </div>
     
-    <app-material-vertical-tabs [tabConfig$]="caseTabs$" (TabClick)="onTabClick($event)"></app-material-vertical-tabs>
+    <app-material-vertical-tabs *ngIf="caseTabs$.length > 1" [tabConfig$]="caseTabs$" (TabClick)="onTabClick($event)"></app-material-vertical-tabs>
     
   </div>
   <div class="psdk-case-view-main">

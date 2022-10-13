@@ -10,7 +10,6 @@ import { handleEvent } from '../../../_helpers/event-util';
   templateUrl: './phone.component.html',
   styleUrls: ['./phone.component.scss']
 })
-// eslint-disable-next-line import/prefer-default-export
 export class PhoneComponent implements OnInit {
 
   @Input() pConn$: any;

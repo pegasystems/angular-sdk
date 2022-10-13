@@ -1,5 +1,4 @@
 /* eslint-disable max-classes-per-file */
-/* eslint-disable import/prefer-default-export */
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';

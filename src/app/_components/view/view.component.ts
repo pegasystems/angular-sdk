@@ -17,7 +17,6 @@ import { ReferenceComponent } from '../reference/reference.component';
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss']
 })
-// eslint-disable-next-line import/prefer-default-export
 export class ViewComponent implements OnInit {
 
   @Input() pConn$: any;

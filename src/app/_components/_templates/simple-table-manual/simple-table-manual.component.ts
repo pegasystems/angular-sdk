@@ -11,7 +11,6 @@ import { FieldGroupUtils } from '../../../_helpers/field-group-utils';
   templateUrl: './simple-table-manual.component.html',
   styleUrls: ['./simple-table-manual.component.scss']
 })
-// eslint-disable-next-line import/prefer-default-export
 export class SimpleTableManualComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;

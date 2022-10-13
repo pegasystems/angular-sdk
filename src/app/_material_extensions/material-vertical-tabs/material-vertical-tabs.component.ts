@@ -21,12 +21,12 @@ export class MaterialVerticalTabsComponent implements OnInit {
     
     if (this.tabConfig$) {
       // seletedTabId is the first tab, unless another is selected
-      this.selectedTabId$ = this.tabConfig$[0].id;
+      this.selectedTabId$ = this.tabConfig$[0]?.id;
 
       // run through and see anything is selected
       for (let i in this.tabConfig$) {
         let aTab = this.tabConfig$[i];
-        if (aTab.selected) {
+        if (aTab?.selected) {
           this.selectedTabId$ = aTab.id;
           break;
         }
