@@ -42,7 +42,7 @@ export class FeedContainerComponent implements OnInit {
   // functions
   actionsAPI: any;
   // until FeedAPI moved back to PCore, we access the methods directly (see ngInit)
-  // feedAPI: any;
+  feedAPI: any;
 
   pulseData: any;
 
@@ -603,7 +603,13 @@ export class FeedContainerComponent implements OnInit {
       // debugger;
       // used to be: this./*feedAPI.*/postMessage(pulseMessage);
       // With latest FeedAPI, the 1st arg should be getConfigProps().value
-      this./*feedAPI.*/postMessage(this.pConn$.getConfigProps().value, this.pulseConversation);
+      
+      // If feedAPI is defined then only post message
+      if(this.feedAPI){
+        this./*feedAPI.*/postMessage(this.pConn$.getConfigProps().value, this.pulseConversation);
+      }else{
+        console.log("We don't support Pulse yet");
+      }
 
     }
 
