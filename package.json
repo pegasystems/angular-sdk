@@ -82,7 +82,7 @@
     "@pega/configs": "^0.3.4",
     "@pega/eslint-config": "^0.3.4",
     "@pega/prettier-config": "^0.3.4",
-    "@playwright/test": "^1.21.1",
+    "@playwright/test": "^1.27.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^13.9.4",
