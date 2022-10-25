@@ -15,7 +15,7 @@ The Angular SDK is built on a new and modernized UI technology stack (the Conste
 
 ## Pega Infinity Server and Constellation architecture-enabled Application
 
-This **8.7 version** of the Angular SDK assumes that you have access to a Pega Infinity server (**8.7.0+ GA**) running an application that is configured to run using the Constellation UI service.
+This version of the Angular SDK assumes that you have access to a Pega Infinity server (**8.8.0+ GA or 8.7.0+ GA**) running an application that is configured to run using the Constellation UI service.
 
 The **MediaCo** sample application is already configured as a Constellation architecture-based application and can be found in the Angular SDK download associated with this repo which is available at [https://community.pega.com/marketplace/components/angular-sdk](https://community.pega.com/marketplace/components/angular-sdk). The OAuth 2.0 Client Registration records associated with the **MediaCo** application are available in the same Angular SDK download. For more information about the MediaCo sample application, see [MediaCo sample application](https://docs-previous.pega.com/constellation-sdks/mediaco-sample-application).
 
@@ -58,7 +58,7 @@ Future updates to the SDK will support more recent LTS versions of node as the C
    * The **serverConfig** section contains values related to the Pega Infinity server and SDK Content Server.
    <br><br>
 
-3. Edit the **package.json** file's dependency for **[@pega/constellationjs](https://www.npmjs.com/package/@pega/constellationjs)** with the **tag name** that is appropriate for the Pega Infinity version that your application is running. For example, Infinity 8.7.1 uses the tag "**SDK-8.7.1**", Infinity 8.7.2 uses the tag "**SDK-8.7.2**", etc. You must **always** use the appropriate Constellation architecture files that match your Infinity deployment.
+3. Edit the **package.json** file's dependency for **[@pega/constellationjs](https://www.npmjs.com/package/@pega/constellationjs)** with the **tag name** that is appropriate for the Pega Infinity version that your application is running. For example, Infinity 8.8.0 uses the tag "**SDK-8.8.0**", Infinity 8.7.3 uses the tag "**SDK-8.7.3**", etc. You must **always** use the appropriate Constellation architecture files that match your Infinity deployment.
 <br><br>
 
 
