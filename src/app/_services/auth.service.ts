@@ -554,8 +554,6 @@ export class AuthService {
       sessionStorage.removeItem("asdk_loggingIn");
       //console.log("loginIfNecessary: clearing loggingIn");
       this.authRedirectCallback(window.location.href, ()=> {
-        //sessionStorage.removeItem("asdk_loggingIn");
-        console.log("loginIfNecessary: clearing loggingIn (commented out)");
         window.location.href = window.location.pathname;
       });
       return;
