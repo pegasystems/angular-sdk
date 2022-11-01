@@ -57,6 +57,12 @@ export class ServerConfigService {
     if( !oServerConfig.infinityRestServerUrl.endsWith('/') ) {
       oServerConfig.infinityRestServerUrl = `${oServerConfig.infinityRestServerUrl}/`;
     }
+
+    // Specify our own internal list of well known portals to exclude (if one not specified)
+    if( !oServerConfig.excludePortals ) {
+      oServerConfig.excludePortals = ["pxExpress", "Developer", "pxPredictionStudio", "pxAdminStudio", "pyCaseWorker", "pyCaseManager7"];
+      console.warn(`No exludePortals entry found within serverConfig section of sdk-config.json.  Using the following default list: ["pxExpress", "Developer", "pxPredictionStudio", "pxAdminStudio", "pyCaseWorker", "pyCaseManager7"]`);
+    }
   }
 
   async getSdkConfig() : Promise<any> {
@@ -114,10 +120,12 @@ export class ServerConfigService {
       this.PCore = window.PCore;
     }
 
-    if ((this.getSdkConfigServer().appPortal !== "") &&
-        (this.getSdkConfigServer().appPortal !== undefined) ) {
+    const serverConfig = this.getSdkConfigServer();
+
+    if ((serverConfig.appPortal !== "") &&
+        (serverConfig.appPortal !== undefined) ) {
           // use the specified portal
-          console.log(`Using appPortal: ${this.getSdkConfigServer().appPortal}`);
+          console.log(`Using appPortal: ${serverConfig.appPortal}`);
           return;
     }
   
@@ -126,13 +134,16 @@ export class ServerConfigService {
     const serverUrl = this.getBaseUrl();
     const appAlias = this.getSdkConfigServer().appAlias;
     const appAliasPath = appAlias ? `app/${appAlias}/` : '';
+    const arExcludedPortals = serverConfig["excludePortals"];
     let fetchHeaders = {};
 
     fetchHeaders["Authorization"] = Utils.sdkGetAuthHeader();
   
     fetchHeaders["Content-Type"] = "application/json";
   
-      await fetch ( `${serverUrl}${appAliasPath}${endpoints.API}${endpoints.DATA}/${dataPageName}`,
+    // Using v1 API here as v2 data_views is not able to access same data page currently.  Should move to avoid having this logic to find
+    //  a default portal or constellation portal and rather have Constellation JS Engine API just load the default portal
+    await fetch ( `${serverUrl}${appAliasPath}${endpoints.API}${endpoints.DATA}/${dataPageName}`,
         {
           method: 'GET',
           headers: fetchHeaders
@@ -140,17 +151,38 @@ export class ServerConfigService {
         .then( response => response.json())
         .then( async (agData) => {
   
-          let arAccessGroups = agData.pxResults;
+          const arAccessGroups = agData.pxResults;
+          let selectedPortal = null;
   
           for (let ag of arAccessGroups) {
             if (ag.pyAccessGroup === userAccessGroup) {
-              // Found operator's current access group. Use its portal
-              this.setSdkConfigServer("appPortal", ag.pyPortal);
+              // Check if default portal works
+              if( !arExcludedPortals.includes(ag.pyPortal) ) {
+                selectedPortal = ag.pyPortal;
+              } else {
+                // Find first portal that is not excluded (might work)
+                for (let portal of ag.pyUserPortals ) {
+                  if( !arExcludedPortals.includes(portal.pyPortalLayout) ) {
+                    selectedPortal = portal.pyPortalLayout;
+                    break;
+                  }
+                }
+              }
               break;
             }
           }
-      });
+          if( selectedPortal ) {
+            // Found operator's current access group. Use its portal
+            this.setSdkConfigServer("appPortal", selectedPortal);
+            console.log(`Using appPortal: ${serverConfig.appPortal}`);
+          }
   
+        })
+        .catch( e => {
+          if( e ) {
+            // check specific error if 401, and wiped out if so stored token is stale.  Fetcch new tokens.
+          }
+        });  
   }
 
 }
