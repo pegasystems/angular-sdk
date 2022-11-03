@@ -112,7 +112,7 @@ test.describe('E2E test', () => {
 
     const currentCaseID = await page.locator('div[id="current-caseID"]').textContent();
     const filePath = path.join(__dirname, '../../../src/assets/cableinfo.png');
-    await page.setInputFiles('#upload-photo', filePath);
+    await page.setInputFiles('#upload-input', filePath);
 
     await Promise.all([
       page.waitForResponse(`${endpoints.serverConfig.infinityRestServerUrl}/api/application/v2/attachments/upload`)
