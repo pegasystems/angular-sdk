@@ -1,6 +1,8 @@
+const path = require('path');
 const {test, expect} = require('@playwright/test');
 const config = require('../../config');
 const common = require('../../common');
+const endpoints = require("../../../sdk-config.json");
 
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:3500/portal');
@@ -108,7 +110,22 @@ test.describe('E2E test', () => {
     const sendToMgr = page.locator('mat-checkbox[data-test-id="C3B43E79AEC2D689F0CF97BD6AFB7DC4"]');
     await sendToMgr.click();
 
+    const currentCaseID = await page.locator('div[id="current-caseID"]').textContent();
+    const filePath = path.join(__dirname, '../MediaCo/cableinfo.png');
+    await page.setInputFiles('#upload-photo', filePath);
+
+    await Promise.all([
+      page.waitForResponse(`${endpoints.serverConfig.infinityRestServerUrl}/api/application/v2/attachments/upload`)
+    ]);
+
     await page.locator('button:has-text("submit")').click();
+
+    await Promise.all([
+      page.waitForResponse(`${endpoints.serverConfig.infinityRestServerUrl}/api/application/v2/cases/${currentCaseID}/attachments`),
+    ]);
+
+    const attachmentCount = await page.locator('div[id="attachment-count"]').textContent();
+    await expect(Number(attachmentCount)).toBeGreaterThan(0);
 
     //  Click text=Thank you! The next step in this case has been routed appropriately.
       await page
