@@ -4,7 +4,7 @@
       </span>
     <div class="psdk-modal-file-selector" *ngIf="bShowSelector$">
         <mat-spinner *ngIf="bLoading$" class="progress-spinner" diameter="40"></mat-spinner>
-        <input hidden type="file" #uploader (change)="uploadMyFiles($event)"/>
+        <input hidden type="file" #uploader id='upload-input' (change)="uploadMyFiles($event)"/>
     
 
         <button mat-stroked-button color="primary" [disabled]="bDisabled$" (click)="uploader.click()">

@@ -214,30 +214,59 @@ export class AttachmentComponent implements OnInit {
   };
 
   _removeFileFromList(item: any) {
-    if (item != null) {
-      for (let fileIndex in this.arFileList$) {
-        if (this.arFileList$[fileIndex].id == item.id) {
-          // remove the file from the list and redraw
-          this.ngZone.run( () => {
-            this.arFileList$.splice(parseInt(fileIndex), 1);
-
-            // call delete attachment
-            if (this.value$ && this.value$.pxResults[0]) {
-              this.pConn$.attachmentsInfo = {
-                type: "File",
-                attachmentFieldName: this.att_valueRef,
-                delete: true
-              };
-            } else {
-              this.pConn$.attachmentsInfo = null;
-            }
-
-            this.bShowSelector$ = true;
-          });
-          break;
-        }
+    const fileIndex = this.arFileList$.findIndex(element => element?.id === item?.id);
+    if (this.PCore$.getPCoreVersion()?.includes('8.7')) {
+      if (this.value$ && this.value$.pxResults[0]) {
+        this.pConn$.attachmentsInfo = {
+          type: "File",
+          attachmentFieldName: this.att_valueRef,
+          delete: true
+        };
       }
+      if (fileIndex > -1) { this.arFileList$.splice(fileIndex, 1) };
+      
+    } else {
+      const attachmentsList = [];
+      const currentAttachmentList = this.getCurrentAttachmentsList(this.pConn$.getContextName()).filter(
+        (f) => f.label !== this.att_valueRef
+      );
+      if (this.value$ && this.value$.pxResults && +this.value$.pyCount > 0) {
+        const deletedFile = {
+          type: "File",
+          label: this.att_valueRef,
+          delete: true,
+          responseProps: {
+            pzInsKey: this.arFileList$[fileIndex].id
+          },
+        };
+        // updating the redux store to help form-handler in passing the data to delete the file from server
+        this.PCore$.getStateUtils().updateState(
+          this.pConn$.getContextName(),
+          'attachmentsList',
+          [...currentAttachmentList, deletedFile],
+          {
+            pageReference: 'context_data',
+            isArrayDeepMerge: false
+          }
+        );
+      } else {
+        this.PCore$.getStateUtils().updateState(
+          this.pConn$.getContextName(),
+          'attachmentsList',
+          [...currentAttachmentList, ...attachmentsList],
+          {
+            pageReference: 'context_data',
+            isArrayDeepMerge: false
+          }
+        );
+      }
+      if (fileIndex > -1) { this.arFileList$.splice(fileIndex, 1) };
     }
+    this.bShowSelector$ = this.arFileList$?.length > 0 ? false : true;
+  }
+
+  getCurrentAttachmentsList(context) {
+    return this.PCore$.getStoreValue('.attachmentsList', 'context_data', context) || [];
   }
 
   uploadMyFiles(event: any) {
@@ -264,13 +293,33 @@ export class AttachmentComponent implements OnInit {
           
           this.att_id = fileRes.ID;
 
-          const reqObj = {
-            type: "File",
-            attachmentFieldName: this.att_valueRef,
-            category: this.att_categoryName,
-            ID: fileRes.ID
-          };
-          this.pConn$.attachmentsInfo = this.PCore$.getPCoreVersion()?.includes('8.7') ? reqObj : [reqObj];
+          let reqObj;
+          if (this.PCore$.getPCoreVersion()?.includes('8.7')) {
+            reqObj = {
+              type: "File",
+              attachmentFieldName: this.att_valueRef,
+              category: this.att_categoryName,
+              ID: fileRes.ID
+            };
+            this.pConn$.attachmentsInfo = reqObj;
+          } else {
+            reqObj = {
+              type: "File",
+              label: this.att_valueRef,
+              category: this.att_categoryName,
+              handle: fileRes.ID,
+              ID: fileRes.clientFileID
+            };
+            this.PCore$.getStateUtils().updateState(
+              this.pConn$.getContextName(),
+              'attachmentsList',
+              [reqObj],
+              {
+                pageReference: 'context_data',
+                isArrayDeepMerge: false
+              }
+            );
+          }
 
           const fieldName = this.pConn$.getStateProps().value;
           const context = this.pConn$.getContextName();
