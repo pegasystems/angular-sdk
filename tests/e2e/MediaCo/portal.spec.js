@@ -124,7 +124,7 @@ test.describe('E2E test', () => {
       page.waitForResponse(`${endpoints.serverConfig.infinityRestServerUrl}/api/application/v2/cases/${currentCaseID}/attachments`),
     ]);
 
-    const attachmentCount = await page.locator('div[id="attachment-count"]').textContent();
+    const attachmentCount = await page.locator('div[id="attachments-count"]').textContent();
     await expect(Number(attachmentCount)).toBeGreaterThan(0);
 
     //  Click text=Thank you! The next step in this case has been routed appropriately.
