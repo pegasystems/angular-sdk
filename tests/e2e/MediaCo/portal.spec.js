@@ -111,7 +111,7 @@ test.describe('E2E test', () => {
     await sendToMgr.click();
 
     const currentCaseID = await page.locator('div[id="current-caseID"]').textContent();
-    const filePath = path.join(__dirname, '../MediaCo/cableinfo.png');
+    const filePath = path.join(__dirname, '../../../src/assets/cableinfo.png');
     await page.setInputFiles('#upload-photo', filePath);
 
     await Promise.all([
