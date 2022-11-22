@@ -20,6 +20,7 @@ export class TodoComponent implements OnInit {
   @Input() target$: string;
   @Input() type$: string = "worklist";
   @Input() context$: string;
+  @Input() myWorkList$: any;
 
 
   configProps$ : Object;
@@ -35,6 +36,8 @@ export class TodoComponent implements OnInit {
 
 
   arAssignments$: Array<any>;
+
+  assignmentsSource$: any;
 
   PCore$: any;
 
@@ -142,17 +145,20 @@ export class TodoComponent implements OnInit {
 
 
     this.datasource$ = this.configProps$["datasource"] ? this.configProps$["datasource"] : this.datasource$;
+    this.myWorkList$ = this.configProps$["myWorkList"] ? this.configProps$["myWorkList"] : this.myWorkList$;
+
+    this.assignmentsSource$ = this.datasource$?.source || this.myWorkList$?.source;
 
 
 
     if (this.showTodoList$) {
-      this.assignmentCount$ = (this.datasource$.source != null) ? this.datasource$.source.length : 0;
-      this.arAssignments$ = this.topThreeAssignments(this.datasource$.source);
+      this.assignmentCount$ = (this.assignmentsSource$ != null) ? this.assignmentsSource$.length : 0;
+      this.arAssignments$ = this.topThreeAssignments(this.assignmentsSource$);
     }
     else {
       // get caseInfoId assignment.
       if (this.caseInfoID$ != undefined) {
-        this.arAssignments$ = this.getCaseInfoAssignment(this.datasource$.source, this.caseInfoID$);
+        this.arAssignments$ = this.getCaseInfoAssignment(this.assignmentsSource$, this.caseInfoID$);
       }
 
     }
@@ -225,7 +231,7 @@ export class TodoComponent implements OnInit {
 
     this.ngZone.run( () => {
       this.bShowMore$ = false;
-      this.arAssignments$ = this.datasource$.source;
+      this.arAssignments$ = this.assignmentsSource$;
     });
 
    
@@ -236,7 +242,7 @@ export class TodoComponent implements OnInit {
     this.ngZone.run(() => {
       this.bShowMore$ = true;
 
-      this.arAssignments$ = this.topThreeAssignments(this.datasource$.source);
+      this.arAssignments$ = this.topThreeAssignments(this.assignmentsSource$);
     });
 
   }

@@ -13,6 +13,5 @@ export function compareSdkPCoreVersions() {
 
   // const theConstellationVersion = PCore.getPCoreVersion();
 
-  // eslint-disable-next-line no-console
   console.warn(`Using Constellation version ${PCore.getPCoreVersion()}. Ensure this is the same version as your Infinity server.`);
 }
