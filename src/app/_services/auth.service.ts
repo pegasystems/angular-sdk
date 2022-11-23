@@ -157,7 +157,7 @@ export class AuthService {
       //  So, create a reference to it
       window.myLoadMashup = bootstrapShell.loadMashup;
 
-      // For experimentation, save a reference to loadPortal,loadDefaultPortal too!
+      // Save a reference to loadPortal,loadDefaultPortal too!
       window.myLoadPortal = bootstrapShell.loadPortal;
       window.myLoadDefaultPortal = bootstrapShell.loadDefaultPortal;
 

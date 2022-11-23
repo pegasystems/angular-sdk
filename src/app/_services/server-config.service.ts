@@ -122,13 +122,12 @@ export class ServerConfigService {
 
     const serverConfig = this.getSdkConfigServer();
     
-    /** Commenting it out since we won't call selectPortal() if appPortal is specified in sdk-config.json */
-    // if ((serverConfig.appPortal !== "") &&
-    //     (serverConfig.appPortal !== undefined) ) {
-    //       // use the specified portal
-    //       console.log(`Using appPortal: ${serverConfig.appPortal}`);
-    //       return;
-    // }
+    if ((serverConfig.appPortal !== "") &&
+        (serverConfig.appPortal !== undefined) ) {
+          // use the specified portal
+          console.log(`Using appPortal: ${serverConfig.appPortal}`);
+          return;
+    }
   
     const userAccessGroup = this.PCore.getEnvironmentInfo().getAccessGroup();
     const dataPageName = "D_OperatorAccessGroups";
