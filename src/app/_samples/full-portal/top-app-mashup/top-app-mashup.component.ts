@@ -33,6 +33,7 @@ declare global {
       registerComponentCreator( c11nPropObject ): Function;
     },
     myLoadPortal: Function;
+    myLoadDefaultPortal: Function;
   }
 }
 
@@ -242,12 +243,25 @@ export class TopAppMashupComponent implements OnInit {
 
     } );
 
-    this.scservice.selectPortal()
-    .then( () => {
-      const thePortal = this.scservice.getAppPortal();
-      window.myLoadPortal("app-root", thePortal, [], null);   // this is defined in bootstrap shell that's been loaded already
-    })
-
+    const thePortal = this.scservice.getAppPortal();
+  
+    // Note: myLoadPortal and myLoadDefaultPortal are set when bootstrapWithAuthHeader is invoked
+    if(thePortal){
+      console.log(`Loading specified appPortal: ${thePortal}`);
+      window.myLoadPortal("app-root", thePortal, []);   // this is defined in bootstrap shell that's been loaded already
+    }else if(window.myLoadDefaultPortal){
+      console.log(`Loading default portal`);
+      window.myLoadDefaultPortal("app-root", []);
+    }else{
+      // This path of selecting a portal by enumerating entries within current user's access group's portals list
+      //  relies on Traditional DX APIs and should be avoided when the Constellation bootstrap supports
+      //  the loadDefaultPortal API
+      this.scservice.selectPortal()
+      .then( () => {
+        const selPortal = this.scservice.getAppPortal();
+        window.myLoadPortal("app-root", selPortal, []);   // this is defined in bootstrap shell that's been loaded already
+      })
+    }
   }
 
   showHideProgress(bShow: boolean) {

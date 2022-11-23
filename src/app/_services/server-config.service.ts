@@ -121,7 +121,7 @@ export class ServerConfigService {
     }
 
     const serverConfig = this.getSdkConfigServer();
-
+    
     if ((serverConfig.appPortal !== "") &&
         (serverConfig.appPortal !== undefined) ) {
           // use the specified portal
