@@ -341,6 +341,9 @@ export class AuthService {
       if (!sdkConfigAuth.revoke) {
         sdkConfigAuth.revoke = `${pegaUrl}PRRestService/oauth2/v1/revoke`;
       }
+      if (!sdkConfigAuth.redirectUri) {
+        sdkConfigAuth.redirectUri = `${window.location.origin}${window.location.pathname}`;
+      }
       if (!sdkConfigAuth.userinfo) {
         const appAliasSeg = sdkConfigServer.appAlias ? `app/${sdkConfigServer.appAlias}/` : '';
         sdkConfigAuth.userinfo = `${pegaUrl}${appAliasSeg}api/oauthclients/v1/userinfo/JSON`;
@@ -351,10 +354,10 @@ export class AuthService {
       sdkConfigAuth.authService = "pega";
     }
 
-    // Construct path to redirect uri
-    let sRedirectUri=`${window.location.origin}${window.location.pathname}`;
-    const nLastPathSep = sRedirectUri.lastIndexOf("/");
-    sRedirectUri = `${sRedirectUri.substring(0,nLastPathSep+1)}auth.html`
+    // Construct path to auth.html (used for case when not doing a main window redirect)
+    let sNoMainRedirectUri=sdkConfigAuth.redirectUri;
+    const nLastPathSep = sNoMainRedirectUri.lastIndexOf("/");
+    sNoMainRedirectUri = nLastPathSep !== -1 ? `${sNoMainRedirectUri.substring(0,nLastPathSep+1)}auth.html` : `${sNoMainRedirectUri}/auth.html`;
   
     const authConfig:any = {
       clientId: this.bNoInitialRedirect ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
@@ -363,8 +366,8 @@ export class AuthService {
       revokeUri: sdkConfigAuth.revoke,
       userinfoUri: sdkConfigAuth.userinfo,
       redirectUri: this.bNoInitialRedirect || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup
-        ? sRedirectUri
-        : `${window.location.origin}${window.location.pathname}`,
+        ? sNoMainRedirectUri
+        : sdkConfigAuth.redirectUri,
       authService: sdkConfigAuth.authService,
       appAlias: sdkConfigServer.appAlias || '',
       useLocking: true
@@ -482,7 +485,8 @@ export class AuthService {
 
   login = (bFullReauth:boolean=false) => {
 
-    this.scService.getServerConfig().then(() => {
+    this.scService.getServerConfig().then((sdkConfig) => {
+      let sRedirectUri=sdkConfig.authConfig.redirectUri;
       // Needed so a redirect to login screen and back will know we are still in process of logging in
       sessionStorage.setItem("asdk_loggingIn", `${Date.now()}`);
       //console.log("loggingIn: setting time");
@@ -493,15 +497,14 @@ export class AuthService {
 
       if( bMainRedirect && !bFullReauth ) {
         // update redirect uri to be the root
-        this.updateRedirectUri(`${window.location.origin}${window.location.pathname}`);
+        this.updateRedirectUri(sRedirectUri);
         this.authMgr.loginRedirect();
         // Don't have token til after the redirect
         return Promise.resolve(undefined);
       } else {
         // Construct path to redirect uri
-        let sRedirectUri=`${window.location.origin}${window.location.pathname}`;
         const nLastPathSep = sRedirectUri.lastIndexOf("/");
-        sRedirectUri = `${sRedirectUri.substring(0,nLastPathSep+1)}auth.html`
+        sRedirectUri = nLastPathSep !== -1 ? `${sRedirectUri.substring(0,nLastPathSep+1)}auth.html` : `${sRedirectUri}/auth.html`;
         this.updateRedirectUri(sRedirectUri);
         return new Promise( (resolve, reject) => {
           this.authMgr.login().then(token => {
