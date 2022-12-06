@@ -30,24 +30,24 @@ test.describe("E2E test", () => {
     await createCase.click();
 
     /** Creating a Complex Fields case-type */
-    const complexFieldsCaseBtn = await page.locator('button[id="create-case"] > span:has-text("Complex Fields")');
+    const complexFieldsCaseBtn = page.locator('button[id="create-case"] > span:has-text("Complex Fields")');
     await complexFieldsCaseBtn.click();
 
     /** Selecting Query from the Category dropdown */
-    const selectedCategory = await page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
+    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
     await selectedCategory.click();
     await page.locator('mat-option > span:has-text("Query")').click();
 
     await page.locator('button:has-text("submit")').click();
 
     /** selecting SingleRecord option from dropdown  */
-    const selectedOption = await page.locator(
+    const selectedOption = page.locator(
       'mat-select[data-test-id="365ab066d5dd67171317bc3fc755245a"]'
     );
     await selectedOption.click();
     await page.locator('mat-option >> span:has-text("SingleRecord")').click();
 
-    const detailsFieldsList = await page.locator('div[id="details-fields-list"]');
+    const detailsFieldsList = page.locator('div[id="details-fields-list"]');
 
     /** Testing the values present on Confirm screen */
     await expect(detailsFieldsList.locator('span >> text="Sacramento"')).toBeVisible();
@@ -60,7 +60,7 @@ test.describe("E2E test", () => {
     await page.locator('mat-option > span:has-text("ListOfRecords")').click();
 
     /** selecting Table option from dropdown  */
-    const selectedDisplayAs = await page.locator('mat-select[data-test-id="03e83bd975984c06d12c584cb59cc4ad"]');
+    const selectedDisplayAs = page.locator('mat-select[data-test-id="03e83bd975984c06d12c584cb59cc4ad"]');
     await selectedDisplayAs.click();
     await page.locator('mat-option > span:has-text("Table")').click();
 
