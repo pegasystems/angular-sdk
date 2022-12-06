@@ -328,7 +328,7 @@ Step 3: Create a Certificate Signing Request (will be prompted for a passphrase 
 
 Step 4: Generate the Certificate
    ```
-   $ openssl x509 -req -days 3650 -in private.csr -signkey private.key -out private.crt -extensions req_ext -extfile ssl.conf
+   $ openssl x509 -req -sha256 -days 3650 -in private.csr -signkey private.key -out private.crt -extensions req_ext -extfile ssl.conf
    ```
 
 Step 5: Add the Certificate to the keychain and trust it (will be prompted for Mac system password)
@@ -338,7 +338,7 @@ Step 5: Add the Certificate to the keychain and trust it (will be prompted for M
 
 Step 6: Create a pem file from crt
    ```
-   $ openssl x509 -in private.crt -out private.pem -outform PEM
+   $ openssl x509 -sha256 -in private.crt -out private.pem -outform PEM
    ```
 Step 7: Run webpack server with arguments to use the keys (assumes private.pem and private.key are in the root project directory).  May need to close prior open instances of browser (if previously accessed prior insecure localhost)
 
