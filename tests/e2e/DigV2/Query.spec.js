@@ -40,9 +40,22 @@ test.describe("E2E test", () => {
 
     await page.locator('button:has-text("submit")').click();
 
+    /** selecting SingleRecord option from dropdown  */
+    const selectedOption = await page.locator(
+      'mat-select[data-test-id="365ab066d5dd67171317bc3fc755245a"]'
+    );
+    await selectedOption.click();
+    await page.locator('mat-option >> span:has-text("SingleRecord")').click();
+
+    const detailsFieldsList = await page.locator('div[id="details-fields-list"]');
+
+    /** Testing the values present on Confirm screen */
+    await expect(detailsFieldsList.locator('span >> text="Sacramento"')).toBeVisible();
+    await expect(detailsFieldsList.locator('span >> text="CA"')).toBeVisible();
+    await expect(detailsFieldsList.locator('span >> text="2653"')).toBeVisible();
+
     /** Query as Table */
     /** selecting ListOfReords option from dropdown  */
-    const selectedOption = await page.locator('mat-select[data-test-id="365ab066d5dd67171317bc3fc755245a"]');
     await selectedOption.click();
     await page.locator('mat-option > span:has-text("ListOfRecords")').click();
 

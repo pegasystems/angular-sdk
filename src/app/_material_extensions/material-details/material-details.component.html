@@ -1,4 +1,4 @@
-<div style="padding: 16px;">
+<div style="padding: 16px;" id="details-fields-list">
     <div *ngFor="let field of arFields$">
         <div *ngIf="field.type === 'reference'; else showDetails">
             <app-view [pConn$]="field.pConn"></app-view>
