@@ -1,4 +1,5 @@
 const {test} = require('@playwright/test');
+const common = require('../../common');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
@@ -69,8 +70,8 @@ test.describe("E2E test", () => {
 
     const dataServiceInput = page.locator('input[data-test-id="1321FA74451B96BC02663B0EF96CCBB9"]');
     await dataServiceInput.click();
-    const date = `${new Date().getMonth()+2}/${new Date().getDate()}/${new Date().getFullYear()}`;
-    await dataServiceInput.type(date);
+    const futureDate = common.getFutureDate();
+    await dataServiceInput.type(futureDate);
 
     await page.locator('button:has-text("next")').click();
 
