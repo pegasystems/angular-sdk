@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("E2E test", () => {
-  test("should login, create case and run different test cases for User Reference", async ({ page }) => {
+  test("should login, create case and run different test cases for Query", async ({ page }) => {
     await common.Login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
     /** Testing announcement banner presence */

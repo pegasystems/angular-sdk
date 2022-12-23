@@ -114,7 +114,11 @@ export class ListViewComponent implements OnInit {
     }
 
     this.configProps = this.pConn$.getConfigProps();
-    this.rowID = this.configProps?.referenceType === 'Case' ? 'pyID' : 'pyGUID';
+    /** By default, pyGUID is used for Data classes and pyID is for Work classes as row-id/key */
+    const defRowID = this.configProps?.referenceType === 'Case' ? 'pyID' : 'pyGUID';
+    /** If compositeKeys is defined, use dynamic value, else fallback to pyID or pyGUID. */
+    const compositeKeys = this.configProps?.compositeKeys;
+    this.rowID = compositeKeys && compositeKeys[0] ? compositeKeys[0] : defRowID;
     this.bShowSearch$ = this.utils.getBooleanValue(this.configProps.globalSearch);
     this.bColumnReorder$ = this.utils.getBooleanValue(this.configProps.reorderFields);
     this.bGrouping$ = this.utils.getBooleanValue(this.configProps.grouping);
