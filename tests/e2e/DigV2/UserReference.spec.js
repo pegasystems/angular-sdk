@@ -57,7 +57,7 @@ test.describe("E2E test", () => {
     await firstSearchboxOption.click();
     const selectedUser = firstSearchboxOption.innerHTML;
 
-    /** selecting user from autocomplete field  */
+    /** selecting user from dropdown field  */
     const dropdownInput = page.locator(
       'mat-select[data-test-id="12781aa4899d4a2141570b5e52b27156"]'
     );
