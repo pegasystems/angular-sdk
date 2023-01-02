@@ -30,9 +30,6 @@ export class FieldGroupTemplateComponent implements OnInit {
     menuIconOverride$: any;
     prevRefLength: number;
     ngOnInit(): void {
-        if (!this.PCore$) {
-            this.PCore$ = window.PCore;
-        }
 
         // First thing in initialization is registering and subscribing to the AngularPConnect service
         this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
@@ -56,6 +53,9 @@ export class FieldGroupTemplateComponent implements OnInit {
     }
 
     ngOnChanges(changes) {
+        if (!this.PCore$) {
+            this.PCore$ = window.PCore;
+        }
         if (changes && changes.configProps$) {
             const props = changes.configProps$;
             if (props.currentValue !== props.previousValue) {
@@ -83,7 +83,7 @@ export class FieldGroupTemplateComponent implements OnInit {
         if (this.prevRefLength != this.referenceList.length) {
             if (!this.readonlyMode) {
                 if (this.referenceList?.length === 0) {
-                    this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList?.length, this.pageReference);
+                    this.addFieldGroupItem();
                 }
                 let children: any = [];
                 this.referenceList?.map((item, index) => {
@@ -96,11 +96,19 @@ export class FieldGroupTemplateComponent implements OnInit {
     }
 
     addFieldGroupItem() {
-        this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length, this.pageReference);
+        if (this.PCore$.getPCoreVersion()?.includes('8.7')) {
+            this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length, this.pageReference);
+        } else {
+            this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length);
+        }
     };
 
     deleteFieldGroupItem(index) {
-        this.pConn$.getListActions().deleteEntry(index, this.pageReference);
+        if (this.PCore$.getPCoreVersion()?.includes('8.7')) {
+            this.pConn$.getListActions().deleteEntry(index, this.pageReference);
+        } else {
+            this.pConn$.getListActions().deleteEntry(index);
+        }
     };
 }
 
