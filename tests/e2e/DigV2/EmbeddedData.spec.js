@@ -125,7 +125,7 @@ test.describe("E2E test", () => {
 
     await page.locator('button:has-text("Next")').click();
 
-    table = page.locator('table[id="readonly-table"]');
+    let table = page.locator('table[id="readonly-table"]');
 
     /** Testing the values present on Confirm screen */
     await expect(table.locator('td:has-text("Global St")')).toBeVisible();

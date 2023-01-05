@@ -247,11 +247,19 @@ export class SimpleTableManualComponent implements OnInit {
   }
 
   addRecord() {
-    this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length, this.pageReference);
+    if (this.PCore$.getPCoreVersion()?.includes('8.7')) {
+      this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length, this.pageReference);
+    } else {
+      this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length);
+    }
   };
 
   deleteRecord(index) {
-    this.pConn$.getListActions().deleteEntry(index, this.pageReference);
+    if (this.PCore$.getPCoreVersion()?.includes('8.7')) {
+      this.pConn$.getListActions().deleteEntry(index, this.pageReference);
+    } else {
+      this.pConn$.getListActions().deleteEntry(index);
+    }
   };
 
   buildElementsForTable() {
