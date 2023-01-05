@@ -244,12 +244,13 @@ export class TopAppMashupComponent implements OnInit {
     } );
 
     const thePortal = this.scservice.getAppPortal();
-  
+    const defaultPortal = window.PCore?.getEnvironmentInfo()?.getDefaultPortal();
+    
     // Note: myLoadPortal and myLoadDefaultPortal are set when bootstrapWithAuthHeader is invoked
     if(thePortal){
       console.log(`Loading specified appPortal: ${thePortal}`);
       window.myLoadPortal("app-root", thePortal, []);   // this is defined in bootstrap shell that's been loaded already
-    }else if(window.myLoadDefaultPortal){
+    }else if(window.myLoadDefaultPortal && defaultPortal){
       console.log(`Loading default portal`);
       window.myLoadDefaultPortal("app-root", []);
     }else{
