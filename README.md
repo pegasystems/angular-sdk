@@ -31,6 +31,7 @@ Future updates to the SDK will support more recent LTS versions of node as the C
 
 ---
 # Installing and Running the Application
+The following procedures provide an overview of installing Constellation SDKs and running the application. For detailed documentation, see [Installing and configuring Constellation SDKs](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/installing-configuring-constellation-sdks.html).
 
 ### **Install** the Angular SDK
 
@@ -373,6 +374,6 @@ Refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are in
 ## Additional Resources
 * [Angular](https://angular.io/)
 * [Angular Material](https://material.angular.io/)
-* [Constellation SDK Documentation](https://docs-previous.pega.com/constellation-sdks/constellation-sdks)
-* [Troubleshooting the Constellation SDKs](https://docs-previous.pega.com/constellation-sdks/troubleshooting-constellation-sdks)
+* [Constellation SDKs Documentation](https://docs-previous.pega.com/constellation-sdks/constellation-sdks)
+* [Troubleshooting Constellation SDKs](https://docs-previous.pega.com/constellation-sdks/troubleshooting-constellation-sdks)
 * [MediaCo sample application](https://docs-previous.pega.com/constellation-sdks/mediaco-sample-application)
