@@ -31,7 +31,7 @@ Future updates to the SDK will support more recent LTS versions of node as the C
 
 ---
 # Installing and Running the Application
-The following procedures provide an overview of installing Constellation SDKs and running the application. For detailed documentation, see [Intstalling and configuring Constellation SDKs](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/installing-configuring-constellation-sdks.html).
+The following procedures provide an overview of installing Constellation SDKs and running the application. For detailed documentation, see [Installing and configuring Constellation SDKs](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/installing-configuring-constellation-sdks.html).
 
 ### **Install** the Angular SDK
 
