@@ -289,7 +289,7 @@ export class ListViewComponent implements OnInit {
       reqObj[this.rowID] = value;
       reqObj['$selected'] = checked;
     }
-    this.pConn$?.getListActions()?.setSelectedRows([{[this.rowID]: value, $selected: checked}]);
+    this.pConn$?.getListActions()?.setSelectedRows([reqObj]);
   }
 
   rowClick(row) {
