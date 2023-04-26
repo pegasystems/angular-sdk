@@ -101,6 +101,8 @@ export class ListViewComponent implements OnInit {
   singleSelectionMode: boolean;
   multiSelectionMode: boolean;
   rowID: any;
+  response: any;
+  compositeKeys: any;
   constructor(private psService: ProgressSpinnerService,
               private utils: Utils) { 
 
@@ -117,8 +119,8 @@ export class ListViewComponent implements OnInit {
     /** By default, pyGUID is used for Data classes and pyID is for Work classes as row-id/key */
     const defRowID = this.configProps?.referenceType === 'Case' ? 'pyID' : 'pyGUID';
     /** If compositeKeys is defined, use dynamic value, else fallback to pyID or pyGUID. */
-    const compositeKeys = this.configProps?.compositeKeys;
-    this.rowID = compositeKeys && compositeKeys[0] ? compositeKeys[0] : defRowID;
+    this.compositeKeys = this.configProps?.compositeKeys;
+    this.rowID = this.compositeKeys && this.compositeKeys?.length === 1 ? this.compositeKeys[0] : defRowID;
     this.bShowSearch$ = this.utils.getBooleanValue(this.configProps.globalSearch);
     this.bColumnReorder$ = this.utils.getBooleanValue(this.configProps.reorderFields);
     this.bGrouping$ = this.utils.getBooleanValue(this.configProps.grouping);
@@ -161,7 +163,7 @@ export class ListViewComponent implements OnInit {
 
         this.displayedColumns$ = this.getDisplayColums(columnFields);
         this.fields$ = this.updateFields(this.fields$, this.displayedColumns$);
-
+        this.response = tableDataResults;
         this.updatedRefList = this.updateData(tableDataResults, this.fields$);
         if (this.selectionMode === SELECTION_MODE.SINGLE && this.updatedRefList?.length > 0) {
           this.displayedColumns$?.unshift('select');
@@ -259,13 +261,35 @@ export class ListViewComponent implements OnInit {
 
   fieldOnChange(row) {
     const value = row[this.rowID];
-    this.pConn$?.getListActions?.()?.setSelectedRows([{[this.rowID]: value}]);
+    const reqObj = {};
+    if (this.compositeKeys?.length > 1) {
+      const index = this.response.findIndex(element => element[this.rowID] === value);
+      const selectedRow = this.response[index];
+      this.compositeKeys.forEach(element => {
+        reqObj[element] = selectedRow[element]
+      });
+    } else {
+      reqObj[this.rowID] = value;
+    }
+    this.pConn$?.getListActions?.()?.setSelectedRows([reqObj]);
   }
 
   onCheckboxClick(row, event) {
     const value = row[this.rowID];
     const checked = event?.checked;
-    this.pConn$?.getListActions()?.setSelectedRows([{[this.rowID]: value, $selected: checked}]);
+    const reqObj = {};
+    if (this.compositeKeys?.length > 1) {
+      const index = this.response.findIndex(element => element[this.rowID] === value);
+      const selectedRow = this.response[index];
+      this.compositeKeys.forEach(element => {
+        reqObj[element] = selectedRow[element]
+      });
+      reqObj['$selected'] = checked;
+    } else {
+      reqObj[this.rowID] = value;
+      reqObj['$selected'] = checked;
+    }
+    this.pConn$?.getListActions()?.setSelectedRows([reqObj]);
   }
 
   rowClick(row) {

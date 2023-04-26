@@ -20,6 +20,7 @@ export class PromotedFiltersComponent implements OnInit {
   @Input() pageClass;
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
+  @Input() parameters = {};
   localeCategory = 'SimpleTable';
   localizedVal;
   filtersProperties = {};
@@ -130,7 +131,7 @@ export class PromotedFiltersComponent implements OnInit {
     if (this.PCore$.getFormUtils().isFormValid(this.transientItemID) && this.isValidInput(formValues)) {
       this.showTable = true;
       const Query: any = {
-        dataViewParameters: {}
+        dataViewParameters: this.parameters || {}
       };
 
       if (Object.keys(promotedFilters).length > 0) {
