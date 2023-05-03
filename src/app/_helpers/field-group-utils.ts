@@ -14,8 +14,6 @@ export class FieldGroupUtils {
       } else if (resolvePage.startsWith('D_') && !resolvePage.endsWith('.pxResults')) {
         resolvePage = `${resolvePage}.pxResults`;
       }
-    } else {
-      resolvePage = `${pConn.getPageReference().replace('caseInfo.content', '')}${resolvePage}`;
     }
     return resolvePage;
   };
