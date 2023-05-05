@@ -159,6 +159,13 @@ test.describe("E2E test", () => {
     await selectedSubCategory.click();
     await page.locator('mat-option > span:has-text("FieldGroup")').click();
 
+    /** Editable mode type tests */
+    selectedEditMode = await page.locator(
+      'mat-select[data-test-id="6f64b45d01d11d8efd1693dfcb63b735"]'
+    );
+    await selectedEditMode.click();
+    await page.locator('mat-option > span:has-text("Editable")').click();
+
     /** Entering values in the first Row */
     await page
       .locator('input[data-test-id="202003240938510823869"]')
