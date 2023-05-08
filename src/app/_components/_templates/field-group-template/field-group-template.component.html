@@ -1,28 +1,53 @@
 <div id="field-group">
-    <div *ngIf="readonlyMode else editable">
-        <div *ngFor="let item of referenceList; let i = index">
-            <app-field-group-list [item]="item" heading="{{heading}} {{i+1}}"></app-field-group-list>
-        </div>
+  <div *ngIf="readonlyMode; else editable">
+    <div *ngFor="let item of referenceList; let i = index">
+      <app-field-group-list
+        [item]="item"
+        heading="{{fieldHeader === 'propertyRef' ? getDynamicHeader(item, i) : getStaticHeader(heading, i+1)}}"
+      ></app-field-group-list>
     </div>
-    <ng-template #editable>
-        <div *ngIf="children && children.length > 0">
-            <div *ngFor="let kid of children; let i = index">
-                <div class="header-div"> 
-                    <div style="width: 80%;">
-                        <b>{{kid.name}}</b>
-                    </div>
-                    <div style="width: 20%; text-align: right">
-                        <button id="delete-button" mat-icon-button (click)="deleteFieldGroupItem(i)">
-                            <img class="psdk-utility-card-action-svg-icon" src="{{menuIconOverride$}}">
-                        </button>
-                    </div>
-                </div>
-                
-                <div *ngIf="kid.children.getPConnect().getRawMetadata().type.toLowerCase() == 'region'">
-                    <app-region [pConn$]="kid.children.getPConnect()" [formGroup$]="formGroup$"></app-region> 
-                </div>
-            </div>
-            <button mat-button color="primary" style="font-size: 16px;" (click)="addFieldGroupItem()">+ Add</button>
+  </div>
+  <ng-template #editable>
+    <div *ngIf="children && children.length > 0">
+      <div *ngFor="let kid of children; let i = index">
+        <div class="header-div">
+          <div style="width: 80%">
+            <b>{{ kid.name }}</b>
+          </div>
+          <div style="width: 20%; text-align: right">
+            <button
+              id="delete-button"
+              mat-icon-button
+              (click)="deleteFieldGroupItem(i)"
+            >
+              <img
+                class="psdk-utility-card-action-svg-icon"
+                src="{{ menuIconOverride$ }}"
+              />
+            </button>
+          </div>
         </div>
-    </ng-template>
+
+        <div
+          *ngIf="
+            kid.children.getPConnect().getRawMetadata().type.toLowerCase() ==
+            'region'
+          "
+        >
+          <app-region
+            [pConn$]="kid.children.getPConnect()"
+            [formGroup$]="formGroup$"
+          ></app-region>
+        </div>
+      </div>
+      <button
+        mat-button
+        color="primary"
+        style="font-size: 16px"
+        (click)="addFieldGroupItem()"
+      >
+        + Add
+      </button>
+    </div>
+  </ng-template>
 </div>

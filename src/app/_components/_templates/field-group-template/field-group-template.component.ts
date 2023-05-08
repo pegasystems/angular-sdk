@@ -102,8 +102,8 @@ export class FieldGroupTemplateComponent implements OnInit {
             id: index,
             name:
               this.fieldHeader === "propertyRef"
-                ? this.getDynamicHeaderProp(item, index)
-                : `${this.heading} ${index + 1}`,
+                ? this.getDynamicHeader(item, index)
+                : this.getStaticHeader(this.heading, index),
             children: this.fieldGroupUtils.buildView(
               this.pConn$,
               index,
@@ -117,7 +117,11 @@ export class FieldGroupTemplateComponent implements OnInit {
     this.prevRefLength = this.referenceList.length;
   }
 
-  getDynamicHeaderProp = (item, index) => {
+  getStaticHeader = (heading, index) => {
+    return `${heading} ${index + 1}`;
+  }
+
+  getDynamicHeader = (item, index) => {
     if (
       this.fieldHeader === "propertyRef" &&
       this.heading &&
