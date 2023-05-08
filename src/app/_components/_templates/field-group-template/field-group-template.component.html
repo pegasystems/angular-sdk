@@ -3,7 +3,7 @@
     <div *ngFor="let item of referenceList; let i = index">
       <app-field-group-list
         [item]="item"
-        heading="{{fieldHeader === 'propertyRef' ? getDynamicHeader(item, i) : getStaticHeader(heading, i+1)}}"
+        heading="{{fieldHeader === 'propertyRef' ? getDynamicHeader(item, i) : getStaticHeader(heading, i)}}"
       ></app-field-group-list>
     </div>
   </div>
