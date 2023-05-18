@@ -1,6 +1,6 @@
 {
-  "name": "angularsdk",
-  "version": "0.0.0",
+  "name": "angular-sdk",
+  "version": "0.0.10",
   "scripts": {
     "build:prod": "run-p -l lint prod-build-angularsdk",
     "build:prod:ci": "npm run clean && npm install && npm run build:prod",
