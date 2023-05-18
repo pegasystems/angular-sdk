@@ -1,8 +1,27 @@
 <p align="center"><img width=60% src="docs/media/AngularSDK-Logo.png">
 
+<hr />
+<h1 style="color: red">IMPORTANT – PLEASE READ!</h1>
+
+<h3>In <strong>late May 2023</strong>, there will be a <strong>significant update</strong> to the Angular SDK <strong>main</strong> branch.</h3>
+
+We will be updating the SDK to use **Angular 15** and **Angular Material 15** replacing the current use of Angular 13.
+
+We strongly advise current SDK users to prepare for converting their changes
+to the SDK code to Angular 15. Once the Angular SDK has been updated to use
+Angular 15, the **main** branch will only support Pega Infinity&trade; 8.8.0+
+
+For any users who prefer to remain with Angular 13, we will create a _legacy_ branch for the existing Angular 13 code before updating the **main** branch.
+We will post the name of that branch here in the README once it is available. 
+This legacy branch will be the only Angular SDK code that will work
+with Pega Infinity&trade; 8.7.*.
+
+<br />
+<hr />
+
 # Angular SDK
 
-The **Angular SDK** provides Pega customers with the ability to build DX components that connect Pega’s ConstellationJS Engine APIs with a design system other than Pega Cosmos.
+The **Angular SDK** provides Pega customers with the ability to build DX components that connect Pega’s ConstellationJS Engine APIs with a design system other than Pega's Constellation design system.
 
 The Angular SDK differs from out-of-the-box Constellation design system because it provides and demonstrates the use of a design system that is not the Pega **Constellation** design system. The alternative design system used in this Angular SDK is 
  [Angular Material](https://material.angular.io/) - open-source components that integrate seamlessly with Angular.
