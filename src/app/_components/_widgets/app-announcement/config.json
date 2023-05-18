@@ -15,7 +15,7 @@
       "name": "description",
       "label": "description",
       "format": "TEXT",
-      "defaultValue": "We've launched a brand new experience to accelerate your workflow. Check out the guides to help you get the most of Cosmos."
+      "defaultValue": "We've launched a brand new experience to accelerate your workflow. Check out the guides to help you get the most of the Constellation design system."
     },
     {
       "name": "whatsnewlink",
