@@ -1,41 +1,29 @@
-
- 
 const FeedApi = (pConnect) => {
-  const {
-    invokeRestApi,
-    getCancelTokenSource,
-    isRequestCanceled
-  } = PCore.getRestClient();
+  const { invokeRestApi, getCancelTokenSource, isRequestCanceled } = PCore.getRestClient();
   const appName = window.PCore.getEnvironmentInfo().getApplicationName();
   let mentionsTagsCancelTokenSource = [];
 
   const getPulseContext = (pulseContext) => {
-    if (pulseContext && pulseContext.indexOf("DATA-PORTAL") !== -1) {
+    if (pulseContext && pulseContext.indexOf('DATA-PORTAL') !== -1) {
       pulseContext = `DATA-PORTAL $${appName}`;
     }
     return pulseContext;
   };
 
-  const fetchMessages = (
-    pulseContext,
-    feedID,
-    feedClass,
-    feedFilters,
-    fetchMessagesCancelTokenSource
-  ) => {
+  const fetchMessages = (pulseContext, feedID, feedClass, feedFilters, fetchMessagesCancelTokenSource) => {
     pulseContext = getPulseContext(pulseContext);
-    let filterBy = "";
+    let filterBy = '';
     if (feedFilters) {
       feedFilters.forEach((feedFilter) => {
         if (feedFilter.on) filterBy = `${filterBy}${feedFilter.id},`;
       });
-      if (filterBy === "") filterBy = "ClearFilters";
+      if (filterBy === '') filterBy = 'ClearFilters';
     }
     const queryPayload = {
       filterForContext: pulseContext,
       feedID,
       feedClass,
-      filterBy
+      filterBy,
     };
 
     for (let i = 0; i < fetchMessagesCancelTokenSource.length; i += 1) {
@@ -45,10 +33,10 @@ const FeedApi = (pConnect) => {
     fetchMessagesCancelTokenSource.push(newCancelTokenSource);
 
     return invokeRestApi(
-      "getFeedMessages",
+      'getFeedMessages',
       {
         queryPayload,
-        cancelTokenSource: newCancelTokenSource
+        cancelTokenSource: newCancelTokenSource,
       },
       pConnect.getContextName()
     )
@@ -71,92 +59,69 @@ const FeedApi = (pConnect) => {
               }
             }
             if (!feedFilters) {
-              feedFilters = [
-                { id: "All", label: "All", on: "true", disabled: false }
-              ];
+              feedFilters = [{ id: 'All', label: 'All', on: 'true', disabled: false }];
               if (response.data.data.FeedFilters) {
-                const feedFiltersList =
-                  response.data.data.FeedFilters.pxResults;
-                let allFilter = "true";
+                const feedFiltersList = response.data.data.FeedFilters.pxResults;
+                let allFilter = 'true';
                 if (Array.isArray(feedFiltersList)) {
                   feedFiltersList.forEach((feedFilter) => {
                     const feedFilterItem = {
                       id: feedFilter.pyFeedSourceReference,
                       label: feedFilter.pyLabel,
                       disabled: false,
-                      on: feedFilter.pySelected
+                      on: feedFilter.pySelected,
                     };
                     if (!feedFilterItem.on) allFilter = false;
                     feedFilters.push(feedFilterItem);
                   });
 
-                  feedFilters.find(
-                    (feedItem) => feedItem.id === "All"
-                  ).on = allFilter;
+                  feedFilters.find((feedItem) => feedItem.id === 'All').on = allFilter;
                 }
               }
             }
           }
           // if filters appllied, need to reset store
-          if (filterBy !== "" || !pConnect.getValue(`pulse.messageIDs`))
+          if (filterBy !== '' || !pConnect.getValue(`pulse.messageIDs`))
             pConnect.updateState({
               pulse: {
                 messages: respMessages,
                 messageIDs: respMessageIDs,
-                feedViewResponse
-              }
+                feedViewResponse,
+              },
             });
           else
             pConnect.updateState({
               pulse: {
                 messages: {
                   ...pConnect.getValue(`pulse.messages`),
-                  ...respMessages
+                  ...respMessages,
                 },
-                messageIDs: [
-                  ...pConnect.getValue(`pulse.messageIDs`),
-                  ...respMessageIDs
-                ],
-                feedViewResponse
-              }
+                messageIDs: [...pConnect.getValue(`pulse.messageIDs`), ...respMessageIDs],
+                feedViewResponse,
+              },
             });
           return feedFilters;
         }
 
-        pConnect.reportError(
-          `fetchMessages call failed ${response.status}`,
-          response.data
-        );
-        return "";
+        pConnect.reportError(`fetchMessages call failed ${response.status}`, response.data);
+        return '';
       })
       .catch((error) => {
         if (!isRequestCanceled(error)) {
-          pConnect.reportError(
-            ": Error ocurred during ajax call at fetchMessages API : ",
-            error.response
-          );
+          pConnect.reportError(': Error ocurred during ajax call at fetchMessages API : ', error.response);
         }
       });
   };
 
-  const postMessage = (
-    pulseContext,
-    message,
-    attachmentIDs,
-    isReply = false
-  ) => {
+  const postMessage = (pulseContext, message, attachmentIDs, isReply = false) => {
     pulseContext = getPulseContext(pulseContext);
     const reqBody = JSON.stringify({
       context: pulseContext,
       message,
-      attachments: attachmentIDs
+      attachments: attachmentIDs,
     });
 
-    invokeRestApi(
-      "postFeedMessages",
-      { body: reqBody },
-      pConnect.getContextName()
-    )
+    invokeRestApi('postFeedMessages', { body: reqBody }, pConnect.getContextName())
       .then((response) => {
         if (response.status === 201 && response.data) {
           const messageData = response.data;
@@ -166,22 +131,22 @@ const FeedApi = (pConnect) => {
             pyFeed: {
               pyPostedOn: messageData.postedTime,
               pyFeedTitle: messageData.postedByUser.name,
-              pyCommentContext: "pzInsKey",
-              pyIconType: "user",
-              pyIconReference: "pi pi-case"
+              pyCommentContext: 'pzInsKey',
+              pyIconType: 'user',
+              pyIconReference: 'pi pi-case',
             },
             postedByUser: messageData.postedByUser,
             pyMessage: messageData.message,
             mentions: messageData.mentions || [],
-            pyMessageViewReference: "pzPostDetails",
-            pxIcon: "globe",
-            tags: messageData.tags || []
+            pyMessageViewReference: 'pzPostDetails',
+            pxIcon: 'globe',
+            tags: messageData.tags || [],
           };
 
           if (isReply) {
-            let pxResults = pConnect.getValue(".pxResults");
+            let pxResults = pConnect.getValue('.pxResults');
             if (!pxResults) pxResults = [];
-            pConnect.setValue(".pxResults", [...pxResults, messageObject]);
+            pConnect.setValue('.pxResults', [...pxResults, messageObject]);
           } else {
             messageObject.pxResults = [];
             if (pConnect.getValue(`pulse.messageIDs`)) {
@@ -190,46 +155,35 @@ const FeedApi = (pConnect) => {
               pConnect.updateState({
                 pulse: {
                   messages: { ...messages, [messageObject.ID]: messageObject },
-                  messageIDs: [messageObject.ID, ...messageIDs]
-                }
+                  messageIDs: [messageObject.ID, ...messageIDs],
+                },
               });
             } else {
               pConnect.updateState({
                 pulse: {
                   messages: { [messageObject.ID]: messageObject },
-                  messageIDs: [messageObject.ID]
-                }
+                  messageIDs: [messageObject.ID],
+                },
               });
             }
           }
         } else {
-          pConnect.reportError(
-            `postMessage call failed with status ${response.status}`,
-            response
-          );
+          pConnect.reportError(`postMessage call failed with status ${response.status}`, response);
         }
       })
       .catch((error) => {
-        pConnect.reportError(
-          ": Error ocurred during ajax call at postMessage API : ",
-          error.response
-        );
+        pConnect.reportError(': Error ocurred during ajax call at postMessage API : ', error.response);
       });
   };
 
-  const likeMessage = ({
-    pulseContext,
-    likedBy: unLiked,
-    messageID,
-    isReply
-  }) => {
+  const likeMessage = ({ pulseContext, likedBy: unLiked, messageID, isReply }) => {
     pulseContext = getPulseContext(pulseContext);
-    const routeKey = unLiked ? "unlikeFeedMessages" : "likeFeedMessages";
+    const routeKey = unLiked ? 'unlikeFeedMessages' : 'likeFeedMessages';
     const body = JSON.stringify({
-      ContextClass: pulseContext
+      ContextClass: pulseContext,
     });
     const queryPayload = {
-      pulseContext
+      pulseContext,
     };
 
     invokeRestApi(routeKey, { body, queryPayload }, pConnect.getContextName())
@@ -253,7 +207,7 @@ const FeedApi = (pConnect) => {
                 }
                 reply.pyLikes = {
                   pxLikeCount: updatedLikeCount,
-                  pxIsLiked: updatedLikedFlag
+                  pxIsLiked: updatedLikedFlag,
                 };
               }
               return reply;
@@ -263,10 +217,10 @@ const FeedApi = (pConnect) => {
               pulse: {
                 messages: {
                   [messageID]: {
-                    pxResults
-                  }
-                }
-              }
+                    pxResults,
+                  },
+                },
+              },
             });
           } else {
             const msg = { ...pConnect.getValue(`pulse.messages.${messageID}`) };
@@ -284,29 +238,23 @@ const FeedApi = (pConnect) => {
 
             msg.pyLikes = {
               pxLikeCount: updatedLikeCount,
-              pxIsLiked: updatedLikedFlag
+              pxIsLiked: updatedLikedFlag,
             };
 
             pConnect.updateState({
               pulse: {
                 messages: {
-                  [pulseContext]: msg
-                }
-              }
+                  [pulseContext]: msg,
+                },
+              },
             });
           }
         } else {
-          pConnect.reportError(
-            `likeMessage call failed with status ${response.status}`,
-            response
-          );
+          pConnect.reportError(`likeMessage call failed with status ${response.status}`, response);
         }
       })
       .catch((error) => {
-        pConnect.reportError(
-          ": Error ocurred during ajax call at likeMessage API : ",
-          error.response.data
-        );
+        pConnect.reportError(': Error ocurred during ajax call at likeMessage API : ', error.response.data);
       });
   };
 
@@ -316,30 +264,24 @@ const FeedApi = (pConnect) => {
       messageKey = replyID;
     }
     const queryPayload = {
-      messageID: messageKey
+      messageID: messageKey,
     };
 
-    invokeRestApi(
-      "deleteFeedMessage",
-      { queryPayload },
-      pConnect.getContextName()
-    )
+    invokeRestApi('deleteFeedMessage', { queryPayload }, pConnect.getContextName())
       .then((response) => {
         if (response.status === 200) {
           if (isReply) {
             const msg = pConnect.getValue(`pulse.messages.${messageID}`);
-            const pxResults = msg.pxResults.filter(
-              (reply) => reply.pzInsKey !== replyID
-            );
+            const pxResults = msg.pxResults.filter((reply) => reply.pzInsKey !== replyID);
 
             pConnect.updateState({
               pulse: {
                 messages: {
                   [messageID]: {
-                    pxResults
-                  }
-                }
-              }
+                    pxResults,
+                  },
+                },
+              },
             });
           } else {
             const msgIDs = pConnect.getValue(`pulse.messageIDs`);
@@ -351,33 +293,27 @@ const FeedApi = (pConnect) => {
             pConnect.updateState({
               pulse: {
                 messageIDs: newMsgIDs,
-                messages: msgs
-              }
+                messages: msgs,
+              },
             });
           }
         } else {
-          pConnect.reportError(
-            `deleteMessage call failed with status ${response.status}`,
-            response
-          );
+          pConnect.reportError(`deleteMessage call failed with status ${response.status}`, response);
         }
       })
       .catch((error) => {
-        pConnect.reportError(
-          ": Error ocurred during ajax call at deleteMessage API : ",
-          error.response
-        );
+        pConnect.reportError(': Error ocurred during ajax call at deleteMessage API : ', error.response);
       });
   };
 
   const getMentionSuggestions = (mentionProps) => {
-    const { searchFor, mentionsType = "Users", listSize = 5 } = mentionProps;
+    const { searchFor, mentionsType = 'Users', listSize = 5 } = mentionProps;
     const pulseContext = getPulseContext(mentionProps.pulseContext);
     const queryPayload = {
       pulseContext,
       searchFor,
       mentionsType,
-      listSize
+      listSize,
     };
 
     for (let i = 0; i < mentionsTagsCancelTokenSource.length; i += 1) {
@@ -387,10 +323,10 @@ const FeedApi = (pConnect) => {
     mentionsTagsCancelTokenSource.push(newCancelTokenSource);
 
     return invokeRestApi(
-      "getMentionSuggestions",
+      'getMentionSuggestions',
       {
         queryPayload,
-        cancelTokenSource: newCancelTokenSource
+        cancelTokenSource: newCancelTokenSource,
       },
       pConnect.getContextName()
     )
@@ -401,23 +337,17 @@ const FeedApi = (pConnect) => {
           mentionSuggestions = response.data.map((mentionSuggestion) => {
             return {
               fullname: mentionSuggestion.caption,
-              id: mentionSuggestion.mentionsID
+              id: mentionSuggestion.mentionsID,
             };
           });
         } else {
-          pConnect.reportError(
-            `Get mention suggestions call failed ${response.status}`,
-            response.data
-          );
+          pConnect.reportError(`Get mention suggestions call failed ${response.status}`, response.data);
         }
         return mentionSuggestions;
       })
       .catch((err) => {
         if (!isRequestCanceled(err)) {
-          pConnect.reportError(
-            ": Error ocurred during ajax call at getMentionSuggestions API : ",
-            err.response.data
-          );
+          pConnect.reportError(': Error ocurred during ajax call at getMentionSuggestions API : ', err.response.data);
         }
       });
   };
@@ -426,7 +356,7 @@ const FeedApi = (pConnect) => {
     const { searchFor, listSize = 5 } = mentionProps;
     const queryPayload = {
       searchFor,
-      listSize
+      listSize,
     };
 
     for (let i = 0; i < mentionsTagsCancelTokenSource.length; i += 1) {
@@ -436,10 +366,10 @@ const FeedApi = (pConnect) => {
     mentionsTagsCancelTokenSource.push(newCancelTokenSource);
 
     return invokeRestApi(
-      "getTagSuggestions",
+      'getTagSuggestions',
       {
         queryPayload,
-        cancelTokenSource: newCancelTokenSource
+        cancelTokenSource: newCancelTokenSource,
       },
       pConnect.getContextName()
     )
@@ -449,19 +379,13 @@ const FeedApi = (pConnect) => {
         if (response.status === 200 && response.data) {
           tagSuggestions = response.data.tags.map((tag) => `#${tag}`);
         } else {
-          pConnect.reportError(
-            `Get tag suggestions call failed ${response.status}`,
-            response.data
-          );
+          pConnect.reportError(`Get tag suggestions call failed ${response.status}`, response.data);
         }
         return tagSuggestions;
       })
       .catch((err) => {
         if (!isRequestCanceled(err)) {
-          pConnect.reportError(
-            ": Error ocurred during ajax call at getTagSuggestions API : ",
-            err.response.data
-          );
+          pConnect.reportError(': Error ocurred during ajax call at getTagSuggestions API : ', err.response.data);
         }
       });
   };
@@ -472,15 +396,11 @@ const FeedApi = (pConnect) => {
     likeMessage,
     deleteMessage,
     getMentionSuggestions,
-    getTagSuggestions
+    getTagSuggestions,
   };
 };
 
 export default FeedApi;
-
-
-
-
 
 // /* eslint-disable sonarjs/cognitive-complexity */
 // const FeedApi = (pConnect) => {

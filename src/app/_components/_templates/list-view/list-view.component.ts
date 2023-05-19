@@ -3,12 +3,9 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
-import { ProgressSpinnerService } from "../../../_messages/progress-spinner.service";
-// import * as moment from "moment";
-import { Utils } from "../../../_helpers/utils";
-
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
+import { Utils } from '../../../_helpers/utils';
 
 const SELECTION_MODE = { SINGLE: 'single', MULTI: 'multi' };
 
@@ -25,10 +22,9 @@ export class Group {
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.scss']
+  styleUrls: ['./list-view.component.scss'],
 })
 export class ListViewComponent implements OnInit {
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -36,14 +32,13 @@ export class ListViewComponent implements OnInit {
   @Input() bInForm$: boolean = false;
   @Input() payload;
 
-  repeatList$: MatTableDataSource<any>;
-  fields$ : Array<any>;
+  PCore$: any;
 
-  tempList: MatTableDataSource<any>;
+  repeatList$: MatTableDataSource<any>;
+  fields$: Array<any>;
 
   displayedColumns$ = Array<string>();
   groupByColumns$: Array<string> = [];
-
 
   configProps: any;
 
@@ -53,8 +48,6 @@ export class ListViewComponent implements OnInit {
 
   searchIcon$: string;
 
-  PCore$: any;
-
   bShowSearch$: boolean = false;
   bColumnReorder$: boolean = false;
   bGrouping$: boolean = false;
@@ -62,10 +55,8 @@ export class ListViewComponent implements OnInit {
   perfFilter: string;
   searchFilter: string;
 
-  
-
   menuSvgIcon$: string;
-  arrowSvgIcon$: string = "";
+  arrowSvgIcon$: string = '';
   arrowDownSvgIcon$: string;
   arrowUpSvgIcon$: string;
 
@@ -77,15 +68,13 @@ export class ListViewComponent implements OnInit {
   compareRef: string;
   arrowDirection: string;
 
-  
-
-  filterByColumns : Array<any> = [];
+  filterByColumns: Array<any> = [];
   bShowFilterPopover$: boolean = false;
   bContains$: boolean = true;
   bDateTime$: boolean = false;
 
-  filterContainsLabel$: string = "";
-  filterContainsType$: string = "contains";
+  filterContainsLabel$: string = '';
+  filterContainsType$: string = 'contains';
   filterContainsValue$: any;
 
   bIsDate$: boolean = false;
@@ -103,14 +92,10 @@ export class ListViewComponent implements OnInit {
   rowID: any;
   response: any;
   compositeKeys: any;
-  constructor(private psService: ProgressSpinnerService,
-              private utils: Utils) { 
 
-
-  }
+  constructor(private psService: ProgressSpinnerService, private utils: Utils) {}
 
   ngOnInit(): void {
-
     if (!this.PCore$) {
       this.PCore$ = window.PCore;
     }
@@ -125,20 +110,20 @@ export class ListViewComponent implements OnInit {
     this.bColumnReorder$ = this.utils.getBooleanValue(this.configProps.reorderFields);
     this.bGrouping$ = this.utils.getBooleanValue(this.configProps.grouping);
 
-    this.menuSvgIcon$ = this.utils.getImageSrc("more", this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.arrowDownSvgIcon$ = this.utils.getImageSrc("arrow-down", this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.arrowUpSvgIcon$ = this.utils.getImageSrc("arrow-up", this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.menuSvgIcon$ = this.utils.getImageSrc('more', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.arrowDownSvgIcon$ = this.utils.getImageSrc('arrow-down', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.arrowUpSvgIcon$ = this.utils.getImageSrc('arrow-up', this.PCore$.getAssetLoader().getStaticServerUrl());
 
-    this.filterSvgIcon$ = this.utils.getImageSrc("filter", this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.filterOnSvgIcon$ = this.utils.getImageSrc("filter-on", this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.groupBySvgIcon$ = this.utils.getImageSrc("row", this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.filterSvgIcon$ = this.utils.getImageSrc('filter', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.filterOnSvgIcon$ = this.utils.getImageSrc('filter-on', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.groupBySvgIcon$ = this.utils.getImageSrc('row', this.PCore$.getAssetLoader().getStaticServerUrl());
 
     this.selectionMode = this.configProps.selectionMode;
 
-    this.arFilterMainButtons$.push({ actionID: "submit", jsAction: "submit", name: "Submit"});
-    this.arFilterSecondaryButtons$.push({ actionID: "cancel", jsAction: "cancel", name: "Cancel"});
+    this.arFilterMainButtons$.push({ actionID: 'submit', jsAction: 'submit', name: 'Submit' });
+    this.arFilterSecondaryButtons$.push({ actionID: 'cancel', jsAction: 'cancel', name: 'Cancel' });
 
-    this.searchIcon$ = this.utils.getImageSrc("search", this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.searchIcon$ = this.utils.getImageSrc('search', this.PCore$.getAssetLoader().getStaticServerUrl());
     this.getListData();
   }
 
@@ -149,17 +134,16 @@ export class ListViewComponent implements OnInit {
 
       // returns a promise
       const workListData = this.PCore$.getDataApiUtils().getData(refList, this.payload);
-      
+
       this.bShowFilterPopover$ = false;
 
-      workListData.then( (workListJSON: Object) => {
-
+      workListData.then((workListJSON: Object) => {
         // don't update these fields until we return from promise
         this.fields$ = this.configProps.presets[0].children[0].children;
         // this is an unresovled version of this.fields$, need unresolved, so can get the property reference
         let columnFields = componentConfig.presets[0].children[0].children;
 
-        const tableDataResults = workListJSON["data"].data;
+        const tableDataResults = workListJSON['data'].data;
 
         this.displayedColumns$ = this.getDisplayColums(columnFields);
         this.fields$ = this.updateFields(this.fields$, this.displayedColumns$);
@@ -181,10 +165,8 @@ export class ListViewComponent implements OnInit {
 
         this.repeatList$.paginator = this.paginator;
         this.repeatList$.sort = this.sort;
-        
       });
     }
-    
   }
 
   ngOnChanges(changes) {
@@ -197,16 +179,9 @@ export class ListViewComponent implements OnInit {
     }
   }
 
-
-
-  ngOnDestroy() {
-
-
-  }
+  ngOnDestroy() {}
 
   ngAfterViewInit() {
-
-
     // paginator has to exist for this to work,
     // so called after init (paginator drawn)
     // Calls are now in workListData promise
@@ -214,14 +189,11 @@ export class ListViewComponent implements OnInit {
     // this.repeatList$.sort = this.sort;
   }
 
-
-
   drop(event: CdkDragDrop<Array<string>>) {
     moveItemInArray(this.displayedColumns$, event.previousIndex, event.currentIndex);
   }
 
-
-  updateFields(arFields, arColumns) : Array<any> {
+  updateFields(arFields, arColumns): Array<any> {
     let arReturn = arFields;
     for (let i in arReturn) {
       arReturn[i].config.name = arColumns[i];
@@ -230,15 +202,9 @@ export class ListViewComponent implements OnInit {
     return arReturn;
   }
 
-
-
- 
-
   applySearch(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchFilter = filterValue.trim().toLowerCase();
-
-
 
     if (this.groupByColumns$.length > 0) {
       this.repeatList$.data = this.repeatListData.slice();
@@ -248,9 +214,7 @@ export class ListViewComponent implements OnInit {
 
       this.perfFilter = performance.now().toString();
       this.repeatList$.filter = this.perfFilter;
-
-    }
-    else {
+    } else {
       this.repeatList$.filter = this.searchFilter;
     }
 
@@ -263,10 +227,10 @@ export class ListViewComponent implements OnInit {
     const value = row[this.rowID];
     const reqObj = {};
     if (this.compositeKeys?.length > 1) {
-      const index = this.response.findIndex(element => element[this.rowID] === value);
+      const index = this.response.findIndex((element) => element[this.rowID] === value);
       const selectedRow = this.response[index];
-      this.compositeKeys.forEach(element => {
-        reqObj[element] = selectedRow[element]
+      this.compositeKeys.forEach((element) => {
+        reqObj[element] = selectedRow[element];
       });
     } else {
       reqObj[this.rowID] = value;
@@ -279,10 +243,10 @@ export class ListViewComponent implements OnInit {
     const checked = event?.checked;
     const reqObj = {};
     if (this.compositeKeys?.length > 1) {
-      const index = this.response.findIndex(element => element[this.rowID] === value);
+      const index = this.response.findIndex((element) => element[this.rowID] === value);
       const selectedRow = this.response[index];
-      this.compositeKeys.forEach(element => {
-        reqObj[element] = selectedRow[element]
+      this.compositeKeys.forEach((element) => {
+        reqObj[element] = selectedRow[element];
       });
       reqObj['$selected'] = checked;
     } else {
@@ -293,24 +257,20 @@ export class ListViewComponent implements OnInit {
   }
 
   rowClick(row) {
-
     switch (this.configProps.rowClickAction) {
-      case "openAssignment" :
+      case 'openAssignment':
         this.psService.sendMessage(true);
         this.openAssignment(row);
         break;
-
     }
-    
   }
 
-  _getIconStyle(level) : string {
-    let sReturn = "";
+  _getIconStyle(level): string {
+    let sReturn = '';
     let nLevel = parseInt(level);
-    nLevel --;
+    nLevel--;
     nLevel = nLevel * 15;
-    sReturn = "padding-left: " + nLevel + "px; vertical-align: middle";
-
+    sReturn = 'padding-left: ' + nLevel + 'px; vertical-align: middle';
 
     return sReturn;
   }
@@ -323,43 +283,38 @@ export class ListViewComponent implements OnInit {
       }
     }
 
-    return "";
+    return '';
   }
 
   _showButton(name, row) {
     let bReturn = false;
     const { pxRefObjectClass, pzInsKey, pxRefObjectKey } = row;
     switch (name) {
-      case "pxTaskLabel":
-        if (pxRefObjectClass != "" && pzInsKey != "") {
+      case 'pxTaskLabel':
+        if (pxRefObjectClass != '' && pzInsKey != '') {
           bReturn = true;
         }
         break;
-      case "pxRefObjectInsName":
-        if (pxRefObjectClass != "" && pxRefObjectKey != "") {
+      case 'pxRefObjectInsName':
+        if (pxRefObjectClass != '' && pxRefObjectKey != '') {
           bReturn = true;
         }
-        break
+        break;
     }
 
     return bReturn;
   }
 
   _listViewClick(name, value, index) {
-
-    switch(name) {
-      case "pxTaskLabel":
+    switch (name) {
+      case 'pxTaskLabel':
         this.openAssignment(this.repeatList$.data[index]);
         break;
-      case "pxRefObjectInsName":
+      case 'pxRefObjectInsName':
         this.openWork(this.repeatList$.data[index]);
         break;
     }
-
-
   }
-
-
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -368,67 +323,63 @@ export class ListViewComponent implements OnInit {
   _headerSortClick(event, columnData) {
     // images 0 - filter, 1 - arrow, 2 - more
 
-    let arrowImage = event.srcElement.getElementsByTagName("img")[1];
-    let arrowAttr = arrowImage.getAttribute("arrow");
+    let arrowImage = event.srcElement.getElementsByTagName('img')[1];
+    let arrowAttr = arrowImage.getAttribute('arrow');
 
     this.clearOutArrows(event, columnData);
 
-    switch(arrowAttr) {
-      case "up" :
-          arrowImage.src = this.arrowDownSvgIcon$;
-          arrowImage.setAttribute("arrow", "down");
-          break;
-      case "down" :
-          arrowImage.src = "";
-          arrowImage.setAttribute("arrow", "none");
-          break;
-      default: 
-          arrowImage.src = this.arrowUpSvgIcon$;
-          arrowImage.setAttribute("arrow", "up");
-          break;
+    switch (arrowAttr) {
+      case 'up':
+        arrowImage.src = this.arrowDownSvgIcon$;
+        arrowImage.setAttribute('arrow', 'down');
+        break;
+      case 'down':
+        arrowImage.src = '';
+        arrowImage.setAttribute('arrow', 'none');
+        break;
+      default:
+        arrowImage.src = this.arrowUpSvgIcon$;
+        arrowImage.setAttribute('arrow', 'up');
+        break;
     }
 
     this.compareType = columnData.type;
     this.compareRef = columnData.config.name;
-    this.arrowDirection = arrowImage.getAttribute("arrow");
+    this.arrowDirection = arrowImage.getAttribute('arrow');
 
     this.filterSortGroupBy();
-    
   }
 
   clearOutArrows(event, columnData) {
-    let arImages = event.srcElement.parentElement.getElementsByTagName("img");
+    let arImages = event.srcElement.parentElement.getElementsByTagName('img');
 
-      for (let theImage of arImages) {
+    for (let theImage of arImages) {
       //let theImage = arImages[i]
-      let arrow = theImage.getAttribute("arrow");
+      let arrow = theImage.getAttribute('arrow');
       if (arrow) {
-        let arrowId = theImage.getAttribute("arrowid");
-        if (arrow != "none" && arrowId != columnData.config.name) {
-          theImage.setAttribute("arrow", "none");
-          theImage.src = "";
+        let arrowId = theImage.getAttribute('arrowid');
+        if (arrow != 'none' && arrowId != columnData.config.name) {
+          theImage.setAttribute('arrow', 'none');
+          theImage.src = '';
         }
       }
     }
-
   }
 
-
-  sortCompare(a, b) : number {
-
+  sortCompare(a, b): number {
     let aValue = a[this.compareRef];
     let bValue = b[this.compareRef];
 
-    if (this.compareType == "Date" || this.compareType == "DateTime") {
+    if (this.compareType == 'Date' || this.compareType == 'DateTime') {
       aValue = this.utils.getSeconds(aValue);
       bValue = this.utils.getSeconds(bValue);
     }
 
-    if (this.compareRef == "pxRefObjectInsName") {
-      const prefixX = aValue.split("-");
-      const prefixY = bValue.split("-");
-      switch(this.arrowDirection) {
-        case "up":
+    if (this.compareRef == 'pxRefObjectInsName') {
+      const prefixX = aValue.split('-');
+      const prefixY = bValue.split('-');
+      switch (this.arrowDirection) {
+        case 'up':
           if (prefixX[0] !== prefixY[0]) {
             if (prefixX[0] < prefixY[0]) return -1;
             if (prefixX[0] > prefixY[0]) return 1;
@@ -436,7 +387,7 @@ export class ListViewComponent implements OnInit {
           }
           return prefixX[1] - prefixY[1];
           break;
-        case "down":
+        case 'down':
           if (prefixX[0] !== prefixY[0]) {
             if (prefixX[0] > prefixY[0]) return -1;
             if (prefixX[0] < prefixY[0]) return 1;
@@ -448,49 +399,45 @@ export class ListViewComponent implements OnInit {
     }
 
     switch (this.arrowDirection) {
-      case "up" :
+      case 'up':
         if (aValue < bValue) {
           return -1;
-        }
-        else if (aValue > bValue) {
-          return 1
+        } else if (aValue > bValue) {
+          return 1;
         }
         break;
-      case "down" :
-        if (aValue> bValue) {
+      case 'down':
+        if (aValue > bValue) {
           return -1;
-        }
-        else if (aValue < bValue) {
-          return 1
+        } else if (aValue < bValue) {
+          return 1;
         }
         break;
     }
 
-
     return 0;
-
   }
 
   updateFilterDisplay(type) {
-    switch(type) {
-      case "Date":
-        this.filterContainsType$ = "notequal";
+    switch (type) {
+      case 'Date':
+        this.filterContainsType$ = 'notequal';
         this.bContains$ = false;
         this.bDateTime$ = true;
         this.bIsDate$ = true;
         this.bIsDateTime$ = false;
         this.bIsTime$ = false;
         break;
-      case "DateTime":
-        this.filterContainsType$ = "notequal";
+      case 'DateTime':
+        this.filterContainsType$ = 'notequal';
         this.bContains$ = false;
         this.bDateTime$ = true;
         this.bIsDate$ = false;
         this.bIsDateTime$ = true;
         this.bIsTime$ = false;
         break;
-      case "Time":
-        this.filterContainsType$ = "notequal";
+      case 'Time':
+        this.filterContainsType$ = 'notequal';
         this.bContains$ = false;
         this.bDateTime$ = true;
         this.bIsDate$ = false;
@@ -498,7 +445,7 @@ export class ListViewComponent implements OnInit {
         this.bIsTime$ = true;
         break;
       default:
-        this.filterContainsType$ = "contains";
+        this.filterContainsType$ = 'contains';
         this.bContains$ = true;
         this.bDateTime$ = false;
         this.bIsDate$ = false;
@@ -509,7 +456,6 @@ export class ListViewComponent implements OnInit {
   }
 
   _filter(event, columnData) {
-
     // add clickAway listener
     window.addEventListener('mouseup', this._clickAway.bind(this));
 
@@ -523,29 +469,29 @@ export class ListViewComponent implements OnInit {
 
       this.bShowFilterPopover$ = true;
     });
-
   }
 
   _clickAway(event: any) {
-
     var bInPopUp = false;
 
-    //run through list of elements in path, if menu not in th path, then want to 
+    //run through list of elements in path, if menu not in th path, then want to
     // hide (toggle) the menu
     for (let i in event.path) {
-      if (event.path[i].className == "psdk-modal-file-top" || event.path[i].tagName == "BUTTON" ||
-          event.path[i].tagName == "MAT-OPTION" || event.path[i].tagName == "MAT-INPUT") {
+      if (
+        event.path[i].className == 'psdk-modal-file-top' ||
+        event.path[i].tagName == 'BUTTON' ||
+        event.path[i].tagName == 'MAT-OPTION' ||
+        event.path[i].tagName == 'MAT-INPUT'
+      ) {
         bInPopUp = true;
         break;
       }
     }
     if (!bInPopUp) {
+      this.bShowFilterPopover$ = false;
 
-        this.bShowFilterPopover$ = false
-    
-        window.removeEventListener('mouseup', this._clickAway.bind(this));
+      window.removeEventListener('mouseup', this._clickAway.bind(this));
     }
-
   }
 
   _filterContainsType(event) {
@@ -567,15 +513,14 @@ export class ListViewComponent implements OnInit {
   _filterContainsTimeValue(event) {
     this.filterContainsValue$ = event.target.value;
   }
-  
 
   _onFilterActionButtonClick(event: any) {
     // modal buttons
     switch (event.action) {
-      case "cancel" :
+      case 'cancel':
         this.currentFilterRefData = [];
         break;
-      case "submit":
+      case 'submit':
         this.updateFilterWithInfo();
         this.filterSortGroupBy();
 
@@ -585,17 +530,15 @@ export class ListViewComponent implements OnInit {
     this.bShowFilterPopover$ = false;
 
     window.removeEventListener('mouseup', this._clickAway.bind(this));
-
   }
 
   updateFilterWithInfo() {
-
     let bFound = false;
     for (let filterObj of this.filterByColumns) {
-      if (filterObj["ref"] === this.currentFilterRefData.config.name) {
-        filterObj["type"] = this.currentFilterRefData.type;
-        filterObj["containsFilter"] = this.filterContainsType$;
-        filterObj["containsFilterValue"] = this.filterContainsValue$;
+      if (filterObj['ref'] === this.currentFilterRefData.config.name) {
+        filterObj['type'] = this.currentFilterRefData.type;
+        filterObj['containsFilter'] = this.filterContainsType$;
+        filterObj['containsFilterValue'] = this.filterContainsValue$;
 
         bFound = true;
         break;
@@ -611,28 +554,24 @@ export class ListViewComponent implements OnInit {
       filterObj.containsFilterValue = this.filterContainsValue$;
 
       this.filterByColumns.push(filterObj);
-
     }
 
     // iterate through filters and update filterOn icon
     for (let filterObj of this.filterByColumns) {
-      let containsFilterValue = filterObj["containsFilterValue"];
-      let containsFilter = filterObj["containsFilter"];
-      let filterRef = filterObj["ref"];
+      let containsFilterValue = filterObj['containsFilterValue'];
+      let containsFilter = filterObj['containsFilter'];
+      let filterRef = filterObj['ref'];
       let filterIndex = this.displayedColumns$.indexOf(filterRef);
-      let arFilterImg = document.getElementsByName("filterOnIcon");
+      let arFilterImg = document.getElementsByName('filterOnIcon');
       let filterImg: any = arFilterImg[filterIndex];
-      if (containsFilterValue == "" && containsFilter != 'null' && containsFilter != 'notnull') {
+      if (containsFilterValue == '' && containsFilter != 'null' && containsFilter != 'notnull') {
         // clear icon
-        filterImg.src = "";
-      }
-      else {
+        filterImg.src = '';
+      } else {
         // show icon
         filterImg.src = this.filterOnSvgIcon$;
       }
-
     }
-
   }
 
   updateFilterVarsWithCurrent(columnData) {
@@ -640,9 +579,9 @@ export class ListViewComponent implements OnInit {
 
     let bFound = false;
     for (let filterObj of this.filterByColumns) {
-      if (filterObj["ref"] === this.currentFilterRefData.config.name) {
-        this.filterContainsType$ = filterObj["containsFilter"];
-        this.filterContainsValue$ = filterObj["containsFilterValue"];
+      if (filterObj['ref'] === this.currentFilterRefData.config.name) {
+        this.filterContainsType$ = filterObj['containsFilter'];
+        this.filterContainsValue$ = filterObj['containsFilterValue'];
 
         bFound = true;
         break;
@@ -650,37 +589,40 @@ export class ListViewComponent implements OnInit {
     }
 
     if (!bFound) {
-      switch( columnData.type) {
-        case "Date":
-        case "DateTime":
-        case "Time":
-          this.filterContainsType$ = "notequal";
+      switch (columnData.type) {
+        case 'Date':
+        case 'DateTime':
+        case 'Time':
+          this.filterContainsType$ = 'notequal';
           break;
         default:
-          this.filterContainsType$ = "contains";
+          this.filterContainsType$ = 'contains';
           break;
       }
-      
-      this.filterContainsValue$ = "";
+
+      this.filterContainsValue$ = '';
     }
   }
 
   filterData(item: any) {
-    let bKeep = true; 
+    let bKeep = true;
     for (let filterObj of this.filterByColumns) {
-      if (filterObj.containsFilterValue != ""  || filterObj.containsFilter == 'null' || filterObj.containsFilter == 'notnull') {
-        let value : any;
+      if (filterObj.containsFilterValue != '' || filterObj.containsFilter == 'null' || filterObj.containsFilter == 'notnull') {
+        let value: any;
         let filterValue: any;
 
         switch (filterObj.type) {
-          case "Date":
-          case "DateTime":
-          case "Time":
-            value = (item[filterObj.ref] != null ?? item[filterObj.ref] != "") ? this.utils.getSeconds(item[filterObj.ref]) : null;
-            filterValue = (filterObj.containsFilterValue != null && filterObj.containsFilterValue != "") ? this.utils.getSeconds(filterObj.containsFilterValue) : null;
+          case 'Date':
+          case 'DateTime':
+          case 'Time':
+            value = item[filterObj.ref] != null ?? item[filterObj.ref] != '' ? this.utils.getSeconds(item[filterObj.ref]) : null;
+            filterValue =
+              filterObj.containsFilterValue != null && filterObj.containsFilterValue != ''
+                ? this.utils.getSeconds(filterObj.containsFilterValue)
+                : null;
 
-            switch(filterObj.containsFilter) {
-              case "notequal":
+            switch (filterObj.containsFilter) {
+              case 'notequal':
                 // becasue filterValue is in minutes, need to have a range of less than 60 secons
 
                 if (value != null && filterValue != null) {
@@ -689,28 +631,28 @@ export class ListViewComponent implements OnInit {
                   filterValue = filterValue / 1000;
 
                   let diff = value - filterValue;
-                  if  (diff >= 0 && diff < 60) {
+                  if (diff >= 0 && diff < 60) {
                     bKeep = false;
                   }
                 }
 
                 break;
-              case "after":
+              case 'after':
                 if (value < filterValue) {
                   bKeep = false;
                 }
                 break;
-              case "before":
+              case 'before':
                 if (value > filterValue) {
                   bKeep = false;
                 }
                 break;
-              case "null":
+              case 'null':
                 if (value != null) {
                   bKeep = false;
                 }
                 break;
-              case "notnull":
+              case 'notnull':
                 if (value == null) {
                   bKeep = false;
                 }
@@ -720,19 +662,19 @@ export class ListViewComponent implements OnInit {
           default:
             value = item[filterObj.ref].toLowerCase();
             filterValue = filterObj.containsFilterValue.toLowerCase();
-    
+
             switch (filterObj.containsFilter) {
-              case "contains":
+              case 'contains':
                 if (value.indexOf(filterValue) < 0) {
                   bKeep = false;
                 }
                 break;
-              case "equals":
+              case 'equals':
                 if (value != filterValue) {
                   bKeep = false;
                 }
                 break;
-              case "startswith":
+              case 'startswith':
                 if (value.indexOf(filterValue) != 0) {
                   bKeep = false;
                 }
@@ -741,7 +683,6 @@ export class ListViewComponent implements OnInit {
 
             break;
         }
-
       }
 
       // if don't keep stop filtering
@@ -753,39 +694,33 @@ export class ListViewComponent implements OnInit {
     return bKeep;
   }
 
-
-
   filterSortGroupBy() {
-
     // get original data set
     let theData = this.repeatListData.slice();
 
     // last filter config data is global
-    theData = theData.filter( this.filterData.bind(this) );
+    theData = theData.filter(this.filterData.bind(this));
 
     // last sort config data is global
-    theData.sort( this.sortCompare.bind(this) );
+    theData.sort(this.sortCompare.bind(this));
 
     let reGroupData = this.addGroups(theData, this.groupByColumns$);
 
     this.repeatList$.data = [];
-    this.repeatList$.data.push( ...reGroupData);
+    this.repeatList$.data.push(...reGroupData);
 
-
-    if (this.searchFilter && this.searchFilter != "") {
+    if (this.searchFilter && this.searchFilter != '') {
       this.repeatList$.filter = this.searchFilter;
-    }
-    else {
+    } else {
       this.perfFilter = performance.now().toString();
       this.repeatList$.filter = this.perfFilter;
     }
-    this.repeatList$.filter = "";
+    this.repeatList$.filter = '';
 
     if (this.repeatList$.paginator) {
       this.repeatList$.paginator.firstPage();
     }
   }
-
 
   //
   // Grouping code inspired by this example
@@ -793,7 +728,6 @@ export class ListViewComponent implements OnInit {
   //
 
   _showUnGroupBy(columnData): boolean {
-
     for (let val of this.groupByColumns$) {
       if (val == columnData.config.name) {
         return true;
@@ -801,27 +735,22 @@ export class ListViewComponent implements OnInit {
     }
 
     return false;
-
   }
 
   _groupBy(event, columnData) {
-
     this.checkGroupByColumn(columnData.config.name, true);
 
     this.filterSortGroupBy();
-
-
   }
-  
+
   _unGroupBy(event, columnData) {
     //event.stopPropagation();
     this.checkGroupByColumn(columnData.config.name, false);
 
     this.filterSortGroupBy();
-
   }
 
-  checkGroupByColumn(field, add ) {
+  checkGroupByColumn(field, add) {
     let found = null;
     for (const column of this.groupByColumns$) {
       if (column === field) {
@@ -833,7 +762,7 @@ export class ListViewComponent implements OnInit {
         this.groupByColumns$.splice(found, 1);
       }
     } else {
-      if ( add ) {
+      if (add) {
         this.groupByColumns$.push(field);
       }
     }
@@ -850,23 +779,22 @@ export class ListViewComponent implements OnInit {
       return data;
     }
     const groups = this.uniqueBy(
-      data.map(
-        row => {
-          const result = new Group();
-          result.level = level + 1;
-          result.parent = parent;
-          for (let i = 0; i <= level; i++) {
-            result[groupByColumns[i]] = row[groupByColumns[i]];
-          }
-          return result;
+      data.map((row) => {
+        const result = new Group();
+        result.level = level + 1;
+        result.parent = parent;
+        for (let i = 0; i <= level; i++) {
+          result[groupByColumns[i]] = row[groupByColumns[i]];
         }
-      ),
-      JSON.stringify);
+        return result;
+      }),
+      JSON.stringify
+    );
 
     const currentColumn = groupByColumns[level];
     let subGroups = [];
-    groups.forEach(group => {
-      const rowsInGroup = data.filter(row => group[currentColumn] === row[currentColumn]);
+    groups.forEach((group) => {
+      const rowsInGroup = data.filter((row) => group[currentColumn] === row[currentColumn]);
       group.totalCounts = rowsInGroup.length;
       const subGroup = this.getSublevel(rowsInGroup, level + 1, groupByColumns, group);
       subGroup.unshift(group);
@@ -895,19 +823,18 @@ export class ListViewComponent implements OnInit {
     this.repeatList$.filter = this.perfFilter;
   }
 
-
   // below is for grid row grouping
   customFilterPredicate(data: any | Group, filter: string): boolean {
     return data instanceof Group ? data.visible : this.getDataRowVisibleWithFilter(data, filter);
   }
 
   getDataRowVisible(data: any): boolean {
-    const groupRows = this.repeatList$.data.filter(row => {
+    const groupRows = this.repeatList$.data.filter((row) => {
       if (!(row instanceof Group)) {
         return false;
       }
       let match = true;
-      this.groupByColumns$.forEach(column => {
+      this.groupByColumns$.forEach((column) => {
         if (!row[column] || !data[column] || row[column] !== data[column]) {
           match = false;
         }
@@ -923,11 +850,10 @@ export class ListViewComponent implements OnInit {
   }
 
   getDataRowVisibleWithFilter(data, filter) {
-
     // fist check if row is visible with grouping
     let bVisible = this.getDataRowVisible(data);
 
-    if (bVisible && filter && filter != "" && filter != this.perfFilter) {
+    if (bVisible && filter && filter != '' && filter != this.perfFilter) {
       // now check if row is filtered.
 
       // assume not there unless we find it
@@ -939,50 +865,45 @@ export class ListViewComponent implements OnInit {
           break;
         }
       }
-
     }
-
 
     return bVisible;
   }
 
-
-  updateData( listData:Array<any>, fieldData:Array<any>): Array<any> {
-    let returnList : Array<any> = new Array<any>();
-    for ( let row in listData) {
-       // copy
+  updateData(listData: Array<any>, fieldData: Array<any>): Array<any> {
+    let returnList: Array<any> = new Array<any>();
+    for (let row in listData) {
+      // copy
       let rowData = JSON.parse(JSON.stringify(listData[row]));
 
-
       for (let field in fieldData) {
-        let config = fieldData[field].config
+        let config = fieldData[field].config;
         let fieldName;
         let formattedDate;
         let myFormat;
 
         switch (fieldData[field].type) {
-          case "Date" :
+          case 'Date':
             fieldName = config.name;
             myFormat = config.formatter;
             if (!myFormat) {
-              myFormat = "Date";
+              myFormat = 'Date';
             }
             formattedDate = this.utils.generateDate(rowData[fieldName], myFormat);
 
             rowData[fieldName] = formattedDate;
             break;
-          case "DateTime" :
+          case 'DateTime':
             fieldName = config.name;
             myFormat = config.formatter;
             if (!myFormat) {
-              myFormat = "DateTime-Long";
+              myFormat = 'DateTime-Long';
             }
             formattedDate = this.utils.generateDateTime(rowData[fieldName], myFormat);
 
             rowData[fieldName] = formattedDate;
             break;
         }
-
       }
 
       returnList.push(rowData);
@@ -994,41 +915,38 @@ export class ListViewComponent implements OnInit {
   openAssignment(row) {
     const { pxRefObjectClass, pzInsKey } = row;
     let sTarget = this.pConn$.getContainerName();
-
-
-    let options = { "containerName" : sTarget};
-
+    let options = { containerName: sTarget };
     this.pConn$.getActionsApi().openAssignment(pzInsKey, pxRefObjectClass, options);
   }
 
   openWork(row) {
-    const {pxRefObjectClass, pxRefObjectKey} = row;
+    const { pxRefObjectClass, pxRefObjectKey } = row;
 
-    if (pxRefObjectClass != "" && pxRefObjectKey != "") {
-      this.pConn$.getActionsApi().openWorkByHandle( pxRefObjectKey, pxRefObjectClass);
+    if (pxRefObjectClass != '' && pxRefObjectKey != '') {
+      this.pConn$.getActionsApi().openWorkByHandle(pxRefObjectKey, pxRefObjectClass);
     }
   }
 
-  
   initializeData(data) {
     data.forEach((item, idx) => {
       item.__original_index = idx;
       item.__level = 1;
     });
-  
+
     return data;
   }
-   
+
   getType(field) {
     const { config = {}, type } = field;
     const { formatType } = config;
-    if (formatType === "datetime" || formatType === "date") {
+    if (formatType === 'datetime' || formatType === 'date') {
       // currently cosmos has only support for date ... it also need to support dateTime
-      return "date";
+      return 'date';
     }
+
     return type.toLowerCase();
   }
-  
+
   initializeColumns(fields = []) {
     return fields.map((field, originalColIndex) => ({
       ...field,
@@ -1039,22 +957,20 @@ export class ListViewComponent implements OnInit {
       groupingEnabled: true,
       grouped: false,
       minWidth: 50,
-      cellRenderer: this.getType(field) === "text" ? null : field.type,
+      cellRenderer: this.getType(field) === 'text' ? null : field.type,
       filter: true,
     }));
   }
 
   getDisplayColums(fields = []) {
-    let arReturn = fields.map(( field, colIndex) => {
-      let theField = field.config.value.substring(field.config.value.indexOf(" ")+1);
-      if (theField.indexOf(".") == 0) {
+    let arReturn = fields.map((field, colIndex) => {
+      let theField = field.config.value.substring(field.config.value.indexOf(' ') + 1);
+      if (theField.indexOf('.') == 0) {
         theField = theField.substring(1);
       }
 
       return theField;
     });
     return arReturn;
- 
   }
-
 }

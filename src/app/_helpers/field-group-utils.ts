@@ -1,5 +1,4 @@
 export class FieldGroupUtils {
-
   /**
    *
    * @param {*} pConn - pConnect object of the view
@@ -16,7 +15,7 @@ export class FieldGroupUtils {
       }
     }
     return resolvePage;
-  };
+  }
 
   /**
    * creates and returns react element of the view
@@ -32,27 +31,22 @@ export class FieldGroupUtils {
     const isDatapage = referenceList.startsWith('D_');
     const pageReference = isDatapage
       ? `${referenceList}[${index}]`
-      : `${pConn.getPageReference()}${referenceList.substring(
-          referenceList.lastIndexOf('.')
-        )}[${index}]`;
-    const meta = viewConfigPath
-      ? pConn.getRawMetadata().children[0].children[0]
-      : pConn.getRawMetadata().children[0];
+      : `${pConn.getPageReference()}${referenceList.substring(referenceList.lastIndexOf('.'))}[${index}]`;
+    const meta = viewConfigPath ? pConn.getRawMetadata().children[0].children[0] : pConn.getRawMetadata().children[0];
     const config = {
       meta,
       options: {
         context,
         pageReference,
         referenceList,
-        hasForm: true
-      }
+        hasForm: true,
+      },
     };
-     
+
     const view = window.PCore.createPConnect(config);
     if (pConn.getConfigProps()?.displayMode === 'LABELS_LEFT') {
       view.getPConnect()?.setInheritedProp('displayMode', 'LABELS_LEFT');
     }
     return view;
-  };
-
+  }
 }

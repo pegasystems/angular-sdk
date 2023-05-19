@@ -1,4 +1,4 @@
-@import "../../_shared/styles.scss";
+@import '../../_shared/styles.scss';
 
 .progress-spinner {
   text-align: center;
@@ -7,15 +7,15 @@
 }
 
 .psdk-modal-file-selector {
-    border: 1px dashed $app-neutral-dark-color;
-    width: 100%;
-    padding: 0.3rem;
-    text-align: center;
-    position: relative;
+  border: 1px dashed $app-neutral-dark-color;
+  width: 100%;
+  padding: 0.3rem;
+  text-align: center;
+  position: relative;
 }
 
 .psdk-full-width {
-    width: 100%;
+  width: 100%;
 }
 
 .psdk-label-readonly {

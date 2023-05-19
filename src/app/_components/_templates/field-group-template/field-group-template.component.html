@@ -3,7 +3,7 @@
     <div *ngFor="let item of referenceList; let i = index">
       <app-field-group-list
         [item]="item"
-        heading="{{fieldHeader === 'propertyRef' ? getDynamicHeader(item, i) : getStaticHeader(heading, i)}}"
+        heading="{{ fieldHeader === 'propertyRef' ? getDynamicHeader(item, i) : getStaticHeader(heading, i) }}"
       ></app-field-group-list>
     </div>
   </div>
@@ -15,39 +15,17 @@
             <b>{{ kid.name }}</b>
           </div>
           <div style="width: 20%; text-align: right">
-            <button
-              id="delete-button"
-              mat-icon-button
-              (click)="deleteFieldGroupItem(i)"
-            >
-              <img
-                class="psdk-utility-card-action-svg-icon"
-                src="{{ menuIconOverride$ }}"
-              />
+            <button id="delete-button" mat-icon-button (click)="deleteFieldGroupItem(i)">
+              <img class="psdk-utility-card-action-svg-icon" src="{{ menuIconOverride$ }}" />
             </button>
           </div>
         </div>
 
-        <div
-          *ngIf="
-            kid.children.getPConnect().getRawMetadata().type.toLowerCase() ==
-            'region'
-          "
-        >
-          <app-region
-            [pConn$]="kid.children.getPConnect()"
-            [formGroup$]="formGroup$"
-          ></app-region>
+        <div *ngIf="kid.children.getPConnect().getRawMetadata().type.toLowerCase() == 'region'">
+          <app-region [pConn$]="kid.children.getPConnect()" [formGroup$]="formGroup$"></app-region>
         </div>
       </div>
-      <button
-        mat-button
-        color="primary"
-        style="font-size: 16px"
-        (click)="addFieldGroupItem()"
-      >
-        + Add
-      </button>
+      <button mat-button color="primary" style="font-size: 16px" (click)="addFieldGroupItem()">+ Add</button>
     </div>
   </ng-template>
 </div>

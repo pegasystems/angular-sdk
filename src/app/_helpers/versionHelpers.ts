@@ -7,11 +7,9 @@
 
 declare const PCore;
 
-export const sdkVersion = "8.7";
+export const sdkVersion = '8.7';
 
 export function compareSdkPCoreVersions() {
-
   // const theConstellationVersion = PCore.getPCoreVersion();
-
   console.warn(`Using Constellation version ${PCore.getPCoreVersion()}. Ensure this is the same version as your Infinity server.`);
 }

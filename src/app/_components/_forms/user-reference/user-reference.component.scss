@@ -1,31 +1,30 @@
-@import "../../../_shared/styles.scss";
+@import '../../../_shared/styles.scss';
 
 .psdk-user-reference {
-    font-size: 0.8rem;
-    color: $app-neutral-color;
+  font-size: 0.8rem;
+  color: $app-neutral-color;
 }
 .psdk-single {
-    flex: 1;
+  flex: 1;
 }
 
 .psdk-double {
-    flex: 2;
+  flex: 2;
 }
 
 .psdk-top-pad {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .psdk-full-width {
-    width: 100%;
-    padding-left: 0.625rem;
+  width: 100%;
+  padding-left: 0.625rem;
 }
 
-
 dt {
-    flex: 1;
+  flex: 1;
 }
 
 dd {
-    flex: 2;
+  flex: 2;
 }

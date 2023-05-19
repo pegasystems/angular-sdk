@@ -1,46 +1,46 @@
-@import "../../../_shared/styles.scss";
+@import '../../../_shared/styles.scss';
 
 .mc-resolution {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .mc-card {
-    display: flex;
-    flex-direction: column;
-    margin: 30px;
-    width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  width: 50%;
 }
 .mc-header {
-    background-color: #B00B55; 
-    border-top-left-radius: 10px; 
-    border-top-right-radius: 10px;
-    padding: 30px;
-    color: white; 
-    font-weight: bold; 
-    font-size: 60px
+  background-color: #b00b55;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 60px;
 }
 
 .mc-body {
-    font-size: 24px;
-    line-height: 1.2em;
-    border: 1px solid #B00B55;
-    padding: 30px;
+  font-size: 24px;
+  line-height: 1.2em;
+  border: 1px solid #b00b55;
+  padding: 30px;
 }
 
 .mc-chat-image {
-    width: 700px;
-    border-radius: 10px;
-    margin: 30px;
+  width: 700px;
+  border-radius: 10px;
+  margin: 30px;
 }
 
 .mc-chat-button {
-    color: white;
-    background-color: $app-secondary-color;
-    font-size: 25px;
-    font-weight: bold;
-    border-radius: 25px;
-    border: 0px;
-    margin: 20px;
-    padding: 10px 30px;
+  color: white;
+  background-color: $app-secondary-color;
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 25px;
+  border: 0px;
+  margin: 20px;
+  padding: 10px 30px;
 }

@@ -1,15 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Utils } from "../../_helpers/utils";
+import { FormGroup } from '@angular/forms';
+import { Utils } from '../../_helpers/utils';
 
 @Component({
   selector: 'app-multi-step',
   templateUrl: './multi-step.component.html',
   styleUrls: ['./multi-step.component.scss'],
-  providers: [Utils]
+  providers: [Utils],
 })
 export class MultiStepComponent implements OnInit {
-
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
   @Input() arMainButtons$: Array<any>;
@@ -18,74 +17,68 @@ export class MultiStepComponent implements OnInit {
   @Input() bIsVertical$: boolean;
   @Input() arCurrentStepIndicies$: Array<number>;
   @Input() arNavigationSteps$: Array<any>;
-  
-  svgCurrent$: string;
-  svgNotCurrent$: string;
-
-
-  bShow$: boolean = true;
-
   @Output() ActionButtonClick: EventEmitter<any> = new EventEmitter();
 
   PCore$: any;
 
-  constructor(private utils: Utils) { }
+  svgCurrent$: string;
+  svgNotCurrent$: string;
+  bShow$: boolean = true;
+
+  constructor(private utils: Utils) {}
 
   ngOnInit(): void {
-
-
     if (!this.PCore$) {
       this.PCore$ = window.PCore;
     }
 
-     // svg icons
-     this.svgCurrent$ = this.utils.getImageSrc("circle-solid", this.PCore$.getAssetLoader().getStaticServerUrl());
-     this.svgNotCurrent$ = this.utils.getImageSrc("circle-solid", this.PCore$.getAssetLoader().getStaticServerUrl());
+    // svg icons
+    this.svgCurrent$ = this.utils.getImageSrc('circle-solid', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.svgNotCurrent$ = this.utils.getImageSrc('circle-solid', this.PCore$.getAssetLoader().getStaticServerUrl());
   }
-
 
   onActionButtonClick(oData: any) {
     this.ActionButtonClick.emit(oData);
   }
 
   _getVIconClass(status): String {
-    if (status == "current") {
-      return "psdk-vertical-step-icon-selected";
+    if (status == 'current') {
+      return 'psdk-vertical-step-icon-selected';
     }
 
-    return "psdk-vertical-step-icon";
+    return 'psdk-vertical-step-icon';
   }
 
   _getVLabelClass(status): string {
-    if (status == "current") {
-      return "psdk-vertical-step-label-selected";
+    if (status == 'current') {
+      return 'psdk-vertical-step-label-selected';
     }
 
-    return "psdk-vertical-step-label";
+    return 'psdk-vertical-step-label';
   }
 
   _getVBodyClass(index: number): string {
     if (index < this.arNavigationSteps$.length - 1) {
-      return "psdk-vertical-step-body psdk-vertical-step-line";
+      return 'psdk-vertical-step-body psdk-vertical-step-line';
     }
 
-    return "psdk-vertical-step-body";
+    return 'psdk-vertical-step-body';
   }
 
   _getHIconClass(status): string {
-    if (status == "current") {
-      return "psdk-horizontal-step-icon-selected";
+    if (status == 'current') {
+      return 'psdk-horizontal-step-icon-selected';
     }
 
-    return "psdk-horizontal-step-icon";
+    return 'psdk-horizontal-step-icon';
   }
 
   _getHLabelClass(status): string {
-    if (status == "current") {
-      return "psdk-horizontal-step-label-selected";
+    if (status == 'current') {
+      return 'psdk-horizontal-step-label-selected';
     }
 
-    return "psdk-horizontal-step-label";
+    return 'psdk-horizontal-step-label';
   }
 
   _showHLine(index: number): boolean {
@@ -95,7 +88,4 @@ export class MultiStepComponent implements OnInit {
 
     return false;
   }
-
-
-
 }

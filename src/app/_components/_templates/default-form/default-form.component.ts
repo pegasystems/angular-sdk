@@ -5,38 +5,35 @@ import { ReferenceComponent } from '../../reference/reference.component';
 @Component({
   selector: 'app-default-form',
   templateUrl: './default-form.component.html',
-  styleUrls: ['./default-form.component.scss']
+  styleUrls: ['./default-form.component.scss'],
 })
 export class DefaultFormComponent implements OnInit {
-
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
 
-
-
-  configProps$ : Object;
+  configProps$: Object;
   arChildren$: Array<any>;
   divClass$: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     let configProps = this.pConn$.getConfigProps();
     let kids = this.pConn$.getChildren();
 
-    let numCols = configProps.NumCols ? configProps.NumCols : "1";
+    let numCols = configProps.NumCols ? configProps.NumCols : '1';
     switch (numCols) {
-      case "1" :
-        this.divClass$ = "psdk-default-form-one-column";
+      case '1':
+        this.divClass$ = 'psdk-default-form-one-column';
         break;
-      case "2" :
-        this.divClass$ = "psdk-default-form-two-column";
+      case '2':
+        this.divClass$ = 'psdk-default-form-two-column';
         break;
-      case "3" :
-        this.divClass$ = "psdk-default-form-three-column";
+      case '3':
+        this.divClass$ = 'psdk-default-form-three-column';
         break;
-      default :
-        this.divClass$ = "psdk-default-form-one-column";
+      default:
+        this.divClass$ = 'psdk-default-form-one-column';
         break;
     }
 
@@ -44,7 +41,5 @@ export class DefaultFormComponent implements OnInit {
     // Children may contain 'reference' component, so we need to
     //  normalize them
     this.arChildren$ = ReferenceComponent.normalizePConnArray(kids[0].getPConnect().getChildren());
-
   }
-
 }

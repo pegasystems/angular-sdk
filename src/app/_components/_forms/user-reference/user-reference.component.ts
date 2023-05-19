@@ -1,20 +1,22 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Utils } from "../../../_helpers/utils";
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
-import { FormControl, FormGroup } from "@angular/forms";
+import { Component, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
+import { Utils } from '../../../_helpers/utils';
 
-const OPERATORS_DP = "D_pyGetOperatorsForCurrentApplication";
-const DROPDOWN_LIST = "Drop-down list";
-const SEARCH_BOX = "Search box";
+const OPERATORS_DP = 'D_pyGetOperatorsForCurrentApplication';
+const DROPDOWN_LIST = 'Drop-down list';
+const SEARCH_BOX = 'Search box';
 @Component({
-  selector: "app-user-reference",
-  templateUrl: "./user-reference.component.html",
-  styleUrls: ["./user-reference.component.scss"],
+  selector: 'app-user-reference',
+  templateUrl: './user-reference.component.html',
+  styleUrls: ['./user-reference.component.scss'],
 })
 export class UserReferenceComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
 
+  PCore$: any;
+  angularPConnectData: any = {};
   controlName$: string;
   value$;
   userName$: string;
@@ -25,18 +27,11 @@ export class UserReferenceComponent implements OnInit {
   bRequired$: boolean;
   showAsFormattedText$: boolean;
   displayAs$: string;
-
-  angularPConnectData: any = {};
-
-  PCore$: any;
-
-  fieldControl = new FormControl("", null);
   testId: string;
 
-  constructor(
-    private angularPConnect: AngularPConnectService,
-    private utils: Utils
-  ) {}
+  fieldControl = new FormControl('', null);
+
+  constructor(private angularPConnect: AngularPConnectService, private utils: Utils) {}
 
   ngOnInit(): void {
     if (!this.PCore$) {
@@ -44,11 +39,7 @@ export class UserReferenceComponent implements OnInit {
     }
 
     // First thing in initialization is registering and subscribing to the AngularPConnect service
-    this.angularPConnectData =
-      this.angularPConnect.registerAndSubscribeComponent(
-        this,
-        this.onStateChange
-      );
+    this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     this.controlName$ = this.angularPConnect.getComponentID(this);
 
@@ -73,13 +64,13 @@ export class UserReferenceComponent implements OnInit {
 
   get type(): string {
     if (this.bReadonly$ && this.showAsFormattedText$) {
-      return "operator";
+      return 'operator';
     }
     if (this.displayAs$ === DROPDOWN_LIST) {
-      return "dropdown";
+      return 'dropdown';
     }
     if (this.displayAs$ === SEARCH_BOX) {
-      return "searchbox";
+      return 'searchbox';
     }
   }
 
@@ -101,7 +92,7 @@ export class UserReferenceComponent implements OnInit {
 
   updateSelf() {
     let props = this.pConn$.getConfigProps();
-    this.testId = props["testId"];
+    this.testId = props['testId'];
 
     const { label, displayAs, value, showAsFormattedText } = props;
 
@@ -110,16 +101,12 @@ export class UserReferenceComponent implements OnInit {
     this.displayAs$ = displayAs;
 
     let { readOnly, required, disabled } = props;
-    [this.bReadonly$, this.bRequired$, disabled] = [
-      readOnly,
-      required,
-      disabled,
-    ].map(
-      (prop) => prop === true || (typeof prop === "string" && prop === "true")
+    [this.bReadonly$, this.bRequired$, disabled] = [readOnly, required, disabled].map(
+      (prop) => prop === true || (typeof prop === 'string' && prop === 'true')
     );
 
     const isUserNameAvailable = (user) => {
-      return typeof user === "object" && user !== null && user.userName;
+      return typeof user === 'object' && user !== null && user.userName;
     };
 
     this.userID$ = this.utils.getUserId(value);
@@ -132,11 +119,7 @@ export class UserReferenceComponent implements OnInit {
         // referenced users won't be available, so get user details from dx api
         const { getOperatorDetails } = this.PCore$.getUserApi();
         getOperatorDetails(this.userID$).then((resp) => {
-          if (
-            resp.data &&
-            resp.data.pyOperatorInfo &&
-            resp.data.pyOperatorInfo.pyUserName
-          ) {
+          if (resp.data && resp.data.pyOperatorInfo && resp.data.pyOperatorInfo.pyUserName) {
             this.userName$ = resp.data.pyOperatorInfo.pyUserName;
           }
         });
@@ -146,7 +129,7 @@ export class UserReferenceComponent implements OnInit {
         dataViewName: OPERATORS_DP,
       };
       this.PCore$.getRestClient()
-        .invokeRestApi("getListData", { queryPayload })
+        .invokeRestApi('getListData', { queryPayload })
         .then((resp) => {
           const ddDataSource = resp.data.data.map((listItem) => ({
             key: listItem.pyUserIdentifier,
@@ -161,18 +144,16 @@ export class UserReferenceComponent implements OnInit {
   }
 
   fieldOnChange(event: any) {
-    if (event?.value === "Select") {
-      event.value = "";
+    if (event?.value === 'Select') {
+      event.value = '';
     }
     this.angularPConnectData.actions.onChange(this, event);
   }
 
   fieldOnBlur(event: any) {
-    let key = "";
+    let key = '';
     if (event?.target?.value) {
-      const index = this.options$?.findIndex(
-        (element) => element.value === event.target.value
-      );
+      const index = this.options$?.findIndex((element) => element.value === event.target.value);
       key = index > -1 ? (key = this.options$[index].key) : event.target.value;
     }
 
@@ -184,14 +165,14 @@ export class UserReferenceComponent implements OnInit {
   }
 
   getErrorMessage() {
-    let errMessage: string = "";
+    let errMessage: string = '';
 
     // look for validation messages for json, pre-defined or just an error pushed from workitem (400)
-    if (this.fieldControl.hasError("message")) {
+    if (this.fieldControl.hasError('message')) {
       errMessage = this.angularPConnectData.validateMessage;
       return errMessage;
-    } else if (this.fieldControl.hasError("required")) {
-      errMessage = "You must enter a value";
+    } else if (this.fieldControl.hasError('required')) {
+      errMessage = 'You must enter a value';
     } else if (this.fieldControl.errors) {
       errMessage = this.fieldControl.errors.toString();
     }

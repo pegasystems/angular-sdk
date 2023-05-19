@@ -1,16 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { AuthService } from "../../../_services/auth.service";
-import { ChangeDetectorRef } from "@angular/core";
-import { Subscription, Observable } from 'rxjs';
-import { ProgressSpinnerService } from "../../../_messages/progress-spinner.service";
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { MatDialogModule, MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { interval } from "rxjs/internal/observable/interval";
-import { endpoints } from '../../../_services/endpoints';
-import { UpdateWorklistService } from '../../../_messages/update-worklist.service';
-import { NgZone } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { UpdateWorklistService } from 'src/app/_messages/update-worklist.service';
+import { AuthService } from 'src/app/_services/auth.service';
 import { ServerConfigService } from 'src/app/_services/server-config.service';
 import { compareSdkPCoreVersions } from 'src/app/_helpers/versionHelpers';
 
@@ -23,124 +15,86 @@ declare global {
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
+  PCore$: any;
+  pConn$: any;
 
   bLoggedIn$: boolean = false;
-  bPConnectLoaded$ : boolean = false;
-  bHasPConnect$ : boolean = false;
-  userName$: string = "";
-  subscription: Subscription;
+  bPConnectLoaded$: boolean = false;
+  bHasPConnect$: boolean = false;
+  userName$: string = '';
   isProgress$: boolean = false;
-
-  progressSpinnerMessage: any;
   progressSpinnerSubscription: Subscription;
   resetPConnectSubscription: Subscription;
 
-  spinnerTimer: any;
-
-  pConn$: any;
-  PCore$: any;
-
-  bootstrapShell: any;
-
-
-
-  constructor(private aService: AuthService,
-              private cdRef: ChangeDetectorRef,
-              private snackBar: MatSnackBar,
-              private settingsDialog: MatDialog,
-              private psservice: ProgressSpinnerService,
-              private uwservice: UpdateWorklistService,
-              private titleService: Title,
-              private scservice: ServerConfigService,
-              private ngZone: NgZone) { }
+  constructor(
+    private aService: AuthService,
+    private uwservice: UpdateWorklistService,
+    private scservice: ServerConfigService,
+    private ngZone: NgZone
+  ) {}
 
   ngOnInit() {
-
-
-    this.scservice.getServerConfig().then( () => {
+    this.scservice.getServerConfig().then(() => {
       this.initialize();
     });
-
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
     this.progressSpinnerSubscription.unsubscribe();
     this.resetPConnectSubscription.unsubscribe();
 
-    this.PCore$.getPubSubUtils().unsubscribe(
-      this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
-      "cancelAssignment"
-    );
+    this.PCore$.getPubSubUtils().unsubscribe(this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'cancelAssignment');
 
-    this.PCore$.getPubSubUtils().unsubscribe(
-      "assignmentFinished",
-      "assignmentFinished"
-    );
+    this.PCore$.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
 
-    this.PCore$.getPubSubUtils().unsubscribe(
-      "showWork",
-      "showWork"
-    );
+    this.PCore$.getPubSubUtils().unsubscribe('showWork', 'showWork');
   }
 
-
   initialize() {
-
     // Add event listener for when logged in and constellation bootstrap is loaded
-    document.addEventListener("SdkConstellationReady", () => {
+    document.addEventListener('SdkConstellationReady', () => {
       this.bLoggedIn$ = true;
       // start the portal
       this.startMashup();
     });
 
     // Add event listener for when logged out
-    document.addEventListener("SdkLoggedOut", () => {
+    document.addEventListener('SdkLoggedOut', () => {
       this.bLoggedIn$ = false;
     });
 
     /* Login if needed (and indicate this is a portal scenario) */
     //const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    this.aService.loginIfNecessary("simpleportal", false);
+    this.aService.loginIfNecessary('simpleportal', false);
   }
 
-
   showWork() {
+    window.myLoadMashup('app-root', false);
 
-      window.myLoadMashup('app-root', false);
+    // update the worklist
+    this.uwservice.sendMessage(true);
 
-
-      // update the worklist
-      this.uwservice.sendMessage(true);
-
-      this.ngZone.run(() => {
-        this.bPConnectLoaded$ = true;
-      });
+    this.ngZone.run(() => {
+      this.bPConnectLoaded$ = true;
+    });
   }
 
   cancelAssignment() {
-
     setTimeout(() => {
-
-
       // update the worklist
       this.uwservice.sendMessage(true);
 
       this.ngZone.run(() => {
         this.bPConnectLoaded$ = false;
       });
-
     });
-
   }
 
   assignmentFinished() {
-
     setTimeout(() => {
-
       // update the worklist
       this.uwservice.sendMessage(true);
 
@@ -151,8 +105,7 @@ export class NavigationComponent implements OnInit {
   }
 
   startMashup() {
-
-    window.PCore.onPCoreReady( (renderObj) => {
+    window.PCore.onPCoreReady((renderObj) => {
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
 
@@ -168,8 +121,8 @@ export class NavigationComponent implements OnInit {
         // experiment with returning a PConnect that has deferenced the
         //  referenced View if the c11n is a 'reference' component
         const compType = c11nEnv.getPConnect().getComponentName();
-        console.log( `navigation - registerComponentCreator c11nEnv type: ${compType}`);        
-        
+        console.log(`navigation - registerComponentCreator c11nEnv type: ${compType}`);
+
         return c11nEnv;
 
         // REACT implementaion:
@@ -187,7 +140,7 @@ export class NavigationComponent implements OnInit {
       });
 
       // Change to reflect new use of arg in the callback:
-      const { props /*, domContainerID = null */ } = renderObj;
+      const { props } = renderObj;
 
       // makes sure Angular tracks these changes
       this.ngZone.run(() => {
@@ -196,53 +149,47 @@ export class NavigationComponent implements OnInit {
         this.bHasPConnect$ = true;
         this.bPConnectLoaded$ = true;
 
-        sessionStorage.setItem("pCoreUsage", "AngularSDKMashup");
+        sessionStorage.setItem('pCoreUsage', 'AngularSDKMashup');
       });
 
       //
       // so don't have multiple subscriptions, unsubscribe first
       //
-      this.PCore$.getPubSubUtils().unsubscribe(
-        this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
-        "cancelAssignment"
-      );
+      this.PCore$.getPubSubUtils().unsubscribe(this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'cancelAssignment');
 
-      this.PCore$.getPubSubUtils().unsubscribe(
-        "assignmentFinished",
-        "assignmentFinished"
-      );
+      this.PCore$.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
 
-      this.PCore$.getPubSubUtils().unsubscribe(
-        "showWork",
-        "showWork"
-      );
-
+      this.PCore$.getPubSubUtils().unsubscribe('showWork', 'showWork');
 
       //
       // now subscribe
       //
       this.PCore$.getPubSubUtils().subscribe(
         this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
-        () => { this.cancelAssignment() },
-        "cancelAssignment"
+        () => {
+          this.cancelAssignment();
+        },
+        'cancelAssignment'
       );
 
       this.PCore$.getPubSubUtils().subscribe(
-        "assignmentFinished",
-        () => { this.assignmentFinished() },
-        "assignmentFinished"
+        'assignmentFinished',
+        () => {
+          this.assignmentFinished();
+        },
+        'assignmentFinished'
       );
 
       this.PCore$.getPubSubUtils().subscribe(
-        "showWork",
-        () => { this.showWork() },
-        "showWork"
+        'showWork',
+        () => {
+          this.showWork();
+        },
+        'showWork'
       );
+    });
 
-    } );
-
-    window.myLoadMashup("app-root", false);   // this is defined in bootstrap shell that's been loaded already
-
+    window.myLoadMashup('app-root', false); // this is defined in bootstrap shell that's been loaded already
   }
 
   logOff() {
@@ -251,5 +198,4 @@ export class NavigationComponent implements OnInit {
       window.location.reload();
     });
   }
-
 }

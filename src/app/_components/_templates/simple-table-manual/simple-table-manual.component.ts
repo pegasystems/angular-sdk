@@ -1,24 +1,26 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { Utils } from "../../../_helpers/utils";
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
-import { getContext, populateRowKey, buildFieldsForTable } from "./helpers";
-import { DatapageService } from "src/app/_services/datapage.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
+import { Utils } from '../../../_helpers/utils';
+import { getContext, buildFieldsForTable } from './helpers';
+import { DatapageService } from 'src/app/_services/datapage.service';
 import { FieldGroupUtils } from '../../../_helpers/field-group-utils';
 
 @Component({
   selector: 'app-simple-table-manual',
   templateUrl: './simple-table-manual.component.html',
-  styleUrls: ['./simple-table-manual.component.scss']
+  styleUrls: ['./simple-table-manual.component.scss'],
 })
 export class SimpleTableManualComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
 
+  // Used with AngularPConnect
+  angularPConnectData: any = {};
+  PCore$: any;
+
   bVisible$: boolean = true;
-
   configProps$: any;
-
   displayedColumns: Array<string> = [];
   rowData: Array<any> = [];
   processedFields: Array<any> = [];
@@ -26,9 +28,6 @@ export class SimpleTableManualComponent implements OnInit {
   requestedReadOnlyMode: boolean = false;
   readOnlyMode: boolean = false;
   editableMode: boolean;
-  // Used with AngularPConnect
-  angularPConnectData: any = {};
-  PCore$: any;
   menuIconOverride$: string;
   pageReference: string;
   referenceList: any;
@@ -37,7 +36,8 @@ export class SimpleTableManualComponent implements OnInit {
   prevRefLength: number;
   elementsData = [];
   rawFields: any;
-  label: string = "";
+  label: string = '';
+
   constructor(
     private angularPConnect: AngularPConnectService,
     private utils: Utils,
@@ -79,9 +79,9 @@ export class SimpleTableManualComponent implements OnInit {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
-    if (this.configProps$["visibility"] != null) {
+    if (this.configProps$['visibility'] != null) {
       // eslint-disable-next-line no-multi-assign
-      this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
+      this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$['visibility']);
     }
 
     // NOTE: getConfigProps() has each child.config with datasource and value undefined
@@ -109,13 +109,13 @@ export class SimpleTableManualComponent implements OnInit {
     const hideDeleteRow = allowTableEdit === false ? true : false;
     let { contextClass } = this.configProps$;
     this.referenceList = referenceList;
-    if (!contextClass){
+    if (!contextClass) {
       let listName = this.pConn$.getComponentConfig().referenceList;
       listName = this.PCore$.getAnnotationUtils().getPropertyName(listName);
       contextClass = this.pConn$.getFieldMetadata(listName)?.pageClass;
     }
     this.contextClass = contextClass;
-    
+
     const resolvedFields = children?.[0]?.children || presets?.[0].children?.[0].children;
     // get raw config as @P and other annotations are processed and don't appear in the resolved config.
     //  Destructure "raw" children into array var: "rawFields"
@@ -135,13 +135,12 @@ export class SimpleTableManualComponent implements OnInit {
     const resolvedList = this.fieldGroupUtils.getReferenceList(this.pConn$);
     this.pageReference = `${this.pConn$.getPageReference()}${resolvedList}`;
     this.pConn$.setReferenceList(resolvedList);
-    
 
     // This gives up the "properties" we need to map to row/column values later
     // const processedData = populateRowKey(referenceList);
 
-    this.requestedReadOnlyMode = renderMode === "ReadOnly";
-    this.readOnlyMode = renderMode === "ReadOnly";
+    this.requestedReadOnlyMode = renderMode === 'ReadOnly';
+    this.readOnlyMode = renderMode === 'ReadOnly';
     this.editableMode = renderMode === 'Editable';
     this.showAddRowButton = !this.readOnlyMode && !hideAddRow;
     const showDeleteButton = !this.readOnlyMode && !hideDeleteRow;
@@ -161,10 +160,10 @@ export class SimpleTableManualComponent implements OnInit {
     // Here, we use the "name" field in fieldDefs since that has the assoicated property
     //  (if one exists for the field). If no "name", use "cellRenderer" (typically get DELETE_ICON)
     //  for our columns.
-    this.displayedColumns = this.fieldDefs?.map( (field) => {
+    this.displayedColumns = this.fieldDefs?.map((field) => {
       return field.name ? field.name : field.cellRenderer;
     });
-  
+
     // And now we can process the resolvedFields to add in the "name"
     //  from from the fieldDefs. This "name" is the value that
     //  we'll share to connect things together in the table.
@@ -172,7 +171,7 @@ export class SimpleTableManualComponent implements OnInit {
     this.processedFields = [];
 
     this.processedFields = resolvedFields.map((field, i) => {
-      field.config["name"] = this.displayedColumns[i]; // .config["value"].replace(/ ./g,"_");   // replace space dot with underscore
+      field.config['name'] = this.displayedColumns[i]; // .config["value"].replace(/ ./g,"_");   // replace space dot with underscore
       return field;
     });
 
@@ -183,7 +182,7 @@ export class SimpleTableManualComponent implements OnInit {
         this.generateRowsData();
       }
     }
-    
+
     this.prevRefLength = this.referenceList?.length;
 
     // These are the data structures referred to in the html file.
@@ -211,7 +210,7 @@ export class SimpleTableManualComponent implements OnInit {
   //  of the given row field
   getRowValue(inRowData: Object, inColKey: string): any {
     // See what data (if any) we have to display
-    const refKeys: Array<string> = inColKey.split(".");
+    const refKeys: Array<string> = inColKey.split('.');
     let valBuilder = inRowData;
     for (var key of refKeys) {
       valBuilder = valBuilder[key];
@@ -236,7 +235,7 @@ export class SimpleTableManualComponent implements OnInit {
       this.rowData = data;
     }
   }
-  
+
   formatRowsData(data) {
     return data?.map((item) => {
       return this.displayedColumns.reduce((dataForRow, colKey) => {
@@ -252,7 +251,7 @@ export class SimpleTableManualComponent implements OnInit {
     } else {
       this.pConn$.getListActions().insert({ classID: this.contextClass }, this.referenceList.length);
     }
-  };
+  }
 
   deleteRecord(index) {
     if (this.PCore$.getPCoreVersion()?.includes('8.7')) {
@@ -260,25 +259,27 @@ export class SimpleTableManualComponent implements OnInit {
     } else {
       this.pConn$.getListActions().deleteEntry(index);
     }
-  };
+  }
 
   buildElementsForTable() {
     const context = this.pConn$.getContextName();
     const eleData: any = [];
     this.referenceList.forEach((element, index) => {
       const data: any = [];
-      this.rawFields?.forEach(item => {
+      this.rawFields?.forEach((item) => {
         const referenceListData = this.fieldGroupUtils.getReferenceList(this.pConn$);
         const isDatapage = referenceListData.startsWith('D_');
-        const pageReferenceValue = isDatapage ? `${referenceListData}[${index}]` : `${this.pConn$.getPageReference()}${referenceListData.substring(referenceListData.lastIndexOf('.'))}[${index}]`;
+        const pageReferenceValue = isDatapage
+          ? `${referenceListData}[${index}]`
+          : `${this.pConn$.getPageReference()}${referenceListData.substring(referenceListData.lastIndexOf('.'))}[${index}]`;
         const config = {
           meta: item,
           options: {
             context,
             pageReference: pageReferenceValue,
             referenceList: referenceListData,
-            hasForm: true
-          }
+            hasForm: true,
+          },
         };
         const view = this.PCore$.createPConnect(config);
         data.push(view);

@@ -1,22 +1,22 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Utils } from "../../../_helpers/utils";
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
-import { interval } from "rxjs/internal/observable/interval";
-
-// import * as moment from "moment";
-
+import { FormControl, FormGroup } from '@angular/forms';
+import { interval } from 'rxjs';
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
+import { Utils } from '../../../_helpers/utils';
 
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
-  styleUrls: ['./date.component.scss']
+  styleUrls: ['./date.component.scss'],
 })
 export class DateComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
-  configProps$ : Object;
-  label$: string = "";
+
+  // Used with AngularPConnect
+  angularPConnectData: any = {};
+  configProps$: Object;
+  label$: string = '';
   value$: any;
   bRequired$: boolean = false;
   bReadonly$: boolean = false;
@@ -24,16 +24,12 @@ export class DateComponent implements OnInit {
   bVisible$: boolean = true;
   controlName$: string;
   bHasForm$: boolean = true;
-  componentReference: string = "";
-  fieldControl = new FormControl('', null);
-  // Used with AngularPConnect
-  angularPConnectData: any = {};
-  testId: string = "";
-  constructor(private angularPConnect: AngularPConnectService,
-              private cdRef: ChangeDetectorRef,
-              private utils: Utils) {
+  componentReference: string = '';
+  testId: string = '';
 
-  }
+  fieldControl = new FormControl('', null);
+
+  constructor(private angularPConnect: AngularPConnectService, private cdRef: ChangeDetectorRef, private utils: Utils) {}
 
   ngOnInit(): void {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
@@ -50,8 +46,7 @@ export class DateComponent implements OnInit {
       this.formGroup$.addControl(this.controlName$, this.fieldControl);
       this.fieldControl.setValue(this.value$);
       this.bHasForm$ = true;
-    }
-    else {
+    } else {
       this.bReadonly$ = true;
       this.bHasForm$ = false;
     }
@@ -75,8 +70,8 @@ export class DateComponent implements OnInit {
   checkAndUpdate() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
-    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
-  
+    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate(this);
+
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
       this.updateSelf();
@@ -89,107 +84,100 @@ export class DateComponent implements OnInit {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
-    if (this.configProps$["value"] != undefined) {
+    if (this.configProps$['value'] != undefined) {
+      let sDateValue: any = '';
+      sDateValue = this.configProps$['value'];
 
-      let sDateValue: any = "";
-      sDateValue = this.configProps$["value"];
-
-
-      if (sDateValue != "") {
-        if (typeof sDateValue == "object") {
+      if (sDateValue != '') {
+        if (typeof sDateValue == 'object') {
           sDateValue = sDateValue.toISOString();
-        } else if (sDateValue.indexOf("/") < 0) {
+        } else if (sDateValue.indexOf('/') < 0) {
           // if we have the "pega" format, then for display, convert to standard format (US)
           // sDateValue = this.formatDate(sDateValue);
-          sDateValue = this.utils.generateDate(sDateValue, "Date-Long-Custom-YYYY")
+          sDateValue = this.utils.generateDate(sDateValue, 'Date-Long-Custom-YYYY');
           // sDateValue = moment(sDateValue, "YYYYMMDD").format("MM/DD/YYYY");
         }
         this.value$ = new Date(sDateValue);
       }
     }
-    this.testId = this.configProps$["testId"];
-    this.label$ = this.configProps$["label"];
+    this.testId = this.configProps$['testId'];
+    this.label$ = this.configProps$['label'];
 
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
-      if (this.configProps$["required"] != null) {
-        this.bRequired$ = this.utils.getBooleanValue(this.configProps$["required"]);
+      if (this.configProps$['required'] != null) {
+        this.bRequired$ = this.utils.getBooleanValue(this.configProps$['required']);
       }
       this.cdRef.detectChanges();
     });
 
-    if (this.configProps$["visibility"] != null) {
-      this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
+    if (this.configProps$['visibility'] != null) {
+      this.bVisible$ = this.utils.getBooleanValue(this.configProps$['visibility']);
     }
 
-     // disabled
-     if (this.configProps$["disabled"] != undefined) {
-      this.bDisabled$ = this.utils.getBooleanValue(this.configProps$["disabled"]);
+    // disabled
+    if (this.configProps$['disabled'] != undefined) {
+      this.bDisabled$ = this.utils.getBooleanValue(this.configProps$['disabled']);
     }
 
     if (this.bDisabled$) {
       this.fieldControl.disable();
-    }
-    else {
+    } else {
       this.fieldControl.enable();
     }
 
-    if (this.configProps$["readOnly"] != null) {
-      this.bReadonly$ = this.utils.getBooleanValue(this.configProps$["readOnly"]);
+    if (this.configProps$['readOnly'] != null) {
+      this.bReadonly$ = this.utils.getBooleanValue(this.configProps$['readOnly']);
     }
 
     this.componentReference = this.pConn$.getStateProps().value;
 
     // trigger display of error message with field control
-    if (this.angularPConnectData.validateMessage != null && this.angularPConnectData.validateMessage != "") {
+    if (this.angularPConnectData.validateMessage != null && this.angularPConnectData.validateMessage != '') {
       let timer = interval(100).subscribe(() => {
-        this.fieldControl.setErrors({'message': true});
+        this.fieldControl.setErrors({ message: true });
         this.fieldControl.markAsTouched();
 
         timer.unsubscribe();
-        });
+      });
     }
   }
 
   fieldOnDateChange(event: any, sValue: string) {
     // this comes from the date pop up
-    if (typeof(event.value) == "object") {
-      event.value = (event.value).toISOString();
+    if (typeof event.value == 'object') {
+      event.value = event.value.toISOString();
       // convert date to pega "date" format
       // event.value = moment(event.value).format("YYYYMMDD");
     }
-    this.angularPConnectData.actions.onChange(this, {value: event.value});
+    this.angularPConnectData.actions.onChange(this, { value: event.value });
   }
 
-  fieldOnClick(event: any) {
-
-  }
+  fieldOnClick(event: any) {}
 
   fieldOnBlur(event: any) {
     // PConnect wants to use eventHandler for onBlur
-    if (typeof(event.value) == "object") {
-      event.value = (event.value).toISOString();
+    if (typeof event.value == 'object') {
+      event.value = event.value.toISOString();
       // convert date to pega "date" format
       // event.value = moment(event.value).format("YYYYMMDD");
     }
-    this.angularPConnectData.actions.onBlur(this, {value: event.value});
+    this.angularPConnectData.actions.onBlur(this, { value: event.value });
   }
 
   hasErrors() {
-    return this.fieldControl.status === "INVALID";
+    return this.fieldControl.status === 'INVALID';
   }
 
   getErrorMessage() {
-    let errMessage : string = "";
+    let errMessage: string = '';
     // look for validation messages for json, pre-defined or just an error pushed from workitem (400)
     if (this.fieldControl.hasError('message')) {
       errMessage = this.angularPConnectData.validateMessage;
       return errMessage;
-    }
-    else if (this.fieldControl.hasError('required')) {
+    } else if (this.fieldControl.hasError('required')) {
       errMessage = 'You must enter a value';
-    }
-    else if (this.fieldControl.errors) {
+    } else if (this.fieldControl.errors) {
       errMessage = `${this.fieldControl.errors.matDatepickerParse.text} is not a valid date value`;
     }
     return errMessage;

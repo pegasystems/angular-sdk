@@ -1,14 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Utils } from "../../_helpers/utils";
-
+import { Utils } from '../../_helpers/utils';
 
 @Component({
   selector: 'app-material-case-summary',
   templateUrl: './material-case-summary.component.html',
-  styleUrls: ['./material-case-summary.component.scss']
+  styleUrls: ['./material-case-summary.component.scss'],
 })
 export class MaterialCaseSummaryComponent implements OnInit {
-
   @Input() status$: string;
   @Input() bShowStatus$: boolean;
   @Input() primaryFields$: Array<any>;
@@ -16,14 +14,12 @@ export class MaterialCaseSummaryComponent implements OnInit {
 
   primaryFieldsWithStatus$: Array<any>;
 
-  constructor(private utils: Utils) { }
+  constructor(private utils: Utils) {}
 
   ngOnInit(): void {
-
     this.updatePrimaryWithStatus();
     this.updateLabelAndDate(this.primaryFieldsWithStatus$);
     this.updateLabelAndDate(this.secondaryFields$);
-    
   }
 
   ngOnChanges() {
@@ -34,17 +30,16 @@ export class MaterialCaseSummaryComponent implements OnInit {
 
   updateLabelAndDate(arData: Array<any>) {
     for (let field of arData) {
-      switch(field.type.toLowerCase()) {
-        case "caseoperator":
-          if (field.config.label.toLowerCase() == "create operator") {
-            field.config["displayLabel"] = field.config.createLabel;
-          }
-          else if (field.config.label.toLowerCase() == "update operator") {
-            field.config["displayLabel"] = field.config.updateLabel;
+      switch (field.type.toLowerCase()) {
+        case 'caseoperator':
+          if (field.config.label.toLowerCase() == 'create operator') {
+            field.config['displayLabel'] = field.config.createLabel;
+          } else if (field.config.label.toLowerCase() == 'update operator') {
+            field.config['displayLabel'] = field.config.updateLabel;
           }
           break;
-        case "date":
-          field.config.value = this.utils.generateDate(field.config.value, "Date-Long");
+        case 'date':
+          field.config.value = this.utils.generateDate(field.config.value, 'Date-Long');
           break;
       }
     }
@@ -57,20 +52,14 @@ export class MaterialCaseSummaryComponent implements OnInit {
     }
 
     if (this.bShowStatus$) {
-      const oStatus = { type: "status", config: { value: this.status$, label: "Status" }};
+      const oStatus = { type: 'status', config: { value: this.status$, label: 'Status' } };
 
       const count = this.primaryFieldsWithStatus$.length;
       if (count < 2) {
         this.primaryFieldsWithStatus$.push(oStatus);
-      }
-      else {
+      } else {
         this.primaryFieldsWithStatus$.splice(1, 0, oStatus);
       }
     }
   }
-
-
-
-
-
 }
