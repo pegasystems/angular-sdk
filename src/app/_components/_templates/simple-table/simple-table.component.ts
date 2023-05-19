@@ -1,27 +1,25 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { Utils } from "../../../_helpers/utils";
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
+import { Utils } from '../../../_helpers/utils';
 
 @Component({
-  selector: "app-simple-table",
-  templateUrl: "./simple-table.component.html",
-  styleUrls: ["./simple-table.component.scss"],
+  selector: 'app-simple-table',
+  templateUrl: './simple-table.component.html',
+  styleUrls: ['./simple-table.component.scss'],
 })
 export class SimpleTableComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
 
-  bVisible$: boolean = true;
-
-  configProps$: any;
   angularPConnectData: any = {};
   PCore$: any;
+
+  bVisible$: boolean = true;
+  configProps$: any;
   fieldGroupProps: any;
-  constructor(
-    private angularPConnect: AngularPConnectService,
-    private utils: Utils
-  ) {}
+
+  constructor(private angularPConnect: AngularPConnectService, private utils: Utils) {}
 
   ngOnInit(): void {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
@@ -57,9 +55,9 @@ export class SimpleTableComponent implements OnInit {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
-    if (this.configProps$["visibility"] != null) {
+    if (this.configProps$['visibility'] != null) {
       // eslint-disable-next-line no-multi-assign
-      this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$["visibility"]);
+      this.bVisible$ = this.bVisible$ = this.utils.getBooleanValue(this.configProps$['visibility']);
     }
 
     const { multiRecordDisplayAs } = this.configProps$;
@@ -69,8 +67,8 @@ export class SimpleTableComponent implements OnInit {
       listName = this.PCore$.getAnnotationUtils().getPropertyName(listName);
       contextClass = this.pConn$.getFieldMetadata(listName)?.pageClass;
     }
-    if(multiRecordDisplayAs === "fieldGroup") {
-      this.fieldGroupProps = {...this.configProps$, contextClass};
+    if (multiRecordDisplayAs === 'fieldGroup') {
+      this.fieldGroupProps = { ...this.configProps$, contextClass };
     }
   }
 

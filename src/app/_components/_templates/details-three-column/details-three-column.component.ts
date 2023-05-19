@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
 
 @Component({
   selector: 'app-details-three-column',
   templateUrl: './details-three-column.component.html',
-  styleUrls: ['./details-three-column.component.scss']
+  styleUrls: ['./details-three-column.component.scss'],
 })
 export class DetailsThreeColumnComponent implements OnInit {
-
-  constructor(private angularPConnect: AngularPConnectService) { }
+  constructor(private angularPConnect: AngularPConnectService) {}
 
   @Input() pConn$: any;
 
@@ -20,32 +19,27 @@ export class DetailsThreeColumnComponent implements OnInit {
   angularPConnectData: any = {};
 
   ngOnInit(): void {
+    // First thing in initialization is registering and subscribing to the AngularPConnect service
+    this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
-       // First thing in initialization is registering and subscribing to the AngularPConnect service
-       this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
-
-       //this.updateSelf();
-       this.checkAndUpdate();
-
+    //this.updateSelf();
+    this.checkAndUpdate();
   }
 
   ngOnDestroy() {
-
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
     }
-
   }
 
   onStateChange() {
     this.checkAndUpdate();
-
   }
 
   checkAndUpdate() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
-    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
+    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate(this);
 
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
@@ -53,25 +47,18 @@ export class DetailsThreeColumnComponent implements OnInit {
     }
   }
 
- updateSelf() {
- 
-
-  let kids = this.pConn$.getChildren();
-  for (let kid of kids) {
-    let pKid = kid.getPConnect();
-    let pKidData = pKid.resolveConfigProps(pKid.getRawMetadata());
-    if (kids.indexOf(kid) == 0) {
-      this.arFields$ = pKidData.children;
-    }
-    else if (kids.indexOf(kid) == 1) {
-      this.arFields2$ = pKidData.children;
-    }
-    else {
-      this.arFields3$ = pKidData.children;
+  updateSelf() {
+    let kids = this.pConn$.getChildren();
+    for (let kid of kids) {
+      let pKid = kid.getPConnect();
+      let pKidData = pKid.resolveConfigProps(pKid.getRawMetadata());
+      if (kids.indexOf(kid) == 0) {
+        this.arFields$ = pKidData.children;
+      } else if (kids.indexOf(kid) == 1) {
+        this.arFields2$ = pKidData.children;
+      } else {
+        this.arFields3$ = pKidData.children;
+      }
     }
   }
-
-
- }
-
 }

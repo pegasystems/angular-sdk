@@ -1,17 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ProgressSpinnerService } from "../../_messages/progress-spinner.service";
-import { ErrorMessagesService } from "../../_messages/error-messages.service";
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Utils } from '../../_helpers/utils';
+import { FormGroup } from '@angular/forms';
 import { ReferenceComponent } from '../reference/reference.component';
 
 @Component({
   selector: 'app-assignment-card',
   templateUrl: './assignment-card.component.html',
-  styleUrls: ['./assignment-card.component.scss']
+  styleUrls: ['./assignment-card.component.scss'],
 })
 export class AssignmentCardComponent implements OnInit {
-
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
   @Input() arMainButtons$: Array<any>;
@@ -21,28 +17,21 @@ export class AssignmentCardComponent implements OnInit {
 
   @Output() ActionButtonClick: EventEmitter<any> = new EventEmitter();
 
-
-  constructor(private utils: Utils) { }
+  constructor() {}
 
   ngOnInit(): void {
     // Children may contain 'reference' component, so we need to
     //  normalize them
     this.arChildren$ = ReferenceComponent.normalizePConnArray(this.arChildren$);
-
   }
 
   ngOnChanges(data: any) {
     // Children may contain 'reference' component, so we need to
     //  normalize them
     this.arChildren$ = ReferenceComponent.normalizePConnArray(this.arChildren$);
-
-
   }
 
   onActionButtonClick(oData: any) {
     this.ActionButtonClick.emit(oData);
   }
-
-
-
 }

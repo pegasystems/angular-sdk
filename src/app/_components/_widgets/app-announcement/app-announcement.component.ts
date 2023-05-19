@@ -3,10 +3,9 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-app-announcement',
   templateUrl: './app-announcement.component.html',
-  styleUrls: ['./app-announcement.component.scss']
+  styleUrls: ['./app-announcement.component.scss'],
 })
 export class AppAnnouncementComponent implements OnInit {
-
   @Input() pConn$: any;
 
   header$: string;
@@ -15,10 +14,9 @@ export class AppAnnouncementComponent implements OnInit {
   label$: string;
   whatsnewlink$: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-
     let configProps = this.pConn$.getConfigProps();
 
     this.header$ = configProps.header;
@@ -26,7 +24,5 @@ export class AppAnnouncementComponent implements OnInit {
     this.arDetails$ = configProps.details;
     this.label$ = configProps.label;
     this.whatsnewlink$ = configProps.whatsnewlink;
-
   }
-
 }

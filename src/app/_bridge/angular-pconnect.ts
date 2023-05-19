@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
+import { interval } from 'rxjs';
 import * as isEqual from 'fast-deep-equal';
-import { ProgressSpinnerService } from "../_messages/progress-spinner.service";
-import { ErrorMessagesService } from "../_messages/error-messages.service";
-import { interval } from "rxjs/internal/observable/interval";
-import { Utils } from "../_helpers/utils";
-
-
+import { ProgressSpinnerService } from '../_messages/progress-spinner.service';
+import { ErrorMessagesService } from '../_messages/error-messages.service';
+import { Utils } from '../_helpers/utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AngularPConnectService {
-
   /**
    * Local variable for access to the store once the service is connected to it.
    */
@@ -33,19 +30,13 @@ export class AngularPConnectService {
   /* Used to toggle some class-wide logging */
   private static bLogging = false;
 
-
-  constructor(private psService: ProgressSpinnerService,
-              private erService: ErrorMessagesService,
-              private utils: Utils) {
-
-
-
+  constructor(private psService: ProgressSpinnerService, private erService: ErrorMessagesService, private utils: Utils) {
     // Establish necessary override flags for our use of Core
     //const coreOverrides = { "dynamicLoadComponents": false };
     // let coreOverrides = window.PCore.getBehaviorOverrides();
     // coreOverrides["dynamicLoadComponents"] = false;
     // window.PCore.setBehaviorOverrides( coreOverrides );
-    window.PCore.setBehaviorOverride("dynamicLoadComponents", false);
+    window.PCore.setBehaviorOverride('dynamicLoadComponents', false);
 
     // Always best to use deep object compare when it's available
     if (isEqual !== undefined) {
@@ -53,7 +44,6 @@ export class AngularPConnectService {
     } else {
       //console.log(`AngularPConnect is using JSON.stringify compare`);
     }
-
   }
 
   /**
@@ -80,11 +70,11 @@ export class AngularPConnectService {
    * to unsubscribe from the store. (Typically during ngOnDestroy)
    */
   private subscribeToStore(inComp: object = null, inCallback: Function = null): Function {
-    const theCompName: string = inComp ? `${inComp.constructor.name}` : "no component provided";
-    let fnUnsubscribe = null
+    const theCompName: string = inComp ? `${inComp.constructor.name}` : 'no component provided';
+    let fnUnsubscribe = null;
     //console.log( `Bridge subscribing: ${theCompName} `);
     if (inComp) {
-        fnUnsubscribe = this.getStore().subscribe(inCallback);
+      fnUnsubscribe = this.getStore().subscribe(inCallback);
     }
     return fnUnsubscribe;
   }
@@ -99,7 +89,7 @@ export class AngularPConnectService {
     let addProps = {};
 
     if (inComp === null) {
-      console.error( `AngularPConnect: getComponentProps called with bad component: ${inComp}`);
+      console.error(`AngularPConnect: getComponentProps called with bad component: ${inComp}`);
     }
 
     // if ((inComp.constructor.name === "FlowContainerComponent") || (inComp.constructor.name === "ViewContainerComponent")
@@ -108,12 +98,11 @@ export class AngularPConnectService {
     // }
 
     if (inComp.additionalProps !== undefined) {
-
-      if (typeof inComp.additionalProps === "object") {
+      if (typeof inComp.additionalProps === 'object') {
         addProps = inComp.pConn$.resolveConfigProps(inComp.additionalProps);
-      } else if (typeof inComp.additionalProps === "function") {
+      } else if (typeof inComp.additionalProps === 'function') {
         const propsToAdd = inComp.additionalProps(window.PCore.getStore().getState(), inComp.pConn$);
-        addProps = inComp.pConn$.resolveConfigProps( propsToAdd );
+        addProps = inComp.pConn$.resolveConfigProps(propsToAdd);
       }
     }
 
@@ -126,22 +115,19 @@ export class AngularPConnectService {
     // This block can be removed once all these props will be added as part of configs
     inComp.pConn$.populateAdditionalProps(compProps);
 
-
     compProps = inComp.pConn$.resolveConfigProps(compProps);
 
-    if (compProps && (undefined !== compProps.validatemessage) && compProps.validatemessage != "") {
+    if (compProps && undefined !== compProps.validatemessage && compProps.validatemessage != '') {
       //console.log( `   validatemessage for ${inComp.constructor.name} ${inComp.angularPConnectData.compID}: ${compProps.validatemessage}`);
-
     }
 
     return {
       ...compProps,
-      ...addProps
-    }
-
+      ...addProps,
+    };
   }
 
-   /**
+  /**
    * Returns the unique id for given component created when registering
    * Otherwise, return undefined.
    * @param inComp The component whose property is being requested.
@@ -156,11 +142,11 @@ export class AngularPConnectService {
    * @param inComp The component whose property is being requested.
    * @param inProp The property being requested.
    */
-  public getComponentProp(inComp = null, inProp = "" ) {
+  public getComponentProp(inComp = null, inProp = '') {
     let propVal;
 
     if (inComp === null) {
-      console.error( `AngularPConnect: getComponentProp called with bad component: ${inComp}`);
+      console.error(`AngularPConnect: getComponentProp called with bad component: ${inComp}`);
     }
 
     const compID = inComp.angularPConnectData.compID;
@@ -171,7 +157,6 @@ export class AngularPConnectService {
     return propVal;
   }
 
-
   /**
    *
    * @returns The current complete set of resolved properties that are associated with
@@ -180,9 +165,9 @@ export class AngularPConnectService {
    */
   public getCurrentCompleteProps(inComp = null) {
     if (inComp === null) {
-      console.error( `AngularPConnect: getCurrentCompleteProps called with bad component: ${inComp}`);
+      console.error(`AngularPConnect: getCurrentCompleteProps called with bad component: ${inComp}`);
     }
-    return this.componentPropsArr[inComp.angularPConnectData.compID]
+    return this.componentPropsArr[inComp.angularPConnectData.compID];
   }
 
   /**
@@ -201,16 +186,16 @@ export class AngularPConnectService {
    * validateMessage: any validation/error message that gets generated for this object,
    * actions: any actions that are defined for this object
    */
-  registerAndSubscribeComponent (inComp, inCallback: Function = null): Object {
+  registerAndSubscribeComponent(inComp, inCallback: Function = null): Object {
     // Create an initial object to be returned.
     let returnObject = {
-      compID: "",
+      compID: '',
       unsubscribeFn: null,
-      validateMessage: "",
-      actions: null
-    }
+      validateMessage: '',
+      actions: null,
+    };
 
-    if ((inComp === null) || (inCallback === null)) {
+    if (inComp === null || inCallback === null) {
       console.error(`AngularPConnect: bad call to registerAndSubscribe: inComp: ${inComp} inCallback: ${inCallback}`);
       return returnObject;
     }
@@ -222,27 +207,29 @@ export class AngularPConnectService {
     }
 
     if (undefined !== inComp.bridgeComponentID) {
-      console.error( `OLD SCHOOL: ${compType}`);
+      console.error(`OLD SCHOOL: ${compType}`);
     }
-
 
     if (undefined === inComp.actions && undefined === inComp.angularPConnectData) {
       console.error(`AngularPConnect: bad call to registerAndSubscribe from ${compType}: actions not defined as a class variable for inComp`);
       return returnObject;
     }
     if (undefined === inComp.bridgeComponentID && undefined === inComp.angularPConnectData) {
-      console.error(`AngularPConnect: bad call to registerAndSubscribe from ${compType}: bridgeComponentID not defined as a class variable for inComp`);
+      console.error(
+        `AngularPConnect: bad call to registerAndSubscribe from ${compType}: bridgeComponentID not defined as a class variable for inComp`
+      );
       return returnObject;
     }
     if (undefined === inComp.unsubscribeStore && undefined === inComp.angularPConnectData) {
-      console.error(`AngularPConnect: bad call to registerAndSubscribe from ${compType}: unsubscribeStore not defined as a class variable for inComp`);
+      console.error(
+        `AngularPConnect: bad call to registerAndSubscribe from ${compType}: unsubscribeStore not defined as a class variable for inComp`
+      );
       return returnObject;
     }
     if (undefined === inComp.validateMessage && undefined === inComp.angularPConnectData) {
       console.error(`AngularPConnect: bad call to registerAndSubscribe from ${compType}: validateMessage not defined as a class variable for inComp`);
       return returnObject;
     }
-
 
     // call processActions to populate metadata with actions as in PConnectHOR initialize
     this.processActions(inComp);
@@ -257,7 +244,7 @@ export class AngularPConnectService {
 
     // Now proceed to register and subscribe...
     const theCompID: string = this.getNextComponentId();
-    const theUnsub: Function = this.subscribeToStore( inComp, inCallback);
+    const theUnsub: Function = this.subscribeToStore(inComp, inCallback);
 
     if (undefined === inComp.angularPConnectData) {
       inComp.bridgeComponentID = theCompID;
@@ -295,12 +282,11 @@ export class AngularPConnectService {
    * Return **false**: means the component props are the same and the component doesn't need to update (re-render).
    * If the ***inComp*** input is bad, false is also returned.
    */
-  shouldComponentUpdate( inComp ) : boolean {
-
+  shouldComponentUpdate(inComp): boolean {
     const bShowLogging = false;
-    let bRet:boolean = false;
+    let bRet: boolean = false;
     // check for reasonable input
-    if ({} === inComp) {
+    if (Utils.isEmptyObject(inComp)) {
       console.error(`AngularPConnect: bad call to shouldComponentUpdate: inComp: ${JSON.stringify(inComp)}`);
       return bRet;
     }
@@ -308,34 +294,33 @@ export class AngularPConnectService {
       console.error(`AngularPConnect: bad call to shouldComponentUpdate: ${inComp.constructor.name} does not have a validateMessage property.`);
     }
 
-    const compID = (inComp.bridgeComponentID !== undefined) ? inComp.bridgeComponentID : inComp.angularPConnectData.compID;
+    const compID = inComp.bridgeComponentID !== undefined ? inComp.bridgeComponentID : inComp.angularPConnectData.compID;
 
     const currentProps = this.componentPropsArr[compID];
     const currentPropsAsStr: string = JSON.stringify(currentProps);
 
     let incomingProps: any = this.getComponentProps(inComp);
 
-     // if have pageMessages, and it is blank, remove it.  This causes issues of making it appear
-     // that a will cause an update, when there is no change
-     if (incomingProps["pageMessages"] && incomingProps["pageMessages"].length == 0) {
-       inComp.angularPConnectData.pageMessages = incomingProps["pageMessages"];
-       delete incomingProps["pageMessages"];
-     }
-
-     if (incomingProps["httpMessages"]) {
-      inComp.angularPConnectData.httpMessages = incomingProps["httpMessages"];
-      delete incomingProps["httpMessages"];
+    // if have pageMessages, and it is blank, remove it.  This causes issues of making it appear
+    // that a will cause an update, when there is no change
+    if (incomingProps['pageMessages'] && incomingProps['pageMessages'].length == 0) {
+      inComp.angularPConnectData.pageMessages = incomingProps['pageMessages'];
+      delete incomingProps['pageMessages'];
     }
 
+    if (incomingProps['httpMessages']) {
+      inComp.angularPConnectData.httpMessages = incomingProps['httpMessages'];
+      delete incomingProps['httpMessages'];
+    }
 
     let incomingPropsAsStr: string = JSON.stringify(incomingProps);
 
     // fast-deep-equal version
     if (isEqual !== undefined) {
       bRet = !isEqual(currentProps, incomingProps);
-    } else{
+    } else {
       // stringify compare version
-      if ( currentPropsAsStr != incomingPropsAsStr ) {
+      if (currentPropsAsStr != incomingPropsAsStr) {
         bRet = true;
       }
     }
@@ -345,24 +330,23 @@ export class AngularPConnectService {
     this.componentPropsArr[compID] = incomingProps;
     // and update the component's validation message (if undefined, it should be set to "")
     if (undefined !== inComp.angularPConnectData) {
-      inComp.angularPConnectData.validateMessage = (incomingProps.validatemessage === undefined) ? "" : this.utils.htmlDecode(incomingProps.validatemessage);
+      inComp.angularPConnectData.validateMessage =
+        incomingProps.validatemessage === undefined ? '' : this.utils.htmlDecode(incomingProps.validatemessage);
 
-      if (inComp.angularPConnectData.validateMessage != "") {
+      if (inComp.angularPConnectData.validateMessage != '') {
         // if have a validate message, turn off spinner
         let timer = interval(100).subscribe(() => {
           this.psService.sendMessage(false);
 
           timer.unsubscribe();
-          });
+        });
 
-          let sErrorMessage = ( currentProps && currentProps["label"] ) ? currentProps["label"].concat(" - ") : "";
-          sErrorMessage = sErrorMessage.concat(inComp.angularPConnectData.validateMessage);
-          this.erService.sendMessage("update", sErrorMessage);
+        let sErrorMessage = currentProps && currentProps['label'] ? currentProps['label'].concat(' - ') : '';
+        sErrorMessage = sErrorMessage.concat(inComp.angularPConnectData.validateMessage);
+        this.erService.sendMessage('update', sErrorMessage);
       }
-
-
-    } else  {
-      inComp.validateMessage = (incomingProps.validatemessage === undefined) ? "" : this.utils.htmlDecode(incomingProps.validatemessage);
+    } else {
+      inComp.validateMessage = incomingProps.validatemessage === undefined ? '' : this.utils.htmlDecode(incomingProps.validatemessage);
     }
 
     if (bRet && compID === undefined) {
@@ -373,14 +357,12 @@ export class AngularPConnectService {
     //console.log("current props: " + currentPropsAsStr);
 
     if (bRet) {
-
-       //console.log(`**** change for: ${inComp.constructor.name}`);
-       //console.log("current props: " + currentPropsAsStr);
+      //console.log(`**** change for: ${inComp.constructor.name}`);
+      //console.log("current props: " + currentPropsAsStr);
       // console.log("incoming props: " + incomingPropsAsStr);
-       //console.log(`    ${inComp.constructor.name}: shouldComponentUpdate returning: ${bRet}, compId: ${compID}` );
-
-       //console.log( `    Updating with componentProps for ${inComp.constructor.name}: ${JSON.stringify(this.componentPropsArr[compID])}`);
-       //console.log( `          and validateMessage: ${inComp.validateMessage}`);
+      //console.log(`    ${inComp.constructor.name}: shouldComponentUpdate returning: ${bRet}, compId: ${compID}` );
+      //console.log( `    Updating with componentProps for ${inComp.constructor.name}: ${JSON.stringify(this.componentPropsArr[compID])}`);
+      //console.log( `          and validateMessage: ${inComp.validateMessage}`);
     }
     // else if (inComp.constructor.name.indexOf("View") >= 0 || inComp.constructor.name.indexOf("Root") >= 0) {
     //   console.log("no change");
@@ -406,20 +388,19 @@ export class AngularPConnectService {
       //console.log(`AngularPConnect.changeHandler`);
     }
     // check for reasonable input
-    if (undefined === inComp || {} === inComp) {
+    if (undefined === inComp || Utils.isEmptyObject(inComp)) {
       console.error(`AngularPConnect: bad call to changeHandler: inComp: ${JSON.stringify(inComp)}`);
       return;
     }
 
     const pConnect = inComp.pConn$;
-    if (undefined === pConnect ) {
+    if (undefined === pConnect) {
       console.error(`AngularPConnect: bad call to changeHandler: inComp.pConn$: ${pConnect}`);
       return;
     }
 
-
     // clear out errors
-    this.erService.sendMessage("dismiss", "");
+    this.erService.sendMessage('dismiss', '');
 
     pConnect.getActionsApi().changeHandler(pConnect, event);
   }
@@ -435,13 +416,13 @@ export class AngularPConnectService {
       //console.log(`AngularPConnect.eventHandler`);
     }
     // check for reasonable input
-    if (undefined === inComp || {} === inComp) {
+    if (undefined === inComp || Utils.isEmptyObject(inComp)) {
       console.error(`AngularPConnect: bad call to eventHandler: inComp: ${JSON.stringify(inComp)}`);
       return;
     }
 
     const pConnect = inComp.pConn$;
-    if (undefined === pConnect ) {
+    if (undefined === pConnect) {
       console.error(`AngularPConnect: bad call to eventHandler: inComp.pConn$: ${pConnect}`);
       return;
     }
@@ -449,17 +430,15 @@ export class AngularPConnectService {
     pConnect.getActionsApi().eventHandler(pConnect, event);
   }
 
-
   /**
    * @returns A handle to the application's store
    */
   getStore() {
-      if (this.theStore === null) {
-          this.theStore = window.PCore.getStore();
-      }
+    if (this.theStore === null) {
+      this.theStore = window.PCore.getStore();
+    }
     return this.theStore;
   }
-
 
   /**
    * @param bLogMsg If true, will write the stringified state to the store for debugging/inspection
@@ -467,19 +446,19 @@ export class AngularPConnectService {
    * @returns A handle to the __state__ of application's store
    */
   getState(bLogMsg: boolean = false, inComp: object = null) {
-      const theState: object = this.getStore().getState();
-      if (bLogMsg) {
-          const theCompName: string = inComp ? `${inComp.constructor.name}: ` : "";
-          console.log( `${theCompName} Store state: ${JSON.stringify(theState)}`);
-      }
-      return theState;
+    const theState: object = this.getStore().getState();
+    if (bLogMsg) {
+      const theCompName: string = inComp ? `${inComp.constructor.name}: ` : '';
+      console.log(`${theCompName} Store state: ${JSON.stringify(theState)}`);
+    }
+    return theState;
   }
 
   // processActions - carried over from PConnectHOC initialize
   /**
-    *  processActions exposes all actions in the metadata.
-    *  Attaches common handler (eventHandler) for all actions.
-  */
+   *  processActions exposes all actions in the metadata.
+   *  Attaches common handler (eventHandler) for all actions.
+   */
   private processActions(inComp) {
     const pConnect = inComp.pConn$;
     if (undefined === pConnect) {
@@ -488,11 +467,10 @@ export class AngularPConnectService {
     }
 
     if (inComp.pConn$.isEditable()) {
-      inComp.pConn$.setAction("onChange", this.changeHandler.bind(this));
-      inComp.pConn$.setAction("onBlur", this.eventHandler.bind(this));
+      inComp.pConn$.setAction('onChange', this.changeHandler.bind(this));
+      inComp.pConn$.setAction('onBlur', this.eventHandler.bind(this));
     }
   }
-
 }
 
 // Set behavior overrides at load time
@@ -502,5 +480,5 @@ if (window.PCore) {
   // let coreOverrides = window.PCore.getBehaviorOverrides();
   // coreOverrides["dynamicLoadComponents"] = false;
   // window.PCore.setBehaviorOverrides( coreOverrides );
-  window.PCore.setBehaviorOverride("dynamicLoadComponents", false);
+  window.PCore.setBehaviorOverride('dynamicLoadComponents', false);
 }

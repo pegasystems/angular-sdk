@@ -12,12 +12,12 @@ export function getAllFields(pConnect: any) {
   return allFields;
 }
 
-export function filterForFieldValueList(fields : any) {
+export function filterForFieldValueList(fields: any) {
   return fields
     .filter(({ visibility }) => visibility !== false)
     .map(({ value, label }) => ({
       id: label.toLowerCase(),
       name: label,
-      value
+      value,
     }));
 }

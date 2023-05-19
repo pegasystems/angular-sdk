@@ -1,18 +1,22 @@
-<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
+<div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
   <div [formGroup]="formGroup$">
-    <div *ngIf="bVisible$"  >
+    <div *ngIf="bVisible$">
       <mat-form-field class="psdk-full-width">
-        <textarea matInput rows="5" [placeholder]="label$" type="text" [attr.data-test-id]="testId"
-        [value]="value$" 
-        [required]="bRequired$"
-        [disabled]="bDisabled$"
-        (change)="fieldOnChange($event)"></textarea>
+        <textarea
+          matInput
+          rows="5"
+          [placeholder]="label$"
+          type="text"
+          [attr.data-test-id]="testId"
+          [value]="value$"
+          [required]="bRequired$"
+          [disabled]="bDisabled$"
+          (change)="fieldOnChange($event)"
+        ></textarea>
       </mat-form-field>
     </div>
   </div>
-
 </div>
 <ng-template #noEdit>
   <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
 </ng-template>
-

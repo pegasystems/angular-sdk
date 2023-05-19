@@ -1,24 +1,20 @@
-import { Reference } from '@angular/compiler/src/render3/r3_ast';
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, Form } from '@angular/forms';
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
+import { FormGroup } from '@angular/forms';
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
 import { ReferenceComponent } from '../../reference/reference.component';
-
-
 
 @Component({
   selector: 'app-case-summary',
   templateUrl: './case-summary.component.html',
-  styleUrls: ['./case-summary.component.scss']
+  styleUrls: ['./case-summary.component.scss'],
 })
 export class CaseSummaryComponent implements OnInit {
-
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
 
-  angularPConnectData: any = { };
+  angularPConnectData: any = {};
 
-  configProps$ : Object;
+  configProps$: Object;
   arChildren$: Array<any>;
 
   status$: string;
@@ -26,15 +22,13 @@ export class CaseSummaryComponent implements OnInit {
   primaryFields$: Array<any> = [];
   secondaryFields$: Array<any> = [];
 
-  constructor( private angularPConnect: AngularPConnectService ) { }
+  constructor(private angularPConnect: AngularPConnectService) {}
 
   ngOnInit(): void {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     this.initComponent();
-
-
   }
 
   ngOnDestroy(): void {
@@ -44,9 +38,8 @@ export class CaseSummaryComponent implements OnInit {
   }
 
   initComponent() {
-
     // dereference the View in case the incoming pConn$ is a 'reference'
-    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$)
+    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
     // Then, continue on with other initialization
 
@@ -55,18 +48,15 @@ export class CaseSummaryComponent implements OnInit {
 
     this.generatePrimaryAndSecondaryFields();
 
-
-    this.status$ = this.configProps$["status"];
-    this.bShowStatus$ = this.configProps$["showStatus"];
-
+    this.status$ = this.configProps$['status'];
+    this.bShowStatus$ = this.configProps$['showStatus'];
   }
-
 
   // Callback passed when subscribing to store change
   onStateChange() {
     // Should always check the bridge to see if the component should
     // update itself (re-render)
-    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate( this );
+    const bUpdateSelf = this.angularPConnect.shouldComponentUpdate(this);
 
     // ONLY call updateSelf when the component should update
     if (bUpdateSelf) {
@@ -75,19 +65,14 @@ export class CaseSummaryComponent implements OnInit {
   }
 
   updateSelf() {
-
     this.generatePrimaryAndSecondaryFields();
   }
 
   ngOnChanges() {
     this.initComponent();
-
-
   }
 
-
   generatePrimaryAndSecondaryFields() {
-
     this.primaryFields$ = [];
     this.secondaryFields$ = [];
 
@@ -100,8 +85,5 @@ export class CaseSummaryComponent implements OnInit {
       let kid = oField.getPConnect();
       this.secondaryFields$.push(kid.resolveConfigProps(kid.getRawMetadata()));
     }
-
   }
-
-
 }

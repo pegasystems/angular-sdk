@@ -1,19 +1,26 @@
 <div *ngIf="bHasNavigation$" class="psdk-stepper">
-    <app-multi-step [pConn$]="newPConn$" [formGroup$]="formGroup$"
-        [arChildren$]="arChildren$"
-        [arMainButtons$]="arMainButtons$" [arSecondaryButtons$]="arSecondaryButtons$"
-        [bIsVertical$]="bIsVertical$" [arCurrentStepIndicies$]="arCurrentStepIndicies$"
-        [arNavigationSteps$]="arNavigationSteps$"
-        (ActionButtonClick)="onActionButtonClick($event)">
-    </app-multi-step>
+  <app-multi-step
+    [pConn$]="newPConn$"
+    [formGroup$]="formGroup$"
+    [arChildren$]="arChildren$"
+    [arMainButtons$]="arMainButtons$"
+    [arSecondaryButtons$]="arSecondaryButtons$"
+    [bIsVertical$]="bIsVertical$"
+    [arCurrentStepIndicies$]="arCurrentStepIndicies$"
+    [arNavigationSteps$]="arNavigationSteps$"
+    (ActionButtonClick)="onActionButtonClick($event)"
+  >
+  </app-multi-step>
 </div>
 <div *ngIf="!bHasNavigation$">
-    <app-assignment-card [pConn$]="newPConn$" [formGroup$]="formGroup$"
-        [arChildren$]="arChildren$"
-        [arMainButtons$]="arMainButtons$" [arSecondaryButtons$]="arSecondaryButtons$"
-        (ActionButtonClick)="onActionButtonClick($event)"
-        [updateToken$]="updateToken$">
-    </app-assignment-card>
-
+  <app-assignment-card
+    [pConn$]="newPConn$"
+    [formGroup$]="formGroup$"
+    [arChildren$]="arChildren$"
+    [arMainButtons$]="arMainButtons$"
+    [arSecondaryButtons$]="arSecondaryButtons$"
+    (ActionButtonClick)="onActionButtonClick($event)"
+    [updateToken$]="updateToken$"
+  >
+  </app-assignment-card>
 </div>
-

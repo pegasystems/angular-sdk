@@ -1,19 +1,19 @@
-<div *ngIf="!bReadonly$ && bHasForm$ else noEdit">
-  <div [formGroup]="formGroup$" *ngIf="bVisible$"  >
-    <mat-form-field class="psdk-full-width" >
-      <mat-label>{{label$}}</mat-label>
-      <input 
-        matInput 
-        [placeholder]="" 
-        type="time" 
+<div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
+  <div [formGroup]="formGroup$" *ngIf="bVisible$">
+    <mat-form-field class="psdk-full-width">
+      <mat-label>{{ label$ }}</mat-label>
+      <input
+        matInput
+        [placeholder]=""
+        type="time"
         [value]="value$"
-        [required]="bRequired$" 
-        [formControlName]="controlName$" 
+        [required]="bRequired$"
+        [formControlName]="controlName$"
         (click)="fieldOnClick($event)"
         (change)="fieldOnChange($event)"
-        (blur)="fieldOnBlur($event)" 
-      >
-      <mat-error *ngIf="fieldControl.invalid">{{getErrorMessage()}}</mat-error>
+        (blur)="fieldOnBlur($event)"
+      />
+      <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
     </mat-form-field>
   </div>
 </div>

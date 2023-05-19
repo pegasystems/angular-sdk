@@ -1,19 +1,30 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AngularPConnectService } from "../../../_bridge/angular-pconnect";
 import { FormGroup } from '@angular/forms';
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
+
+const SUPPORTED_TYPES_IN_PROMOTED_FILTERS = [
+  'TextInput',
+  'Percentage',
+  'Email',
+  'Integer',
+  'Decimal',
+  'Checkbox',
+  'DateTime',
+  'Date',
+  'Time',
+  'Text',
+  'TextArea',
+  'Currency',
+  'URL',
+  'RichText',
+];
 
 @Component({
   selector: 'app-promoted-filters',
   templateUrl: './promoted-filters.component.html',
-  styleUrls: ['./promoted-filters.component.scss']
+  styleUrls: ['./promoted-filters.component.scss'],
 })
 export class PromotedFiltersComponent implements OnInit {
-  showFilters: boolean;
-
-  constructor(private angularPConnect: AngularPConnectService) { }
-
-  angularPConnectData: any = {};
-  PCore$: any;
   @Input() viewName;
   @Input() filters;
   @Input() listViewProps;
@@ -21,6 +32,11 @@ export class PromotedFiltersComponent implements OnInit {
   @Input() pConn$: any;
   @Input() formGroup$: FormGroup;
   @Input() parameters = {};
+
+  angularPConnectData: any = {};
+  PCore$: any;
+
+  showFilters: boolean;
   localeCategory = 'SimpleTable';
   localizedVal;
   filtersProperties = {};
@@ -28,22 +44,8 @@ export class PromotedFiltersComponent implements OnInit {
   transientItemID;
   processedFilters = [];
   payload = {};
-  SUPPORTED_TYPES_IN_PROMOTED_FILTERS = [
-    'TextInput',
-    'Percentage',
-    'Email',
-    'Integer',
-    'Decimal',
-    'Checkbox',
-    'DateTime',
-    'Date',
-    'Time',
-    'Text',
-    'TextArea',
-    'Currency',
-    'URL',
-    'RichText'
-  ];
+
+  constructor(private angularPConnect: AngularPConnectService) {}
 
   ngOnInit(): void {
     if (!this.PCore$) {
@@ -53,6 +55,12 @@ export class PromotedFiltersComponent implements OnInit {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
     this.updateSelf();
+  }
+
+  ngOnDestroy(): void {
+    if (this.angularPConnectData.unsubscribeFn) {
+      this.angularPConnectData.unsubscribeFn();
+    }
   }
 
   onStateChange() {
@@ -72,13 +80,13 @@ export class PromotedFiltersComponent implements OnInit {
       this.filtersProperties[this.PCore$.getAnnotationUtils().getPropertyName(filter.config.value)] = '';
     });
 
-    const filtersWithClassID = {...this.filtersProperties, classID: this.pageClass};
-    this.transientItemID = this.pConn$.getContainerManager().addTransientItem({id: this.viewName, data: filtersWithClassID});
+    const filtersWithClassID = { ...this.filtersProperties, classID: this.pageClass };
+    this.transientItemID = this.pConn$.getContainerManager().addTransientItem({ id: this.viewName, data: filtersWithClassID });
     this.processedFilters = [];
     this.filters.map((filter) => {
       const filterClone = { ...filter };
       // convert any field which is not supported to TextInput and delete the placeholder as it may contain placeholder specific to original type.
-      if (!this.SUPPORTED_TYPES_IN_PROMOTED_FILTERS.includes(filterClone.type)) {
+      if (!SUPPORTED_TYPES_IN_PROMOTED_FILTERS.includes(filterClone.type)) {
         filterClone.type = 'TextInput';
         delete filterClone.config.placeholder;
       }
@@ -90,8 +98,8 @@ export class PromotedFiltersComponent implements OnInit {
         meta: filterClone,
         options: {
           hasForm: true,
-          contextName: this.transientItemID
-        }
+          contextName: this.transientItemID,
+        },
       });
       this.processedFilters.push(c11nEnv);
     });
@@ -103,12 +111,12 @@ export class PromotedFiltersComponent implements OnInit {
       if (value) {
         acc[field] = {
           lhs: {
-            field
+            field,
           },
-          comparator: "EQ",
+          comparator: 'EQ',
           rhs: {
-            value
-          }
+            value,
+          },
         };
       }
       return acc;
@@ -131,7 +139,7 @@ export class PromotedFiltersComponent implements OnInit {
     if (this.PCore$.getFormUtils().isFormValid(this.transientItemID) && this.isValidInput(formValues)) {
       this.showTable = true;
       const Query: any = {
-        dataViewParameters: this.parameters || {}
+        dataViewParameters: this.parameters || {},
       };
 
       if (Object.keys(promotedFilters).length > 0) {
@@ -146,5 +154,4 @@ export class PromotedFiltersComponent implements OnInit {
     this.showTable = false;
     this.pConn$?.getListActions?.()?.setSelectedRows([]); // Clear the selection (if any made by user)
   }
-
 }

@@ -1,24 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-material-vertical-tabs',
   templateUrl: './material-vertical-tabs.component.html',
-  styleUrls: ['./material-vertical-tabs.component.scss']
+  styleUrls: ['./material-vertical-tabs.component.scss'],
 })
 export class MaterialVerticalTabsComponent implements OnInit {
-
   @Input() tabConfig$: Array<any>;
   @Output() TabClick: EventEmitter<any> = new EventEmitter();
-  
-  selectedTabId$ : any;
 
-  constructor() { }
+  selectedTabId$: any;
+
+  constructor() {}
 
   ngOnInit(): void {
-
     // tabConfig$  [ {name: , id: , count: }]
-    
+
     if (this.tabConfig$) {
       // seletedTabId is the first tab, unless another is selected
       this.selectedTabId$ = this.tabConfig$[0]?.id;
@@ -32,12 +29,9 @@ export class MaterialVerticalTabsComponent implements OnInit {
         }
       }
     }
-
-
   }
 
-  onChange(tab : any) {
+  onChange(tab: any) {
     this.TabClick.emit(tab);
   }
-
 }
