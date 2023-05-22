@@ -76,7 +76,6 @@
               }
             ],
             "styles": [
-              "./node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -168,7 +167,6 @@
       }
     }
   },
-  "defaultProject": "angularsdk",
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss"

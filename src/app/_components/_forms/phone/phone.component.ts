@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { interval } from 'rxjs';
-import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
-import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
+import { interval } from 'rxjs/internal/observable/interval';
 import { Utils } from '../../../_helpers/utils';
+import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
 import { handleEvent } from '../../../_helpers/event-util';
-
 @Component({
   selector: 'app-phone',
   templateUrl: './phone.component.html',
@@ -20,7 +18,7 @@ export class PhoneComponent implements OnInit {
   configProps$: Object;
 
   label$: string = '';
-  value$: number;
+  value$: string;
   bRequired$: boolean = false;
   bReadonly$: boolean = false;
   bDisabled$: boolean = false;
@@ -30,9 +28,6 @@ export class PhoneComponent implements OnInit {
   componentReference: string = '';
   testId: string;
   separateDialCode = false;
-  SearchCountryField = SearchCountryField;
-  CountryISO = CountryISO;
-  PhoneNumberFormat = PhoneNumberFormat;
   afterBlur: boolean;
 
   fieldControl = new FormControl('', null);
@@ -133,8 +128,6 @@ export class PhoneComponent implements OnInit {
       this.phoneForm.setValue({ phone: this.value$ });
     }
 
-    this.componentReference = this.pConn$.getStateProps().value;
-
     // trigger display of error message with field control
     if (this.angularPConnectData.validateMessage != null && this.angularPConnectData.validateMessage != '') {
       let timer = interval(100).subscribe(() => {
@@ -150,7 +143,7 @@ export class PhoneComponent implements OnInit {
     if (this.formGroup$.controls[this.controlName$].value) {
       const actionsApi = this.pConn$?.getActionsApi();
       const propName = this.pConn$?.getStateProps().value;
-      const value = this.formGroup$.controls[this.controlName$].value.e164Number;
+      const value = this.formGroup$.controls[this.controlName$].value;
       const eventObj = {
         target: {
           value,
@@ -161,8 +154,6 @@ export class PhoneComponent implements OnInit {
       handleEvent(actionsApi, 'blur', propName, value);
     }
   }
-
-  fieldOnClick(event: any) {}
 
   fieldOnBlur(event: any) {
     // PConnect wants to use eventHandler for onBlur

@@ -47,6 +47,7 @@
     "import/no-useless-path-segments": "off",
     "import/order": "off",
     "import/prefer-default-export": "off",
+    "import/no-relative-packages": "off",
 
     "no-else-return": "off",
     "no-restricted-syntax": "off",

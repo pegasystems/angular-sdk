@@ -8,26 +8,26 @@ table {
   white-space: nowrap;
 }
 
-::ng-deep td.mat-cell {
+::ng-deep td.mat-mdc-cell {
   white-space: nowrap;
 }
 
-::ng-deep th.mat-header-cell,
-td.mat-cell,
-td.mat-footer-cell {
+::ng-deep th.mat-mdc-header-cell,
+td.mat-mdc-cell,
+td.mat-mdc-footer-cell {
   padding: 0rem 0.188rem;
 }
 
-::ng-deep .mat-button {
+::ng-deep .mat-mdc-button {
   padding: 0px;
   text-align: left;
 }
 
-.mat-icon-button {
+.mat-mdc-icon-button {
   width: fit-content;
 }
 
-.mat-row .mat-cell {
+.mat-mdc-row .mat-mdc-cell {
   text-align: left;
 }
 
@@ -137,7 +137,7 @@ td.mat-footer-cell {
   box-shadow: 0 0 10px 3px #777;
 }
 
-tr.mat-row {
+tr.mat-mdc-row {
   cursor: pointer;
 }
 

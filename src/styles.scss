@@ -11,10 +11,10 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-button.mat-menu-item {
+button.mat-mdc-menu-item {
   line-height: 24px !important;
 }
-a.mat-menu-item > mat-icon {
+a.mat-mdc-menu-item > mat-icon {
   margin-bottom: 14px;
 }
 .mat-icon svg {
@@ -24,4 +24,13 @@ a.mat-menu-item > mat-icon {
 .mat-step-icon-content .mat-icon svg {
   height: 100%;
   width: 100%;
+}
+
+.mat-mdc-card {
+  padding: 16px;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled),
+.mat-mdc-form-field-focus-overlay {
+  background-color: transparent;
 }

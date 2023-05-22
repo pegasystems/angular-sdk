@@ -1,40 +1,21 @@
 <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
   <div #f="ngForm" [formGroup]="formGroup$">
     <div class="psdk-full-width">
-      <ngx-intl-tel-input
-        [cssClass]="'custom'"
-        [attr.data-test-id]="testId"
-        [enableAutoCountrySelect]="true"
-        [enablePlaceholder]="true"
-        [searchCountryFlag]="true"
-        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-        [selectFirstCountry]="false"
-        [selectedCountryISO]="CountryISO.UnitedStates"
-        [maxLength]="15"
-        [phoneValidation]="true"
-        [separateDialCode]="true"
-        (change)="fieldOnChange($event)"
-        (blur)="fieldOnBlur($event)"
-        [numberFormat]="PhoneNumberFormat.National"
-        [formControlName]="controlName$"
-      >
-      </ngx-intl-tel-input>
-      <mat-error *ngIf="fieldControl.invalid && afterBlur">{{ getErrorMessage() }}</mat-error>
+      <mat-form-field class="psdk-full-width">
+        <ngx-mat-intl-tel-input
+          [attr.data-test-id]="testId"
+          [formControlName]="controlName$"
+          [enablePlaceholder]="true"
+          [enableSearch]="true"
+          (change)="fieldOnChange($event)"
+          (blur)="fieldOnBlur($event)"
+        >
+        </ngx-mat-intl-tel-input>
+        <mat-error *ngIf="fieldControl.invalid && afterBlur">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
     </div>
   </div>
 </div>
 <ng-template #noEdit>
-  <div #f="ngForm" [formGroup]="phoneForm">
-    <div class="psdk-full-width" [hidden]="true">
-      <ngx-intl-tel-input [maxLength]="15" [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone"> </ngx-intl-tel-input>
-    </div>
-  </div>
-  <div class="psdk-label-infix-readonly">
-    <span class="psdk-label-wrapper-readonly">
-      <label class="phone-label-readonly">Phone number</label>
-    </span>
-    <div class="psdk-data-readonly">
-      <label>{{ f.form?.value?.phone?.internationalNumber }}</label>
-    </div>
-  </div>
+  <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
 </ng-template>

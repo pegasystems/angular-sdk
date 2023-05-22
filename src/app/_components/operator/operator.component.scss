@@ -66,9 +66,9 @@ dd {
   grid-column-start: 2;
 }
 
-.mat-button.mat-primary,
-.mat-icon-button.mat-primary,
-.mat-stroked-button.mat-primary {
+.mat-mdc-button.mat-primary,
+.mat-mdc-icon-button.mat-primary,
+.mat-mdc-outlined-button.mat-primary {
   padding: 0px;
   line-height: unset;
 }

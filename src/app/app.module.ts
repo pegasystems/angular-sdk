@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LayoutModule } from '@angular/cdk/layout';
+import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,7 +39,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 import { AuthService } from './_services/auth.service';
 import { ServerConfigService } from './_services/server-config.service';
@@ -281,7 +281,7 @@ import { Utils } from './_helpers/utils';
     MatTooltipModule,
     MatDialogModule,
     MatStepperModule,
-    NgxIntlTelInputModule,
+    NgxMatIntlTelInputComponent,
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'auto' } },

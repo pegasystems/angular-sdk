@@ -27,7 +27,7 @@ export class DecimalComponent implements OnInit {
   componentReference: string = '';
   testId: string;
 
-  fieldControl = new FormControl(null, null);
+  fieldControl = new FormControl<number | null>(null, null); 
 
   constructor(private angularPConnect: AngularPConnectService, private cdRef: ChangeDetectorRef, private utils: Utils) {}
 

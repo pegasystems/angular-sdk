@@ -1,23 +1,18 @@
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable no-undef */
 
-const { test, expect } = require('@playwright/test');
-const config = require('../../config');
-const common = require('../../common');
+const { test, expect } = require("@playwright/test");
+const config = require("../../config");
+const common = require("../../common");
 
 test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3500/portal");
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto("http://localhost:3500/portal");
 });
 
-test.describe('E2E test', () => {
-  test('should login, create case and run different test cases for Case Reference', async ({
-    page
-  }) => {
-    await common.Login(
-      config.config.apps.digv2.user.username,
-      config.config.apps.digv2.user.password,
-      page
-    );
+test.describe("E2E test", () => {
+  test("should login, create case and run different test cases for Case Reference", async ({ page }) => {
+    await common.Login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
     /** Testing announcement banner presence */
     const announcementBanner = page.locator('h2:has-text("Announcements")');
@@ -27,50 +22,55 @@ test.describe('E2E test', () => {
     const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
     await expect(worklist).toBeVisible();
 
+    /** Hovering over navbar */
+    const navbar = page.locator("app-navbar");
+    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
+
     // /** Creating a Query case-type which will be referred by Complex Fields case type */
-    let createCase = page.locator('button[id="create-button"]');
+    let createCase = page.locator('mat-list-item[id="create-case-button"]');
     await createCase.click();
 
-    let queryCase = await page.locator('button[id="create-case"] > span:has-text("Query")');
+    let queryCase = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Query")');
     await queryCase.click();
-    
-    let modal =  page.locator('div[id="dialog"]');
+
+    let modal = page.locator('div[id="dialog"]');
 
     /** Value to be typed in the Name input */
     const name = "John Doe";
 
-    await modal.locator('input').type(name);
+    await modal.locator("input").type(name);
     await modal.locator('button:has-text("submit")').click();
 
     // /** Storing case-id of the newly created Query case-type(s), will be used later */
     const caseID = [];
- 
+
     caseID.push(await page.locator('div[id="caseId"]').textContent());
-    
+
     /** Creating another Query case-type which will be used for ListOfRecords mode */
-    createCase = page.locator('button[id="create-button"]');
+    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
+    createCase = page.locator('mat-list-item[id="create-case-button"]');
     await createCase.click();
 
-    queryCase = await page.locator('button[id="create-case"] > span:has-text("Query")');
+    queryCase = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Query")');
     await queryCase.click();
 
-    modal =  page.locator('div[id="dialog"]');
+    modal = page.locator('div[id="dialog"]');
 
-    await modal.locator('input').type(name);
+    await modal.locator("input").type(name);
     await modal.locator('button:has-text("submit")').click();
 
     caseID.push(await page.locator('div[id="caseId"]').textContent());
-    console.log('caseID', caseID);
-   
+
     /** Creating a Complex Fields case-type */
     /** opening all case types */
-    createCase = page.locator('button[id="create-button"]');
+    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
+    createCase = page.locator('mat-list-item[id="create-case-button"]');
     await createCase.click();
 
     /** Creating a Complex Fields case-type */
-    const complexFieldsCaseBtn = await page.locator('button[id="create-case"] > span:has-text("Complex Fields")');
+    const complexFieldsCaseBtn = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Complex Fields")');
     await complexFieldsCaseBtn.click();
-   
+
     /** Selecting CaseReference from the Category dropdown */
     const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
     await selectedCategory.click();
@@ -79,7 +79,7 @@ test.describe('E2E test', () => {
     await page.locator('button:has-text("submit")').click();
 
     /** Field sub category tests */
-    
+
     let selectedSubCategory = await page.locator('mat-select[data-test-id="c2adefb64c594c6b634b3be9a40f6c83"]');
     await selectedSubCategory.click();
     await page.locator('mat-option > span:has-text("Field")').click();
@@ -105,7 +105,7 @@ test.describe('E2E test', () => {
     await page.locator('mat-select[role="combobox"] >> nth=2').click();
 
     await page.locator(`mat-option > span:has-text("${name}") >> nth=0`).click();
-    
+
     await page.locator('button:has-text("Next")').click();
 
     await expect(page.locator(`text="${name}"`)).toBeVisible();
@@ -132,13 +132,12 @@ test.describe('E2E test', () => {
     /** SingleRecord mode type tests */
     await selectedTestName.click();
     await page.locator('mat-option > span:has-text("SingleRecord")').click();
-
     const selectedRow = await page.locator(`tr:has-text("${caseID[1]}")`);
-    await selectedRow.locator('td >> span >> nth=0').click();
+    await selectedRow.locator("td >> input[type='radio']").click();
 
     await page.locator('button:has-text("Next")').click();
 
-    await expect(page.locator(`td >> text="${caseID[1]}"`)).toBeVisible();
+    await expect(page.locator(`text="${caseID[1]}"`)).toBeVisible();
 
     await page.locator('button:has-text("Previous")').click();
 
@@ -147,7 +146,7 @@ test.describe('E2E test', () => {
     await page.locator('mat-option > span:has-text("ListOfRecords")').click();
 
     const selectedRow2 = await page.locator(`tr:has-text("${caseID[1]}")`);
-    await selectedRow2.locator('mat-checkbox').click();
+    await selectedRow2.locator("mat-checkbox").click();
 
     await page.locator('button:has-text("Next")').click();
 

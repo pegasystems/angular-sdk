@@ -6,18 +6,13 @@ const config = require("../../config");
 const common = require("../../common");
 
 test.beforeEach(async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto("http://localhost:3500/portal");
 });
 
 test.describe("E2E test", () => {
-  test("should login, create case and run different test cases for User Reference", async ({
-    page,
-  }) => {
-    await common.Login(
-      config.config.apps.digv2.user.username,
-      config.config.apps.digv2.user.password,
-      page
-    );
+  test("should login, create case and run different test cases for User Reference", async ({ page }) => {
+    await common.Login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
     /** Testing announcement banner presence */
     const announcementBanner = page.locator('h2:has-text("Announcements")');
@@ -32,19 +27,15 @@ test.describe("E2E test", () => {
     await navbar.locator('div[class="psdk-appshell-nav"]').hover();
 
     /** opening all case types */
-    const createCase = page.locator('button[id="create-button"]');
+    const createCase = page.locator('mat-list-item[id="create-case-button"]');
     await createCase.click();
 
     /** Creating a Complex Fields case-type */
-    const complexFieldsCaseBtn = await page.locator(
-      'button[id="create-case"] > span:has-text("Complex Fields")'
-    );
+    const complexFieldsCaseBtn = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Complex Fields")');
     await complexFieldsCaseBtn.click();
 
     /** Selecting User Reference from the Category dropdown */
-    const selectedCategory = page.locator(
-      'mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]'
-    );
+    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
     await selectedCategory.click();
     await page.locator('mat-option > span:has-text("UserReference")').click();
 
@@ -58,9 +49,7 @@ test.describe("E2E test", () => {
     const selectedUser = firstSearchboxOption.innerHTML;
 
     /** selecting user from dropdown field  */
-    const dropdownInput = page.locator(
-      'mat-select[data-test-id="12781aa4899d4a2141570b5e52b27156"]'
-    );
+    const dropdownInput = page.locator('mat-select[data-test-id="12781aa4899d4a2141570b5e52b27156"]');
     await dropdownInput.click();
     const firstDropdownOption = page.locator('div[role="listbox"]>mat-option:first-child');
     await firstDropdownOption.click();
