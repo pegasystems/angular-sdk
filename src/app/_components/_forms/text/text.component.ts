@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
 import { Utils } from '../../../_helpers/utils';
 
-// import * as moment from "moment";
-
 @Component({
   selector: 'app-text',
   templateUrl: './text.component.html',
@@ -117,7 +115,6 @@ export class TextComponent implements OnInit {
     //   day: 'numeric'
     // }).format(new Date(sVal + "T00:00"));
 
-    // sVal = moment(sVal, "YYYYMMDD").format("MM/DD/YYYY");
     return this.utils.generateDate(sVal, 'Date-Long-Custom-YYYY');
   }
 
@@ -134,7 +131,7 @@ export class TextComponent implements OnInit {
     //   second: 'numeric',
     //   hour12: true,
     // }).format(new Date(value))
-    // sVal = moment(sVal, "YYYYMMDD").format("MM/DD/YYYY, hh:mm a");
+
     return this.utils.generateDateTime(value, 'DateTime-Long-YYYY-Custom');
   }
 }

@@ -78,7 +78,6 @@ export class RepeatingStructuresComponent implements OnInit {
 
           // format date
           // formattedDate = formattedDate.replace("GMT", "+0000");
-          // formattedDate = moment(formattedDate, "YYYYMMDD[T]HHmmss[.]SSS Z").format("MMMM D, YYYY h:mm:ss A");
           this.utils.generateDateTime(formattedDate, 'MMMM D, YYYY h:mm:ss A');
 
           // update
