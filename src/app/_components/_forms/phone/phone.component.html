@@ -5,6 +5,7 @@
         <ngx-mat-intl-tel-input
           [attr.data-test-id]="testId"
           [formControlName]="controlName$"
+          [preferredCountries]="['us']"
           [enablePlaceholder]="true"
           [enableSearch]="true"
           (change)="fieldOnChange($event)"
