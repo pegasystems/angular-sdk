@@ -57,7 +57,7 @@ export class NavbarComponent implements OnInit {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
-    this.navIcon$ = this.PCore$.getAssetLoader().getStaticServerUrl().concat('assets/pzpega-logo-mark.svg');
+    this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
 
     // this is a dummy "get", because right now images are in http and the main screen is https
     // so the images don't load automatically.  This call, makes an initial hit that allows the
@@ -100,8 +100,8 @@ export class NavbarComponent implements OnInit {
 
   initComponent() {
     this.ngZone.run(() => {
-      this.navIcon$ = this.PCore$.getAssetLoader().getStaticServerUrl().concat('assets/pzpega-logo-mark.svg');
-      this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.PCore$.getAssetLoader().getStaticServerUrl());
+      this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
+      this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.utils.getSDKStaticContentUrl());
 
       // Then, continue on with other initialization
 
@@ -111,7 +111,7 @@ export class NavbarComponent implements OnInit {
       for (let page in this.navPages$) {
         this.navPages$[page]['iconName'] = this.utils.getImageSrc(
           this.navPages$[page]['pxPageViewIcon'],
-          this.PCore$.getAssetLoader().getStaticServerUrl()
+          this.utils.getSDKStaticContentUrl()
         );
       }
 
@@ -123,7 +123,7 @@ export class NavbarComponent implements OnInit {
 
       let oData = this.pConn$.getDataObject();
 
-      this.portalLogoImage$ = this.PCore$.getAssetLoader().getStaticServerUrl().concat('assets/pzpega-logo-mark.svg');
+      this.portalLogoImage$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
       this.portalOperator$ = this.PCore$.getEnvironmentInfo().getOperatorName();
       this.portalOperatorInitials$ = this.utils.getInitials(this.portalOperator$);
 
@@ -139,10 +139,10 @@ export class NavbarComponent implements OnInit {
 
   navPanelCreateButtonClick() {
     if (this.navExpandCollapse$.indexOf('plus') > 0) {
-      this.navExpandCollapse$ = this.utils.getImageSrc('times', this.PCore$.getAssetLoader().getStaticServerUrl());
+      this.navExpandCollapse$ = this.utils.getImageSrc('times', this.utils.getSDKStaticContentUrl());
       this.bShowCaseTypes$ = true;
     } else {
-      this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.PCore$.getAssetLoader().getStaticServerUrl());
+      this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.utils.getSDKStaticContentUrl());
       this.bShowCaseTypes$ = false;
     }
 

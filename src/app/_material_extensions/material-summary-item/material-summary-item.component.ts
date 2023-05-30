@@ -18,11 +18,11 @@ export class MaterialSummaryItemComponent implements OnInit {
   constructor(private utils: Utils) {}
 
   ngOnInit(): void {
-    this.imagePath$ = this.utils.getIconPath(this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.imagePath$ = this.utils.getIconPath(this.utils.getSDKStaticContentUrl());
 
-    this.settingsSvgIcon$ = this.utils.getImageSrc('more', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.settingsSvgIcon$ = this.utils.getImageSrc('more', this.utils.getSDKStaticContentUrl());
     if (this.menuIconOverride$ != '') {
-      this.menuIconOverride$ = this.utils.getImageSrc(this.menuIconOverride$, this.PCore$.getAssetLoader().getStaticServerUrl());
+      this.menuIconOverride$ = this.utils.getImageSrc(this.menuIconOverride$, this.utils.getSDKStaticContentUrl());
     }
   }
 }
