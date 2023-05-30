@@ -67,7 +67,7 @@ test.describe("E2E test", () => {
     let phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1f8261d17452a959e013666c5df45e07"]');
     let countrySelector = phone.locator("button.country-selector");
     await countrySelector.click();
-    await page.locator("div.flag.US").click();
+    await page.locator("div.flag.US >> nth=0").click();
     await phone.locator('input[type="tel"]').type("(201) 555-0123");
 
     await page.locator('button:has-text("+ Add")').click();
@@ -80,7 +80,7 @@ test.describe("E2E test", () => {
     phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1f8261d17452a959e013666c5df45e07"] >> nth=1');
     countrySelector = phone.locator("button.country-selector");
     await countrySelector.click();
-    await page.locator("div.flag.US").click();
+    await page.locator("div.flag.US >> nth=0").click();
     await phone.locator('input[type="tel"]').type("(201) 444-0213");
 
     await page.locator('button:has-text("Next")').click();
@@ -131,7 +131,7 @@ test.describe("E2E test", () => {
     phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1f8261d17452a959e013666c5df45e07"]');
     countrySelector = phone.locator("button.country-selector");
     await countrySelector.click();
-    await page.locator("div.flag.US").click();
+    await page.locator("div.flag.US >> nth=0").click();
     await phone.locator('input[type="tel"]').type("(201) 555-0123");
 
     await page.locator('button:has-text("+ Add")').click();
@@ -145,7 +145,7 @@ test.describe("E2E test", () => {
     phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1f8261d17452a959e013666c5df45e07"] >> nth=1');
     countrySelector = phone.locator("button.country-selector");
     await countrySelector.click();
-    await page.locator("div.flag.US").click();
+    await page.locator("div.flag.US >> nth=0").click();
     await phone.locator('input[type="tel"]').type("(201) 444-0213");
 
     await page.locator('button:has-text("Next")').click();

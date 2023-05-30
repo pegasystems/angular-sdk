@@ -76,7 +76,7 @@ test.describe("E2E test", () => {
     const phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1F8261D17452A959E013666C5DF45E07"]');
     const countrySelector = phone.locator("button.country-selector");
     await countrySelector.click();
-    await page.locator("div.flag.US").click();
+    await page.locator("div.flag.US >> nth=0").click();
     await phone.locator('input[type="tel"]').type("(201) 555-0123");
 
     await page.locator('button:has-text("submit")').click();
