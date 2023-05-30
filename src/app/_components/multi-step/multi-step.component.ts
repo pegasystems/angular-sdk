@@ -33,8 +33,8 @@ export class MultiStepComponent implements OnInit {
     }
 
     // svg icons
-    this.svgCurrent$ = this.utils.getImageSrc('circle-solid', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.svgNotCurrent$ = this.utils.getImageSrc('circle-solid', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.svgCurrent$ = this.utils.getImageSrc('circle-solid', this.utils.getSDKStaticContentUrl());
+    this.svgNotCurrent$ = this.utils.getImageSrc('circle-solid', this.utils.getSDKStaticContentUrl());
   }
 
   onActionButtonClick(oData: any) {

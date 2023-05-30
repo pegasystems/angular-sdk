@@ -52,7 +52,7 @@ export class SimpleTableManualComponent implements OnInit {
       this.PCore$ = window.PCore;
     }
     // Then, continue on with other initialization
-    this.menuIconOverride$ = this.utils.getImageSrc('trash', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.menuIconOverride$ = this.utils.getImageSrc('trash', this.utils.getSDKStaticContentUrl());
     // call checkAndUpdate when initializing
     this.checkAndUpdate();
   }

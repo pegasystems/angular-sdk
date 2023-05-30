@@ -351,10 +351,10 @@ export class FeedContainerComponent implements OnInit {
     */
 
     // set up svg images
-    this.svgComment$ = this.utils.getImageSrc('chat', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.svgLike$ = this.utils.getImageSrc('thumbs-up', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.svgLikedByMe$ = this.utils.getImageSrc('thumbs-up-solid', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.svgSend$ = this.utils.getImageSrc('send', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.svgComment$ = this.utils.getImageSrc('chat', this.utils.getSDKStaticContentUrl());
+    this.svgLike$ = this.utils.getImageSrc('thumbs-up', this.utils.getSDKStaticContentUrl());
+    this.svgLikedByMe$ = this.utils.getImageSrc('thumbs-up-solid', this.utils.getSDKStaticContentUrl());
+    this.svgSend$ = this.utils.getImageSrc('send', this.utils.getSDKStaticContentUrl());
   }
 
   ngOnDestroy(): void {

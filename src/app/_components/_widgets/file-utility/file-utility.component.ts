@@ -81,7 +81,7 @@ export class FileUtilityComponent implements OnInit {
     this.lu_name$ = configProps.label;
     this.lu_icon$ = 'paper-clip';
 
-    this.closeSvgIcon$ = this.utils.getImageSrc('times', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.closeSvgIcon$ = this.utils.getImageSrc('times', this.utils.getSDKStaticContentUrl());
 
     let onViewAllCallback = () => this.onViewAll(this.arFullListAttachments);
 

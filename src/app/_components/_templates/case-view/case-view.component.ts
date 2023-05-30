@@ -130,7 +130,7 @@ export class CaseViewComponent implements OnInit {
     this.arAvailableActions$ = caseInfo?.availableActions ? caseInfo.availableActions : [];
     this.arAvailabeProcesses$ = caseInfo?.availableProcesses ? caseInfo.availableProcesses : [];
 
-    this.svgCase$ = this.utils.getImageSrc(this.configProps$['icon'], this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.svgCase$ = this.utils.getImageSrc(this.configProps$['icon'], this.utils.getSDKStaticContentUrl());
 
     //this.utils.consoleKidDump(this.pConn$);
 
