@@ -38,7 +38,7 @@ export class FieldGroupTemplateComponent implements OnInit {
 
     let menuIconOverride$ = 'trash';
     if (menuIconOverride$) {
-      this.menuIconOverride$ = this.utils.getImageSrc(menuIconOverride$, this.PCore$.getAssetLoader().getStaticServerUrl());
+      this.menuIconOverride$ = this.utils.getImageSrc(menuIconOverride$, this.utils.getSDKStaticContentUrl());
     }
   }
 

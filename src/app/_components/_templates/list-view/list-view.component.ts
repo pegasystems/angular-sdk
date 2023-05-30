@@ -110,20 +110,20 @@ export class ListViewComponent implements OnInit {
     this.bColumnReorder$ = this.utils.getBooleanValue(this.configProps.reorderFields);
     this.bGrouping$ = this.utils.getBooleanValue(this.configProps.grouping);
 
-    this.menuSvgIcon$ = this.utils.getImageSrc('more', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.arrowDownSvgIcon$ = this.utils.getImageSrc('arrow-down', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.arrowUpSvgIcon$ = this.utils.getImageSrc('arrow-up', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.menuSvgIcon$ = this.utils.getImageSrc('more', this.utils.getSDKStaticContentUrl());
+    this.arrowDownSvgIcon$ = this.utils.getImageSrc('arrow-down', this.utils.getSDKStaticContentUrl());
+    this.arrowUpSvgIcon$ = this.utils.getImageSrc('arrow-up', this.utils.getSDKStaticContentUrl());
 
-    this.filterSvgIcon$ = this.utils.getImageSrc('filter', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.filterOnSvgIcon$ = this.utils.getImageSrc('filter-on', this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.groupBySvgIcon$ = this.utils.getImageSrc('row', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.filterSvgIcon$ = this.utils.getImageSrc('filter', this.utils.getSDKStaticContentUrl());
+    this.filterOnSvgIcon$ = this.utils.getImageSrc('filter-on', this.utils.getSDKStaticContentUrl());
+    this.groupBySvgIcon$ = this.utils.getImageSrc('row', this.utils.getSDKStaticContentUrl());
 
     this.selectionMode = this.configProps.selectionMode;
 
     this.arFilterMainButtons$.push({ actionID: 'submit', jsAction: 'submit', name: 'Submit' });
     this.arFilterSecondaryButtons$.push({ actionID: 'cancel', jsAction: 'cancel', name: 'Cancel' });
 
-    this.searchIcon$ = this.utils.getImageSrc('search', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.searchIcon$ = this.utils.getImageSrc('search', this.utils.getSDKStaticContentUrl());
     this.getListData();
   }
 

@@ -31,8 +31,8 @@ export class StagesComponent implements OnInit {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
-    const imagePath = this.utils.getIconPath(this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.checkSvgIcon$ = this.utils.getImageSrc('check', this.PCore$.getAssetLoader().getStaticServerUrl());
+    const imagePath = this.utils.getIconPath(this.utils.getSDKStaticContentUrl());
+    this.checkSvgIcon$ = this.utils.getImageSrc('check', this.utils.getSDKStaticContentUrl());
   }
 
   ngOnDestroy(): void {

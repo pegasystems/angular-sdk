@@ -35,13 +35,13 @@ export class ListUtilityComponent implements OnInit {
 
     this.imagePath$ = this.getIconPath();
 
-    this.headerSvgIcon$ = this.utils.getImageSrc(this.icon$, this.PCore$.getAssetLoader().getStaticServerUrl());
-    this.settingsSvgIcon$ = this.utils.getImageSrc('more', this.PCore$.getAssetLoader().getStaticServerUrl());
+    this.headerSvgIcon$ = this.utils.getImageSrc(this.icon$, this.utils.getSDKStaticContentUrl());
+    this.settingsSvgIcon$ = this.utils.getImageSrc('more', this.utils.getSDKStaticContentUrl());
   }
 
   ngOnChanges() {}
 
   getIconPath(): string {
-    return this.PCore$.getAssetLoader().getStaticServerUrl() + 'assets/icons/';
+    return this.utils.getSDKStaticContentUrl() + 'assets/icons/';
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Utils } from '../../_helpers/utils';
 
 @Component({
   selector: 'app-utility',
@@ -16,7 +17,7 @@ export class UtilityComponent implements OnInit {
   headerIconUrl$: string;
   noItemsMessage$: string;
 
-  constructor() {}
+  constructor(private utils: Utils) {}
 
   ngOnInit(): void {
     if (!this.PCore$) {
@@ -26,7 +27,7 @@ export class UtilityComponent implements OnInit {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
     this.headerIcon$ = this.configProps$['headerIcon'];
-    this.headerIconUrl$ = this.PCore$.getAssetLoader().getStaticServerUrl();
+    this.headerIconUrl$ = this.utils.getSDKStaticContentUrl();
     this.headerText$ = this.configProps$['headerText'];
     this.noItemsMessage$ = this.configProps$['noItemsMessage'];
   }

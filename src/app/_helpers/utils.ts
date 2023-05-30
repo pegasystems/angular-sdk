@@ -3,6 +3,7 @@ import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 import * as localizedFormat from 'dayjs/plugin/localizedFormat';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
+import { ServerConfigService } from '../_services/server-config.service';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(localizedFormat);
@@ -14,8 +15,19 @@ export class Utils {
 
   viewContainerCount: number = 0;
 
-  constructor() {}
+  constructor(private scService: ServerConfigService) {}
 
+  getSDKStaticContentUrl() {
+    const sdkConfigServer = this.scService.getSdkConfigServer();
+
+    // NOTE: Needs a trailing slash! So add one if not provided
+    if (!sdkConfigServer.sdkContentServerUrl.endsWith('/')) {
+      sdkConfigServer.sdkContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/`;
+    }
+
+    return `${sdkConfigServer.sdkContentServerUrl}constellation/`;
+  }  
+  
   consoleKidDump(pConn: any, level: number = 1, kidNum: number = 1) {
     let sDash = '';
     for (var i = 0; i < level; i++) {
