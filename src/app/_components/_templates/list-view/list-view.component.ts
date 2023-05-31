@@ -66,7 +66,7 @@ export class ListViewComponent implements OnInit {
 
   compareType: string;
   compareRef: string;
-  arrowDirection: string;
+  arrowDirection: string = 'down';
 
   filterByColumns: Array<any> = [];
   bShowFilterPopover$: boolean = false;
@@ -323,29 +323,31 @@ export class ListViewComponent implements OnInit {
   _headerSortClick(event, columnData) {
     // images 0 - filter, 1 - arrow, 2 - more
 
-    let arrowImage = event.srcElement.getElementsByTagName('img')[1];
-    let arrowAttr = arrowImage.getAttribute('arrow');
+    /** Commenting this code for now as it is giving errors not sure if it ever worked */
+    // let arrowImage = event.srcElement.getElementsByTagName('img')[1];
+    // let arrowAttr = arrowImage.getAttribute('arrow');
 
-    this.clearOutArrows(event, columnData);
+    // this.clearOutArrows(event, columnData);
 
-    switch (arrowAttr) {
-      case 'up':
-        arrowImage.src = this.arrowDownSvgIcon$;
-        arrowImage.setAttribute('arrow', 'down');
-        break;
-      case 'down':
-        arrowImage.src = '';
-        arrowImage.setAttribute('arrow', 'none');
-        break;
-      default:
-        arrowImage.src = this.arrowUpSvgIcon$;
-        arrowImage.setAttribute('arrow', 'up');
-        break;
-    }
+    // switch (arrowAttr) {
+    //   case 'up':
+    //     arrowImage.src = this.arrowDownSvgIcon$;
+    //     arrowImage.setAttribute('arrow', 'down');
+    //     break;
+    //   case 'down':
+    //     arrowImage.src = '';
+    //     arrowImage.setAttribute('arrow', 'none');
+    //     break;
+    //   default:
+    //     arrowImage.src = this.arrowUpSvgIcon$;
+    //     arrowImage.setAttribute('arrow', 'up');
+    //     break;
+    // }
 
     this.compareType = columnData.type;
     this.compareRef = columnData.config.name;
-    this.arrowDirection = arrowImage.getAttribute('arrow');
+    // this.arrowDirection = arrowImage.getAttribute('arrow');
+    this.arrowDirection = this.arrowDirection === 'up' ? 'down' : 'up';
 
     this.filterSortGroupBy();
   }
