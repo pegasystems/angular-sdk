@@ -1,4 +1,3 @@
-// import * as moment from "moment";
 import { Injectable } from '@angular/core';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -27,8 +26,7 @@ export class Utils {
     }
 
     return `${sdkConfigServer.sdkContentServerUrl}constellation/`;
-  }  
-
+  }
 
   consoleKidDump(pConn: any, level: number = 1, kidNum: number = 1) {
     let sDash = '';

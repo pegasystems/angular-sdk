@@ -3,9 +3,9 @@ be distributed under licenses different than the angular-sdk software.
 
 The third-party libraries and links to their licenses include the following:
 
-* Angular - https://angular.io/license
+- Angular - https://angular.io/license
 
-* Angular Material - https://github.com/angular/components/blob/master/LICENSE
+- Angular Material - https://github.com/angular/components/blob/master/LICENSE
 
 Other third-party libraries and links to their licenses can be found in the
 node_modules folder after **npm install** in each project has been run.

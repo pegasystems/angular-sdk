@@ -6,6 +6,7 @@ const config = require("../../config");
 const common = require("../../common");
 
 test.beforeEach(async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto("http://localhost:3500/portal");
 });
 
@@ -26,11 +27,11 @@ test.describe("E2E test", () => {
     await navbar.locator('div[class="psdk-appshell-nav"]').hover();
 
     /** opening all case types */
-    const createCase = page.locator('button[id="create-button"]');
+    const createCase = page.locator('mat-list-item[id="create-case-button"]');
     await createCase.click();
 
     /** Creating a Complex Fields case-type */
-    const complexFieldsCaseBtn = page.locator('button[id="create-case"] > span:has-text("Complex Fields")');
+    const complexFieldsCaseBtn = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Complex Fields")');
     await complexFieldsCaseBtn.click();
 
     /** Selecting Query from the Category dropdown */
@@ -41,9 +42,7 @@ test.describe("E2E test", () => {
     await page.locator('button:has-text("submit")').click();
 
     /** selecting SingleRecord option from dropdown  */
-    const selectedOption = page.locator(
-      'mat-select[data-test-id="365ab066d5dd67171317bc3fc755245a"]'
-    );
+    const selectedOption = page.locator('mat-select[data-test-id="365ab066d5dd67171317bc3fc755245a"]');
     await selectedOption.click();
     await page.locator('mat-option >> span:has-text("SingleRecord")').click();
 
@@ -64,7 +63,7 @@ test.describe("E2E test", () => {
     await selectedDisplayAs.click();
     await page.locator('mat-option > span:has-text("Table")').click();
 
-    const tableRows = page.locator('app-simple-table table tbody');
+    const tableRows = page.locator("app-simple-table table tbody");
     await expect(tableRows).toBeVisible();
   }, 10000);
 });

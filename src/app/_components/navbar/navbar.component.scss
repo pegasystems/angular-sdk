@@ -102,7 +102,8 @@ $natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1) !default;
 }
 
 .psdk-nav-button-span {
-  padding: 1rem;
+  padding: 0 1rem;
+  color: invert($app-nav-bg, 100%);
 }
 
 .psdk-nav-oper-avatar {
@@ -121,4 +122,30 @@ $natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1) !default;
   color: white;
   font-weight: normal;
   font-size: 1rem;
+}
+
+mat-list {
+  padding: 0;
+}
+
+.psdk-profile-list-item {
+  padding-left: 24px;
+}
+
+mat-list-item {
+  padding: 20px 30px;
+  padding-right: 0;
+  cursor: pointer !important;
+  height: auto !important;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .flex-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+  }
 }

@@ -95,7 +95,6 @@ export class DateComponent implements OnInit {
           // if we have the "pega" format, then for display, convert to standard format (US)
           // sDateValue = this.formatDate(sDateValue);
           sDateValue = this.utils.generateDate(sDateValue, 'Date-Long-Custom-YYYY');
-          // sDateValue = moment(sDateValue, "YYYYMMDD").format("MM/DD/YYYY");
         }
         this.value$ = new Date(sDateValue);
       }
@@ -146,9 +145,8 @@ export class DateComponent implements OnInit {
   fieldOnDateChange(event: any, sValue: string) {
     // this comes from the date pop up
     if (typeof event.value == 'object') {
-      event.value = event.value.toISOString();
       // convert date to pega "date" format
-      // event.value = moment(event.value).format("YYYYMMDD");
+      event.value = event.value.toISOString();
     }
     this.angularPConnectData.actions.onChange(this, { value: event.value });
   }
@@ -158,9 +156,8 @@ export class DateComponent implements OnInit {
   fieldOnBlur(event: any) {
     // PConnect wants to use eventHandler for onBlur
     if (typeof event.value == 'object') {
-      event.value = event.value.toISOString();
       // convert date to pega "date" format
-      // event.value = moment(event.value).format("YYYYMMDD");
+      event.value = event.value.toISOString();
     }
     this.angularPConnectData.actions.onBlur(this, { value: event.value });
   }

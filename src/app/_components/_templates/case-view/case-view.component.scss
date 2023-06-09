@@ -5,7 +5,7 @@ h1 {
   line-height: 1.3rem;
 }
 
-::ng-deep .mat-menu-panel {
+::ng-deep .mat-mdc-menu-panel {
   overflow: unset;
   max-width: unset;
 }
@@ -68,7 +68,8 @@ h1 {
   display: block;
   text-align: left;
   padding-left: 0.5rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: 0;
+  padding-top: 5px;
 }
 .psdk-case-view-heading-id {
   font-size: 0.9rem;

@@ -18,7 +18,7 @@ export class TimeComponent implements OnInit {
   configProps$: Object;
 
   label$: string = '';
-  value$: number;
+  value$: string;
   bRequired$: boolean = false;
   bReadonly$: boolean = false;
   bDisabled$: boolean = false;

@@ -433,15 +433,12 @@ export class FeedContainerComponent implements OnInit {
 
       this.showReplyComment$[message.ID] = false;
 
-      // message["displayPostedTime"] = moment(postedTime, "YYYYMMDD[T]HHmmss[.]SSS Z").fromNow();
       message['displayPostedTime'] = this.utils.generateDateTime(postedTime, 'DateTime-Since');
 
       // for sorting lasted update
       if (updatedTime != null) {
-        // message["updateTimeUTC"] = parseInt(moment(updatedTime, "YYYYMMDD[T]HHmmss[.]SSS Z").format("x"));
         message['updateTimeUTC'] = new Date(updatedTime).getTime();
       } else {
-        // message["updateTimeUTC"] = parseInt(moment(postedTime, "YYYYMMDD[T]HHmmss[.]SSS Z").format("x"));
         message['updateTimeUTC'] = new Date(postedTime).getTime();
       }
 
@@ -453,7 +450,6 @@ export class FeedContainerComponent implements OnInit {
         let reply = message.replies[iR];
 
         let replyPostedTime = reply['postedTime'];
-        // reply["displayPostedTime"] = moment(replyPostedTime, "YYYYMMDD[T]HHmmss[.]SSS Z").fromNow();
         reply['displayPostedTime'] = this.utils.generateDateTime(postedTime, 'DateTime-Since');
 
         //let oReplyUser = this.userData.get(reply.postedByUser);
@@ -477,7 +473,6 @@ export class FeedContainerComponent implements OnInit {
 
       this.showReplyComment$[message.ID] = false;
 
-      // message["displayPostedTime"] = moment(postedTime, "YYYYMMDD[T]HHmmss[.]SSS Z").fromNow();
       message['displayPostedTime'] = this.utils.generateDateTime(postedTime, 'DateTime-Since');
 
       let oUser = this.userData.get(message.postedBy);
@@ -495,7 +490,6 @@ export class FeedContainerComponent implements OnInit {
         let reply = message.replies[iR];
 
         let replyPostedTime = reply['postedTime'];
-        // reply["displayPostedTime"] = moment(replyPostedTime, "YYYYMMDD[T]HHmmss[.]SSS Z").fromNow();
         reply['displayPostedTime'] = this.utils.generateDateTime(postedTime, 'DateTime-Since');
 
         //let oReplyUser = this.userData.get(reply.postedByUser);

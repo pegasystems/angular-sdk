@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
 
-// import * as moment from "moment";
-
 @Component({
   selector: 'app-text-content',
   templateUrl: './text-content.component.html',
