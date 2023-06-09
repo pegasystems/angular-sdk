@@ -66,7 +66,7 @@ export class ListViewComponent implements OnInit {
 
   compareType: string;
   compareRef: string;
-  arrowDirection: string = "down";
+  arrowDirection: string = 'down';
 
   filterByColumns: Array<any> = [];
   bShowFilterPopover$: boolean = false;
