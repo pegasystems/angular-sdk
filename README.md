@@ -3,18 +3,16 @@
 <hr />
 <h1 style="color: red">IMPORTANT – PLEASE READ!</h1>
 
-<h3>In <strong>late May 2023</strong>, there will be a <strong>significant update</strong> to the Angular SDK <strong>main</strong> branch.</h3>
+<h3>In <strong>early June 2023</strong>, there was a <strong>significant update</strong> to the Angular SDK <strong>main</strong> branch.</h3>
 
-We will be updating the SDK to use **Angular 15** and **Angular Material 15** replacing the current use of Angular 13.
+The <strong>main</strong> branch has been updated to use **Angular 15** and **Angular Material 15** which replaces the use of Angular 13.
 
 We strongly advise current SDK users to prepare for converting their changes
-to the SDK code to Angular 15. Once the Angular SDK has been updated to use
-Angular 15, the **main** branch will only support Pega Infinity&trade; 8.8.0+
+to the SDK code to Angular 15. The **main** branch will only support Pega Infinity&trade; 8.8.0+
 
-For any users who prefer to remain with Angular 13, we will create a _legacy_ branch for the existing Angular 13 code before updating the **main** branch.
-We will post the name of that branch here in the README once it is available. 
-This legacy branch will be the only Angular SDK code that will work
-with Pega Infinity&trade; 8.7.*.
+For any users who prefer to remain with Angular 13 or who need to use Pega Infinity&trade; 8.7, we have created a _**release/8.7.10**_ 
+branch which contains the Angular 13 code that was in place before updating the **main** branch. This release/8.7.10 branch will be the 
+only Angular SDK code that will work with Pega Infinity&trade; 8.7.*.
 
 <br />
 <hr />
@@ -393,6 +391,6 @@ Refer to our [guidelines for contributors](./docs/CONTRIBUTING.md) if you are in
 ## Additional Resources
 * [Angular](https://angular.io/)
 * [Angular Material](https://material.angular.io/)
-* [Constellation SDKs Documentation](https://docs-previous.pega.com/constellation-sdks/constellation-sdks)
-* [Troubleshooting Constellation SDKs](https://docs-previous.pega.com/constellation-sdks/troubleshooting-constellation-sdks)
-* [MediaCo sample application](https://docs-previous.pega.com/constellation-sdks/mediaco-sample-application)
+* [Constellation SDKs Documentation](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/constellation-sdks.html)
+* [Troubleshooting Constellation SDKs](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/troubleshooting-constellation-sdks.html)
+* [MediaCo sample application](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/mediaco-sample-application.html)
