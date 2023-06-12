@@ -3,14 +3,10 @@
 <hr />
 <h1 style="color: red">IMPORTANT – PLEASE READ!</h1>
 
-<h3>In <strong>early June 2023</strong>, this new <strong>release/8.7.10</strong> branch was created to provide continued access to the earlier SDK code that uses <strong>Angular 13</strong> and <strong>Angular Material 13</strong>.</h3>
+<h3>This was the <strong>main</strong> branch prior to June 2023. This version of the Angular SDK uses <strong>Angular 13</strong> and <strong>Angular Material 13</strong>, and supports Pega Infinity&trade; 8.7 and 8.8.</h3>
+<br />
 
-If you would like to use (or migrate to) the use of **Angular 15** and **Angular Material 15**, you can use the **main** branch of this repo.
-
-We strongly advise current SDK users to convert their changes to use Angular 15
-running on the **main** branch. The **main** branch will only support Pega Infinity&trade; **8.8.0+**
-
-This _**release/8.7.10**_ branch is the only Angular SDK code that will work with Pega Infinity&trade; 8.7.*.
+If you would like to use (or migrate to) the use of **Angular 15** and **Angular Material 15**, use the [`main`](https://github.com/pegasystems/angular-sdk/tree/main) branch of this repo. For more information about the Angular 15 version of the SDK, see [What's New > Angular SDK 8.8.10](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/whats-new-sdk.html#d2490e210).
 
 <br />
 <hr />
