@@ -1,19 +1,19 @@
-<div *ngIf="!bPCoreReady$ && bLoggedIn$" class="psdk-loading">
-  <div class="progress-box">
-    <mat-spinner class="progress-spinner"></mat-spinner>
+<div *ngIf="isInvalidPortal; else loadPortal" class="portal-load-error">
+  <div>
+    Unable to open portal: <span class="portal-name">{{ portalName }}</span> <br /><br />
+    Please authenticate as an end user operator, rather than a developer or an administrator.
   </div>
+  <button class="logout-btn" (click)="logOff()">Logout</button>
 </div>
-<!--
-<div *ngIf="bPCoreReady$">
-    <div *ngFor="let kid of arChildren$">
-        <div *ngIf="kid.getPConnect().getComponentName() == 'AppShell'">
-            <app-app-shell [pConn$]="kid.getPConnect()"></app-app-shell>
-        </div>
+<ng-template #loadPortal>
+  <div *ngIf="!bPCoreReady$ && bLoggedIn$" class="psdk-loading">
+    <div class="progress-box">
+      <mat-spinner class="progress-spinner"></mat-spinner>
     </div>
-</div>
--->
-<div *ngIf="bPCoreReady$">
-  <div *ngIf="sComponentName$ == 'RootContainer'">
-    <app-root-container [pConn$]="pConn$" [PCore$]="PCore$" [props$]="props$"></app-root-container>
   </div>
-</div>
+  <div *ngIf="bPCoreReady$">
+    <div *ngIf="sComponentName$ == 'RootContainer'">
+      <app-root-container [pConn$]="pConn$" [PCore$]="PCore$" [props$]="props$"></app-root-container>
+    </div>
+  </div>
+</ng-template>

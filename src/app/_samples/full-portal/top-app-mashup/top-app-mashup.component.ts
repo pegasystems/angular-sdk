@@ -56,6 +56,7 @@ export class TopAppMashupComponent implements OnInit {
   spinnerTimer: any;
 
   portalName: string;
+  isInvalidPortal: boolean = false;
 
   constructor(
     private aService: AuthService,
@@ -167,6 +168,9 @@ export class TopAppMashupComponent implements OnInit {
     if (thePortal) {
       console.log(`Loading specified appPortal: ${thePortal}`);
       window.myLoadPortal('app-root', thePortal, []); // this is defined in bootstrap shell that's been loaded already
+    } else if (defaultPortal && this.scservice.getSdkConfigServer().excludePortals.includes(defaultPortal)) {
+      this.isInvalidPortal = true;
+      this.portalName = defaultPortal;
     } else if (window.myLoadDefaultPortal && defaultPortal) {
       console.log(`Loading default portal`);
       window.myLoadDefaultPortal('app-root', []);
@@ -213,64 +217,10 @@ export class TopAppMashupComponent implements OnInit {
     }
   }
 
-  doSubscribe() {
-    window.PCore.onPCoreReady((renderObj: any) => {
-      // Check that we're seeing the PCore version we expect
-      compareSdkPCoreVersions();
-
-      // Need to register the callback function for PCore.registerComponentCreator
-      //  This callback is invoked if/when you call a PConnect createComponent
-      window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
-        // debugger;
-
-        // experiment with returning a PConnect that has deferenced the
-        //  referenced View if the c11n is a 'reference' component
-        const compType = c11nEnv.getPConnect().getComponentName();
-        console.log(`top-app-mashup: doSubscribe - registerComponentCreator c11nEnv type: ${compType}`);
-
-        return c11nEnv;
-
-        // REACT implementaion:
-        // const PConnectComp = createPConnectComponent();
-        // return (
-        //     <PConnectComp {
-        //       ...{
-        //         ...c11nEnv,
-        //         ...c11nEnv.getPConnect().getConfigProps(),
-        //         ...c11nEnv.getPConnect().getActions(),
-        //         additionalProps
-        //       }}
-        //     />
-        //   );
-      });
-
-      // Change to reflect new use of arg in the callback:
-      const { props /*, domContainerID = null */ } = renderObj;
-
-      this.ngZone.run(() => {
-        this.props$ = props;
-        this.pConn$ = this.props$.getPConnect();
-        this.sComponentName$ = this.pConn$.getComponentName();
-        this.PCore$ = window.PCore;
-        this.arChildren$ = this.pConn$.getChildren();
-        this.bPCoreReady$ = true;
-      });
-
-      sessionStorage.setItem('pCoreUsage', 'AngularSDK');
+  logOff() {
+    this.aService.logout().then(() => {
+      // Reload the page to kick off the login
+      window.location.reload();
     });
-
-    // this has to happen in a timeout, because detectChanges can NOT happen inside the
-    // onPCoreReady, angular animations will not work.
-    // can not be called from a service, as that is not asychronous
-    // let timer = interval(50).subscribe(() => {
-
-    //   if (this.bPCoreReady$) {
-
-    //     this.cdRef.detectChanges();
-    //     timer.unsubscribe();
-
-    //   }
-
-    //   });
   }
 }
