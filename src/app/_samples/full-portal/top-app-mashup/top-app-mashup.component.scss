@@ -42,11 +42,13 @@
 
 .portal-load-error .portal-name {
   font-style: italic;
-  color: $app-primary-light-color;
-  text-transform: uppercase;
+  color: $app-warning-color-dark;
 }
 
 .logout-btn {
+  position: absolute;
+  top: 1.5em;
+  right: 1em;
   background: none;
   font-size: 1em;
   border: 3px solid $app-neutral-color;
@@ -61,4 +63,18 @@
 .logout-btn:hover {
   background: $app-warning-color-dark;
   color: $app-form-color;
+}
+
+.portals-list {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 1em;
+  color: $app-primary-light-color;
+  text-decoration: underline;
+}
+
+.portal-list-item:hover {
+  cursor: pointer;
+  color: $app-primary-dark-color;
 }
