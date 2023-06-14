@@ -1,7 +1,12 @@
-<div *ngIf="isInvalidPortal; else loadPortal" class="portal-load-error">
+<div *ngIf="portalSelectionScreen; else loadPortal" class="portal-load-error">
   <div>
-    Unable to open portal: <span class="portal-name">{{ portalName }}</span> <br /><br />
-    Please authenticate as an end user operator, rather than a developer or an administrator.
+    Default portal ( <span class="portal-name">{{ defaultPortalName }}</span> ) for current operator is not compatible with SDK. <br /><br />
+    Please select one of the portals available to the operator's access group:
+  </div>
+  <div class="portals-list">
+    <div *ngFor="let portal of availablePortals" class="portal-list-item" (click)="loadSelectedPortal(portal)">
+      {{ portal }}
+    </div>
   </div>
   <button class="logout-btn" (click)="logOff()">Logout</button>
 </div>

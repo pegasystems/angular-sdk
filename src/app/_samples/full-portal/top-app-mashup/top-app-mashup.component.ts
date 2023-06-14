@@ -1,7 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
-import { ResetPConnectService } from '../../../_messages/reset-pconnect.service';
 import { ServerConfigService } from '../../../_services/server-config.service';
 import { AuthService } from '../../../_services/auth.service';
 import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
@@ -55,13 +54,13 @@ export class TopAppMashupComponent implements OnInit {
 
   spinnerTimer: any;
 
-  portalName: string;
-  isInvalidPortal: boolean = false;
+  portalSelectionScreen: boolean = false;
+  availablePortals: Array<string>;
+  defaultPortalName: string;
 
   constructor(
     private aService: AuthService,
     private psservice: ProgressSpinnerService,
-    private rpcservice: ResetPConnectService,
     private ngZone: NgZone,
     private scservice: ServerConfigService
   ) {}
@@ -81,22 +80,6 @@ export class TopAppMashupComponent implements OnInit {
     // handle showing and hiding the progress spinner
     this.progressSpinnerSubscription = this.psservice.getMessage().subscribe((message) => {
       this.showHideProgress(message.show);
-    });
-
-    this.resetPConnectSubscription = this.rpcservice.getMessage().subscribe((message) => {
-      // if (message.reset) {
-      //   this.bPConnectLoaded$ = false;
-      //   ///window.PCore = null;
-      //   let timer = interval(10).subscribe(() => {
-      //     timer.unsubscribe();
-      //     //this.getPConnectAndUpdate();
-      //     loadPortal('app-root',this.portalName, [],"");
-      //     //let sConfig = sessionStorage.getItem("savedConfig");
-      //     //this.pConnectUpdate(JSON.parse(sConfig));
-      //     // update the worklist
-      //     this.uwservice.sendMessage(true);
-      //   });
-      // }
     });
 
     // Add event listener for when logged in and constellation bootstrap is loaded
@@ -163,24 +146,22 @@ export class TopAppMashupComponent implements OnInit {
 
     const thePortal = this.scservice.getAppPortal();
     const defaultPortal = window.PCore?.getEnvironmentInfo?.().getDefaultPortal?.();
+    const excludePortals = this.scservice.getSdkConfigServer().excludePortals;
 
     // Note: myLoadPortal and myLoadDefaultPortal are set when bootstrapWithAuthHeader is invoked
     if (thePortal) {
       console.log(`Loading specified appPortal: ${thePortal}`);
       window.myLoadPortal('app-root', thePortal, []); // this is defined in bootstrap shell that's been loaded already
-    } else if (defaultPortal && this.scservice.getSdkConfigServer().excludePortals.includes(defaultPortal)) {
-      this.isInvalidPortal = true;
-      this.portalName = defaultPortal;
-    } else if (window.myLoadDefaultPortal && defaultPortal) {
-      console.log(`Loading default portal`);
+    } else if (window.myLoadDefaultPortal && defaultPortal && !excludePortals.includes(defaultPortal)) {
+      console.log(`Loading default portal: ${defaultPortal}`);
       window.myLoadDefaultPortal('app-root', []);
     } else {
-      // This path of selecting a portal by enumerating entries within current user's access group's portals list
-      //  relies on Traditional DX APIs and should be avoided when the Constellation bootstrap supports
-      //  the loadDefaultPortal API
-      this.scservice.selectPortal().then(() => {
-        const selPortal = this.scservice.getAppPortal();
-        window.myLoadPortal('app-root', selPortal, []); // this is defined in bootstrap shell that's been loaded already
+      console.log('Loading portal selection screen');
+      this.portalSelectionScreen = true;
+      this.defaultPortalName = defaultPortal;
+      // Getting current user's access group's available portals list other than exluded portals (relies on Traditional DX APIs)
+      this.scservice.getAvailablePortals().then((portals: Array<string>) => {
+        this.availablePortals = portals;
       });
     }
   }
@@ -222,5 +203,10 @@ export class TopAppMashupComponent implements OnInit {
       // Reload the page to kick off the login
       window.location.reload();
     });
+  }
+
+  loadSelectedPortal(portal) {
+    this.portalSelectionScreen = false;
+    window.myLoadPortal('app-root', portal, []); // this is defined in bootstrap shell that's been loaded already
   }
 }
