@@ -75,6 +75,11 @@ class PegaAuth {
       return nFirstPathOffset !== -1 ? redirectUri.substring(0, nFirstPathOffset) : redirectUri;
     };
 
+    // Make sure browser in a secure context, else PKCE will fail
+    if( !window.crypto.subtle ) {
+      throw(new Error(`Authorization code grant flow failed due to insecure browser context at ${window.location.origin}.  Use localhost or https.`));
+    }
+
     const redirectOrigin = fnGetRedirectUriOrigin();
 
     const state = window.btoa(location.origin);
