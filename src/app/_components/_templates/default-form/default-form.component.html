@@ -1,6 +1,6 @@
 <!-- When adding a component here, add the same component in 'region' template as well -->
 <div [className]="divClass$">
-  <div *ngFor="let kid of arChildren$">
+    <div *ngFor="let kid of arChildren$" [ngClass]="{'grid-column': kid.getPConnect().getComponentName() === 'View'}">
     <div [ngSwitch]="kid.getPConnect().getComponentName()">
       <app-pulse *ngSwitchCase="'Pulse'" [pConn$]="kid.getPConnect()"></app-pulse>
       <app-todo *ngSwitchCase="'Todo'" [pConn$]="kid.getPConnect()"></app-todo>
@@ -30,5 +30,5 @@
       <app-attachment *ngSwitchCase="'Attachment'" [pConn$]="kid.getPConnect()"></app-attachment>
       <div *ngSwitchDefault>DefaultForm wants component not yet available: {{ kid.getPConnect().getComponentName() }}</div>
     </div>
-  </div>
+</div>
 </div>
