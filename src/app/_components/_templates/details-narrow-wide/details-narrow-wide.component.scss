@@ -1,0 +1,8 @@
+.psdk-grid-filter {
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    column-gap: calc(2 * 0.5rem);
+    row-gap: calc(2 * 0.5rem);
+    align-items: start;
+}
+ 

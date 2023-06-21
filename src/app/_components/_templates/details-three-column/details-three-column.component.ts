@@ -14,7 +14,7 @@ export class DetailsThreeColumnComponent implements OnInit {
   arFields$: Array<any> = [];
   arFields2$: Array<any> = [];
   arFields3$: Array<any> = [];
-
+  propsToUse: any = {};
   // Used with AngularPConnect
   angularPConnectData: any = {};
 
@@ -48,6 +48,10 @@ export class DetailsThreeColumnComponent implements OnInit {
   }
 
   updateSelf() {
+    const theConfigProps = this.pConn$.getConfigProps();
+    const label = theConfigProps.label;
+    const showLabel = theConfigProps.showLabel;
+    this.propsToUse = { label, showLabel, ...this.pConn$.getInheritedProps() };
     let kids = this.pConn$.getChildren();
     for (let kid of kids) {
       let pKid = kid.getPConnect();
