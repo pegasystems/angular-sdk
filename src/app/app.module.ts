@@ -77,6 +77,8 @@ import { DetailsComponent } from './_components/_templates/details/details.compo
 import { DetailsOneColumnComponent } from './_components/_templates/details-one-column/details-one-column.component';
 import { DetailsThreeColumnComponent } from './_components/_templates/details-three-column/details-three-column.component';
 import { DetailsTwoColumnComponent } from './_components/_templates/details-two-column/details-two-column.component';
+import { DetailsNarrowWideComponent } from './_components/_templates/details-narrow-wide/details-narrow-wide.component';
+import { DetailsWideNarrowComponent } from './_components/_templates/details-wide-narrow/details-wide-narrow.component';
 import { DropdownComponent } from './_components/_forms/dropdown/dropdown.component';
 import { EmailComponent } from './_components/_forms/email/email.component';
 import { FeedContainerComponent } from './_components/feed-container/feed-container.component';
@@ -225,6 +227,8 @@ import { Utils } from './_helpers/utils';
     MaterialDetailsComponent,
     DetailsOneColumnComponent,
     DetailsThreeColumnComponent,
+    DetailsNarrowWideComponent,
+    DetailsWideNarrowComponent,
     PercentageComponent,
     CaseHistoryComponent,
     NarrowWideFormComponent,

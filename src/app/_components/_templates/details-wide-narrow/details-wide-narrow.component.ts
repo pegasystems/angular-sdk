@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
 
 @Component({
-  selector: 'app-details-two-column',
-  templateUrl: './details-two-column.component.html',
-  styleUrls: ['./details-two-column.component.scss'],
+  selector: 'app-details-wide-narrow',
+  templateUrl: './details-wide-narrow.component.html',
+  styleUrls: ['./details-wide-narrow.component.scss'],
 })
-export class DetailsTwoColumnComponent implements OnInit {
+export class DetailsWideNarrowComponent implements OnInit {
   constructor(private angularPConnect: AngularPConnectService) {}
 
   @Input() pConn$: any;
