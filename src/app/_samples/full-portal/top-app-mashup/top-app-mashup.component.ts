@@ -1,9 +1,15 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
 import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
 import { ServerConfigService } from '../../../_services/server-config.service';
 import { AuthService } from '../../../_services/auth.service';
 import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
+import RootContainerComponent from '@pega/angular-sdk-components/lib/src/app/_components/infra/root-container';
+
+import { getSdkComponentMap } from '@pega/angular-sdk-components/lib/src/app/_bridge/helpers/sdk_component_map';
+import localSdkComponentMap from '../../../../sdk-local-component-map';
 
 declare global {
   interface Window {
@@ -33,6 +39,8 @@ declare global {
   selector: 'app-top-app-mashup',
   templateUrl: './top-app-mashup.component.html',
   styleUrls: ['./top-app-mashup.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatProgressSpinnerModule, RootContainerComponent]
 })
 export class TopAppMashupComponent implements OnInit {
   PCore$: any;
@@ -104,43 +112,12 @@ export class TopAppMashupComponent implements OnInit {
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
 
-      /* In react initialRender happens here */
+      // Initialize the SdkComponentMap (local and pega-provided)
+      getSdkComponentMap(localSdkComponentMap).then((theComponentMap: any) => {
+        console.log(`SdkComponentMap initialized`, theComponentMap);
 
-      // Need to register the callback function for PCore.registerComponentCreator
-      // This callback is invoked if/when you call a PConnect createComponent
-      window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
-        // experiment with returning a PConnect that has deferenced the
-        // referenced View if the c11n is a 'reference' component
-        const compType = c11nEnv.getPConnect().getComponentName();
-        // console.log( `top-app-mashup: startPortal - registerComponentCreator c11nEnv type: ${compType}`);
-
-        return c11nEnv;
-
-        // REACT implementaion:
-        // const PConnectComp = createPConnectComponent();
-        // return (
-        //     <PConnectComp {
-        //       ...{
-        //         ...c11nEnv,
-        //         ...c11nEnv.getPConnect().getConfigProps(),
-        //         ...c11nEnv.getPConnect().getActions(),
-        //         additionalProps
-        //       }}
-        //     />
-        //   );
-      });
-
-      // Change to reflect new use of arg in the callback:
-      const { props } = renderObj;
-
-      // makes sure Angular tracks these changes
-      this.ngZone.run(() => {
-        this.props$ = props;
-        this.pConn$ = this.props$.getPConnect();
-        this.sComponentName$ = this.pConn$.getComponentName();
-        this.PCore$ = window.PCore;
-        this.arChildren$ = this.pConn$.getChildren();
-        this.bPCoreReady$ = true;
+        // Don't call initialRender until SdkComponentMap is fully initialized
+        this.initialRender(renderObj);
       });
     });
 
@@ -164,6 +141,47 @@ export class TopAppMashupComponent implements OnInit {
         this.availablePortals = portals;
       });
     }
+  }
+
+  initialRender(renderObj) {
+    /* In react initialRender happens here */
+
+    // Need to register the callback function for PCore.registerComponentCreator
+    // This callback is invoked if/when you call a PConnect createComponent
+    window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+      // experiment with returning a PConnect that has deferenced the
+      // referenced View if the c11n is a 'reference' component
+      const compType = c11nEnv.getPConnect().getComponentName();
+      // console.log( `top-app-mashup: startPortal - registerComponentCreator c11nEnv type: ${compType}`);
+
+      return c11nEnv;
+
+      // REACT implementaion:
+      // const PConnectComp = createPConnectComponent();
+      // return (
+      //     <PConnectComp {
+      //       ...{
+      //         ...c11nEnv,
+      //         ...c11nEnv.getPConnect().getConfigProps(),
+      //         ...c11nEnv.getPConnect().getActions(),
+      //         additionalProps
+      //       }}
+      //     />
+      //   );
+    });
+
+    // Change to reflect new use of arg in the callback:
+    const { props } = renderObj;
+
+    // makes sure Angular tracks these changes
+    this.ngZone.run(() => {
+      this.props$ = props;
+      this.pConn$ = this.props$.getPConnect();
+      this.sComponentName$ = this.pConn$.getComponentName();
+      this.PCore$ = window.PCore;
+      this.arChildren$ = this.pConn$.getChildren();
+      this.bPCoreReady$ = true;
+    });
   }
 
   showHideProgress(bShow: boolean) {

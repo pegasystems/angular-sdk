@@ -1,3 +1,8 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
 export class FieldGroupUtils {
   /**
    *
@@ -39,8 +44,8 @@ export class FieldGroupUtils {
         context,
         pageReference,
         referenceList,
-        hasForm: true,
-      },
+        hasForm: true
+      }
     };
 
     const view = window.PCore.createPConnect(config);

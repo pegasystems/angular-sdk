@@ -6,7 +6,7 @@ export const loginBoxType = {
 };
 
 export const endpoints = {
-  // Change this URL if you want to point the React application at another Pega server.
+  // Change this URL if you want to point the application at another Pega server.
   // local
   //BASEURL: "http://localhost:1080/prweb/api",
   //BASEURL: "https://localhost:1080/prweb/api",

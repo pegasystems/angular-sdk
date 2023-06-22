@@ -1,5 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
+import { ResolutionScreenComponent } from '../resolution-screen/resolution-screen.component';
+import RootContainerComponent from '@pega/angular-sdk-components/lib/src/app/_components/infra/root-container';
+import { BundleSwatchComponent } from '../bundle-swatch/bundle-swatch.component';
 
 declare function loadMashup(targetDom, preLoadComponents);
 
@@ -7,6 +11,8 @@ declare function loadMashup(targetDom, preLoadComponents);
   selector: 'app-main-screen',
   templateUrl: './main-screen.component.html',
   styleUrls: ['./main-screen.component.scss'],
+  standalone: true,
+  imports: [CommonModule, BundleSwatchComponent, RootContainerComponent, ResolutionScreenComponent]
 })
 export class MainScreenComponent implements OnInit {
   @Input() pConn$: any;
@@ -36,7 +42,7 @@ export class MainScreenComponent implements OnInit {
       banner: 'Value package',
       price: '99.00',
       internetSpeed: '100 Mbps',
-      calling: '',
+      calling: ''
     };
 
     // second
@@ -48,7 +54,7 @@ export class MainScreenComponent implements OnInit {
       banner: 'Most popular',
       price: '120.00',
       internetSpeed: '300 Mbps',
-      calling: '',
+      calling: ''
     };
 
     // third
@@ -60,7 +66,7 @@ export class MainScreenComponent implements OnInit {
       banner: 'All the channels you want',
       price: '150.00',
       internetSpeed: '1 Gbps',
-      calling: ' & International',
+      calling: ' & International'
     };
 
     this.PCore$.getPubSubUtils().subscribe(
@@ -81,7 +87,10 @@ export class MainScreenComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.PCore$.getPubSubUtils().unsubscribe(this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'cancelAssignment');
+    this.PCore$.getPubSubUtils().unsubscribe(
+      this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
+      'cancelAssignment'
+    );
 
     this.PCore$.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
   }
@@ -125,9 +134,9 @@ export class MainScreenComponent implements OnInit {
         flowType: sFlowType ? sFlowType : 'pyStartCase',
         caseInfo: {
           content: {
-            Package: sLevel,
-          },
-        },
+            Package: sLevel
+          }
+        }
       };
 
       createWork('CableC-CableCon-Work-Service', actionInfo);
@@ -137,9 +146,9 @@ export class MainScreenComponent implements OnInit {
         flowType: sFlowType ? sFlowType : 'pyStartCase',
         caseInfo: {
           content: {
-            Package: sLevel,
-          },
-        },
+            Package: sLevel
+          }
+        }
       };
 
       createWork('DIXL-MediaCo-Work-NewService', actionInfo);

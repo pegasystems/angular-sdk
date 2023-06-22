@@ -20,7 +20,7 @@ const cosmosDist = path.resolve(
 const isWatchEnable = process.env.WITH_WATCH === "true";
 const isDevelopmentEnv = process.env.NODE_ENV === "development";
 
-const reactBuildType = isDevelopmentEnv ? "development" : "production.min";
+const sdkBuildType = isDevelopmentEnv ? "development" : "production.min";
 
 const cpObj = {
   patterns: [

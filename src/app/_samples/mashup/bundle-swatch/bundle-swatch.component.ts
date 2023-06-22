@@ -4,6 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   selector: 'app-bundle-swatch',
   templateUrl: './bundle-swatch.component.html',
   styleUrls: ['./bundle-swatch.component.scss'],
+  standalone: true
 })
 export class BundleSwatchComponent implements OnInit {
   @Input() swatchConfig$: any;

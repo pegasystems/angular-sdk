@@ -9,7 +9,9 @@ dayjs.extend(customParseFormat);
 dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Utils {
   lastControlID: number = 0;
 

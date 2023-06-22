@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { GetLoginStatusService } from '../../../_messages/get-login-status.service';
 import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
@@ -13,6 +15,8 @@ declare function loadMashup(targetDom: any, preLoadComponents: any): any;
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatButtonModule]
 })
 export class SideBarComponent implements OnInit {
   @Input() pConn$: any;
@@ -102,7 +106,7 @@ export class SideBarComponent implements OnInit {
 
     const actionInfo = {
       containerName: 'primary',
-      flowType: sFlowType ? sFlowType : 'pyStartCase',
+      flowType: sFlowType ? sFlowType : 'pyStartCase'
     };
 
     this.psservice.sendMessage(true);

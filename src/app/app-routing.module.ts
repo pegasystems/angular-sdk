@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TopAppComponent } from './_components/top-app/top-app.component';
+import { TopAppComponent } from '@pega/angular-sdk-components/lib/src/app/_components/designSystemExtension/top-app/top-app.component';
 import { TopAppMashupComponent } from './_samples/full-portal/top-app-mashup/top-app-mashup.component';
 import { NavigationComponent } from './_samples/simple-portal/navigation/navigation.component';
 import { MCNavComponent } from './_samples/mashup/mc-nav/mc-nav.component';
