@@ -4,7 +4,7 @@ import { AngularPConnectService } from '../../_bridge/angular-pconnect';
 import { ProgressSpinnerService } from '../../_messages/progress-spinner.service';
 import { ReferenceComponent } from '../reference/reference.component';
 import { Utils } from '../../_helpers/utils';
-
+import { getToDoAssignments, showBanner } from './helpers';
 /**
  * WARNING:  It is not expected that this file should be modified.  It is part of infrastructure code that works with
  * Redux and creation/update of Redux containers and PConnect.  Modifying this code could have undesireable results and
@@ -49,9 +49,11 @@ export class FlowContainerComponent implements OnInit {
   caseMessages$: string;
   bHasCaseMessages$: boolean = false;
   checkSvg$: string;
-
+  TODO: any;
+  bShowConfirm = false;
+  bShowBanner: boolean;
+  confirm_pconn: any;
   //itemKey: string = "";   // JA - this is what Nebula/Constellation uses to pass to finishAssignment, navigateToStep
-
 
   constructor(
     private angularPConnect: AngularPConnectService,
@@ -77,7 +79,8 @@ export class FlowContainerComponent implements OnInit {
 
     // get the PCore constants
     this.pCoreConstants = this.PCore$.getConstants();
-
+    const { TODO } = this.pCoreConstants;
+    this.TODO = TODO;
     //with init, force children to be loaded of global pConn
     this.initComponent(true);
 
@@ -105,7 +108,10 @@ export class FlowContainerComponent implements OnInit {
       this.angularPConnectData.unsubscribeFn();
     }
 
-    this.PCore$.getPubSubUtils().unsubscribe(this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'cancelAssignment');
+    this.PCore$.getPubSubUtils().unsubscribe(
+      this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
+      'cancelAssignment'
+    );
 
     this.PCore$.getPubSubUtils().unsubscribe('cancelPressed', 'cancelPressed');
   }
@@ -182,7 +188,7 @@ export class FlowContainerComponent implements OnInit {
 
     if (!isContainerItemAvailable) {
       containerMgr.initializeContainers({
-        type: containerType,
+        type: containerType
       });
 
       /* remove commented out code when update React/WC
@@ -348,6 +354,7 @@ export class FlowContainerComponent implements OnInit {
 
     const caseViewMode = this.pConn$.getValue('context_data.caseViewMode');
     const { CASE_INFO: CASE_CONSTS, CONTAINER_TYPE } = this.PCore$.getConstants();
+    this.bShowBanner = showBanner(this.pConn$);
 
     if (caseViewMode && caseViewMode == 'review') {
       setTimeout(() => {
@@ -370,7 +377,7 @@ export class FlowContainerComponent implements OnInit {
           const caseActions = localPConn.getValue(CASE_CONSTS.CASE_INFO_ACTIONS);
 */
 
-          const todoAssignments = this.getToDoAssignments(this.pConn$);
+          const todoAssignments = getToDoAssignments(this.pConn$);
 
           if (todoAssignments && todoAssignments.length > 0) {
             this.todo_caseInfoID$ = this.pConn$.getValue(CASE_CONSTS.CASE_INFO_ID);
@@ -417,6 +424,7 @@ export class FlowContainerComponent implements OnInit {
     this.caseMessages$ = this.pConn$.getValue('caseMessages');
     if (this.caseMessages$ || !this.hasAssignments()) {
       this.bHasCaseMessages$ = true;
+      this.bShowConfirm = true;
       this.checkSvg$ = this.utils.getImageSrc('check', this.utils.getSDKStaticContentUrl());
       // Temp fix for 8.7 change: confirmationNote no longer coming through in caseMessages$.
       // So, if we get here and caseMessages$ is empty, use default value in DX API response
@@ -428,10 +436,9 @@ export class FlowContainerComponent implements OnInit {
       this.PCore$.getPubSubUtils().publish('assignmentFinished');
 
       this.psService.sendMessage(false);
-
-      return;
     } else if (this.bHasCaseMessages$) {
       this.bHasCaseMessages$ = false;
+      this.bShowConfirm = false;
     }
 
     // this check in routingInfo, mimic Nebula/Constellation (React) to check and get the internals of the
@@ -454,7 +461,12 @@ export class FlowContainerComponent implements OnInit {
         });
 
         if (currentOrder.length > 0) {
-          if (currentItems[key] && currentItems[key].view && type === 'single' && Object.keys(currentItems[key].view).length > 0) {
+          if (
+            currentItems[key] &&
+            currentItems[key].view &&
+            type === 'single' &&
+            Object.keys(currentItems[key].view).length > 0
+          ) {
             // when we get here, it it because the flow action data has changed
             // from the server, and need to add to pConnect and update children
 
@@ -472,10 +484,11 @@ export class FlowContainerComponent implements OnInit {
               isFlowContainer: true,
               containerName: localPConn.getContainerName(),
               containerItemName: key,
-              parentPageReference: localPConn.getPageReference(),
+              parentPageReference: localPConn.getPageReference()
             };
 
             const configObject = this.PCore$.createPConnect(config);
+            this.confirm_pconn = configObject.getPConnect();
             // 8.7 - config might be a Reference component so, need to normalize it to get
             //  the View if it is a Reference component. And need to pass in the getPConnect
             //  to have normalize do a c11Env createComponent (that makes sure options.hasForm
@@ -498,8 +511,8 @@ export class FlowContainerComponent implements OnInit {
               let oWorkItem = this.arChildren$[0].getPConnect();
               let oWorkData = oWorkItem.getDataObject();
 
-              this.containerName$ = this.getActiveViewLabel() || oWorkData.caseInfo.assignments[0].name;
-              this.instructionText$ = oWorkData.caseInfo.assignments[0].instructions;
+              this.containerName$ = this.getActiveViewLabel() || oWorkData.caseInfo.assignments?.[0].name;
+              this.instructionText$ = oWorkData.caseInfo.assignments?.[0].instructions;
             });
           }
         }
@@ -560,61 +573,8 @@ export class FlowContainerComponent implements OnInit {
       flowName,
       caseViewMode: 'perform',
       resourceType: 'ASSIGNMENT',
-      data: pConnect.getDataObject(contextName),
+      data: pConnect.getDataObject(contextName)
     });
   }
-
-  showTodo(pConnect) {
-    const caseViewMode = pConnect.getValue('context_data.caseViewMode');
-    return caseViewMode !== 'perform';
-  }
-
-  getChildCaseAssignments(pConnect) {
-    const childCases = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.CHILD_ASSIGNMENTS);
-    let allAssignments = [];
-    if (childCases && childCases.length > 0) {
-      childCases.forEach(({ assignments = [], Name }) => {
-        const childCaseAssignments = assignments.map((assignment) => ({
-          ...assignment,
-          caseName: Name,
-        }));
-        allAssignments = allAssignments.concat(childCaseAssignments);
-      });
-    }
-    return allAssignments;
-  }
-
-  getActiveCaseActionName(pConnect) {
-    const caseActions = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.CASE_INFO_ACTIONS);
-    const activeActionID = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.ACTIVE_ACTION_ID);
-    const activeAction = caseActions.find((action) => action.ID === activeActionID);
-    return activeAction?.name || '';
-  }
-
-  getToDoAssignments(pConnect) {
-    const caseActions = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.CASE_INFO_ACTIONS);
-    const assignmentLabel = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.ASSIGNMENT_LABEL);
-    const assignments = pConnect.getValue(this.PCore$.getConstants().CASE_INFO.D_CASE_ASSIGNMENTS_RESULTS) || [];
-    const childCasesAssignments = this.getChildCaseAssignments(pConnect) || [];
-    let childCasesAssignmentsCopy = JSON.parse(JSON.stringify(childCasesAssignments));
-
-    childCasesAssignmentsCopy = childCasesAssignmentsCopy.map((assignment) => {
-      assignment.isChild = true;
-      return assignment;
-    });
-
-    const todoAssignments = [...assignments, ...childCasesAssignmentsCopy];
-    let todoAssignmentsCopy = JSON.parse(JSON.stringify(todoAssignments));
-
-    if (caseActions && !this.showTodo(pConnect)) {
-      todoAssignmentsCopy = todoAssignmentsCopy.map((assignment) => {
-        assignment.name = this.getActiveCaseActionName(pConnect) || assignmentLabel;
-        return assignment;
-      });
-    }
-
-    return todoAssignmentsCopy;
-  }
-
   // helpers end
 }

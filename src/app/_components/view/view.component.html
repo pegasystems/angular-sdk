@@ -24,6 +24,7 @@
     <app-case-view *ngSwitchCase="'CaseView'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-case-view>
     <app-list-page *ngSwitchCase="'ListPage'" [pConn$]="pConn$"></app-list-page>
     <app-data-reference *ngSwitchCase="'DataReference'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-data-reference>
+    <app-confirmation *ngSwitchCase="'Confirmation'" [pConn$]="pConn$"></app-confirmation>
     <div *ngSwitchDefault>
       <!-- show something to let us know we got an unknown templateName$ -->
       <h4 *ngIf="templateName$ !== ''">View template not recognized: [{{ templateName$ }}]</h4>

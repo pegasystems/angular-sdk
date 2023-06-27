@@ -66,6 +66,7 @@ import { CaseHistoryComponent } from './_components/_widgets/case-history/case-h
 import { CaseSummaryComponent } from './_components/_templates/case-summary/case-summary.component';
 import { CaseViewComponent } from './_components/_templates/case-view/case-view.component';
 import { CheckBoxComponent } from './_components/_forms/check-box/check-box.component';
+import { ConfirmationComponent } from './_components/_templates/confirmation/confirmation.component';
 import { CurrencyComponent } from './_components/_forms/currency/currency.component';
 import { DataReferenceComponent } from './_components/_templates/data-reference/data-reference.component';
 import { DateComponent } from './_components/_forms/date/date.component';
@@ -246,6 +247,7 @@ import { Utils } from './_helpers/utils';
     FieldGroupTemplateComponent,
     FieldGroupListComponent,
     SimpleTableManualComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
