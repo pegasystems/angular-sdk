@@ -1,0 +1,29 @@
+<div>
+    <div *ngIf="showConfirmView">
+        <h2 id='confirm-label' class="confirm-label">{{label}}</h2>
+        <div *ngIf="showDetails">
+            <app-details [pConn$]="pConn$"></app-details>
+        </div>
+        <div *ngIf="showTasks && toDoList?.length > 0">
+            <app-todo
+            [pConn$]="pConn$"
+            [datasource$]="{source: toDoList}"
+            [headerText$]="'Open Tasks'"
+            [type$]="CONSTS.TODO"
+            [isConfirm]="true"
+          ></app-todo>
+        </div>
+        <div class="done-button">
+          <button mat-raised-button color="primary" (click)="onConfirmViewClose()">Done</button>
+        </div>
+    </div>
+    <div *ngIf="toDoList?.length > 0">
+        <app-todo
+        [pConn$]="pConn$"
+        [datasource$]="{source: toDoList}"
+        [headerText$]="'Tasks'"
+        [type$]=CONSTS.TODO
+        [isConfirm]="true"
+      ></app-todo>
+    </div>
+</div>

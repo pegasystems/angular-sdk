@@ -14,11 +14,29 @@ export class DefaultFormComponent implements OnInit {
   configProps$: Object;
   arChildren$: Array<any>;
   divClass$: string;
+  template: any;
+  showLabel: any;
+  label: any;
+
+  NO_HEADER_TEMPLATES = [
+    'SubTabs',
+    'SimpleTable',
+    'Details',
+    'DetailsTwoColumn',
+    'DetailsThreeColumn',
+    'NarrowWideDetails',
+    'WideNarrowDetails',
+    'Confirmation'
+  ];
 
   constructor() {}
 
   ngOnInit(): void {
     let configProps = this.pConn$.getConfigProps();
+    this.template = configProps?.template;
+    const propToUse = { ...this.pConn$.getInheritedProps() };
+    this.showLabel = propToUse?.showLabel;
+    this.label = propToUse?.label;
     let kids = this.pConn$.getChildren();
 
     let numCols = configProps.NumCols ? configProps.NumCols : '1';

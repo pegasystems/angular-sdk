@@ -2,8 +2,8 @@
 /* eslint-disable no-undef */
 
 const { test, expect } = require("@playwright/test");
-const config = require("../../config");
-const common = require("../../common");
+const config = require("../../../config");
+const common = require("../../../common");
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });

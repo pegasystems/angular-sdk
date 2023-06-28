@@ -19,6 +19,7 @@ export class TodoComponent implements OnInit {
   @Input() type$: string = 'worklist';
   @Input() context$: string;
   @Input() myWorkList$: any;
+  @Input() isConfirm;
 
   PCore$: any;
 
