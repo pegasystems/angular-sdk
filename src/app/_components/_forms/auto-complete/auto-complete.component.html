@@ -1,3 +1,7 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <app-field-value-list [label$]="label$" [value$]="value$" [displayMode$]="displayMode$"></app-field-value-list>
+</div>
+<ng-template #noDisplayMode>
 <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
   <div [formGroup]="formGroup$" *ngIf="bVisible$">
     <mat-form-field class="psdk-full-width">
@@ -23,6 +27,7 @@
     </mat-form-field>
   </div>
 </div>
+</ng-template>
 <ng-template #noEdit>
   <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
 </ng-template>

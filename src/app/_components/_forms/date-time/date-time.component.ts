@@ -23,6 +23,7 @@ export class DateTimeComponent implements OnInit {
   bReadonly$: boolean = false;
   bDisabled$: boolean = false;
   bVisible$: boolean = true;
+  displayMode$: string = '';
   controlName$: string;
   bHasForm$: boolean = true;
   componentReference: string = '';
@@ -84,6 +85,7 @@ export class DateTimeComponent implements OnInit {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
 
     this.label$ = this.configProps$['label'];
+    this.displayMode$ = this.configProps$['displayMode'];
     this.testId = this.configProps$['testId'];
     if (this.configProps$['value'] != undefined) {
       const value = this.configProps$['value'];

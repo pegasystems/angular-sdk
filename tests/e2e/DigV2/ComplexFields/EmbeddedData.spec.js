@@ -181,11 +181,11 @@ test.describe("E2E test", () => {
     const fieldGroup = page.locator('div[id="field-group"]');
 
     /** Testing the values that were entered by Editable test */
-    await expect(fieldGroup.locator('span >> text="Global St"')).toBeVisible();
-    await expect(fieldGroup.locator('span >> text="California"')).toBeVisible();
-    await expect(fieldGroup.locator('span >> text="AK"')).toBeVisible();
-    await expect(fieldGroup.locator('span >> text="03142"')).toBeVisible();
-    await expect(fieldGroup.locator('span >> text="+12014440213"')).toBeVisible();
+    await expect(fieldGroup.locator('div >> text="Global St"')).toBeVisible();
+    await expect(fieldGroup.locator('div >> text="California"')).toBeVisible();
+    await expect(fieldGroup.locator('div >> text="AK"')).toBeVisible();
+    await expect(fieldGroup.locator('div >> text="03142"')).toBeVisible();
+    await expect(fieldGroup.locator('div >> text="+12014440213"')).toBeVisible();
 
     await page.locator('button:has-text("Next")').click();
 

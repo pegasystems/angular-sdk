@@ -23,6 +23,7 @@ export class TextInputComponent implements OnInit {
   bReadonly$: boolean = false;
   bDisabled$: boolean = false;
   bVisible$: boolean = true;
+  displayMode$: string = '';
   controlName$: string;
   testId: string = '';
   bHasForm$: boolean = true;
@@ -84,7 +85,7 @@ export class TextInputComponent implements OnInit {
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-
+    
     if (this.configProps$['value'] != undefined) {
       this.value$ = this.configProps$['value'];
     }
@@ -92,6 +93,7 @@ export class TextInputComponent implements OnInit {
     this.testId = this.configProps$['testId'];
 
     this.label$ = this.configProps$['label'];
+    this.displayMode$ = this.configProps$['displayMode'];
     this.componentReference = this.pConn$.getStateProps().value;
 
     if (this.configProps$['visibility'] != null) {

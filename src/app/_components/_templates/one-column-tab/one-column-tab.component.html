@@ -1,3 +1,5 @@
 <div class="psdk-one-column-tab">
-  <app-one-column [formGroup$]="formGroup$" [pConn$]="pConn$"></app-one-column>
+  <div *ngFor="let kid of arChildren$">
+    <app-one-column [formGroup$]="formGroup$" [pConn$]="pConn$"></app-one-column>
+  </div>
 </div>

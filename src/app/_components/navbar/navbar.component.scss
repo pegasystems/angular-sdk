@@ -14,11 +14,13 @@ $natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1) !default;
 .psdk-nav-header {
   display: flex;
   padding-top: 0.625rem;
+  align-items: center;
 }
 
 .psdk-nav-logo {
   width: 3.75rem;
   padding: 0.625rem;
+  margin-right: 1.25rem;
 }
 
 // background color white
@@ -33,7 +35,7 @@ $natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1) !default;
 }
 
 .psdk-nav-portal-app {
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .psdk-appshell-nav {
@@ -46,7 +48,8 @@ $natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1) !default;
   width: $app-nav-width;
   height: 100%;
   color: invert($app-nav-bg, 100%);
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   white-space: nowrap;
   transition: width $transition-medium $natural-ease;
   will-change: width;

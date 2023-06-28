@@ -21,6 +21,7 @@ export class TextComponent implements OnInit {
   bReadonly$: boolean = false;
   bDisabled$: boolean = false;
   bVisible$: boolean = true;
+  displayMode$: string = '';
   controlName$: string;
   componentReference: string = '';
   formattedValue$: string;
@@ -65,7 +66,8 @@ export class TextComponent implements OnInit {
     }
 
     this.label$ = this.configProps$['label'];
-
+    this.displayMode$ = this.configProps$['displayMode'];
+    
     // TDB - get formats
     switch (this.formatAs$) {
       case 'text':

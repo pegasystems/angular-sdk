@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
 
 @Component({
@@ -7,6 +8,9 @@ import { AngularPConnectService } from '../../../_bridge/angular-pconnect';
   styleUrls: ['./details-three-column.component.scss'],
 })
 export class DetailsThreeColumnComponent implements OnInit {
+  showHighlightedData: boolean;
+  highlightedDataArr: any;
+  PCore$: any;
   constructor(private angularPConnect: AngularPConnectService) {}
 
   @Input() pConn$: any;
@@ -14,7 +18,8 @@ export class DetailsThreeColumnComponent implements OnInit {
   arFields$: Array<any> = [];
   arFields2$: Array<any> = [];
   arFields3$: Array<any> = [];
-  propsToUse: any = {};
+  @Input() formGroup$: FormGroup;
+
   // Used with AngularPConnect
   angularPConnectData: any = {};
 
@@ -48,10 +53,25 @@ export class DetailsThreeColumnComponent implements OnInit {
   }
 
   updateSelf() {
-    const theConfigProps = this.pConn$.getConfigProps();
-    const label = theConfigProps.label;
-    const showLabel = theConfigProps.showLabel;
-    this.propsToUse = { label, showLabel, ...this.pConn$.getInheritedProps() };
+    const rawMetaData = this.pConn$.resolveConfigProps(this.pConn$.getRawMetadata().config);  
+    this.showHighlightedData = rawMetaData?.showHighlightedData;
+
+    if( this.showHighlightedData ){
+      const highlightedData = rawMetaData?.highlightedData;
+      this.highlightedDataArr = highlightedData.map(field => {
+        field.config.displayMode = 'STACKED_LARGE_VAL';
+
+        if (field.config.value === '@P .pyStatusWork') {
+          field.type = 'TextInput';
+          field.config.displayAsStatus = true;
+        }
+
+        return field;
+      });
+    }
+    
+    this.pConn$.setInheritedProp('displayMode', 'LABELS_LEFT');
+    this.pConn$.setInheritedProp('readOnly', true);
     let kids = this.pConn$.getChildren();
     for (let kid of kids) {
       let pKid = kid.getPConnect();

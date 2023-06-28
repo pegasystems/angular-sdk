@@ -1,5 +1,7 @@
 <div *ngIf="configProps$['visibility'] !== false" class="ng-view-top">
-  <h3 *ngIf="title$ !== ''">{{ title$ }}</h3>
+  <div *ngIf="showLabel$ && label$ && templateName$ !== 'SimpleTable' && templateName$ !== 'DefaultForm'" class="template-title-container">
+    <span>{{label$}}</span>
+  </div>
   <div [ngSwitch]="templateName$">
     <app-default-form *ngSwitchCase="'DefaultForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-default-form>
     <app-narrow-wide-form *ngSwitchCase="'NarrowWideForm'" [formGroup$]="formGroup$" [pConn$]="pConn$"></app-narrow-wide-form>
@@ -56,5 +58,5 @@
         </div>
       </ng-template>
     </div>
-  </div>
+</div>
 </div>

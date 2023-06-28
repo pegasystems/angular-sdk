@@ -22,6 +22,7 @@ export class DateComponent implements OnInit {
   bReadonly$: boolean = false;
   bDisabled$: boolean = false;
   bVisible$: boolean = true;
+  displayMode$: string = '';
   controlName$: string;
   bHasForm$: boolean = true;
   componentReference: string = '';
@@ -101,6 +102,7 @@ export class DateComponent implements OnInit {
     }
     this.testId = this.configProps$['testId'];
     this.label$ = this.configProps$['label'];
+    this.displayMode$ = this.configProps$['displayMode'];
 
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {

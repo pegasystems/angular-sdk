@@ -16,7 +16,7 @@ export class SemanticLinkComponent implements OnInit {
 
   label$: string = '';
   value$: string = '';
-  displayMode: string;
+  displayMode$: string = '';
 
   constructor(private angularPConnect: AngularPConnectService) {}
 
@@ -46,7 +46,7 @@ export class SemanticLinkComponent implements OnInit {
   updateSelf() {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
     this.value$ = this.configProps$['text'] || '---';
-    this.displayMode = this.configProps$['displayMode'];
+    this.displayMode$ = this.configProps$['displayMode'];
     this.label$ = this.configProps$['label'];
   }
 }

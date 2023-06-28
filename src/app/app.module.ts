@@ -146,6 +146,8 @@ import { MaterialVerticalTabsComponent } from './_material_extensions/material-v
 
 import { FieldGroupUtils } from './_helpers/field-group-utils';
 import { Utils } from './_helpers/utils';
+import { MaterialDetailsFieldsComponent } from './_material_extensions/material-details-fields/material-details-fields.component';
+import { FieldValueListTemplate } from './_components/_templates/field-value-list/field-value-list.component';
 
 @NgModule({
   declarations: [
@@ -226,6 +228,7 @@ import { Utils } from './_helpers/utils';
     DetailsComponent,
     DetailsTwoColumnComponent,
     MaterialDetailsComponent,
+    MaterialDetailsFieldsComponent,
     DetailsOneColumnComponent,
     DetailsThreeColumnComponent,
     DetailsNarrowWideComponent,
@@ -245,6 +248,7 @@ import { Utils } from './_helpers/utils';
     SemanticLinkComponent,
     MultiReferenceReadonlyComponent,
     FieldGroupTemplateComponent,
+    FieldValueListTemplate,
     FieldGroupListComponent,
     SimpleTableManualComponent,
     ConfirmationComponent

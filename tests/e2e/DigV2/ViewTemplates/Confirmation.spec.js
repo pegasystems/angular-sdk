@@ -83,21 +83,21 @@ test.describe("E2E test", () => {
     /** Testing the values present on Confirmation screen */
     await expect(page.locator('h2[id="confirm-label"]')).toBeVisible();
 
-    await expect(page.locator('span >> text="John"')).toBeVisible();
-    await expect(page.locator('span >> text="Doe"')).toBeVisible();
-    await expect(page.locator('span >> text="Cambridge"')).toBeVisible();
+    await expect(page.locator('div >> text="John"')).toBeVisible();
+    await expect(page.locator('div >> text="Doe"')).toBeVisible();
+    await expect(page.locator('div >> text="Cambridge"')).toBeVisible();
     await expect(page.locator('a >> text="+12015550123"')).toBeVisible();
 
     await expect(page.locator('div >> text="Case View"')).toBeVisible();
 
-    await expect(page.locator(`label >> text=${caseID}`)).toBeVisible();
+    await expect(page.locator('app-default-form').getByText(caseID)).toBeVisible();
 
     await page.locator('button:has-text("Done")').click();
 
     /** Testing the values that shouldn't be present now */
-    await expect(page.locator('span >> text="John"')).toBeHidden();
-    await expect(page.locator('span >> text="Doe"')).toBeHidden();
-    await expect(page.locator('span >> text="Cambridge"')).toBeHidden();
+    await expect(page.locator('div >> text="John"')).toBeHidden();
+    await expect(page.locator('div >> text="Doe"')).toBeHidden();
+    await expect(page.locator('div >> text="Cambridge"')).toBeHidden();
     await expect(page.locator('a >> text="+12015550123"')).toBeHidden();
 
     await expect(page.locator('div >> text="Case View"')).toBeHidden();
