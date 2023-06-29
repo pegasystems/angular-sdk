@@ -1,9 +1,16 @@
-<b>{{ heading }}</b>
 <div>
-  <div *ngFor="let field of fields">
-    <div class="psdk-grid-filter">
-      <span class="psdk-details-fields-label">{{ field.label }}</span>
-      <span style="margin: 8px 0px">{{ field.value }}</span>
+  <b>{{ heading }}</b>
+  <div>
+    <div
+      *ngIf="
+        item.children.getPConnect().getRawMetadata().type.toLowerCase() ==
+        'region'
+      "
+    >
+      <app-region
+        [pConn$]="item.children.getPConnect()"
+        [formGroup$]="formGroup$"
+      ></app-region>
     </div>
   </div>
 </div>

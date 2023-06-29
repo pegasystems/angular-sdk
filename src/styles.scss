@@ -42,3 +42,19 @@ a.mat-mdc-menu-item > mat-icon {
 .mat-sort-header-container{
   justify-content: space-between;
 }
+
+.psdk-grid-filter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: calc(2 * 0.5rem);
+  row-gap: calc(2 * 0.5rem);
+  align-items: start;
+}
+
+.psdk-grid-label{
+  color: rgba(0, 0, 0, 0.54);
+  margin: 8px 0px;
+}
+.psdk-value {
+  margin: 8px 0px;
+}

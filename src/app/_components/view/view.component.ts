@@ -25,9 +25,12 @@ export class ViewComponent implements OnInit {
   angularPConnectData: any = {};
 
   configProps$: Object;
+  inheritedProps$: Object;
   arChildren$: Array<any>;
   templateName$: string;
   title$: string = '';
+  label$: string = '';
+  showLabel$: boolean = true;
 
   constructor(private angularPConnect: AngularPConnectService, private utils: Utils) {}
 
@@ -77,6 +80,7 @@ export class ViewComponent implements OnInit {
     this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
 
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
+    this.inheritedProps$ = this.pConn$.getInheritedProps();
 
     // NOTE: this.configProps$['visibility'] is used in view.component.ts such that
     //  the View will only be rendered when this.configProps$['visibility'] is false.
@@ -84,6 +88,11 @@ export class ViewComponent implements OnInit {
 
     this.templateName$ = 'template' in this.configProps$ ? (this.configProps$['template'] as string) : '';
     this.title$ = 'title' in this.configProps$ ? (this.configProps$['title'] as string) : '';
+    this.label$ = 'label' in this.configProps$ ? (this.configProps$['label'] as string) : '';
+    this.showLabel$ = 'showLabel' in this.configProps$ ? (this.configProps$['showLabel'] as boolean) : this.showLabel$;
+    // label & showLabel within inheritedProps takes precedence over configProps
+    this.label$ = 'label' in this.inheritedProps$ ? (this.inheritedProps$['label'] as string) : this.label$;
+    this.showLabel$ = 'showLabel' in this.inheritedProps$ ? (this.inheritedProps$['showLabel'] as boolean) : this.showLabel$;
     // children may have a 'reference' so normalize the children array
     this.arChildren$ = ReferenceComponent.normalizePConnArray(this.pConn$.getChildren());
     // was:  this.arChildren$ = this.pConn$.getChildren();

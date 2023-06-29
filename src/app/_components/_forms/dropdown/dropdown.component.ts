@@ -23,6 +23,7 @@ export class DropdownComponent implements OnInit {
   bReadonly$: boolean = false;
   bDisabled$: boolean = false;
   bVisible$: boolean = true;
+  displayMode$: string = '';
   controlName$: string;
   bHasForm$: boolean = true;
   options$: Array<any>;
@@ -92,6 +93,7 @@ export class DropdownComponent implements OnInit {
 
     this.testId = this.configProps$['testId'];
     this.label$ = this.configProps$['label'];
+    this.displayMode$ = this.configProps$['displayMode'];
 
     // timeout and detectChanges to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
@@ -125,7 +127,7 @@ export class DropdownComponent implements OnInit {
     const optionsList = this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject());
     optionsList?.unshift({ key: 'Select', value: 'Select...' });
     this.options$ = optionsList;
-    if (this.value$ === '' && !this.bReadonly$) {
+    if (this.value$ === '' && !this.bReadonly$ && this.displayMode$ !== 'LABELS_LEFT') {
       this.value$ = 'Select';
     }
     // trigger display of error message with field control

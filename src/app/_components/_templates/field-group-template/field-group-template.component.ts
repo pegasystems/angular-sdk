@@ -16,8 +16,10 @@ export class FieldGroupTemplateComponent implements OnInit {
 
   PCore$: any;
 
+  inheritedProps$: Object;
+  showLabel$: boolean = true;
   angularPConnectData: any = {};
-  label: string;
+  label$: string;
   readonlyMode: boolean;
   contextClass: any;
   referenceList: any;
@@ -76,7 +78,14 @@ export class FieldGroupTemplateComponent implements OnInit {
   }
 
   updateSelf() {
-    this.label = this.configProps$['label'];
+    this.inheritedProps$ = this.pConn$.getInheritedProps();
+    this.label$ = this.configProps$['label'];
+    this.showLabel$ = this.configProps$['showLabel'];
+    // label & showLabel within inheritedProps takes precedence over configProps
+    this.label$ = this.inheritedProps$['label'] || this.label$;
+    this.showLabel$ = this.inheritedProps$['showLabel'] || this.showLabel$;
+
+    this.allowAddEdit = this.configProps$['allowTableEdit'];
     const renderMode = this.configProps$['renderMode'];
     const displayMode = this.configProps$['displayMode'];
     this.readonlyMode = renderMode === 'ReadOnly' || displayMode === 'LABELS_LEFT';
@@ -87,13 +96,17 @@ export class FieldGroupTemplateComponent implements OnInit {
     const resolvedList = this.fieldGroupUtils.getReferenceList(this.pConn$);
     this.pageReference = `${this.pConn$.getPageReference()}${resolvedList}`;
     this.pConn$.setReferenceList(resolvedList);
+    if(this.readonlyMode){
+      this.pConn$.setInheritedProp('displayMode', 'LABELS_LEFT');
+    }
     this.referenceList = this.configProps$['referenceList'];
     if (this.prevRefLength != this.referenceList.length) {
       if (!this.readonlyMode) {
         if (this.referenceList?.length === 0 && this.allowAddEdit !== false) {
           this.addFieldGroupItem();
         }
-        let children: any = [];
+      }
+      let children: any = [];
         this.referenceList?.map((item, index) => {
           children.push({
             id: index,
@@ -102,7 +115,6 @@ export class FieldGroupTemplateComponent implements OnInit {
           });
         });
         this.children = children;
-      }
     }
     this.prevRefLength = this.referenceList.length;
   }

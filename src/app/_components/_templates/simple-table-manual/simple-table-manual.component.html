@@ -7,6 +7,9 @@
       <ng-container *ngFor="let dCol of processedFields" [matColumnDef]="dCol.config.name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="_headerSortClick($event, dCol)" arrowPosition="before">
           <div>{{ dCol.config.label }}</div>
+          <div class="psdk-mat-header-filter">
+            <img class="psdk-filter-svg-icon" name="filterOnIcon" />
+          </div>
           <div (click)="$event.stopPropagation()">
             <button mat-icon-button [matMenuTriggerFor]="groupMenu">
               <img class="psdk-list-view-svg-icon" src="{{ menuSvgIcon$ }}" />

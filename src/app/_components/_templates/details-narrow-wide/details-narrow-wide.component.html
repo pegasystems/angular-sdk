@@ -1,10 +1,6 @@
-<div><b>{{propsToUse?.label}}</b></div>
-<div class="psdk-grid-filter">
-  <div>
-    <app-material-details [arFields$]="arFields$"></app-material-details>
-  </div>
-  <div>
-    <app-material-details [arFields$]="arFields2$"></app-material-details>
-  </div>
-</div>
-  
+<app-material-details
+  [arFields$]="arFields$"
+  [arFields2$]="arFields2$"
+  [arHighlightedFields]="highlightedDataArr"
+  [layout]="'narrow-wide'"
+></app-material-details>

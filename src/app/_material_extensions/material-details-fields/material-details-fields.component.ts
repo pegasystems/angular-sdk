@@ -2,21 +2,20 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Utils } from '../../_helpers/utils';
 
 @Component({
-  selector: 'app-material-details',
-  templateUrl: './material-details.component.html',
-  styleUrls: ['./material-details.component.scss'],
+  selector: 'app-material-details-fields',
+  templateUrl: './material-details-fields.component.html',
+  styleUrls: ['./material-details-fields.component.scss'],
 })
-export class MaterialDetailsComponent implements OnInit {
+export class MaterialDetailsFieldsComponent implements OnInit {
+  PCore$: any;
+  angularPConnect: any;
   constructor(private utils: Utils) {}
 
-  @Input() arChildren: Array<any>;
   @Input() arFields$: Array<any>;
-  @Input() arFields2$: Array<any>;
-  @Input() arFields3$: Array<any>;
   @Input() arHighlightedFields: Array<any>;
-  @Input() layout: any;
 
   ngOnInit(): void {}
+
 
   _getValue(configValue) {
     if (configValue && configValue != '') {

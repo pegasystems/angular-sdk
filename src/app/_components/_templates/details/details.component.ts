@@ -14,6 +14,8 @@ export class DetailsComponent implements OnInit {
   PCore$: any;
 
   arFields$: Array<any> = [];
+  highlightedDataArr: Array<any> = [];
+  showHighlightedData: boolean;
 
   // Used with AngularPConnect
   angularPConnectData: any = {};
@@ -52,6 +54,23 @@ export class DetailsComponent implements OnInit {
   }
 
   updateSelf() {
+    const rawMetaData = this.pConn$.resolveConfigProps(this.pConn$.getRawMetadata().config);  
+    this.showHighlightedData = rawMetaData?.showHighlightedData;
+
+    if( this.showHighlightedData ){
+      const highlightedData = rawMetaData?.highlightedData;
+      this.highlightedDataArr = highlightedData.map(field => {
+        field.config.displayMode = 'STACKED_LARGE_VAL';
+
+        if (field.config.value === '@P .pyStatusWork') {
+          field.type = 'TextInput';
+          field.config.displayAsStatus = true;
+        }
+
+        return field;
+      });
+    }
+
     let kids = this.pConn$.getChildren();
     for (let kid of kids) {
       this.arFields$ = [];

@@ -1,22 +1,27 @@
-<div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
-  <div [formGroup]="formGroup$" *ngIf="bVisible$">
-    <mat-form-field class="psdk-full-width">
-      <mat-select
-        [value]="value$"
-        [required]="bRequired$"
-        [attr.data-test-id]="testId"
-        (selectionChange)="fieldOnChange($event)"
-        [formControlName]="controlName$"
-      >
-        <mat-option *ngFor="let opt of options$" [value]="opt.key">
-          {{ opt.value }}
-        </mat-option>
-      </mat-select>
-      <mat-label>{{ label$ }}</mat-label>
-      <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
-    </mat-form-field>
-  </div>
+<div *ngIf="displayMode$; else noDisplayMode">
+  <app-field-value-list [label$]="label$" [value$]="value$" [displayMode$]="displayMode$"></app-field-value-list>
 </div>
+<ng-template #noDisplayMode>
+  <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$">
+      <mat-form-field class="psdk-full-width">
+        <mat-select
+          [value]="value$"
+          [required]="bRequired$"
+          [attr.data-test-id]="testId"
+          (selectionChange)="fieldOnChange($event)"
+          [formControlName]="controlName$"
+        >
+          <mat-option *ngFor="let opt of options$" [value]="opt.key">
+            {{ opt.value }}
+          </mat-option>
+        </mat-select>
+        <mat-label>{{ label$ }}</mat-label>
+        <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</ng-template>
 <ng-template #noEdit>
   <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
 </ng-template>
