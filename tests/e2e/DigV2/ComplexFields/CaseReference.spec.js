@@ -6,8 +6,8 @@ const config = require("../../../config");
 const common = require("../../../common");
 
 test.beforeEach(async ({ page }) => {
-  await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto("http://localhost:3500/portal");
+  await page.setViewportSize({ width: 1920, height: 1280 });
+  await page.goto('http://localhost:3500/portal', { waitUntil: 'networkidle' });
 });
 
 test.describe("E2E test", () => {
@@ -54,7 +54,7 @@ test.describe("E2E test", () => {
     queryCase = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Query")');
     await queryCase.click();
 
-    modal = page.locator('div[id="dialog"]');
+    modal = await page.locator('div[id="dialog"]');
 
     await modal.locator("input").type(name);
     await modal.locator('button:has-text("submit")').click();
