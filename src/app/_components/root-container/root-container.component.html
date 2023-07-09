@@ -8,7 +8,7 @@
     <!-- <app-reference *ngSwitchCase="'reference'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-reference> -->
     <app-view-container
       *ngSwitchCase="'ViewContainer'"
-      [pConn$]="displayOnlyFA$ ? viewContainerPConn : pConn$"
+      [pConn$]="displayOnlyFA$ ? viewContainerPConn$ : pConn$"
       [displayOnlyFA$]="displayOnlyFA$"
     ></app-view-container>
     <app-hybrid-view-container *ngSwitchCase="'HybridViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-hybrid-view-container>

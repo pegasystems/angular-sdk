@@ -37,7 +37,7 @@ export class RootContainerComponent implements OnInit {
 
   progressSpinnerSubscription: Subscription;
   spinnerTimer: any = null;
-  viewContainerPConn: any = null;
+  viewContainerPConn$: any = null;
 
   constructor(private angularPConnect: AngularPConnectService, private psService: ProgressSpinnerService, private ngZone: NgZone) {}
 
@@ -187,7 +187,7 @@ export class RootContainerComponent implements OnInit {
                 options,
               };
 
-              this.viewContainerPConn = this.PCore$.createPConnect(viewContConfig).getPConnect();
+              this.viewContainerPConn$ = this.PCore$.createPConnect(viewContConfig).getPConnect();
             }
             this.bShowRoot$ = true;
           });
