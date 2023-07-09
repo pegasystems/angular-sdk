@@ -37,7 +37,7 @@ export class NavigationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.scservice.getServerConfig().then(() => {
+    this.scservice.readSdkConfig().then(() => {
       this.initialize();
     });
   }

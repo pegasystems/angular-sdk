@@ -6,7 +6,11 @@
   <div [ngSwitch]="componentName$">
     <app-view *ngSwitchCase="'View'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-view>
     <!-- <app-reference *ngSwitchCase="'reference'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-reference> -->
-    <app-view-container *ngSwitchCase="'ViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-view-container>
+    <app-view-container
+      *ngSwitchCase="'ViewContainer'"
+      [pConn$]="displayOnlyFA$ ? viewContainerPConn : pConn$"
+      [displayOnlyFA$]="displayOnlyFA$"
+    ></app-view-container>
     <app-hybrid-view-container *ngSwitchCase="'HybridViewContainer'" [pConn$]="pConn$" [displayOnlyFA$]="displayOnlyFA$"></app-hybrid-view-container>
     <app-modal-view-container
       *ngSwitchCase="'ModalViewContainer'"

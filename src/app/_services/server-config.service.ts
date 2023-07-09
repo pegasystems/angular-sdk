@@ -11,7 +11,11 @@ export class ServerConfigService {
 
   constructor() {}
 
-  getServerConfig(): Promise<any> {
+  /**
+   * Asynchronous initialization of the config file contents.
+   * @returns Promise of config file fetch
+   */
+  readSdkConfig(): Promise<any> {
     if (Object.keys(this.sdkConfig).length === 0) {
       return fetch('./sdk-config.json')
         .then((response) => {
@@ -47,8 +51,9 @@ export class ServerConfigService {
     }
     console.log(`Using sdkContentServerUrl: ${this.sdkConfig['serverConfig'].sdkContentServerUrl}`);
 
-    if (!oServerConfig.infinityRestServerUrl.endsWith('/')) {
-      oServerConfig.infinityRestServerUrl = `${oServerConfig.infinityRestServerUrl}/`;
+    // Don't want a trailing slash for infinityRestServerUrl
+    if (oServerConfig.infinityRestServerUrl.endsWith('/')) {
+      oServerConfig.infinityRestServerUrl = oServerConfig.infinityRestServerUrl.slice(0, -1);
     }
 
     // Specify our own internal list of well known portals to exclude (if one not specified)
@@ -60,20 +65,32 @@ export class ServerConfigService {
     }
   }
 
+  /**
+   *
+   * @returns the sdk-config JSON object
+   */
   async getSdkConfig(): Promise<any> {
     if (Object.keys(this.sdkConfig).length === 0) {
-      const config = await this.getServerConfig();
+      await this.readSdkConfig();
     }
     return this.sdkConfig;
   }
 
-  getSdkConfigAuth(): any {
+  /**
+   *
+   * @returns the authConfig block in the SDK Config object
+   */
+  async getSdkConfigAuth(): Promise<any> {
     if (Object.keys(this.sdkConfig).length === 0) {
-      const config = this.getSdkConfig();
+      await this.getSdkConfig();
     }
     return this.sdkConfig['authConfig'];
   }
 
+  /**
+   *
+   * @returns the serverConfig bloc from the sdk-config.json file
+   */
   getSdkConfigServer(): any {
     if (Object.keys(this.sdkConfig).length === 0) {
       const config = this.getSdkConfig();
@@ -81,24 +98,16 @@ export class ServerConfigService {
     return this.sdkConfig['serverConfig'];
   }
 
+  /**
+   * @param {String} key the key to be inserted/updated in serverConfig
+   * @param {String} value the value to be assigned to the given key
+   */
   setSdkConfigServer(key: string, value: string) {
     this.sdkConfig['serverConfig'][key] = value;
   }
 
   getBaseUrl(): string {
     return this.getSdkConfigServer().infinityRestServerUrl;
-  }
-
-  hasDefinedAppPortal(): boolean {
-    if (this.getAppPortal() !== '' && this.getAppPortal() !== undefined) {
-      return true;
-    }
-
-    return false;
-  }
-
-  getAppPortal(): string {
-    return this.getSdkConfigServer().appPortal;
   }
 
   /**

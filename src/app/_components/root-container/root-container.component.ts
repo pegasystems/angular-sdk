@@ -10,6 +10,8 @@ import { ReferenceComponent } from '../reference/reference.component';
  * is totally at your own risk.
  */
 
+const options = { context: 'app' };
+
 @Component({
   selector: 'app-root-container',
   templateUrl: './root-container.component.html',
@@ -20,7 +22,6 @@ export class RootContainerComponent implements OnInit {
   @Input() props$: any;
   @Input() PCore$: any;
   @Input() displayOnlyFA$: boolean;
-  @Input() isMashup$: boolean;
 
   // For interaction with AngularPConnect
   angularPConnectData: any = {};
@@ -36,16 +37,12 @@ export class RootContainerComponent implements OnInit {
 
   progressSpinnerSubscription: Subscription;
   spinnerTimer: any = null;
+  viewContainerPConn: any = null;
 
   constructor(private angularPConnect: AngularPConnectService, private psService: ProgressSpinnerService, private ngZone: NgZone) {}
 
   ngOnInit(): void {
     let myContext = 'app';
-    if (this.isMashup$) {
-      myContext = 'root';
-    }
-
-    const options = { context: myContext };
 
     if (!this.PCore$) {
       this.PCore$ = window.PCore;
@@ -132,13 +129,7 @@ export class RootContainerComponent implements OnInit {
     const renderingModes = ['portal', 'view'];
     const noPortalMode = 'noPortal';
 
-    let myContext = 'app';
-    if (this.isMashup$) {
-      myContext = 'root';
-    }
-
-    const options = { context: myContext };
-    const { renderingMode, children, skeleton, httpMessages, routingInfo } = myProps;
+    const { renderingMode, children, skeleton, routingInfo } = myProps;
 
     if (routingInfo && renderingModes.includes(renderingMode)) {
       const { accessedOrder, items } = routingInfo;
@@ -185,6 +176,19 @@ export class RootContainerComponent implements OnInit {
           this.ngZone.run(() => {
             let localPConn = arChildren[0].getPConnect();
             this.componentName$ = localPConn.getComponentName();
+
+            if (this.componentName$ === 'ViewContainer') {
+              const configProps = this.pConn$.getConfigProps();
+              const viewContConfig = {
+                meta: {
+                  type: 'ViewContainer',
+                  config: configProps,
+                },
+                options,
+              };
+
+              this.viewContainerPConn = this.PCore$.createPConnect(viewContConfig).getPConnect();
+            }
             this.bShowRoot$ = true;
           });
         });

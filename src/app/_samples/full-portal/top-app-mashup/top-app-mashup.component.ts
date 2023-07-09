@@ -66,7 +66,7 @@ export class TopAppMashupComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.scservice.getServerConfig().then(() => {
+    this.scservice.readSdkConfig().then(() => {
       this.initialize();
     });
   }
@@ -144,9 +144,8 @@ export class TopAppMashupComponent implements OnInit {
       });
     });
 
-    const thePortal = this.scservice.getAppPortal();
+    const { appPortal: thePortal, excludePortals } = this.scservice.getSdkConfigServer();
     const defaultPortal = window.PCore?.getEnvironmentInfo?.().getDefaultPortal?.();
-    const excludePortals = this.scservice.getSdkConfigServer().excludePortals;
 
     // Note: myLoadPortal and myLoadDefaultPortal are set when bootstrapWithAuthHeader is invoked
     if (thePortal) {

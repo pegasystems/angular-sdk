@@ -28,6 +28,7 @@ export class MCNavComponent implements OnInit {
   PCore$: any;
   pConn$: any;
 
+  applicationLabel: string = '';
   bLoggedIn$: boolean = false;
   bPConnectLoaded$: boolean = false;
   bHasPConnect$: boolean = false;
@@ -49,7 +50,7 @@ export class MCNavComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.scservice.getServerConfig().then(() => {
+    this.scservice.readSdkConfig().then(() => {
       this.initialize();
     });
   }
@@ -59,12 +60,10 @@ export class MCNavComponent implements OnInit {
     this.resetPConnectSubscription.unsubscribe();
   }
 
-  initialize() {
+  async initialize() {
     if (!this.PCore$) {
       this.PCore$ = window.PCore;
     }
-
-    this.titleService.setTitle('Media Co');
 
     sessionStorage.clear();
 
@@ -103,7 +102,7 @@ export class MCNavComponent implements OnInit {
       this.bLoggedIn$ = false;
     });
 
-    const sdkConfigAuth = this.scservice.getSdkConfigAuth();
+    const sdkConfigAuth = await this.scservice.getSdkConfigAuth();
 
     if (!sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === 'Basic') {
       // Service package to use custom auth with Basic
@@ -133,8 +132,12 @@ export class MCNavComponent implements OnInit {
     }
 
     this.PCore$.onPCoreReady((renderObj) => {
+      console.log('PCore ready!');
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
+      this.applicationLabel = this.PCore$.getEnvironmentInfo().getApplicationLabel();
+
+      this.titleService.setTitle(this.applicationLabel);
 
       // Need to register the callback function for PCore.registerComponentCreator
       //  This callback is invoked if/when you call a PConnect createComponent
