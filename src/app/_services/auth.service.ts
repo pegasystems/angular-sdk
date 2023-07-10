@@ -20,7 +20,7 @@ export class AuthService {
   gbCustomAuth: boolean = false;
 
   constructor(private scService: ServerConfigService, private oarservice: OAuthResponseService) {
-    this.scService.getServerConfig().then(() => {});
+    this.scService.readSdkConfig();
   }
 
   /*
@@ -36,7 +36,7 @@ export class AuthService {
     }
   };
 
-  setNoMainRedirect = (bNoInitialRedirect) => {
+  setNoInitialRedirect = (bNoInitialRedirect) => {
     if (bNoInitialRedirect) {
       this.forcePopupForReauths(true);
       sessionStorage.setItem('asdk_noRedirect', '1');
@@ -76,7 +76,7 @@ export class AuthService {
   };
 
   updateLoginStatus = () => {
-    const sAuthHdr = this.getAuthHeader();
+    const sAuthHdr = this.sdkGetAuthHeader();
     this.bLoggedIn = sAuthHdr && sAuthHdr.length > 0;
   };
 
@@ -85,24 +85,21 @@ export class AuthService {
    * @param {Object} authConfig
    * @param {Object} tokenInfo
    */
-  constellationInit = (authConfig: any, tokenInfo: any) => {
-    /*
-    // Safety check (should no longer be necessary)
-    const bLoginRedirectCodePage = window.location.href.indexOf("?code") !== -1;
-    if( bLoginRedirectCodePage ) {
-      return;
-    }
-    */
-
+  constellationInit = (authConfig: any, tokenInfo: any, authTokenUpdated, fnReauth) => {
     const constellationBootConfig: any = {};
     const sdkConfigServer = this.scService.getSdkConfigServer();
 
     // Set up constellationConfig with data that bootstrapWithAuthHeader expects
-    // constellationConfig.appAlias = "";
     constellationBootConfig.customRendering = true;
     constellationBootConfig.restServerUrl = sdkConfigServer.infinityRestServerUrl;
-    // Removed /constellation/ from sdkContentServerUrl
+    // NOTE: Needs a trailing slash! So add one if not provided
+    if (!sdkConfigServer.sdkContentServerUrl.endsWith('/')) {
+      sdkConfigServer.sdkContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}/`;
+    }
     constellationBootConfig.staticContentServerUrl = `${sdkConfigServer.sdkContentServerUrl}constellation/`;
+    if (!constellationBootConfig.staticContentServerUrl.endsWith('/')) {
+      constellationBootConfig.staticContentServerUrl = `${constellationBootConfig.staticContentServerUrl}/`;
+    }
     // If appAlias specified, use it
     if (sdkConfigServer.appAlias) {
       constellationBootConfig.appAlias = sdkConfigServer.appAlias;
@@ -128,7 +125,7 @@ export class AuthService {
         onTokenRetrieval: this.updateTokens.bind(this),
       };
     } else {
-      constellationBootConfig.authorizationHeader = this.getAuthHeader();
+      constellationBootConfig.authorizationHeader = this.sdkGetAuthHeader();
     }
 
     // Turn off dynamic load components (should be able to do it here instead of after load?)
@@ -147,8 +144,6 @@ export class AuthService {
         // NOTE: once this callback is done, we lose the ability to access loadMashup.
         //  So, create a reference to it
         window.myLoadMashup = bootstrapShell.loadMashup;
-
-        // Save a reference to loadPortal,loadDefaultPortal too!
         window.myLoadPortal = bootstrapShell.loadPortal;
         window.myLoadDefaultPortal = bootstrapShell.loadDefaultPortal;
 
@@ -176,19 +171,9 @@ export class AuthService {
           })
           .catch((e) => {
             // Assume error caught is because token is not valid and attempt a full reauth
-
             console.error(`Constellation JS Engine bootstrap failed. ${e}`);
             this.gbC11NBootstrapInProgress = false;
             this.fullReauth();
-            /*
-        if( this.isLoginInProgress() ) {
-          // This flag should be reset prior to invoking constellationInit
-          console.log(`Login in progress just prior to fullReauth....so abandoning full reauth.`);
-        } else {
-  //        this.fullReauth();
-        console.log(`Login not in progress so would have been invoking full reAuth. loginRedirectCodePage: ${bLoginRedirectCodePage}`);
-        }
-        */
           });
       })
       .catch((e) => {
@@ -201,12 +186,17 @@ export class AuthService {
     if (!token) {
       // This is used on page reload to load the token from sessionStorage and carry on
       token = this.getCurrentTokens();
+      if (!token) {
+        return;
+      }
     }
 
+    sessionStorage.setItem('asdk_AH', `${token.token_type} ${token.access_token}`);
     this.updateLoginStatus();
 
     // bLoggedIn is getting updated in updateLoginStatus
     this.bLoggedIn = true;
+    sessionStorage.removeItem('asdk_loggingIn');
     this.forcePopupForReauths(true);
 
     const sSI = sessionStorage.getItem('asdk_CI');
@@ -230,7 +220,7 @@ export class AuthService {
     */
     // Code that sets up use of Constellation once it's been loaded and ready
     if (!window.PCore && bLoadC11N) {
-      this.constellationInit(authConfig, token);
+      this.constellationInit(authConfig, token, this.authTokenUpdated, this.authFullReauth.bind(this));
     }
   };
 
@@ -252,7 +242,7 @@ export class AuthService {
     }
   };
 
-  updateRedirectUri = (sRedirectUri) => {
+  updateRedirectUri = (aMgr, sRedirectUri) => {
     const sSI = sessionStorage.getItem('asdk_CI');
     let authConfig = null;
     if (sSI !== null) {
@@ -264,7 +254,7 @@ export class AuthService {
     }
     authConfig.redirectUri = sRedirectUri;
     sessionStorage.setItem('asdk_CI', JSON.stringify(authConfig));
-    this.authMgr.reloadConfig();
+    aMgr.reloadConfig();
   };
 
   authRedirectCallback = (href, fnLoggedInCB = null) => {
@@ -273,14 +263,16 @@ export class AuthService {
     const urlParams = new URLSearchParams(aHrefParts.length > 1 ? `?${aHrefParts[1]}` : '');
     const code = urlParams.get('code');
 
-    this.authMgr.getToken(code).then((token) => {
-      if (token && token.access_token) {
-        this.processTokenOnLogin(token, false);
-        // this.getUserInfo();
-        if (fnLoggedInCB) {
-          fnLoggedInCB(token);
+    this.getAuthMgr(false).then((aMgr) => {
+      aMgr.getToken(code).then((token) => {
+        if (token && token.access_token) {
+          this.processTokenOnLogin(token, false);
+          // this.getUserInfo();
+          if (fnLoggedInCB) {
+            fnLoggedInCB(token.access_token);
+          }
         }
-      }
+      });
     });
   };
 
@@ -309,14 +301,18 @@ export class AuthService {
     return sessionStorage.getItem('asdk_noRedirect') === '1';
   };
 
-  initAuthMgr = (bInit) => {
-    const sdkConfigAuth = this.scService.getSdkConfigAuth();
+  initOAuth = async (bInit) => {
+    const sdkConfigAuth = await this.scService.getSdkConfigAuth();
     const sdkConfigServer = this.scService.getSdkConfigServer();
-    const pegaUrl = sdkConfigServer.infinityRestServerUrl;
-    const currPath = location.pathname;
+    let pegaUrl = sdkConfigServer.infinityRestServerUrl;
+    const bNoInitialRedirect = this.authNoRedirect();
 
     // Construct default OAuth endpoints (if not explicitly specified)
     if (pegaUrl) {
+      // Cope with trailing slash being present
+      if (!pegaUrl.endsWith('/')) {
+        pegaUrl += '/';
+      }
       if (!sdkConfigAuth.authorize) {
         sdkConfigAuth.authorize = `${pegaUrl}PRRestService/oauth2/v1/authorize`;
       }
@@ -345,13 +341,13 @@ export class AuthService {
     sNoMainRedirectUri = nLastPathSep !== -1 ? `${sNoMainRedirectUri.substring(0, nLastPathSep + 1)}auth.html` : `${sNoMainRedirectUri}/auth.html`;
 
     const authConfig: any = {
-      clientId: this.bNoInitialRedirect ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
+      clientId: bNoInitialRedirect ? sdkConfigAuth.mashupClientId : sdkConfigAuth.portalClientId,
       authorizeUri: sdkConfigAuth.authorize,
       tokenUri: sdkConfigAuth.token,
       revokeUri: sdkConfigAuth.revoke,
       userinfoUri: sdkConfigAuth.userinfo,
       redirectUri:
-        this.bNoInitialRedirect || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup
+        bNoInitialRedirect || this.bUsePopupForRestOfSession || endpoints.loginExperience === loginBoxType.Popup
           ? sNoMainRedirectUri
           : sdkConfigAuth.redirectUri,
       authService: sdkConfigAuth.authService,
@@ -366,7 +362,7 @@ export class AuthService {
     if ('silentTimeout' in sdkConfigAuth) {
       authConfig.silentTimeout = sdkConfigAuth.silentTimeout;
     }
-    if (this.bNoInitialRedirect) {
+    if (bNoInitialRedirect && sdkConfigAuth.mashupUserIdentifier && sdkConfigAuth.mashupPassword) {
       authConfig.userIdentifier = sdkConfigAuth.mashupUserIdentifier;
       authConfig.password = sdkConfigAuth.mashupPassword;
     }
@@ -384,6 +380,7 @@ export class AuthService {
         const oSI = JSON.parse(sSI);
         if (
           oSI.authorizeUri !== authConfig.authorizeUri ||
+          oSI.appAlias !== authConfig.appAlias ||
           oSI.clientId !== authConfig.clientId ||
           oSI.userIdentifier !== authConfig.userIdentifier ||
           oSI.password !== authConfig.password
@@ -402,14 +399,26 @@ export class AuthService {
     this.authMgr = new PegaAuth('asdk_CI');
   };
 
-  getAuthMgr = (bInit) => {
-    if (!this.authMgr) {
-      this.initAuthMgr(bInit);
-    }
-    return this.authMgr;
+  getAuthMgr = (bInit): Promise<any> => {
+    return new Promise((resolve) => {
+      let idNextCheck = null;
+      const fnCheckForAuthMgr = () => {
+        if (PegaAuth && !this.authMgr) {
+          this.initOAuth(bInit);
+        }
+        if (this.authMgr) {
+          if (idNextCheck) {
+            clearInterval(idNextCheck);
+          }
+          return resolve(this.authMgr);
+        }
+      };
+      fnCheckForAuthMgr();
+      idNextCheck = setInterval(fnCheckForAuthMgr, 10);
+    });
   };
 
-  getAuthHeader = () => {
+  sdkGetAuthHeader = () => {
     return sessionStorage.getItem('asdk_AH');
   };
 
@@ -452,54 +461,52 @@ export class AuthService {
         // do nothing
       }
     }
-    const aMgr = this.getAuthMgr(false);
-    const tokenInfo = this.getCurrentTokens();
-    return aMgr.getUserinfo(tokenInfo.access_token).then((data) => {
-      userInfo = data;
-      if (userInfo) {
-        sessionStorage.setItem('asdk_UI', JSON.stringify(userInfo));
-      } else {
-        sessionStorage.removeItem('asdk_UI');
-      }
-      return Promise.resolve(userInfo);
+    this.getAuthMgr(false).then((aMgr) => {
+      const tokenInfo = this.getCurrentTokens();
+      return aMgr.getUserinfo(tokenInfo.access_token).then((data) => {
+        userInfo = data;
+        if (userInfo) {
+          sessionStorage.setItem('asdk_UI', JSON.stringify(userInfo));
+        } else {
+          sessionStorage.removeItem('asdk_UI');
+        }
+        return Promise.resolve(userInfo);
+      });
     });
   };
 
   login = (bFullReauth: boolean = false) => {
-    this.scService.getServerConfig().then((sdkConfig) => {
-      let sRedirectUri = sdkConfig.authConfig.redirectUri;
-      // Needed so a redirect to login screen and back will know we are still in process of logging in
-      sessionStorage.setItem('asdk_loggingIn', `${Date.now()}`);
-      //console.log("loggingIn: setting time");
+    if (this.gbCustomAuth) return;
 
-      const aMgr = this.getAuthMgr(!bFullReauth);
-      // aMgr will always be same as this.authMgr
+    this.getAuthMgr(bFullReauth).then(async (aMgr) => {
       const bMainRedirect = !this.authNoRedirect();
+      const sdkConfigAuth = await this.scService.getSdkConfigAuth();
+      let sRedirectUri = sdkConfigAuth.redirectUri;
 
+      // If initial main redirect is OK, redirect to main page, otherwise will authorize in a popup window
       if (bMainRedirect && !bFullReauth) {
         // update redirect uri to be the root
-        this.updateRedirectUri(sRedirectUri);
-        this.authMgr.loginRedirect();
+        this.updateRedirectUri(aMgr, sRedirectUri);
+        aMgr.loginRedirect();
         // Don't have token til after the redirect
         return Promise.resolve(undefined);
       } else {
         // Construct path to redirect uri
         const nLastPathSep = sRedirectUri.lastIndexOf('/');
         sRedirectUri = nLastPathSep !== -1 ? `${sRedirectUri.substring(0, nLastPathSep + 1)}auth.html` : `${sRedirectUri}/auth.html`;
-        this.updateRedirectUri(sRedirectUri);
+        // Set redirectUri to static auth.html
+        this.updateRedirectUri(aMgr, sRedirectUri);
         return new Promise((resolve, reject) => {
-          this.authMgr
+          aMgr
             .login()
             .then((token) => {
-              this.processTokenOnLogin(token, true);
-              // this.getUserInfo();
+              this.processTokenOnLogin(token);
+              // getUserInfo();
               resolve(token.access_token);
             })
             .catch((e) => {
               sessionStorage.removeItem('asdk_loggingIn');
-              //console.log("login(): clearing loggingIn SS")
-
-              console.error(`Error caught during login: ${e}`);
+              console.log(e);
               reject(e);
             });
         });
@@ -522,11 +529,11 @@ export class AuthService {
       this.clearAuthMgr();
       sessionStorage.setItem('asdk_appName', appName);
     }
-    this.setNoMainRedirect(noMainRedirect);
+    this.setNoInitialRedirect(noMainRedirect);
     // If custom auth no need to do any OAuth logic
     if (this.gbCustomAuth) {
       if (!window.PCore) {
-        this.constellationInit(null, null);
+        this.constellationInit(null, null, null, this.authCustomReauth.bind(this));
       }
       return;
     }
@@ -535,24 +542,24 @@ export class AuthService {
     // eslint-disable-next-line @typescript-eslint/prefer-includes
     if (window.location.href.indexOf('?code') !== -1) {
       // initialize authMgr
-      this.initAuthMgr(false);
-      sessionStorage.removeItem('asdk_loggingIn');
-      //console.log("loginIfNecessary: clearing loggingIn");
-      this.authRedirectCallback(window.location.href, () => {
-        window.location.href = window.location.pathname;
+      this.initOAuth(false);
+      return this.getAuthMgr(false).then(() => {
+        this.authRedirectCallback(window.location.href, () => {
+          window.location.href = window.location.pathname;
+        });
       });
-      return;
     }
     // If not login redirect with auth code
     if (!deferLogin && (!this.isLoginInProgress() || this.isLoginExpired())) {
-      const aMgr = this.getAuthMgr(false);
-      this.updateLoginStatus();
-      if (this.bLoggedIn) {
-        this.fireTokenAvailable(this.getCurrentTokens());
-        // this.getUserInfo();
-      } else {
-        return this.login();
-      }
+      this.getAuthMgr(false).then(() => {
+        this.updateLoginStatus();
+        if (this.bLoggedIn) {
+          this.fireTokenAvailable(this.getCurrentTokens());
+          // this.getUserInfo();
+        } else {
+          return this.login();
+        }
+      });
     }
   };
 
@@ -571,6 +578,11 @@ export class AuthService {
     }
   };
 
+  // Passive update where just session storage is updated so can be used on a window refresh
+  authTokenUpdated = (tokenInfo) => {
+    sessionStorage.setItem('rsdk_TI', JSON.stringify(tokenInfo));
+  };
+
   logout = () => {
     return new Promise<void>((resolve) => {
       const fnClearAndResolve = () => {
@@ -582,7 +594,7 @@ export class AuthService {
         resolve();
       };
       if (this.gbCustomAuth) {
-        sessionStorage.removeItem('rsdk_AH');
+        sessionStorage.removeItem('asdk_AH');
         fnClearAndResolve();
         return;
       }
@@ -611,5 +623,26 @@ export class AuthService {
         fnClearAndResolve();
       }
     });
+  };
+
+  // Callback routine for custom event to ask for updated tokens
+  authUpdateTokens = (token) => {
+    this.processTokenOnLogin(token);
+  };
+
+  // Initiate a full OAuth re-authorization (any refresh token has also expired).
+  authFullReauth = () => {
+    const bHandleHere = true; // Other alternative is to raise an event and have someone else handle it
+
+    if (bHandleHere) {
+      // Don't want to do a full clear of authMgr as will loose sessionIndex.  Rather just clear the tokens
+      this.clearAuthMgr(true);
+      this.login(true);
+    } else {
+      // Fire the SdkFullReauth event to indicate a new token is needed (PCore.getAuthUtils.setTokens method
+      //  should be used to communicate the new token to Constellation JS Engine.
+      const event = new CustomEvent('SdkFullReauth', { detail: this.authUpdateTokens });
+      document.dispatchEvent(event);
+    }
   };
 }

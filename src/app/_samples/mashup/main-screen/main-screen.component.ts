@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
+import { ServerConfigService } from 'src/app/_services/server-config.service';
 
 declare function loadMashup(targetDom, preLoadComponents);
 
@@ -20,7 +21,7 @@ export class MainScreenComponent implements OnInit {
   showPega$: boolean = false;
   showResolution$: boolean = false;
 
-  constructor(private psservice: ProgressSpinnerService) {}
+  constructor(private psservice: ProgressSpinnerService, private serverConfigService: ServerConfigService) {}
 
   ngOnInit(): void {
     if (!this.PCore$) {
@@ -102,48 +103,28 @@ export class MainScreenComponent implements OnInit {
     this.showTriplePlayOptions$ = false;
     this.showPega$ = true;
 
-    let actionsApi = this.pConn$.getActionsApi();
-    let createWork = actionsApi.createWork.bind(actionsApi);
-    let sFlowType = 'pyStartCase';
+    this.serverConfigService.getSdkConfig().then((sdkConfig) => {
+      let mashupCaseType = sdkConfig.serverConfig.appMashupCaseType;
+      if (!mashupCaseType) {
+        const caseTypes = this.PCore$.getEnvironmentInfo().environmentInfoObject.pyCaseTypeList;
+        mashupCaseType = caseTypes[0].pyWorkTypeImplementationClassName;
+      }
 
-    this.psservice.sendMessage(true);
-
-    let actionInfo;
-    const accessGroup = sessionStorage.getItem('userAccessGroup');
-
-    let portalName = accessGroup;
-    let pCore: any;
-    if (window.PCore) {
-      pCore = window.PCore;
-
-      portalName = pCore.getEnvironmentInfo().getApplicationLabel();
-    }
-
-    if (portalName.toLowerCase().includes('cableco')) {
-      actionInfo = {
-        containerName: 'primary',
-        flowType: sFlowType ? sFlowType : 'pyStartCase',
-        caseInfo: {
-          content: {
-            Package: sLevel,
-          },
-        },
+      const options = {
+        pageName: 'pyEmbedAssignment',
+        startingFields:
+          mashupCaseType === 'DIXL-MediaCo-Work-NewService'
+            ? {
+                Package: sLevel,
+              }
+            : {},
       };
-
-      createWork('CableC-CableCon-Work-Service', actionInfo);
-    } else if (portalName.toLowerCase().includes('mediaco')) {
-      actionInfo = {
-        containerName: 'primary',
-        flowType: sFlowType ? sFlowType : 'pyStartCase',
-        caseInfo: {
-          content: {
-            Package: sLevel,
-          },
-        },
-      };
-
-      createWork('DIXL-MediaCo-Work-NewService', actionInfo);
-    }
+      this.PCore$.getMashupApi()
+        .createCase(mashupCaseType, this.PCore$.getConstants().APP.APP, options)
+        .then(() => {
+          console.log('createCase rendering is complete');
+        });
+    });   
   }
 
   onShopNow(sLevel: string) {
