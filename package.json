@@ -52,7 +52,7 @@
     "@mdi/svg": "^5.0.45",
     "@pega/constellationjs": "SDK-8.8.3",
     "core-js": "^2.6.12",
-    "dayjs": "^1.10.5",
+    "dayjs": "^1.11.9",
     "downloadjs": "^1.4.7",
     "fast-deep-equal": "^3.1.1",
     "libphonenumber-js": "^1.10.30",
