@@ -21,7 +21,7 @@
     "compress-angularsdk": "node compress-with-assets.mjs",
     "copy-extra-deprecated": "shx cp constellation/lib_asset.json dist/lib_asset.json",
     "copy-index": "shx cp dist/index.html dist/simpleportal.html && shx cp dist/index.html dist/portal.html && shx cp dist/index.html dist/fullportal.html && shx cp dist/index.html dist/embedded.html && shx cp dist/index.html dist/mashup.html && shx cp src/auth.html dist/auth.html",
-    "make-mashup-dir": "cd ./dist && mkdir -p constellation && cd ./constellation && mkdir -p prerequisite && mkdir -p assets && cd ./assets && mkdir -p icons",
+    "make-mashup-dir": "cd ./dist && shx mkdir -p constellation && cd ./constellation && shx mkdir -p prerequisite && shx mkdir -p assets && cd ./assets && shx mkdir -p icons",
     "build-angularsdk": "rimraf ./dist && npm run build && npm run copy-index && npm run copy-configs && npm run make-mashup-dir",
     "prod-build-angularsdk": "rimraf ./dist && npm run prod-build && npm run copy-index && npm run copy-configs && npm run make-mashup-dir && npm run compress-angularsdk",
     "start": "npm run copy-extra && ng serve",
