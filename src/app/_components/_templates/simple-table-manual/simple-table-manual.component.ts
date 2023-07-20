@@ -97,7 +97,7 @@ export class SimpleTableManualComponent implements OnInit {
   rowID: any;
   response: any;
   compositeKeys: any;
-
+  parameters: any;
   constructor(
     private angularPConnect: AngularPConnectService,
     private utils: Utils,
@@ -173,10 +173,11 @@ export class SimpleTableManualComponent implements OnInit {
       allowTableEdit,
       labelProp,
       propertyLabel,
+      fieldMetadata
     } = this.configProps$;
 
     this.label = labelProp || propertyLabel;
-
+    this.parameters = fieldMetadata?.datasource?.parameters;
     const hideAddRow = allowTableEdit === false ? true : false;
     const hideDeleteRow = allowTableEdit === false ? true : false;
     let { contextClass } = this.configProps$;
@@ -847,7 +848,7 @@ export class SimpleTableManualComponent implements OnInit {
     const context = this.pConn$.getContextName();
     // if dataPageName property value exists then make a datapage fetch call and get the list of data.
     if (dataPageName) {
-      this.dataPageService.getDataPageData(dataPageName, context).then((listData) => {
+      this.dataPageService.getDataPageData(dataPageName, this.parameters, context).then((listData) => {
         const data = this.formatRowsData(listData);
         this.originalData = data;
         this.rowData = new MatTableDataSource(data);
