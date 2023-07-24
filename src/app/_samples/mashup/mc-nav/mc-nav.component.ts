@@ -7,17 +7,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription, interval } from 'rxjs';
 
-import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
-import { ResetPConnectService } from '../../../_messages/reset-pconnect.service';
-import { UpdateWorklistService } from '../../../_messages/update-worklist.service';
-import { AuthService } from '../../../_services/auth.service';
-import { endpoints } from '../../../_services/endpoints';
-import { ServerConfigService } from '../../../_services/server-config.service';
-import { Utils } from '../../../_helpers/utils';
-import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
-import { MainScreenComponent } from '../main-screen/main-screen.component';
+import { ProgressSpinnerService } from 'ang-sdk-comps';
+import { ResetPConnectService } from 'ang-sdk-comps';
+import { UpdateWorklistService } from 'ang-sdk-comps';
+import { AuthService } from 'ang-sdk-comps';
+import { endpoints } from 'ang-sdk-comps';
+import { ServerConfigService } from 'ang-sdk-comps';
+import { Utils } from 'ang-sdk-comps';
+import { compareSdkPCoreVersions } from 'ang-sdk-comps';
+import { MainScreenComponent } from 'ang-sdk-comps';
 
-import { getSdkComponentMap } from '@pega/angular-sdk-components/lib/src/app/_bridge/helpers/sdk_component_map';
+import { getSdkComponentMap } from 'ang-sdk-comps';
 import localSdkComponentMap from '../../../../sdk-local-component-map';
 
 declare global {
@@ -67,7 +67,7 @@ export class MCNavComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.scservice.getServerConfig().then(() => {
+    this.scservice.readSdkConfig().then(() => {
       this.initialize();
     });
   }
@@ -77,7 +77,7 @@ export class MCNavComponent implements OnInit {
     this.resetPConnectSubscription.unsubscribe();
   }
 
-  initialize() {
+  async initialize() {
     if (!this.PCore$) {
       this.PCore$ = window.PCore;
     }
@@ -121,7 +121,7 @@ export class MCNavComponent implements OnInit {
       this.bLoggedIn$ = false;
     });
 
-    const sdkConfigAuth = this.scservice.getSdkConfigAuth();
+    const sdkConfigAuth = await this.scservice.getSdkConfigAuth();
 
     if (!sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === 'Basic') {
       // Service package to use custom auth with Basic

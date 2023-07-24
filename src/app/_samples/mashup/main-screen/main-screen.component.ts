@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
-import { ResolutionScreenComponent } from '../resolution-screen/resolution-screen.component';
-import RootContainerComponent from '@pega/angular-sdk-components/lib/src/app/_components/infra/root-container';
-import { BundleSwatchComponent } from '../bundle-swatch/bundle-swatch.component';
+import { ProgressSpinnerService } from 'ang-sdk-comps';
+import { ResolutionScreenComponent } from 'ang-sdk-comps';
+import { RootContainerComponent } from 'ang-sdk-comps';
+import { BundleSwatchComponent } from 'ang-sdk-comps';
 
 declare function loadMashup(targetDom, preLoadComponents);
 
@@ -12,7 +12,7 @@ declare function loadMashup(targetDom, preLoadComponents);
   templateUrl: './main-screen.component.html',
   styleUrls: ['./main-screen.component.scss'],
   standalone: true,
-  imports: [CommonModule, BundleSwatchComponent, RootContainerComponent, ResolutionScreenComponent]
+  imports: [CommonModule, BundleSwatchComponent, ResolutionScreenComponent, RootContainerComponent]
 })
 export class MainScreenComponent implements OnInit {
   @Input() pConn$: any;

@@ -2,15 +2,13 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
-import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
-import { ServerConfigService } from '../../../_services/server-config.service';
-import { AuthService } from '../../../_services/auth.service';
-import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
-import RootContainerComponent from '@pega/angular-sdk-components/lib/src/app/_components/infra/root-container';
-
-import { getSdkComponentMap } from '@pega/angular-sdk-components/lib/src/app/_bridge/helpers/sdk_component_map';
+import { ProgressSpinnerService } from 'ang-sdk-comps';
+import { AuthService } from 'ang-sdk-comps';
+import { compareSdkPCoreVersions } from 'ang-sdk-comps';
+import { RootContainerComponent } from 'ang-sdk-comps';
+import { ServerConfigService } from 'ang-sdk-comps';
+import { getSdkComponentMap } from 'ang-sdk-comps';
 import localSdkComponentMap from '../../../../sdk-local-component-map';
-
 declare global {
   interface Window {
     PCore: {
@@ -74,7 +72,7 @@ export class TopAppMashupComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.scservice.getServerConfig().then(() => {
+    this.scservice.readSdkConfig().then(() => {
       this.initialize();
     });
   }
@@ -121,10 +119,8 @@ export class TopAppMashupComponent implements OnInit {
       });
     });
 
-    const thePortal = this.scservice.getAppPortal();
+    const { appPortal: thePortal, excludePortals } = this.scservice.getSdkConfigServer();
     const defaultPortal = window.PCore?.getEnvironmentInfo?.().getDefaultPortal?.();
-    const excludePortals = this.scservice.getSdkConfigServer().excludePortals;
-
     // Note: myLoadPortal and myLoadDefaultPortal are set when bootstrapWithAuthHeader is invoked
     if (thePortal) {
       console.log(`Loading specified appPortal: ${thePortal}`);

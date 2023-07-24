@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import RootContainerComponent from '@pega/angular-sdk-components/lib/src/app/_components/infra/root-container';
-import ViewContainerComponent from '@pega/angular-sdk-components/lib/src/app/_components/infra/Containers/view-container';
+import { RootContainerComponent } from 'ang-sdk-comps';
+import { ViewContainerComponent } from 'ang-sdk-comps';
 
 @Component({
   selector: 'app-main-content',
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.scss'],
   standalone: true,
-  imports: [CommonModule, ViewContainerComponent, RootContainerComponent]
+  imports: [CommonModule, ViewContainerComponent, RootContainerComponent, ViewContainerComponent]
 })
 export class MainContentComponent implements OnInit {
   @Input() PCore$: any;

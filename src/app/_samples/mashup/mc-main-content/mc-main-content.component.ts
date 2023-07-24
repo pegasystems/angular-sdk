@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ViewContainerComponent } from '@pega/angular-sdk-components/lib/src/app/_components/infra/Containers/view-container';
+import { ViewContainerComponent } from 'ang-sdk-comps';
 
 @Component({
   selector: 'app-mc-main-content',

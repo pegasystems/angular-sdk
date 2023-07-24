@@ -7,15 +7,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 
-import { UpdateWorklistService } from '../../../_messages/update-worklist.service';
-import { AuthService } from '../../../_services/auth.service';
-import { ServerConfigService } from '../../../_services/server-config.service';
-import { compareSdkPCoreVersions } from '../../../_helpers/versionHelpers';
-import { MainContentComponent } from '../main-content/main-content.component';
-import { SideBarComponent } from '../side-bar/side-bar.component';
+import { UpdateWorklistService } from 'ang-sdk-comps';
+import { AuthService } from 'ang-sdk-comps';
+import { ServerConfigService } from 'ang-sdk-comps';
+import { compareSdkPCoreVersions } from 'ang-sdk-comps';
+import { MainContentComponent } from 'ang-sdk-comps';
+import { SideBarComponent } from 'ang-sdk-comps';
 
-import { getSdkComponentMap } from '@pega/angular-sdk-components/lib/src/app/_bridge/helpers/sdk_component_map';
 import localSdkComponentMap from '../../../../sdk-local-component-map';
+import { getSdkComponentMap } from 'ang-sdk-comps';
 
 declare global {
   interface Window {
@@ -59,7 +59,7 @@ export class NavigationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.scservice.getServerConfig().then(() => {
+    this.scservice.readSdkConfig().then(() => {
       this.initialize();
     });
   }
