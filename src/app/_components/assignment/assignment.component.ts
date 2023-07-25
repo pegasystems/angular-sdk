@@ -5,6 +5,8 @@ import { ErrorMessagesService } from '../../_messages/error-messages.service';
 import { ProgressSpinnerService } from '../../_messages/progress-spinner.service';
 import { ReferenceComponent } from '../reference/reference.component';
 
+declare const PCore: any;
+
 @Component({
   selector: 'app-assignment',
   templateUrl: './assignment.component.html',
@@ -44,6 +46,7 @@ export class AssignmentComponent implements OnInit {
   init: boolean;
   finishAssignment: any;
   navigateToStep: any;
+  saveAssignment: any;
   cancelAssignment: any;
   cancelCreateStageAssignment: any;
   showPage: any;
@@ -183,6 +186,7 @@ export class AssignmentComponent implements OnInit {
     // store off bound functions to above pointers
     this.finishAssignment = actionsAPI.finishAssignment.bind(actionsAPI);
     this.navigateToStep = actionsAPI.navigateToStep.bind(actionsAPI);
+    this.saveAssignment = actionsAPI.saveAssignment.bind(actionsAPI);
     this.cancelAssignment = actionsAPI.cancelAssignment.bind(actionsAPI);
     this.showPage = actionsAPI.showPage.bind(actionsAPI);
 
@@ -267,6 +271,13 @@ export class AssignmentComponent implements OnInit {
     return arIndicies;
   }
 
+  onSaveActionSuccess(data) {
+    this.actionsAPI.cancelAssignment(this.itemKey$).then(() => {
+      this.psService.sendMessage(false);
+      this.PCore$.getPubSubUtils().publish(this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL);
+    });
+  }
+
   onActionButtonClick(oData: any) {
     this.buttonClick(oData.action, oData.buttonType);
   }
@@ -310,6 +321,26 @@ export class AssignmentComponent implements OnInit {
               });
           }
           break;
+
+        case 'saveAssignment': {
+          const caseID = this.pConn$.getCaseInfo().getKey();
+          const assignmentID = this.pConn$.getCaseInfo().getAssignmentID();
+          const savePromise = this.saveAssignment(this.itemKey$);
+
+          savePromise
+            .then(() => {
+              const caseType = this.pConn$
+                .getCaseInfo()
+                .c11nEnv.getValue(PCore.getConstants().CASE_INFO.CASE_TYPE_ID);
+              this.PCore$.getPubSubUtils().publish("cancelPressed");
+              this.onSaveActionSuccess({ caseType, caseID, assignmentID });
+            })
+            .catch(() => {
+              this.psService.sendMessage(false);
+            });
+
+          break;
+        }
 
         case 'cancelAssignment':
           this.bReInit = true;
