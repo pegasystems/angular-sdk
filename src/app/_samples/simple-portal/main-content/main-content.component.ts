@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RootContainerComponent } from 'ang-sdk-comps';
-import { ViewContainerComponent } from 'ang-sdk-comps';
+import { RootContainerComponent } from 'angular-sdk-library';
+import { ViewContainerComponent } from 'angular-sdk-library';
 
 @Component({
   selector: 'app-main-content',

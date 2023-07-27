@@ -2,12 +2,12 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
-import { ProgressSpinnerService } from 'ang-sdk-comps';
-import { AuthService } from 'ang-sdk-comps';
-import { compareSdkPCoreVersions } from 'ang-sdk-comps';
-import { RootContainerComponent } from 'ang-sdk-comps';
-import { ServerConfigService } from 'ang-sdk-comps';
-import { getSdkComponentMap } from 'ang-sdk-comps';
+import { ProgressSpinnerService } from 'angular-sdk-library';
+import { AuthService } from 'angular-sdk-library';
+import { compareSdkPCoreVersions } from 'angular-sdk-library';
+import { RootContainerComponent } from 'angular-sdk-library';
+import { ServerConfigService } from 'angular-sdk-library';
+import { getSdkComponentMap } from 'angular-sdk-library';
 import localSdkComponentMap from '../../../../sdk-local-component-map';
 declare global {
   interface Window {

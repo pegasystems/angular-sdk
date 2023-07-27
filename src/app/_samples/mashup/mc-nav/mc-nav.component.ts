@@ -7,17 +7,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription, interval } from 'rxjs';
 
-import { ProgressSpinnerService } from 'ang-sdk-comps';
-import { ResetPConnectService } from 'ang-sdk-comps';
-import { UpdateWorklistService } from 'ang-sdk-comps';
-import { AuthService } from 'ang-sdk-comps';
-import { endpoints } from 'ang-sdk-comps';
-import { ServerConfigService } from 'ang-sdk-comps';
-import { Utils } from 'ang-sdk-comps';
-import { compareSdkPCoreVersions } from 'ang-sdk-comps';
-import { MainScreenComponent } from 'ang-sdk-comps';
+import { ProgressSpinnerService } from 'angular-sdk-library';
+import { ResetPConnectService } from 'angular-sdk-library';
+import { UpdateWorklistService } from 'angular-sdk-library';
+import { AuthService } from 'angular-sdk-library';
+import { endpoints } from 'angular-sdk-library';
+import { ServerConfigService } from 'angular-sdk-library';
+import { Utils } from 'angular-sdk-library';
+import { compareSdkPCoreVersions } from 'angular-sdk-library';
+import { MainScreenComponent } from 'angular-sdk-library';
 
-import { getSdkComponentMap } from 'ang-sdk-comps';
+import { getSdkComponentMap } from 'angular-sdk-library';
 import localSdkComponentMap from '../../../../sdk-local-component-map';
 
 declare global {

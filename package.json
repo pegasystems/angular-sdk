@@ -51,7 +51,7 @@
     "@mdi/angular-material": "^5.0.45",
     "@mdi/svg": "^5.0.45",
     "@pega/constellationjs": "SDK-8.8.2",
-    "ang-sdk-comps": "file:ang-sdk-comps-0.0.1.tgz",
+    "angular-sdk-library": "file:angular-sdk-library-0.0.1.tgz",
     "core-js": "^2.6.12",
     "dayjs": "^1.10.5",
     "downloadjs": "^1.4.7",

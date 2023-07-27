@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProgressSpinnerService } from 'ang-sdk-comps';
-import { ResolutionScreenComponent } from 'ang-sdk-comps';
-import { RootContainerComponent } from 'ang-sdk-comps';
-import { BundleSwatchComponent } from 'ang-sdk-comps';
+import { ProgressSpinnerService } from 'angular-sdk-library';
+import { ResolutionScreenComponent } from 'angular-sdk-library';
+import { RootContainerComponent } from 'angular-sdk-library';
+import { BundleSwatchComponent } from 'angular-sdk-library';
 
 declare function loadMashup(targetDom, preLoadComponents);
 

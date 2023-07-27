@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
-import { GetLoginStatusService } from 'ang-sdk-comps';
-import { ProgressSpinnerService } from 'ang-sdk-comps';
-import { UpdateWorklistService } from 'ang-sdk-comps';
-import { CaseService } from 'ang-sdk-comps';
-import { DatapageService } from 'ang-sdk-comps';
+import { GetLoginStatusService } from 'angular-sdk-library';
+import { ProgressSpinnerService } from 'angular-sdk-library';
+import { UpdateWorklistService } from 'angular-sdk-library';
+import { CaseService } from 'angular-sdk-library';
+import { DatapageService } from 'angular-sdk-library';
 
 declare function loadMashup(targetDom: any, preLoadComponents: any): any;
 
