@@ -7,15 +7,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 
-import { UpdateWorklistService } from 'angular-sdk-library';
-import { AuthService } from 'angular-sdk-library';
-import { ServerConfigService } from 'angular-sdk-library';
-import { compareSdkPCoreVersions } from 'angular-sdk-library';
-import { MainContentComponent } from 'angular-sdk-library';
-import { SideBarComponent } from 'angular-sdk-library';
+import { UpdateWorklistService } from '@pega/angular-sdk-library';
+import { AuthService } from '@pega/angular-sdk-library';
+import { ServerConfigService } from '@pega/angular-sdk-library';
+import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
+import { MainContentComponent } from '@pega/angular-sdk-library';
+import { SideBarComponent } from '@pega/angular-sdk-library';
 
 import localSdkComponentMap from '../../../../sdk-local-component-map';
-import { getSdkComponentMap } from 'angular-sdk-library';
+import { getSdkComponentMap } from '@pega/angular-sdk-library';
 
 declare global {
   interface Window {

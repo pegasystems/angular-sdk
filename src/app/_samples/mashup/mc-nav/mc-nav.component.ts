@@ -7,17 +7,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription, interval } from 'rxjs';
 
-import { ProgressSpinnerService } from 'angular-sdk-library';
-import { ResetPConnectService } from 'angular-sdk-library';
-import { UpdateWorklistService } from 'angular-sdk-library';
-import { AuthService } from 'angular-sdk-library';
-import { endpoints } from 'angular-sdk-library';
-import { ServerConfigService } from 'angular-sdk-library';
-import { Utils } from 'angular-sdk-library';
-import { compareSdkPCoreVersions } from 'angular-sdk-library';
-import { MainScreenComponent } from 'angular-sdk-library';
+import { ProgressSpinnerService } from '@pega/angular-sdk-library';
+import { ResetPConnectService } from '@pega/angular-sdk-library';
+import { UpdateWorklistService } from '@pega/angular-sdk-library';
+import { AuthService } from '@pega/angular-sdk-library';
+import { endpoints } from '@pega/angular-sdk-library';
+import { ServerConfigService } from '@pega/angular-sdk-library';
+import { Utils } from '@pega/angular-sdk-library';
+import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
+import { MainScreenComponent } from '@pega/angular-sdk-library';
 
-import { getSdkComponentMap } from 'angular-sdk-library';
+import { getSdkComponentMap } from '@pega/angular-sdk-library';
 import localSdkComponentMap from '../../../../sdk-local-component-map';
 
 declare global {
