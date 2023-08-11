@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TopAppComponent } from '@pega/angular-sdk-library';
-import { TopAppMashupComponent} from '@pega/angular-sdk-library';
-import { NavigationComponent } from '@pega/angular-sdk-library';
-import { MCNavComponent } from '@pega/angular-sdk-library';
+import { TopAppMashupComponent} from '../app/_samples/full-portal/top-app-mashup/top-app-mashup.component';
+import { NavigationComponent } from '../app/_samples/simple-portal/navigation/navigation.component';
+import { MCNavComponent } from '../app/_samples/mashup/mc-nav/mc-nav.component';
 import { endpoints } from '@pega/angular-sdk-library';
 
 // Adding path to remove "Cannot match routes" error at launch
