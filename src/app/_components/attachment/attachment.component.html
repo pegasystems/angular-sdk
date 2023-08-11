@@ -1,15 +1,53 @@
 <div class="psdk-label-infix-readonly">
   <span class="psdk-label-wrapper-readonly">
-    <label class="psdk-label-readonly">{{ label$ }}</label>
+    <label
+      [ngClass]="{
+        'psdk-label-readonly': true,
+        'label-required': bRequired$ === true
+      }"
+      [htmlFor]="att_valueRef"
+      >{{ label$ }}</label
+    >
   </span>
-  <div class="psdk-modal-file-selector" *ngIf="bShowSelector$">
-    <mat-spinner *ngIf="bLoading$" class="progress-spinner" diameter="40"></mat-spinner>
-    <input hidden type="file" #uploader id="upload-input" (change)="uploadMyFiles($event)" />
+  <div
+    [ngClass]="{
+      'psdk-modal-file-selector': status !== 'error',
+      'psdk-modal-file-selector-error': status === 'error'
+    }"
+    id="attachment-container"
+    *ngIf="bShowSelector$"
+  >
+    <mat-spinner
+      *ngIf="bLoading$"
+      class="progress-spinner"
+      diameter="40"
+    ></mat-spinner>
+    <input
+      hidden
+      type="file"
+      [required]="bRequired$"
+      #uploader
+      [id]="att_valueRef"
+      (change)="uploadMyFiles($event)"
+    />
 
-    <button mat-stroked-button color="primary" [disabled]="bDisabled$" (click)="uploader.click()">Upload file</button>
+    <button
+      mat-stroked-button
+      color="primary"
+      [disabled]="bDisabled$"
+      (click)="uploader.click()"
+    >
+      Upload file
+    </button>
+    <span *ngIf="validatemessage" class="file-error">{{
+      validatemessage
+    }}</span>
   </div>
 
-  <div class="psdk-attachment-list" *ngIf="arFileList$ != null && arFileList$.length > 0">
+  <div
+    class="psdk-attachment-list"
+    *ngIf="arFileList$ != null && arFileList$.length > 0"
+  >
     <app-material-summary-list
       *ngIf="bShowJustDelete$; else showfull"
       [arItems$]="arFileList$"
@@ -17,7 +55,10 @@
       [menuIconOverrideAction$]="removeFileFromList$"
     ></app-material-summary-list>
     <ng-template #showfull>
-      <app-material-summary-list [arItems$]="arFileList$" [menuIconOverrideAction$]="removeFileFromList$"></app-material-summary-list>
+      <app-material-summary-list
+        [arItems$]="arFileList$"
+        [menuIconOverrideAction$]="removeFileFromList$"
+      ></app-material-summary-list>
     </ng-template>
   </div>
 </div>

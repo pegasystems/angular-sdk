@@ -93,12 +93,23 @@ export class FileUtilityComponent implements OnInit {
     this.updateSelf();
 
     this.createModalButtons();
+
+    this.PCore$.getPubSubUtils().subscribe(
+      this.PCore$.getEvents().getCaseEvent().CASE_ATTACHMENTS_UPDATED_FROM_CASEVIEW,
+      this.updateSelf.bind(this),
+      "caseAttachmentsUpdateFromCaseview"
+    );    
   }
 
   ngOnDestroy(): void {
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
     }
+
+    this.PCore$.getPubSubUtils().unsubscribe(
+      this.PCore$.getEvents().getCaseEvent().CASE_ATTACHMENTS_UPDATED_FROM_CASEVIEW,
+      "caseAttachmentsUpdateFromCaseview"
+    );
   }
 
   // Callback passed when subscribing to store change

@@ -12,7 +12,7 @@
       <div *ngIf="item$.primary.type != 'URL'" class="psdk-utility-card-main-primary-label">
         {{item$.primary.name}}
       </div>
-      <div *ngIf="item$.secondary.text != ''">{{item$.secondary.text}}</div>
+      <div *ngIf="item$.secondary.text != ''" [style.color]="item$.secondary.error ? 'red' : undefined">{{item$.secondary.text}}</div>
     </div>
     <div class="psdk-utility-card-actions">
       <div *ngIf="menuIconOverride$ == '' else showCustom">
