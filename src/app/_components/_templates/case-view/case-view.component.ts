@@ -38,6 +38,7 @@ export class CaseViewComponent implements OnInit {
 
   caseSummaryPConn$: any;
   currentCaseID: string = '';
+  bHasNewAttachments: boolean = false;
 
   constructor(private cdRef: ChangeDetectorRef, private angularPConnect: AngularPConnectService, private utils: Utils) {}
 
@@ -100,6 +101,17 @@ export class CaseViewComponent implements OnInit {
 
   updateHeaderAndSummary() {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
+    let hasNewAttachments = this.pConn$.getDataObject().caseInfo?.hasNewAttachments;
+
+    if(hasNewAttachments !== this.bHasNewAttachments){
+      this.bHasNewAttachments = hasNewAttachments;
+      if(this.bHasNewAttachments){
+        this.PCore$.getPubSubUtils().publish(
+          this.PCore$.getEvents().getCaseEvent().CASE_ATTACHMENTS_UPDATED_FROM_CASEVIEW,
+          true
+        );
+      }
+    }
 
     let kids = this.pConn$.getChildren();
     for (let kid of kids) {

@@ -1,4 +1,4 @@
-@import '../../_shared/styles.scss';
+@import "../../_shared/styles.scss";
 
 .progress-spinner {
   text-align: center;
@@ -14,13 +14,33 @@
   position: relative;
 }
 
+.label-required::after {
+  display: inline;
+  content: " *";
+  vertical-align: top;
+  color: $app-neutral-dark-color;
+}
+
+.file-error {
+  color: $app-error-light-color;
+}
+
+.psdk-modal-file-selector-error {
+  border: 1px dashed $app-error-light-color;
+  width: 100%;
+  padding: 0.3rem;
+  text-align: center;
+  position: relative;
+}
+
 .psdk-full-width {
   width: 100%;
 }
 
 .psdk-label-readonly {
   opacity: 54%;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
 .psdk-data-readonly {

@@ -12,6 +12,11 @@ const getFormattedDate = date => {
     ).toString().padStart(2, '0')}/${date.getFullYear()}`;
     return formattedDate;
   };
+
+const getAttributes = async element => {
+  const attributes = await element.evaluate(async ele => ele.getAttributeNames());
+  return attributes;
+};
   
 const getFutureDate = () => {
     const today = new Date();
@@ -24,6 +29,7 @@ const getFutureDate = () => {
   
 module.exports = {
     Login,
+    getAttributes,
     getFutureDate
 };
 
