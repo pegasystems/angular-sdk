@@ -8,7 +8,7 @@ import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
 import { RootContainerComponent } from '@pega/angular-sdk-library';
 import { ServerConfigService } from '@pega/angular-sdk-library';
 import { getSdkComponentMap } from '@pega/angular-sdk-library';
-import localSdkComponentMap from '../../../../sdk-local-component-map';
+import localSdkComponentMap from '../../../../../sdk-local-component-map';
 declare global {
   interface Window {
     PCore: {

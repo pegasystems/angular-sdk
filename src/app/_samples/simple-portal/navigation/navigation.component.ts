@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +14,7 @@ import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
 import { MainContentComponent } from '@pega/angular-sdk-library';
 import { SideBarComponent } from '@pega/angular-sdk-library';
 
-import localSdkComponentMap from '../../../../sdk-local-component-map';
+import localSdkComponentMap from '../../../../../sdk-local-component-map';
 import { getSdkComponentMap } from '@pega/angular-sdk-library';
 
 declare global {
@@ -36,7 +36,7 @@ declare global {
     MatButtonModule,
     MatMenuModule,
     SideBarComponent,
-    MainContentComponent
+    forwardRef(() => MainContentComponent)
   ]
 })
 export class NavigationComponent implements OnInit {
@@ -237,3 +237,4 @@ export class NavigationComponent implements OnInit {
     });
   }
 }
+

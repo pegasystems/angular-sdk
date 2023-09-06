@@ -4,7 +4,7 @@
   "scripts": {
     "build:prod": "run-p -l lint prod-build-angularsdk",
     "build:prod:ci": "npm run clean && npm install && npm run build:prod",
-    "build:dev": "run-p -l build-angularsdk",
+    "build:dev": "run-p -l lint build-angularsdk",
     "build:dev:ci": "npm run clean && npm install && npm run build:dev",
     "lint": "eslint --color --cache --cache-location node_modules/.cache/eslint/ src",
     "lint:fix": "eslint --fix --color --cache --cache-location node_modules/.cache/eslint/ src",
@@ -73,7 +73,7 @@
     "@material-ui/pickers": "^3.3.10",
     "@mdi/angular-material": "^5.0.45",
     "@mdi/svg": "^5.0.45",
-    "@pega/angular-sdk-library": "file:pega-angular-sdk-library-8.23.10-20230831-B.tgz",
+    "@pega/angular-sdk-library": "file:pega-angular-sdk-library-8.23.10-20230906-B.tgz",
     "@pega/constellationjs": "SDK-8.8.3",
     "@pega/cosmos-react-core": "^3.0.1",
     "@pega/cosmos-react-work": "3.0.1",

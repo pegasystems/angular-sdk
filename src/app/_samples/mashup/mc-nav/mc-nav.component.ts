@@ -18,7 +18,7 @@ import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
 import { MainScreenComponent } from '@pega/angular-sdk-library';
 
 import { getSdkComponentMap } from '@pega/angular-sdk-library';
-import localSdkComponentMap from '../../../../sdk-local-component-map';
+import localSdkComponentMap from '../../../../../sdk-local-component-map';
 
 declare global {
   interface Window {

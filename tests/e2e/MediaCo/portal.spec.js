@@ -107,14 +107,21 @@ test.describe("E2E test", () => {
 
     const currentCaseID = await page.locator('div[id="current-caseID"]').textContent();
     const filePath = path.join(__dirname, "../../../src/assets/cableinfo.png");
-    await page.setInputFiles("#upload-input", filePath);
+    const attachInputId = await page.locator('div[id="attachment-container"] >> input').getAttribute('id');
+    await page.setInputFiles(`#${attachInputId}`, filePath);
 
-    await Promise.all([page.waitForResponse(`${endpoints.serverConfig.infinityRestServerUrl}/api/application/v2/attachments/upload`)]);
+    const PCoreVersion = await page.evaluate(() => window.PCore.getPCoreVersion());
+
+    await Promise.all([
+      page.waitForResponse(
+        `${endpoints.serverConfig.infinityRestServerUrl}${endpoints.serverConfig.appAlias ? `/app/${endpoints.serverConfig.appAlias}` : ''}/api/application/v2/attachments/upload`
+      )
+    ]);
 
     await page.locator('button:has-text("submit")').click();
 
     await Promise.all([
-      page.waitForResponse(`${endpoints.serverConfig.infinityRestServerUrl}/api/application/v2/cases/${currentCaseID}/attachments`),
+      page.waitForResponse(`${endpoints.serverConfig.infinityRestServerUrl}${endpoints.serverConfig.appAlias ? `/app/${endpoints.serverConfig.appAlias}` : ""}/api/application/v2/cases/${currentCaseID}/attachments${PCoreVersion.includes('8.23') ? '?includeThumbnail=false' : ''}`),
     ]);
 
     const attachmentCount = await page.locator('div[id="attachments-count"]').textContent();

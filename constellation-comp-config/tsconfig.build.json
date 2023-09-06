@@ -17,6 +17,7 @@
     "composite": true,
     "outDir": "../lib",
     "rootDir": "../src",
+    "allowSyntheticDefaultImports": true,
     // "skipLibCheck" must be true in order to not see errors in the @pega/pcore-pconnect-typedefs files themselves
     "skipLibCheck": true,
   }
