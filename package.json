@@ -13,7 +13,7 @@
     "start-prod": "http-server ./dist --port 3500 --gzip --brotli --cors --proxy http://localhost:3500?",
     "start-prod-https": "http-server ./dist --ssl --cert private.pem --key private.key --port 3500 --gzip --brotli --cors --proxy https://localhost:3500?",
     "_comment": "Commands above are those expected to be run by customers/clients",
-    "clean": "node rimraf-standalone.js ./node_modules",
+    "clean": "node rimraf-standalone.js ./node_modules ./.angular/cache",
     "ng": "ng",
     "build": "ng build --configuration development",
     "prod-build": "ng build --configuration production",
