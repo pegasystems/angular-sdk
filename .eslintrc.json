@@ -14,7 +14,7 @@
       }
     }
   },
-  "ignorePatterns": ["node_modules", "packages/*/lib", "!.storybook", ".storybook/public"],
+  "ignorePatterns": ["node_modules", "packages/*/lib", "!.storybook", ".storybook/public", "src/app/_components/custom-constellation"],
   "rules": {
 
     // Prettier recommends running separately from a linter.
