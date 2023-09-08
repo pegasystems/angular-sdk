@@ -14,7 +14,12 @@
       }
     }
   },
-  "ignorePatterns": ["node_modules", "packages/*/lib", "!.storybook", ".storybook/public", "src/app/_components/custom-constellation"],
+  "ignorePatterns": [
+      "node_modules", "packages/*/lib", "!.storybook", ".storybook/public", 
+      "src/app/_components/custom-constellation",
+      "src/app/_components/custom-sdk/**/demo.stories.*",
+      "src/app/_components/custom-sdk/**/mock.stories.*"
+    ],
   "rules": {
 
     // Prettier recommends running separately from a linter.
