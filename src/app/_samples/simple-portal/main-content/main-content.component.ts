@@ -8,7 +8,7 @@ import { ViewContainerComponent } from '@pega/angular-sdk-library';
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.scss'],
   standalone: true,
-  imports: [CommonModule, ViewContainerComponent, RootContainerComponent, ViewContainerComponent]
+  imports: [CommonModule, ViewContainerComponent, RootContainerComponent]
 })
 export class MainContentComponent implements OnInit {
   @Input() PCore$: any;
