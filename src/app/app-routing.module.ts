@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TopAppComponent } from '@pega/angular-sdk-library';
 import { TopAppMashupComponent} from '../app/_samples/full-portal/top-app-mashup/top-app-mashup.component';
 import { NavigationComponent } from '../app/_samples/simple-portal/navigation/navigation.component';
 import { MCNavComponent } from '../app/_samples/mashup/mc-nav/mc-nav.component';
@@ -21,7 +20,7 @@ const appName = window.location.pathname.split('/')[3];
 const routes: Routes = [
   { path: '', component: MCNavComponent },
   { path: endpoints.PORTAL, component: TopAppMashupComponent },
-  { path: endpoints.PORTALHMTL, component: TopAppMashupComponent },
+  { path: endpoints.PORTALHTML, component: TopAppMashupComponent },
   { path: endpoints.FULLPORTAL, component: TopAppMashupComponent },
   { path: endpoints.FULLPORTALHTML, component: TopAppMashupComponent },
   { path: endpoints.SIMPLEPORTAL, component: NavigationComponent },
@@ -29,8 +28,7 @@ const routes: Routes = [
   { path: endpoints.EMBEDDED, component: MCNavComponent },
   { path: endpoints.EMBEDDEDHTML, component: MCNavComponent },
   { path: endpoints.MASHUP, component: MCNavComponent },
-  { path: endpoints.MASHUPHTML, component: MCNavComponent },
-  { path: `prweb/app/${appName}`, component: TopAppComponent },
+  { path: endpoints.MASHUPHTML, component: MCNavComponent }
 ];
 
 @NgModule({
