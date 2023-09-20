@@ -1,0 +1,27 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <app-field-value-list [label$]="label$" [value$]="value$" [displayMode$]="displayMode$"></app-field-value-list>
+</div>
+<ng-template #noDisplayMode>
+  <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
+    <div #f="ngForm" [formGroup]="formGroup$">
+      <div class="psdk-full-width">
+        <mat-form-field class="psdk-full-width">
+          <ngx-mat-intl-tel-input
+            [attr.data-test-id]="testId"
+            [formControlName]="controlName$"
+            [preferredCountries]="['us']"
+            [enablePlaceholder]="true"
+            [enableSearch]="true"
+            (change)="fieldOnChange($event)"
+            (blur)="fieldOnBlur($event)"
+          >
+          </ngx-mat-intl-tel-input>
+          <mat-error *ngIf="fieldControl.invalid && afterBlur">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noEdit>
+  <app-text [pConn$]="pConn$" [formatAs$]="'text'"></app-text>
+</ng-template>

@@ -1,0 +1,23 @@
+{
+  "name": "Pega_DXIL_MyCaseWidget",
+  "label": "My Case Widget",
+  "description": "My Case Widget",
+  "organization": "Pega",
+  "version": "0.0.1",
+  "library": "DXIL",
+  "allowedApplications": [],
+  "componentKey": "Pega_DXIL_MyCaseWidget",
+  "type": "Widget",
+  "subtype": "CASE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+   {
+      "name": "label",
+      "label": "Label value",
+      "format": "TEXT"
+    }
+  ],
+  "defaultConfig": {
+     "label": "Case Widget"
+  }
+}

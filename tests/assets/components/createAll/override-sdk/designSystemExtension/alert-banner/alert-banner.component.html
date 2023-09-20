@@ -1,0 +1,12 @@
+<div>
+  <div *ngFor="let banner of banners">
+    <div *ngFor="let message of banner.messages">
+      <app-alert
+        [message]="message"
+        [severity]="SEVERITY_MAP[banner.variant]"
+        (onClose)="onAlertClose(banner)"
+        [hideClose]="banner.variant === 'urgent'"
+      ></app-alert>
+    </div>
+  </div>
+</div>

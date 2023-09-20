@@ -1,0 +1,13 @@
+<div *ngIf="childrenToRender && childrenToRender.length > 0">
+  <div *ngIf="!displayMultiRef">
+    <div *ngFor="let kid of childrenToRender">
+      <component-mapper [name]="kid?.getPConnect().getComponentName()" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
+    </div>
+  </div>
+  <div *ngIf="displaySingleRef">
+    <component-mapper name="SingleReferenceReadOnly" [props]="{ pConn$: firstChildPConnect() }"></component-mapper>
+  </div>
+  <div *ngIf="displayMultiRef">
+    <component-mapper name="MultiReferenceReadOnly" [props]="{ pConn$: firstChildPConnect() }"></component-mapper>
+  </div>
+</div>

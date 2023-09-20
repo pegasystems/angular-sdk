@@ -1,0 +1,9 @@
+@import '@pega/angular-sdk-library/_shared/styles.scss';
+
+.psdk-case-view-divider {
+  border-bottom: 0.0625rem solid $app-neutral-light-color;
+}
+
+.psdk-flow-container {
+  padding: 0rem 1rem;
+}

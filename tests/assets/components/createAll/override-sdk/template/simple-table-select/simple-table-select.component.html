@@ -1,0 +1,14 @@
+<div *ngIf="showSimpleTableManual">
+  <component-mapper name="SimpleTable" [props]="{ formGroup$, pConn$ }"></component-mapper>
+</div>
+<div *ngIf="!showSimpleTableManual">
+  <div *ngIf="isSearchable; else listView">
+    <component-mapper
+      name="PromotedFilters"
+      [props]="{ formGroup$, pConn$, viewName, filters, listViewProps, pageClass, parameters }"
+    ></component-mapper>
+  </div>
+  <ng-template #listView>
+    <component-mapper name="ListView" [props]="{ pConn$ }"></component-mapper>
+  </ng-template>
+</div>

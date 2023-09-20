@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="70px" viewBox="0 0 100 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>1 col </title>
+    <g id="Page-Config" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Page-layouts" transform="translate(-692.000000, -84.000000)">
+            <g id="1-col-" transform="translate(692.000000, 84.000000)">
+                <rect id="bg" stroke="#A5A8BC" stroke-width="0.5" fill="#E7E9EB" x="0.25" y="0.25" width="99.5" height="69.5"></rect>
+                <g id="white" transform="translate(3.000000, 3.000000)" fill="#FFFFFF">
+                    <rect id="Rectangle" x="0" y="0" width="94" height="66.5"></rect>
+                </g>
+                <g id="gray" transform="translate(6.000000, 6.000000)" fill="#8084A7">
+                    <rect id="Rectangle" x="0" y="-2.84217094e-14" width="88" height="63.8"></rect>
+                </g>
+                <g id="labels" transform="translate(44.000000, 17.000000)" fill="#FFFFFF" font-family="OpenSans-Semibold, Open Sans" font-size="11" font-weight="500">
+                    <text id="A">
+                        <tspan x="0.75" y="12">A</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

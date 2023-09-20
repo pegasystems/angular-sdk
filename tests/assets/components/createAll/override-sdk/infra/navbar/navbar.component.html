@@ -1,0 +1,55 @@
+<div class="psdk-appshell-nav">
+  <div class="psdk-nav-header">
+    <div>
+      <img src="{{ portalLogoImage$ }}" class="psdk-nav-logo" />
+    </div>
+    <div class="psdk-nav-portal-info">
+      <div class="psdk-nav-portal-app">{{ portalApp$ }}</div>
+    </div>
+  </div>
+  <div class="psdk-nav-divider"></div>
+  <div>
+    <mat-list>
+      <mat-list-item id="create-case-button" (click)="navPanelCreateButtonClick()">
+        <div class="flex-box">
+          <img class="psdk-nav-svg-icon" src="{{ navExpandCollapse$ }}" />
+          <span class="psdk-nav-button-span">Create</span>
+        </div>
+      </mat-list-item>
+      <mat-list *ngIf="bShowCaseTypes$" style="margin-left: 40px">
+        <mat-list-item
+          id="case-list-item"
+          *ngFor="let caseType of caseTypes$"
+          (click)="navPanelCreateCaseType(caseType.pyClassName, caseType.pyFlowType)"
+        >
+          <span class="psdk-nav-button-span">{{ caseType.pyLabel }}</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-list>
+  </div>
+  <div style="height: 100%">
+    <mat-list>
+      <mat-list-item *ngFor="let page of navPages$">
+        <div class="flex-box" (click)="navPanelButtonClick(page)">
+          <img class="psdk-nav-svg-icon" src="{{ page.iconName }}" />
+          <span class="psdk-nav-button-span">{{ page.pyLabel }}</span>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="psdk-nav-divider"></div>
+  <div>
+    <mat-list>
+      <mat-list-item [matMenuTriggerFor]="menu" class="psdk-profile-list-item">
+        <div class="flex-box">
+          <div class="psdk-nav-oper-avatar">{{ portalOperatorInitials$ }}</div>
+          <span class="psdk-nav-button-span">{{ portalOperator$ }}</span>
+        </div>
+      </mat-list-item>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item (click)="navPanelLogoutClick()">Logoff</button>
+      </mat-menu>
+    </mat-list>
+  </div>
+</div>

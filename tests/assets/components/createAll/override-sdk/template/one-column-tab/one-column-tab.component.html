@@ -1,0 +1,9 @@
+<div class="psdk-one-column-tab">
+  <div *ngFor="let kid of arChildren$">
+    <div [ngSwitch]="kid.getPConnect().getComponentName()">
+      <component-mapper *ngSwitchCase="'View'" name="View" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
+      <app-region *ngSwitchCase="'Region'" [pConn$]="kid.getPConnect()"></app-region>
+      <div *ngSwitchDefault>Page Missing: {{ kid.getPConnect().getComponentName() }}</div>
+    </div>
+  </div>
+</div>

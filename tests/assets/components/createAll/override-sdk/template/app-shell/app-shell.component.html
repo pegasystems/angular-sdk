@@ -1,0 +1,10 @@
+<div class="appshell-top" *ngIf="bShowAppShell$">
+  <component-mapper name="NavBar" [props]="{ pConn$, appName$, pages$, caseTypes$ }"></component-mapper>
+  <div class="appshell-main">
+    <div *ngFor="let kid of arChildren$">
+      <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'">
+        <component-mapper name="ViewContainer" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
+      </div>
+    </div>
+  </div>
+</div>

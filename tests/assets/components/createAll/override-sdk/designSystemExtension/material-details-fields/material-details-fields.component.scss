@@ -1,0 +1,33 @@
+.psdk-details-fields-label {
+    color: rgba(0, 0, 0, 0.54);
+    margin: 8px 0px;
+  }
+  
+  span.psdk-details-text-style-hf{
+  font-weight: bold;
+  }
+  
+  span.psdk-details-status-style-hf {
+    background-color: #e9eef3;
+    border-radius: calc(0.25 * 0.5rem);
+    color: #4c5a67;
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: calc(0.5rem * 2.5);
+    height: calc(0.5rem * 2.5);
+    padding: 0 0.5rem;
+    text-transform: uppercase;
+  }
+  
+  .psdk-grid-filter {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: calc(2 * 0.5rem);
+    row-gap: calc(2 * 0.5rem);
+    align-items: start;
+  }
+  
+  .psdk-csf-primary-field-value {
+    margin: 8px 0;
+  }

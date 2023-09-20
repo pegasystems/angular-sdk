@@ -1,0 +1,16 @@
+h3 {
+  margin-left: 0.8rem;
+}
+
+.ng-view-top {
+  padding: 0;
+}
+
+.template-title-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: calc(0.9375rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}

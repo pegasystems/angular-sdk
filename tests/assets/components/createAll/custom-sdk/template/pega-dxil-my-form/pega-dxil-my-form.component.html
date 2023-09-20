@@ -1,0 +1,20 @@
+<!-- When adding a component here, add the same component in 'region' template as well -->
+<div *ngIf="!NO_HEADER_TEMPLATES.includes(template) && showLabel">
+  <div class="template-title-container">{{label}}</div>
+</div>
+<div *ngIf="instructions" class='psdk-default-form-instruction-text'>
+  <div key="instructions" id="instruction-text" [innerHTML]="instructions">
+  </div>
+</div>
+<div [className]="divClass$">
+  <div *ngFor="let kid of arChildren$" [ngClass]="{ 'grid-column': kid.getPConnect().getComponentName() === 'View' }">
+    <component-mapper
+      [name]="kid.getPConnect().getComponentName()"
+      [props]="{
+        pConn$: kid.getPConnect(),
+        formGroup$: formGroup$
+      }"
+      errorMsg="PegaDxilMyForm wants component not yet available: {{ kid.getPConnect().getComponentName() }}"
+    ></component-mapper>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <component-mapper name="FieldValueList" [props]="{ label$, value$, displayMode$ }"></component-mapper>
+</div>
+<ng-template #noDisplayMode>
+  <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$">
+      <div class="mat-form-field-infix" *ngIf="showLabel$">
+        <span>
+          <label class="mat-form-field-label psdk-label-readonly">{{ label$ }}</label>
+        </span>
+        <mat-checkbox
+          [labelPosition]="checkboxLabelPos$"
+          [checked]="isChecked$"
+          [disabled]="bDisabled$"
+          [attr.data-test-id]="testId"
+          (change)="fieldOnChange($event)"
+          (click)="fieldOnClick($event)"
+          (blur)="fieldOnBlur($event)"
+          >{{ caption$ }}</mat-checkbox
+        >
+      </div>
+      <div class="mat-form-field-infix" *ngIf="!bReadonly$ && !showLabel$">
+        <mat-checkbox
+          [labelPosition]="checkboxLabelPos$"
+          [checked]="isChecked$"
+          [disabled]="bDisabled$"
+          [attr.data-test-id]="testId"
+          (change)="fieldOnChange($event)"
+          (click)="fieldOnClick($event)"
+          (blur)="fieldOnBlur($event)"
+          >{{ caption$ }}</mat-checkbox
+        >
+      </div>
+      <mat-hint *ngIf="helperText">{{ helperText }}</mat-hint>
+      <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noEdit>
+  <component-mapper name="Text" [props]="{ pConn$, formatAs$: 'text' }"></component-mapper>
+</ng-template>

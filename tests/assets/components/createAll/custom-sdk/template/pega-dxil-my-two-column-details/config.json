@@ -1,0 +1,27 @@
+{
+  "name": "Pega_DXIL_MyTwoColumnDetails",
+  "label": "My Two Column Details",
+  "description": "My Two Column Details",
+  "organization": "Pega",
+  "version": "0.0.1",
+  "library": "DXIL",
+  "allowedApplications": [],
+  "componentKey": "Pega_DXIL_MyTwoColumnDetails",
+  "type": "Template",
+  "subtype": "DETAILS",
+  "icon": "TwoColumnDetails.svg",
+  "properties": [
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views", "UIComponents"]
+    },
+    {
+      "name": "B",
+      "label": "Region B",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views", "UIComponents"]
+    }
+  ]
+}

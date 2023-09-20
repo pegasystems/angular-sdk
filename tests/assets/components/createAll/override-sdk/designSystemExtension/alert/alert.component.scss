@@ -1,0 +1,52 @@
+.psdk-alert {
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0px;
+}
+
+.psdk-alert-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.psdk-alert-error {
+  color: rgb(82, 21, 8);
+  border: 1px solid rgb(207, 53, 22);
+  .mat-icon {
+    color: rgb(207, 53, 22);
+  }
+}
+
+.psdk-grid-warning {
+  color: rgb(102, 60, 0);
+  border: 1px solid #ff9800;
+  .mat-icon {
+    color: #ff9800;
+  }
+}
+
+.psdk-grid-success {
+  color: rgb(2, 46, 9);
+  border: 1px solid rgb(6, 116, 23);
+  .mat-icon {
+    color: rgb(6, 116, 23);
+  }
+}
+
+.psdk-grid-info {
+  color: rgb(13, 60, 97);
+  border: 1px solid #2196f3;
+  .mat-icon {
+    color: #2196f3;
+  }
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}

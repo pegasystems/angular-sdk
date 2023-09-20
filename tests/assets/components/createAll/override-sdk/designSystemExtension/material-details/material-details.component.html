@@ -1,0 +1,40 @@
+<div id="details-fields-list">
+  <div
+    *ngIf="arHighlightedFields && arHighlightedFields.length > 0"
+    [ngClass]="{
+      'psdk-grid-filter-1': this.layout === 'one-column',
+      'psdk-grid-filter-2': this.layout === 'two-column',
+      'psdk-grid-filter-3': this.layout === 'three-column',
+      'psdk-grid-filter-wide-narrow': this.layout === 'wide-narrow',
+      'psdk-grid-filter-narrow-wide': this.layout === 'narrow-wide'
+    }"
+  >
+    <div *ngFor="let field of arHighlightedFields">
+      <div class="psdk-details-fields-label">
+        {{ field.config.label }}
+      </div>
+      <div [ngSwitch]="field.type.toLowerCase()" class="psdk-csf-primary-field-value">
+        <span *ngSwitchCase="'textinput'" class="psdk-details-text-style-hf">{{ _getValue(field.config.value) }}</span>
+        <span *ngSwitchCase="'status'" class="psdk-details-status-style-hf">{{ _getValue(field.config.value) }}</span>
+        <a *ngSwitchCase="'phone'" as="a" href="tel: {{ field.config.value }}">{{ _getValue(field.config.value) }}</a>
+        <a *ngSwitchCase="'email'" href="mailto: {{ field.config.value }}">{{ _getValue(field.config.value) }}</a>
+        <span *ngSwitchCase="'date'" class="psdk-details-text-style-hf">{{ _formatDate(field.config.value, field.type) }}</span>
+        <span *ngSwitchCase="'caseoperator'"></span>
+        <span *ngSwitchDefault>{{ _getValue(field.config.value) }}</span>
+      </div>
+    </div>
+  </div>
+  <div
+    [ngClass]="{
+      'psdk-grid-filter-1': this.layout === 'one-column',
+      'psdk-grid-filter-2': this.layout === 'two-column',
+      'psdk-grid-filter-3': this.layout === 'three-column',
+      'psdk-grid-filter-wide-narrow': this.layout === 'wide-narrow',
+      'psdk-grid-filter-narrow-wide': this.layout === 'narrow-wide'
+    }"
+  >
+    <component-mapper *ngIf="arFields$" name="DetailsFields" [props]="{ arFields$: arFields$ }"></component-mapper>
+    <component-mapper *ngIf="arFields2$" name="DetailsFields" [props]="{ arFields$: arFields2$ }"></component-mapper>
+    <component-mapper *ngIf="arFields3$" name="DetailsFields" [props]="{ arFields$: arFields3$ }"></component-mapper>
+  </div>
+</div>

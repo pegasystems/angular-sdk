@@ -1,0 +1,25 @@
+<div class="psdk-case-summary-fields">
+  <dl *ngFor="let field of primaryFields$" class="psdk-case-summary-fields-primary">
+    <div class="psdk-csf-primary-field">
+      <dt class="psdk-csf-primary-field-header">
+        {{ field.config.displayLabel }}
+      </dt>
+      <dd class="psdk-csf-primary-field-data">
+       <div>
+        <component-mapper
+          *ngIf="field.config.label.toLowerCase() == 'create operator'"
+          name="Operator"
+          [props]="{ name$: field.config.createOperator.userName, date$: field.config.updateDateTime, id$: field.config.createOperator.userId }"
+        ></component-mapper>
+      </div>
+      <div>
+        <component-mapper
+          *ngIf="field.config.label.toLowerCase() == 'updated'"
+          name="Operator"
+          [props]="{ name$: field.config.updateOperator.userName, date$: field.config.updateDateTime, id$: field.config.updateOperator.userId }"
+        ></component-mapper>
+      </div>
+      </dd>
+    </div>
+  </dl>
+</div>

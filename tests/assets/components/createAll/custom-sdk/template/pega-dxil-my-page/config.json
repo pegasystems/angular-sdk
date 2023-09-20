@@ -1,0 +1,32 @@
+{
+  "name": "Pega_DXIL_MyPage",
+  "label": "My Page",
+  "description": "My Page",
+  "organization": "Pega",
+  "version": "0.0.1",
+  "library": "DXIL",
+  "allowedApplications": [],
+  "componentKey": "Pega_DXIL_MyPage",
+  "type": "Template",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+    {
+      "name": "useConfigurableLayout",
+      "label": "Use inline layout for insights",
+      "format": "BOOLEAN"
+    },
+    {
+      "name": "enableGetNextWork",
+      "label": "Enable Get next work",
+      "format": "BOOLEAN"
+    },
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets", "Views", "Insights"]
+    }
+  ],
+  "defaultConfig": {}
+}
