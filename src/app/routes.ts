@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { TopAppMashupComponent} from '../app/_samples/full-portal/top-app-mashup/top-app-mashup.component';
-import { NavigationComponent } from '../app/_samples/simple-portal/navigation/navigation.component';
-import { MCNavComponent } from '../app/_samples/mashup/mc-nav/mc-nav.component';
+import { Routes } from '@angular/router';
+import { TopAppMashupComponent} from './_samples/full-portal/top-app-mashup/top-app-mashup.component';
+import { NavigationComponent } from './_samples/simple-portal/navigation/navigation.component';
+import { MCNavComponent } from './_samples/mashup/mc-nav/mc-nav.component';
 import { endpoints } from '@pega/angular-sdk-library';
 
 // Adding path to remove "Cannot match routes" error at launch
@@ -17,7 +16,7 @@ const appName = window.location.pathname.split('/')[3];
 // TopAppComponent no longer used (was for when login into PegaInfinity and being directed from there to an Angular app,
 // similiar to Nebula/Constellaion)
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: MCNavComponent },
   { path: endpoints.PORTAL, component: TopAppMashupComponent },
   { path: endpoints.PORTALHTML, component: TopAppMashupComponent },
@@ -30,9 +29,3 @@ const routes: Routes = [
   { path: endpoints.MASHUP, component: MCNavComponent },
   { path: endpoints.MASHUPHTML, component: MCNavComponent }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {})],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {}
