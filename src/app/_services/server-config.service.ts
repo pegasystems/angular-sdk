@@ -3,7 +3,7 @@ import { Utils } from '../_helpers/utils';
 import { endpoints } from '../_services/endpoints';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ServerConfigService {
   PCore: any;
@@ -130,14 +130,14 @@ export class ServerConfigService {
       const arExcludedPortals = serverConfig['excludePortals'];
       let headers = {
         Authorization: Utils.sdkGetAuthHeader(),
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       };
 
       // Using v1 API here as v2 data_views is not able to access same data page currently.  Should move to avoid having this logic to find
       //  a default portal or constellation portal and rather have Constellation JS Engine API just load the default portal
-      fetch(`${serverUrl}${appAliasPath}${endpoints.API}${endpoints.DATA}/${dataPageName}`, {
+      fetch(`${serverUrl}${appAliasPath}/${endpoints.API}${endpoints.DATA}/${dataPageName}`, {
         method: 'GET',
-        headers,
+        headers
       })
         .then((response) => {
           if (response.ok && response.status === 200) {
