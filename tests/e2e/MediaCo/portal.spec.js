@@ -187,7 +187,7 @@ test.describe('E2E test', () => {
     const defaultPortalErrorMessage = page.locator('div[data-test-id="defaultPortalErrorMessage"]');
     await expect(defaultPortalErrorMessage).toBeVisible();
 
-    const mediaCoBtn = page.locator('div[class="portal-list-item"]:has-text("MediaCo")');
+    const mediaCoBtn = page.locator('div[class="portal-list-item"] >> text="MediaCo"');
     await expect(mediaCoBtn).toBeVisible();
     await mediaCoBtn.click();
 
