@@ -52,7 +52,7 @@
 
 .psdk-case-summary-fields {
   padding: calc(2 * 0.5rem);
-  display: inline-flex;
+  display: grid;
   grid-row-gap: calc(2 * 0.5rem);
   column-gap: 4rem;
 }
@@ -109,6 +109,8 @@
   font-size: 0.8125rem;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  display: flex;
 }
 
 .psdk-csf-secondary-field-data {
@@ -134,4 +136,8 @@ span.psdk-csf-status-style {
   height: calc(0.5rem * 2.5);
   padding: 0 0.5rem;
   text-transform: uppercase;
+}
+
+.psdk-secondary-value {
+  font-size: 1rem;
 }

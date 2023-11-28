@@ -12,8 +12,10 @@ ul {
   padding-inline-start: 20px;
 }
 .psdk-announcement {
-  background-color: $app-primary-light-color;
+  background-color: white;
   padding: 1rem;
-  margin: 0.5rem;
+  margin: 1rem 0;
   border-radius: 0.6125rem;
+  border-left: 6px solid;
+  border-left-color: #7986cb;
 }
