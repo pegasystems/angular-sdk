@@ -27,7 +27,8 @@ declare global {
       getUserApi(): any;
       getAuthUtils(): any;
       registerComponentCreator(c11nPropObject): Function;
-      getMessageManager: Function
+      getMessageManager: Function;
+      getLocaleUtils: any;
     };
     myLoadPortal: Function;
     myLoadDefaultPortal: Function;

@@ -146,7 +146,7 @@ test.describe('E2E test', () => {
     const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
     await expect(worklist).toBeVisible();
 
-    const caseButton = page.locator(`span:has-text('${caseID}')`);
+    const caseButton = page.locator(`button:has-text('${caseID}')`);
     await caseButton.click();
 
     const mgrDiscountInput = page.locator('input[data-test-id="D69ECA63310344EDB0D0F9881CF9B662"]');
@@ -167,7 +167,7 @@ test.describe('E2E test', () => {
     const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
     await expect(worklist).toBeVisible();
 
-    const caseButton = page.locator(`span:has-text('${caseID}')`);
+    const caseButton = page.locator(`button:has-text('${caseID}')`);
     await caseButton.click();
 
     const tvConnected = page.locator('mat-checkbox[data-test-id="EEF2AA5E42FD9F0FB0A44EA0B2D52921"]');
@@ -187,7 +187,7 @@ test.describe('E2E test', () => {
     const defaultPortalErrorMessage = page.locator('div[data-test-id="defaultPortalErrorMessage"]');
     await expect(defaultPortalErrorMessage).toBeVisible();
 
-    const mediaCoBtn = page.locator('div[class="portal-list-item"]:has-text("MediaCo")');
+    const mediaCoBtn = page.locator('div[class="portal-list-item"] >> text="MediaCo"');
     await expect(mediaCoBtn).toBeVisible();
     await mediaCoBtn.click();
 
