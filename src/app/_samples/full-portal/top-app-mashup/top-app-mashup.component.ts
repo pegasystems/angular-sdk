@@ -9,29 +9,33 @@ import { RootContainerComponent } from '@pega/angular-sdk-library';
 import { ServerConfigService } from '@pega/angular-sdk-library';
 import { getSdkComponentMap } from '@pega/angular-sdk-library';
 import localSdkComponentMap from '../../../../../sdk-local-component-map';
+
 declare global {
   interface Window {
-    PCore: {
-      onPCoreReady: Function;
-      createPConnect: Function;
-      getStore(): any;
-      getConstants(): any;
-      setBehaviorOverrides: Function;
-      setBehaviorOverride: Function;
-      getBehaviorOverrides: Function;
-      getAttachmentUtils: Function;
-      getDataApiUtils: Function;
-      getAssetLoader: Function;
-      getEnvironmentInfo: Function;
-      getPubSubUtils(): any;
-      getUserApi(): any;
-      getAuthUtils(): any;
-      registerComponentCreator(c11nPropObject): Function;
-      getMessageManager: Function;
-      getLocaleUtils: any;
-    };
-    myLoadPortal: Function;
-    myLoadDefaultPortal: Function;
+      PCore: {
+          onPCoreReady: Function;
+          createPConnect: Function;
+          getComponentsRegistry: Function;
+          checkIfSemanticURL: Function;
+          isValidSemanticURL: Function;
+          getConstants(): any;
+          setBehaviorOverrides: Function;
+          getAttachmentUtils: Function;
+          getDataApiUtils: Function;
+          getAssetLoader: Function;
+          getEnvironmentInfo: Function;
+          getPubSubUtils(): any;
+          getUserApi(): any;
+          getAuthUtils(): any;
+          registerComponentCreator(c11nPropObject: any): Function;
+          getMessageManager: Function;
+          getLocaleUtils: any;
+          setBehaviorOverride: Function;
+          populateAdditionalProps: Function;
+          getStore: Function;
+      };
+      myLoadPortal: Function;
+      myLoadDefaultPortal: Function;
   }
 }
 
