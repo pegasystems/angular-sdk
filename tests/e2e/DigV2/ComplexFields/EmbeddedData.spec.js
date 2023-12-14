@@ -53,6 +53,14 @@ test.describe("E2E test", () => {
     await selectedEditMode.click();
     await page.locator('mat-option > span:has-text("Editable")').click();
 
+    const PCoreVersion = await page.evaluate(() => window.PCore.getPCoreVersion());
+
+    if (!PCoreVersion.includes('8.8')) {
+      const editModeType = await page.locator('mat-select[data-test-id="80c1db3a7b228760228004b1a532c71e"]');
+      await editModeType.click();
+      await page.locator('mat-option > span:has-text("Table rows")').click();
+    }
+
     const noRecordsMsg = page.locator('div[id="no-records"]');
     await expect(noRecordsMsg.locator('text="No Records Found."')).toBeVisible();
 
