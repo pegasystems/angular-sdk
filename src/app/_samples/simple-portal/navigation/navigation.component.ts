@@ -8,7 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 
 import { UpdateWorklistService } from '@pega/angular-sdk-library';
-import { AuthService } from '@pega/angular-sdk-library';
+import { loginIfNecessary, logout } from '@pega/auth/lib/sdk-auth-manager';
 import { ServerConfigService } from '@pega/angular-sdk-library';
 import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
 import { MainContentComponent } from '@pega/angular-sdk-library';
@@ -52,7 +52,6 @@ export class NavigationComponent implements OnInit {
   resetPConnectSubscription: Subscription;
 
   constructor(
-    private aService: AuthService,
     private uwservice: UpdateWorklistService,
     private scservice: ServerConfigService,
     private ngZone: NgZone
@@ -93,7 +92,7 @@ export class NavigationComponent implements OnInit {
 
     /* Login if needed (and indicate this is a portal scenario) */
     //const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    this.aService.loginIfNecessary('simpleportal', false);
+    loginIfNecessary({appName: 'simpleportal', mainRedirect: true });
   }
 
   showWork() {
@@ -231,7 +230,7 @@ export class NavigationComponent implements OnInit {
   }
 
   logOff() {
-    this.aService.logout().then(() => {
+    logout().then(() => {
       // Reload the page to kick off the login
       window.location.reload();
     });

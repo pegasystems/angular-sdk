@@ -10,7 +10,7 @@ import { Subscription, interval } from 'rxjs';
 import { ProgressSpinnerService } from '@pega/angular-sdk-library';
 import { ResetPConnectService } from '@pega/angular-sdk-library';
 import { UpdateWorklistService } from '@pega/angular-sdk-library';
-import { AuthService } from '@pega/angular-sdk-library';
+import { loginIfNecessary, logout, sdkSetAuthHeader } from '@pega/auth/lib/sdk-auth-manager';
 import { endpoints } from '@pega/angular-sdk-library';
 import { ServerConfigService } from '@pega/angular-sdk-library';
 import { Utils } from '@pega/angular-sdk-library';
@@ -57,7 +57,6 @@ export class MCNavComponent implements OnInit {
   bootstrapShell: any;
 
   constructor(
-    private aService: AuthService,
     private cdRef: ChangeDetectorRef,
     private psservice: ProgressSpinnerService,
     private rpcservice: ResetPConnectService,
@@ -126,7 +125,7 @@ export class MCNavComponent implements OnInit {
     if (!sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === 'Basic') {
       // Service package to use custom auth with Basic
       const sB64 = window.btoa(`${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}`);
-      this.aService.setAuthHeader(`Basic ${sB64}`);
+      sdkSetAuthHeader(`Basic ${sB64}`);
     }
 
     if (!sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === 'BasicTO') {
@@ -139,12 +138,12 @@ export class MCNavComponent implements OnInit {
       const sB64 = window.btoa(
         `${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}:${sISOTime}`
       );
-      this.aService.setAuthHeader(`Basic ${sB64}`);
+      sdkSetAuthHeader(`Basic ${sB64}`);
     }
 
     // Login if needed, without doing an initial main window redirect
     const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    this.aService.loginIfNecessary(sAppName, true);
+    loginIfNecessary({appName: sAppName, mainRedirect: false});
   }
 
   startMashup() {
@@ -214,7 +213,7 @@ export class MCNavComponent implements OnInit {
   }
 
   logOff() {
-    this.aService.logout().then(() => {
+    logout().then(() => {
       // Reload the page to kick off the login
       window.location.reload();
     });
