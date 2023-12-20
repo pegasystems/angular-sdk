@@ -88,6 +88,8 @@
     "no-empty": "off",
     "no-new-object": "off",
 
+    "react/jsx-fragments": "error",
+
     "import/no-mutable-exports": "error",
     "sonarjs/max-switch-cases": "error",
     "sonarjs/no-collapsible-if": "off",
@@ -127,6 +129,7 @@
     "operator-assignment": "off",
     "prefer-template": "off",
     "vars-on-top": "off",
+
 
     "no-use-before-define": "off",    // doc for @typescript-eslint/no-use-before-define says to turn off the base implementation
     "@typescript-eslint/no-use-before-define": "error"
