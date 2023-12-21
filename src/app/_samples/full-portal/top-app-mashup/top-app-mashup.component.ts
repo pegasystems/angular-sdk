@@ -1,9 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { loginIfNecessary, logout, getAvailablePortals } from '@pega/auth/lib/sdk-auth-manager';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
 import { ProgressSpinnerService } from '@pega/angular-sdk-library';
-import { AuthService } from '@pega/angular-sdk-library';
 import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
 import { RootContainerComponent } from '@pega/angular-sdk-library';
 import { ServerConfigService } from '@pega/angular-sdk-library';
@@ -71,7 +71,6 @@ export class TopAppMashupComponent implements OnInit {
   defaultPortalName: string;
 
   constructor(
-    private aService: AuthService,
     private psservice: ProgressSpinnerService,
     private ngZone: NgZone,
     private scservice: ServerConfigService
@@ -108,7 +107,7 @@ export class TopAppMashupComponent implements OnInit {
 
     /* Login if needed */
     const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    this.aService.loginIfNecessary(sAppName, false);
+    loginIfNecessary({appName: sAppName, mainRedirect: true});
   }
 
   startPortal() {
@@ -139,7 +138,7 @@ export class TopAppMashupComponent implements OnInit {
       this.portalSelectionScreen = true;
       this.defaultPortalName = defaultPortal;
       // Getting current user's access group's available portals list other than exluded portals (relies on Traditional DX APIs)
-      this.scservice.getAvailablePortals().then((portals: Array<string>) => {
+      getAvailablePortals().then((portals: Array<string>) => {
         this.availablePortals = portals;
       });
     }
@@ -219,7 +218,7 @@ export class TopAppMashupComponent implements OnInit {
   }
 
   logOff() {
-    this.aService.logout().then(() => {
+    logout().then(() => {
       // Reload the page to kick off the login
       window.location.reload();
     });
