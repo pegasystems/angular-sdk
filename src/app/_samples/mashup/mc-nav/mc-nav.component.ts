@@ -7,17 +7,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription, interval } from 'rxjs';
 
-import { ProgressSpinnerService } from '@pega/angular-sdk-library';
-import { ResetPConnectService } from '@pega/angular-sdk-library';
-import { UpdateWorklistService } from '@pega/angular-sdk-library';
 import { loginIfNecessary, logout, sdkSetAuthHeader } from '@pega/auth/lib/sdk-auth-manager';
-import { endpoints } from '@pega/angular-sdk-library';
-import { ServerConfigService } from '@pega/angular-sdk-library';
-import { Utils } from '@pega/angular-sdk-library';
-import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
-import { MainScreenComponent } from '@pega/angular-sdk-library';
+import {
+  ProgressSpinnerService,
+  ResetPConnectService,
+  ServerConfigService,
+  UpdateWorklistService,
+  Utils,
+  compareSdkPCoreVersions,
+  endpoints,
+  getSdkComponentMap
+} from '@pega/angular-sdk-library';
 
-import { getSdkComponentMap } from '@pega/angular-sdk-library';
+import { MainScreenComponent } from '../main-screen/main-screen.component';
 import localSdkComponentMap from '../../../../../sdk-local-component-map';
 
 declare global {
@@ -32,20 +34,13 @@ declare global {
   styleUrls: ['./mc-nav.component.scss'],
   providers: [Utils],
   standalone: true,
-  imports: [
-    CommonModule,
-    MatProgressSpinnerModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MainScreenComponent
-  ]
+  imports: [CommonModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatButtonModule, MainScreenComponent]
 })
 export class MCNavComponent implements OnInit {
   starterPackVersion$: string = endpoints.SP_VERSION;
-  PCore$: any;
-  pConn$: any;
+  pConn$: typeof PConnect;
 
+  applicationLabel: string = '';
   bLoggedIn$: boolean = false;
   bPConnectLoaded$: boolean = false;
   bHasPConnect$: boolean = false;
@@ -53,8 +48,6 @@ export class MCNavComponent implements OnInit {
 
   progressSpinnerSubscription: Subscription;
   resetPConnectSubscription: Subscription;
-
-  bootstrapShell: any;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -77,10 +70,6 @@ export class MCNavComponent implements OnInit {
   }
 
   async initialize() {
-    if (!this.PCore$) {
-      this.PCore$ = window.PCore;
-    }
-
     this.titleService.setTitle('Media Co');
 
     sessionStorage.clear();
@@ -94,10 +83,8 @@ export class MCNavComponent implements OnInit {
       if (message.reset) {
         this.bPConnectLoaded$ = false;
 
-        ///window.PCore = null;
-
-        let timer = interval(1000).subscribe(() => {
-          //this.getPConnectAndUpdate();
+        const timer = interval(1000).subscribe(() => {
+          // this.getPConnectAndUpdate();
           window.myLoadMashup('app-root', false);
 
           // update the worklist
@@ -135,25 +122,24 @@ export class MCNavComponent implements OnInit {
       const regex = /[-:]/g;
       sISOTime = sISOTime.replace(regex, '');
       // Service package to use custom auth with Basic
-      const sB64 = window.btoa(
-        `${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}:${sISOTime}`
-      );
+      const sB64 = window.btoa(`${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}:${sISOTime}`);
       sdkSetAuthHeader(`Basic ${sB64}`);
     }
 
     // Login if needed, without doing an initial main window redirect
+    // eslint-disable-next-line no-restricted-globals
     const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    loginIfNecessary({appName: sAppName, mainRedirect: false});
+    loginIfNecessary({ appName: sAppName, mainRedirect: false });
   }
 
   startMashup() {
-    if (!this.PCore$) {
-      this.PCore$ = window.PCore;
-    }
-
-    this.PCore$.onPCoreReady((renderObj) => {
+    PCore.onPCoreReady((renderObj) => {
+      console.log('PCore ready!');
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
+      this.applicationLabel = PCore.getEnvironmentInfo().getApplicationLabel();
+
+      this.titleService.setTitle(this.applicationLabel);
 
       // Initialize the SdkComponentMap (local and pega-provided)
       getSdkComponentMap(localSdkComponentMap).then((theComponentMap: any) => {
@@ -170,12 +156,12 @@ export class MCNavComponent implements OnInit {
   initialRender(renderObj) {
     // Need to register the callback function for PCore.registerComponentCreator
     //  This callback is invoked if/when you call a PConnect createComponent
-    this.PCore$.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+    PCore.registerComponentCreator((c11nEnv) => {
       // debugger;
 
       // experiment with returning a PConnect that has deferenced the
       //  referenced View if the c11n is a 'reference' component
-      const compType = c11nEnv.getPConnect().getComponentName();
+      // const compType = c11nEnv.getPConnect().getComponentName();
       // console.log( `mc-nav - registerComponentCreator c11nEnv type: ${compType}`);
 
       return c11nEnv;

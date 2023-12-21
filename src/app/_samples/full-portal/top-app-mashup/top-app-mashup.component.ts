@@ -1,41 +1,23 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { loginIfNecessary, logout, getAvailablePortals } from '@pega/auth/lib/sdk-auth-manager';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
-import { ProgressSpinnerService } from '@pega/angular-sdk-library';
-import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
-import { RootContainerComponent } from '@pega/angular-sdk-library';
-import { ServerConfigService } from '@pega/angular-sdk-library';
-import { getSdkComponentMap } from '@pega/angular-sdk-library';
+
+import { getAvailablePortals, loginIfNecessary, logout } from '@pega/auth/lib/sdk-auth-manager';
+import {
+  ComponentMapperComponent,
+  ProgressSpinnerService,
+  ServerConfigService,
+  compareSdkPCoreVersions,
+  getSdkComponentMap
+} from '@pega/angular-sdk-library';
+
 import localSdkComponentMap from '../../../../../sdk-local-component-map';
 
 declare global {
   interface Window {
-      PCore: {
-          onPCoreReady: Function;
-          createPConnect: Function;
-          getComponentsRegistry: Function;
-          checkIfSemanticURL: Function;
-          isValidSemanticURL: Function;
-          getConstants(): any;
-          setBehaviorOverrides: Function;
-          getAttachmentUtils: Function;
-          getDataApiUtils: Function;
-          getAssetLoader: Function;
-          getEnvironmentInfo: Function;
-          getPubSubUtils(): any;
-          getUserApi(): any;
-          getAuthUtils(): any;
-          registerComponentCreator(c11nPropObject: any): Function;
-          getMessageManager: Function;
-          getLocaleUtils: any;
-          setBehaviorOverride: Function;
-          populateAdditionalProps: Function;
-          getStore: Function;
-      };
-      myLoadPortal: Function;
-      myLoadDefaultPortal: Function;
+    myLoadPortal: Function;
+    myLoadDefaultPortal: Function;
   }
 }
 
@@ -44,12 +26,10 @@ declare global {
   templateUrl: './top-app-mashup.component.html',
   styleUrls: ['./top-app-mashup.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, RootContainerComponent]
+  imports: [CommonModule, MatProgressSpinnerModule, ComponentMapperComponent]
 })
 export class TopAppMashupComponent implements OnInit {
-  PCore$: any;
-  pConn$: any;
-  props$: any;
+  pConn$: typeof PConnect;
 
   sComponentName$: string;
   arChildren$: Array<any>;
@@ -106,12 +86,20 @@ export class TopAppMashupComponent implements OnInit {
     });
 
     /* Login if needed */
-    const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    loginIfNecessary({appName: sAppName, mainRedirect: true});
+    const sAppName = window.location.pathname.substring(window.location.pathname.indexOf('/') + 1);
+    loginIfNecessary({ appName: sAppName, mainRedirect: true });
+
+    /* Check if portal is specified as a query parameter */
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const portalValue = urlParams.get('portal');
+    if (portalValue) {
+      sessionStorage.setItem('asdk_portalName', portalValue);
+    }
   }
 
   startPortal() {
-    window.PCore.onPCoreReady((renderObj) => {
+    PCore.onPCoreReady((renderObj) => {
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
 
@@ -125,9 +113,14 @@ export class TopAppMashupComponent implements OnInit {
     });
 
     const { appPortal: thePortal, excludePortals } = this.scservice.getSdkConfigServer();
-    const defaultPortal = window.PCore?.getEnvironmentInfo?.().getDefaultPortal?.();
+    const defaultPortal = PCore?.getEnvironmentInfo?.().getDefaultPortal?.();
+    const queryPortal = sessionStorage.getItem('asdk_portalName');
+
     // Note: myLoadPortal and myLoadDefaultPortal are set when bootstrapWithAuthHeader is invoked
-    if (thePortal) {
+    if (queryPortal) {
+      console.log(`Loading appPortal specified as a query parameter: ${queryPortal}`);
+      window.myLoadPortal('app-root', queryPortal, []);
+    } else if (thePortal) {
       console.log(`Loading specified appPortal: ${thePortal}`);
       window.myLoadPortal('app-root', thePortal, []); // this is defined in bootstrap shell that's been loaded already
     } else if (window.myLoadDefaultPortal && defaultPortal && !excludePortals.includes(defaultPortal)) {
@@ -137,7 +130,7 @@ export class TopAppMashupComponent implements OnInit {
       console.log('Loading portal selection screen');
       this.portalSelectionScreen = true;
       this.defaultPortalName = defaultPortal;
-      // Getting current user's access group's available portals list other than exluded portals (relies on Traditional DX APIs)
+      // Getting current user's access group's available portals list other than excluded portals (relies on Traditional DX APIs)
       getAvailablePortals().then((portals: Array<string>) => {
         this.availablePortals = portals;
       });
@@ -149,10 +142,10 @@ export class TopAppMashupComponent implements OnInit {
 
     // Need to register the callback function for PCore.registerComponentCreator
     // This callback is invoked if/when you call a PConnect createComponent
-    window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+    PCore.registerComponentCreator((c11nEnv) => {
       // experiment with returning a PConnect that has deferenced the
       // referenced View if the c11n is a 'reference' component
-      const compType = c11nEnv.getPConnect().getComponentName();
+      // const compType = c11nEnv.getPConnect().getComponentName();
       // console.log( `top-app-mashup: startPortal - registerComponentCreator c11nEnv type: ${compType}`);
 
       return c11nEnv;
@@ -174,15 +167,10 @@ export class TopAppMashupComponent implements OnInit {
     // Change to reflect new use of arg in the callback:
     const { props } = renderObj;
 
-    // makes sure Angular tracks these changes
-    this.ngZone.run(() => {
-      this.props$ = props;
-      this.pConn$ = this.props$.getPConnect();
-      this.sComponentName$ = this.pConn$.getComponentName();
-      this.PCore$ = window.PCore;
-      this.arChildren$ = this.pConn$.getChildren();
-      this.bPCoreReady$ = true;
-    });
+    this.pConn$ = props.getPConnect();
+    this.sComponentName$ = this.pConn$.getComponentName();
+    this.arChildren$ = this.pConn$.getChildren() as Array<any>;
+    this.bPCoreReady$ = true;
   }
 
   showHideProgress(bShow: boolean) {

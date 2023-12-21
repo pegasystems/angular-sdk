@@ -3,13 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
-import { GetLoginStatusService } from '@pega/angular-sdk-library';
-import { ProgressSpinnerService } from '@pega/angular-sdk-library';
-import { UpdateWorklistService } from '@pega/angular-sdk-library';
-import { CaseService } from '@pega/angular-sdk-library';
-import { DatapageService } from '@pega/angular-sdk-library';
-
-declare function loadMashup(targetDom: any, preLoadComponents: any): any;
+import { CaseService, DatapageService, GetLoginStatusService, ProgressSpinnerService, UpdateWorklistService } from '@pega/angular-sdk-library';
 
 @Component({
   selector: 'app-side-bar',
@@ -19,10 +13,10 @@ declare function loadMashup(targetDom: any, preLoadComponents: any): any;
   imports: [CommonModule, MatButtonModule]
 })
 export class SideBarComponent implements OnInit {
-  @Input() pConn$: any;
+  @Input() pConn$: typeof PConnect;
 
-  arButtons$: Array<any> = new Array();
-  arWorkItems$: Array<any> = new Array();
+  arButtons$: Array<any> = [];
+  arWorkItems$: Array<any> = [];
   worklistSubscription: Subscription;
 
   constructor(
@@ -50,14 +44,14 @@ export class SideBarComponent implements OnInit {
 
   updateCaseTypes() {
     this.cservice.getCaseTypes().subscribe(
-      (response) => {
-        let caseManagement = response.body;
-        let caseTypes = caseManagement['caseTypes'];
-        let displayableCaseTypes = new Array();
+      (response: any) => {
+        const caseManagement = response.body;
+        const caseTypes = caseManagement['caseTypes'];
+        // const displayableCaseTypes = [];
 
-        for (let myCase of caseTypes) {
+        for (const myCase of caseTypes) {
           if (myCase.CanCreate == 'true') {
-            let oPayload = {};
+            const oPayload = {};
             oPayload['caseTypeID'] = myCase.ID;
             oPayload['processID'] = myCase.startingProcesses[0].ID;
             oPayload['caption'] = myCase.name;
@@ -67,24 +61,24 @@ export class SideBarComponent implements OnInit {
         }
       },
       (err) => {
-        alert('Errors from get casetypes:' + err.errors);
+        alert(`Errors from get casetypes:${err.errors}`);
         this.glsservice.sendMessage('LoggedOff');
       }
     );
   }
 
   updateWorkList() {
-    let worklistParams = new HttpParams().set('Work', 'true');
+    const worklistParams = new HttpParams().set('Work', 'true');
 
-    let dsubscription = this.dpservice.getDataPage('D_Worklist', worklistParams).subscribe(
-      (response) => {
-        let datapageResults = response.body['pxResults'];
+    const dsubscription = this.dpservice.getDataPage('D_Worklist', worklistParams).subscribe(
+      (response: any) => {
+        const datapageResults = response.body['pxResults'];
 
-        this.arWorkItems$ = new Array();
+        this.arWorkItems$ = [];
 
-        for (let myWork of datapageResults) {
-          let oPayload = {};
-          oPayload['caption'] = myWork.pxRefObjectInsName + ' - ' + myWork.pxTaskLabel;
+        for (const myWork of datapageResults) {
+          const oPayload = {};
+          oPayload['caption'] = `${myWork.pxRefObjectInsName} - ${myWork.pxTaskLabel}`;
           oPayload['pzInsKey'] = myWork.pzInsKey;
           oPayload['pxRefObjectClass'] = myWork.pxRefObjectClass;
 
@@ -94,41 +88,43 @@ export class SideBarComponent implements OnInit {
         dsubscription.unsubscribe();
       },
       (err) => {
-        alert('Error form worklist:' + err.errors);
+        alert(`Error form worklist:${err.errors}`);
       }
     );
   }
 
   buttonClick(oButtonData) {
-    let actionsApi = this.pConn$.getActionsApi();
-    let createWork = actionsApi.createWork.bind(actionsApi);
-    let sFlowType = 'pyStartCase';
+    const actionsApi = this.pConn$.getActionsApi();
+    const createWork = actionsApi.createWork.bind(actionsApi);
+    const sFlowType = 'pyStartCase';
 
-    const actionInfo = {
+    const actionInfo: any = {
       containerName: 'primary',
-      flowType: sFlowType ? sFlowType : 'pyStartCase'
+      flowType: sFlowType || 'pyStartCase'
     };
 
     this.psservice.sendMessage(true);
 
-    window.PCore.getPubSubUtils().publish('showWork');
+    // @ts-ignore - second parameter “payload” for publish method should be optional
+    PCore.getPubSubUtils().publish('showWork');
 
     createWork(oButtonData.caseTypeID, actionInfo);
   }
 
   workButtonClick(oButtonData) {
-    let actionsApi = this.pConn$.getActionsApi();
-    let openAssignment = actionsApi.openAssignment.bind(actionsApi);
+    const actionsApi = this.pConn$.getActionsApi();
+    const openAssignment: any = actionsApi.openAssignment.bind(actionsApi);
 
-    //let sKey = oButtonData.pzInsKey
+    // let sKey = oButtonData.pzInsKey
     const { pxRefObjectClass, pzInsKey } = oButtonData;
-    let sTarget = this.pConn$.getContainerName();
+    const sTarget = this.pConn$.getContainerName();
 
-    let options = { containerName: sTarget };
+    const options = { containerName: sTarget };
 
     this.psservice.sendMessage(true);
 
-    window.PCore.getPubSubUtils().publish('showWork');
+    // @ts-ignore - second parameter “payload” for publish method should be optional
+    PCore.getPubSubUtils().publish('showWork');
 
     openAssignment(pzInsKey, pxRefObjectClass, options).then(() => {});
   }
