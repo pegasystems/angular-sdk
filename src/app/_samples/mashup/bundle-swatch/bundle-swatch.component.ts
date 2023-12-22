@@ -10,8 +10,6 @@ export class BundleSwatchComponent implements OnInit {
   @Input() swatchConfig$: any;
   @Output() ShopNowButtonClick: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
-
   labelPlay$: string;
   labelLevel$: string;
   labelChannelCount$: string;
@@ -30,7 +28,7 @@ export class BundleSwatchComponent implements OnInit {
     this.labelChannelFull$ = this.swatchConfig$.channels_full;
     this.labelBanner$ = this.swatchConfig$.banner;
     this.labelDollars$ = this.swatchConfig$.price.substring(0, this.swatchConfig$.price.indexOf('.'));
-    this.labelCents$ = this.swatchConfig$.price.substring(this.swatchConfig$.price.indexOf('.') + 1) + '/month';
+    this.labelCents$ = `${this.swatchConfig$.price.substring(this.swatchConfig$.price.indexOf('.') + 1)}/month`;
     this.extraCalling$ = this.swatchConfig$.calling;
     this.labelInternetSpeed$ = this.swatchConfig$.internetSpeed;
   }

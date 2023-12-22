@@ -1,20 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ViewContainerComponent } from '@pega/angular-sdk-library';
+import { ComponentMapperComponent } from '@pega/angular-sdk-library';
 
 @Component({
   selector: 'app-mc-main-content',
   templateUrl: './mc-main-content.component.html',
   styleUrls: ['./mc-main-content.component.scss'],
   standalone: true,
-  imports: [CommonModule, ViewContainerComponent]
+  imports: [CommonModule, ComponentMapperComponent]
 })
 export class MCMainContentComponent implements OnInit {
-  @Input() pConn$: any;
+  @Input() pConn$: typeof PConnect;
 
   sComponentName$: string;
-
-  constructor() {}
 
   ngOnInit(): void {
     if (this.pConn$) {

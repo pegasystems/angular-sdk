@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { endpoints } from '@pega/angular-sdk-library';
-import { TopAppMashupComponent} from './_samples/full-portal/top-app-mashup/top-app-mashup.component';
+import { TopAppMashupComponent } from './_samples/full-portal/top-app-mashup/top-app-mashup.component';
 import { NavigationComponent } from './_samples/simple-portal/navigation/navigation.component';
 import { MCNavComponent } from './_samples/mashup/mc-nav/mc-nav.component';
 
@@ -11,7 +11,7 @@ import { MCNavComponent } from './_samples/mashup/mc-nav/mc-nav.component';
 //
 // But we can get it from window.location.pathname
 
-const appName = window.location.pathname.split('/')[3];
+// const appName = window.location.pathname.split('/')[3];
 
 // TopAppComponent no longer used (was for when login into PegaInfinity and being directed from there to an Angular app,
 // similiar to Nebula/Constellaion)

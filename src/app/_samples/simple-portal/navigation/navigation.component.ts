@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, forwardRef } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,15 +7,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 
-import { UpdateWorklistService } from '@pega/angular-sdk-library';
 import { loginIfNecessary, logout } from '@pega/auth/lib/sdk-auth-manager';
-import { ServerConfigService } from '@pega/angular-sdk-library';
-import { compareSdkPCoreVersions } from '@pega/angular-sdk-library';
-import { MainContentComponent } from '@pega/angular-sdk-library';
-import { SideBarComponent } from '@pega/angular-sdk-library';
+import { ServerConfigService, UpdateWorklistService, compareSdkPCoreVersions, getSdkComponentMap } from '@pega/angular-sdk-library';
 
+import { SideBarComponent } from '../side-bar/side-bar.component';
+import { MainContentComponent } from '../main-content/main-content.component';
 import localSdkComponentMap from '../../../../../sdk-local-component-map';
-import { getSdkComponentMap } from '@pega/angular-sdk-library';
 
 declare global {
   interface Window {
@@ -36,12 +33,11 @@ declare global {
     MatButtonModule,
     MatMenuModule,
     SideBarComponent,
-    forwardRef(() => MainContentComponent)
+    MainContentComponent
   ]
 })
 export class NavigationComponent implements OnInit {
-  PCore$: any;
-  pConn$: any;
+  pConn$: typeof PConnect;
 
   bLoggedIn$: boolean = false;
   bPConnectLoaded$: boolean = false;
@@ -67,14 +63,11 @@ export class NavigationComponent implements OnInit {
     this.progressSpinnerSubscription.unsubscribe();
     this.resetPConnectSubscription.unsubscribe();
 
-    this.PCore$.getPubSubUtils().unsubscribe(
-      this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
-      'cancelAssignment'
-    );
+    PCore.getPubSubUtils().unsubscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'cancelAssignment');
 
-    this.PCore$.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
+    PCore.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
 
-    this.PCore$.getPubSubUtils().unsubscribe('showWork', 'showWork');
+    PCore.getPubSubUtils().unsubscribe('showWork', 'showWork');
   }
 
   initialize() {
@@ -91,8 +84,8 @@ export class NavigationComponent implements OnInit {
     });
 
     /* Login if needed (and indicate this is a portal scenario) */
-    //const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    loginIfNecessary({appName: 'simpleportal', mainRedirect: true });
+    // const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
+    loginIfNecessary({ appName: 'simpleportal', mainRedirect: true });
   }
 
   showWork() {
@@ -129,7 +122,7 @@ export class NavigationComponent implements OnInit {
   }
 
   startMashup() {
-    window.PCore.onPCoreReady((renderObj) => {
+    PCore.onPCoreReady((renderObj) => {
       // Initialize the SdkComponentMap (local and pega-provided)
       getSdkComponentMap(localSdkComponentMap).then((theComponentMap: any) => {
         console.log(`SdkComponentMap initialized`, theComponentMap);
@@ -146,13 +139,9 @@ export class NavigationComponent implements OnInit {
     // Check that we're seeing the PCore version we expect
     compareSdkPCoreVersions();
 
-    if (!this.PCore$) {
-      this.PCore$ = window.PCore;
-    }
-
     // Need to register the callback function for PCore.registerComponentCreator
     //  This callback is invoked if/when you call a PConnect createComponent
-    window.PCore.registerComponentCreator((c11nEnv, additionalProps = {}) => {
+    PCore.registerComponentCreator((c11nEnv) => {
       // debugger;
 
       // experiment with returning a PConnect that has deferenced the
@@ -192,27 +181,24 @@ export class NavigationComponent implements OnInit {
     //
     // so don't have multiple subscriptions, unsubscribe first
     //
-    this.PCore$.getPubSubUtils().unsubscribe(
-      this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
-      'cancelAssignment'
-    );
+    PCore.getPubSubUtils().unsubscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'cancelAssignment');
 
-    this.PCore$.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
+    PCore.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
 
-    this.PCore$.getPubSubUtils().unsubscribe('showWork', 'showWork');
+    PCore.getPubSubUtils().unsubscribe('showWork', 'showWork');
 
     //
     // now subscribe
     //
-    this.PCore$.getPubSubUtils().subscribe(
-      this.PCore$.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
       () => {
         this.cancelAssignment();
       },
       'cancelAssignment'
     );
 
-    this.PCore$.getPubSubUtils().subscribe(
+    PCore.getPubSubUtils().subscribe(
       'assignmentFinished',
       () => {
         this.assignmentFinished();
@@ -220,7 +206,7 @@ export class NavigationComponent implements OnInit {
       'assignmentFinished'
     );
 
-    this.PCore$.getPubSubUtils().subscribe(
+    PCore.getPubSubUtils().subscribe(
       'showWork',
       () => {
         this.showWork();
@@ -236,4 +222,3 @@ export class NavigationComponent implements OnInit {
     });
   }
 }
-
