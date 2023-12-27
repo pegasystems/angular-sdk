@@ -77,7 +77,6 @@
     "@material-ui/pickers": "^3.3.10",
     "@mdi/angular-material": "^5.0.45",
     "@mdi/svg": "^5.0.45",
-    "@pega/auth": "^0.1.4",
     "@pega/angular-sdk-library": "file:pega-angular-sdk-library-8.23.10.tgz",
     "@pega/auth": "^0.1.4",
     "@pega/constellationjs": "SDK-8.23.0",
