@@ -1,3 +1,4 @@
+// eslint-disable-next-line strict
 const { devices } = require('@playwright/test');
 
 /**
@@ -5,7 +6,6 @@ const { devices } = require('@playwright/test');
  * https://github.com/motdotla/dotenv
  */
 // require('dotenv').config();
-
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -39,10 +39,10 @@ const config = {
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    ignoreHTTPSErrors:true,
+    ignoreHTTPSErrors: true,
     launchOptions: {
-      slowMo:200,
-    },
+      slowMo: 200
+    }
   },
 
   /* Configure projects for major browsers */
@@ -50,23 +50,23 @@ const config = {
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome'],
-      },
+        ...devices['Desktop Chrome']
+      }
     },
 
     {
       name: 'firefox',
       use: {
-        ...devices['Desktop Firefox'],
-      },
+        ...devices['Desktop Firefox']
+      }
     },
 
     {
       name: 'webkit',
       use: {
-        ...devices['Desktop Safari'],
-      },
-    },
+        ...devices['Desktop Safari']
+      }
+    }
 
     /* Test against mobile viewports. */
     // {
@@ -95,7 +95,7 @@ const config = {
     //     channel: 'chrome',
     //   },
     // },
-  ],
+  ]
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   // outputDir: 'test-results/',

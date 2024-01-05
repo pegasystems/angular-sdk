@@ -1,21 +1,38 @@
-import { provideAnimations } from "@angular/platform-browser/animations";
-import { Preview, applicationConfig } from "@storybook/angular";
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { AngularPConnectService, getSdkComponentMap } from '@pega/angular-sdk-library';
+import { Preview, applicationConfig } from '@storybook/angular';
+
+getSdkComponentMap();
+
+class MockingAngularPConnectService {
+  shouldComponentUpdate = () => true;
+  registerAndSubscribeComponent = () => {
+    return {
+      unsubscribeFn: () => {
+        /* nothing */
+      }
+    };
+  };
+  getComponentID = () => {
+    return Math.random();
+  };
+}
 
 const preview: Preview = {
   decorators: [
     applicationConfig({
-      providers: [provideAnimations()],
-    }),
+      providers: [provideAnimations(), { provide: AngularPConnectService, useClass: MockingAngularPConnectService }]
+    })
   ],
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
+        date: /Date$/
       }
-    },
-  },
+    }
+  }
 };
 
 export default preview;
