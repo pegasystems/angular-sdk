@@ -28,7 +28,11 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/auth.html",
+              {
+                "glob": "authDone.{html,js}",
+                "input": "./node_modules/@pega/auth/lib/oauth-client",
+                "output": "./"
+              },
               {
                 "glob": "mdi.svg",
                 "input": "./node_modules/@mdi/angular-material",

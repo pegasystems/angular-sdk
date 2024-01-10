@@ -27,6 +27,8 @@
     "sdkContentServerUrl": "",
     "appPortal_comment": "If specified, the given appPortal will be loaded. If left blank, the operator's default Portal is used. Ignored for Embedded use",
     "appPortal": "",
+    "appMashupCaseType_comment": "If specified, uses this case type for mashup.  Otherwise, uses the first case type found for the app",
+    "appMashupCaseType": "DIXL-MediaCo-Work-NewService",
     "excludePortals_comment": "Array of specific portals to avoid attempting to load with SDK",
     "excludePortals": [
       "pxExpress",
