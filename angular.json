@@ -77,17 +77,12 @@
                 "glob": "*.*",
                 "input": "./src/assets/icons/",
                 "output": "./constellation/assets/icons"
-              },
-              {
-                "glob": "**/*",
-                "input": "./node_modules/tinymce",
-                "output": "./tinymce"
               }
             ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": ["./node_modules/tinymce/tinymce.min.js"],
+            "scripts": [],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
