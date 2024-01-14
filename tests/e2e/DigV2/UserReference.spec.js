@@ -1,18 +1,15 @@
-/* eslint-disable no-template-curly-in-string */
-/* eslint-disable no-undef */
-
-const { test, expect } = require("@playwright/test");
-const config = require("../../config");
-const common = require("../../common");
+const { test, expect } = require('@playwright/test');
+const config = require('../../config');
+const common = require('../../common');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto("http://localhost:3500/portal");
+  await page.goto(config.config.baseUrl, { waitUntil: 'networkidle' });
 });
 
-test.describe("E2E test", () => {
-  test("should login, create case and run different test cases for User Reference", async ({ page }) => {
-    await common.Login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
+test.describe('E2E test', () => {
+  test('should login, create case and run different test cases for User Reference', async ({ page }) => {
+    await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
     /** Testing announcement banner presence */
     const announcementBanner = page.locator('h2:has-text("Announcements")');
@@ -23,7 +20,7 @@ test.describe("E2E test", () => {
     await expect(worklist).toBeVisible();
 
     /** Hovering over navbar */
-    const navbar = page.locator("app-navbar");
+    const navbar = page.locator('app-navbar');
     await navbar.locator('div[class="psdk-appshell-nav"]').hover();
 
     /** opening all case types */
@@ -43,7 +40,7 @@ test.describe("E2E test", () => {
 
     /** selecting user from autocomplete field  */
     const searchBoxInput = page.locator('input[data-test-id="75c6db46c48c2d7bb102c91d13ed766e"]');
-    await searchBoxInput.type("user");
+    await searchBoxInput.fill('user');
     const firstSearchboxOption = page.locator('div[role="listbox"]>mat-option:first-child');
     await firstSearchboxOption.click();
     const selectedUser = firstSearchboxOption.innerHTML;
