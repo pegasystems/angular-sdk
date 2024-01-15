@@ -17,10 +17,10 @@
   },
   "serverConfig": {
     "comment_serverConfig": "serverConfig is the block for SDK Content Server config entries",
-    
+
     "infinityRestServerUrl_comment": "Full path to Infinity REST server",
     "infinityRestServerUrl": "https://localhost:1080/prweb",
-   
+
     "appAlias_comment": "appAlias of the application which operators will be accessing (e.g., MediaCo)",
     "appAlias": "",
     "sdkContentServerUrl_comment": "If specified, the given URL will be used. If left blank, window.location.origin will be used.",
@@ -30,14 +30,7 @@
     "appMashupCaseType_comment": "If specified, uses this case type for mashup.  Otherwise, uses the first case type found for the app",
     "appMashupCaseType": "DIXL-MediaCo-Work-NewService",
     "excludePortals_comment": "Array of specific portals to avoid attempting to load with SDK",
-    "excludePortals": [
-      "pxExpress",
-      "Developer",
-      "pxPredictionStudio",
-      "pxAdminStudio",
-      "pyCaseWorker",
-      "pyCaseManager7"
-    ]
+    "excludePortals": ["pxExpress", "Developer", "pxPredictionStudio", "pxAdminStudio", "pyCaseWorker", "pyCaseManager7"]
   },
   "dxcbConfig": {
     "publishAccess": {

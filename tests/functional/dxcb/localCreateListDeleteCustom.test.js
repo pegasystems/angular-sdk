@@ -17,7 +17,7 @@ describe('create list and delete local custom', () => {
   it('npm run create Local custom', async () => {
     const fileName = 'MyTestText';
     const newFileNameConstellation = `Pega_DXIL_${fileName}`;
-    const newFileNameCustom = "pega-dxil-my-test-text";
+    const newFileNameCustom = 'pega-dxil-my-test-text';
     const script = `npm run create Field Text ${fileName} "My Test Text" 0.0.1 DXIL "" "My Test Text Description" Pega`;
 
     const { stdout, stderr } = await exec(script);
@@ -35,12 +35,15 @@ describe('create list and delete local custom', () => {
     // check to see file exists
 
     // const fileDir = path.resolve(`src/components/${newFileName}`);
-    const createConstellationFile = path.resolve(path.join(`src/app/_components/custom-constellation/field/${newFileNameConstellation}`, 'index.jsx'));
+    const createConstellationFile = path.resolve(
+      path.join(`src/app/_components/custom-constellation/field/${newFileNameConstellation}`, 'index.jsx')
+    );
     const doesConstellationExist = fs.existsSync(createConstellationFile);
     expect(doesConstellationExist).toBeTruthy();
 
-
-    const createCustomFile = path.resolve(path.join(`src/app/_components/custom-sdk/field/${newFileNameCustom}`, `${newFileNameCustom}.component.ts`));
+    const createCustomFile = path.resolve(
+      path.join(`src/app/_components/custom-sdk/field/${newFileNameCustom}`, `${newFileNameCustom}.component.ts`)
+    );
     const doesCustomExist = fs.existsSync(createCustomFile);
     expect(doesCustomExist).toBeTruthy();
 

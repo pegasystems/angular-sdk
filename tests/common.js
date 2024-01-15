@@ -4,12 +4,12 @@ const login = async (username, password, page) => {
   await page.locator('#submit_row .loginButton').click();
 };
 
-const getAttributes = async (element) => {
+const getAttributes = async element => {
   // eslint-disable-next-line no-return-await
-  return await element.evaluate(async (ele) => ele.getAttributeNames());
+  return await element.evaluate(async ele => ele.getAttributeNames());
 };
 
-const getFormattedDate = (date) => {
+const getFormattedDate = date => {
   if (!date) {
     return date;
   }

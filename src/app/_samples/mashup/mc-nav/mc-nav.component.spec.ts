@@ -8,9 +8,8 @@ describe('MCNavComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MCNavComponent ]
-    })
-    .compileComponents();
+      declarations: [MCNavComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

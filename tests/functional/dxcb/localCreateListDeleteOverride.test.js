@@ -36,7 +36,6 @@ describe('create list and delete local override', () => {
     const doesOverrideExist = fs.existsSync(createOverrideFile);
     expect(doesOverrideExist).toBeTruthy();
 
-
     // if (doesExist) {
     //   // remove it
     //   fs.rmdirSync(fileDir, { recursive: true });
@@ -56,7 +55,6 @@ describe('create list and delete local override', () => {
     // done();
   }, 20000);
 
- 
   it('compare create to default override', async () => {
     const fileName = 'auto-complete';
 

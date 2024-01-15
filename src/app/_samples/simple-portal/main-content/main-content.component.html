@@ -1,8 +1,8 @@
 <!-- mashup -->
-<div *ngIf="sComponentName$ == 'ViewContainer'" class="psdk-main-content">
+<div *ngIf="sComponentName$ === 'ViewContainer'" class="psdk-main-content">
   <component-mapper name="ViewContainer" [props]="{ pConn$, displayOnlyFA$: false }"></component-mapper>
 </div>
 
-<div *ngIf="sComponentName$ == 'RootContainer'">
+<div *ngIf="sComponentName$ === 'RootContainer'">
   <component-mapper name="RootContainer" [props]="{ pConn$, displayOnlyFA$: false }"></component-mapper>
 </div>

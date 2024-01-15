@@ -8,9 +8,8 @@ describe('TopAppMashupComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopAppMashupComponent ]
-    })
-    .compileComponents();
+      declarations: [TopAppMashupComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

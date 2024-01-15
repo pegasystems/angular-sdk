@@ -35,7 +35,6 @@ describe('create publish and delete local override', () => {
     const createOverrideFile = path.resolve(path.join(`src/app/_components/override-sdk/field/${fileName}`, `${fileName}.component.ts`));
     const doesOverrideExist = fs.existsSync(createOverrideFile);
     expect(doesOverrideExist).toBeTruthy();
-
   }, 20000);
 
   it('npm run publish override (no fetch) verify in map', async () => {
@@ -45,29 +44,28 @@ describe('create publish and delete local override', () => {
     const { stdout, stderr } = await exec(script);
     // console.log(stdout);
     expect(stdout).not.toBeNull();
-    
+
     expect(stderr).not.toBeNull();
 
     expect(stdout).toContain('auto-complete');
-    //expect(stdout).toContain('Compiled successfully.');
+    // expect(stdout).toContain('Compiled successfully.');
 
     // verify in map
-    const pegaLocalAngularComponentMapPath = path.join(path.resolve(),  'sdk-local-component-map.ts');
+    const pegaLocalAngularComponentMapPath = path.join(path.resolve(), 'sdk-local-component-map.ts');
     const mapDataAng = fs.readFileSync(pegaLocalAngularComponentMapPath, { encoding: 'utf8' });
     let isInMap = true;
 
-    if (mapDataAng.indexOf("AutoComplete") < 0) {
+    if (mapDataAng.indexOf('AutoComplete') < 0) {
       isInMap = false;
     }
-    if (mapDataAng.indexOf("AutoCompleteComponent") < 0) {
+    if (mapDataAng.indexOf('AutoCompleteComponent') < 0) {
       isInMap = false;
     }
-    if (mapDataAng.indexOf("auto-complete") < 0) {
+    if (mapDataAng.indexOf('auto-complete') < 0) {
       isInMap = false;
     }
 
     expect(isInMap).toBeTruthy();
-
   }, 30000);
 
   it('npm run delete Local override verify removed from map', async () => {
@@ -92,23 +90,21 @@ describe('create publish and delete local override', () => {
     const doesExist = fs.existsSync(createFile);
     expect(doesExist).not.toBeTruthy();
 
-
     // verify removed from map
-    const pegaLocalAngularComponentMapPath = path.join(path.resolve(),  'sdk-local-component-map.ts');
+    const pegaLocalAngularComponentMapPath = path.join(path.resolve(), 'sdk-local-component-map.ts');
     const mapDataAng = fs.readFileSync(pegaLocalAngularComponentMapPath, { encoding: 'utf8' });
     let isInMap = false;
 
-    if (mapDataAng.indexOf("AutoComplete") >= 0) {
+    if (mapDataAng.indexOf('AutoComplete') >= 0) {
       isInMap = true;
     }
-    if (mapDataAng.indexOf("AutoCompleteComponent") >= 0) {
+    if (mapDataAng.indexOf('AutoCompleteComponent') >= 0) {
       isInMap = true;
     }
-    if (mapDataAng.indexOf("auto-complete") >= 0) {
+    if (mapDataAng.indexOf('auto-complete') >= 0) {
       isInMap = true;
     }
 
     expect(isInMap).not.toBeTruthy();
-
   }, 10000);
 });

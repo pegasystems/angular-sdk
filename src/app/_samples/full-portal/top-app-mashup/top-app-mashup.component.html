@@ -17,7 +17,7 @@
     </div>
   </div>
   <div *ngIf="bPCoreReady$">
-    <div *ngIf="sComponentName$ == 'RootContainer'">
+    <div *ngIf="sComponentName$ === 'RootContainer'">
       <component-mapper name="RootContainer" [props]="{ pConn$ }"></component-mapper>
     </div>
   </div>

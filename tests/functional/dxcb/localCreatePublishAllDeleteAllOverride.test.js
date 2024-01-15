@@ -35,7 +35,6 @@ describe('override publish and deleteAll local override', () => {
     const createOverrideFile = path.resolve(path.join(`src/app/_components/override-sdk/field/${fileName}`, `${fileName}.component.ts`));
     const doesOverrideExist = fs.existsSync(createOverrideFile);
     expect(doesOverrideExist).toBeTruthy();
-
   }, 20000);
 
   it('npm run override details override', async () => {
@@ -59,7 +58,6 @@ describe('override publish and deleteAll local override', () => {
     const createOverrideFile = path.resolve(path.join(`src/app/_components/override-sdk/template/${fileName}`, `${fileName}.component.ts`));
     const doesOverrideExist = fs.existsSync(createOverrideFile);
     expect(doesOverrideExist).toBeTruthy();
-
   }, 20000);
 
   it('npm run override navbar override', async () => {
@@ -83,10 +81,7 @@ describe('override publish and deleteAll local override', () => {
     const createOverrideFile = path.resolve(path.join(`src/app/_components/override-sdk/widget/${fileName}`, `${fileName}.component.ts`));
     const doesOverrideExist = fs.existsSync(createOverrideFile);
     expect(doesOverrideExist).toBeTruthy();
-
   }, 20000);
-  
-  
 
   it('npm run publishAll (no fetch) custom verify in map', async () => {
     const script = `npm run publishAll override LoanV2 01-01-01 N noFetch`;
@@ -95,54 +90,52 @@ describe('override publish and deleteAll local override', () => {
     expect(stdout).not.toBeNull();
     expect(stderr).not.toBeNull();
 
-//    expect(stdout).toContain('Compiled successfully.');
-//    expect(stdout).not.toContain('Compiled with warnings.');
-//    expect(stdout).not.toContain('error');
-//    expect(stdout).not.toContain('Error');
+    //    expect(stdout).toContain('Compiled successfully.');
+    //    expect(stdout).not.toContain('Compiled with warnings.');
+    //    expect(stdout).not.toContain('error');
+    //    expect(stdout).not.toContain('Error');
 
     expect(stdout).toContain('auto-complete');
     expect(stdout).toContain('details');
     expect(stdout).toContain('todo');
     // done();
 
-
     // verify in map
-    const pegaLocalAngularComponentMapPath = path.join(path.resolve(),  'sdk-local-component-map.ts');
+    const pegaLocalAngularComponentMapPath = path.join(path.resolve(), 'sdk-local-component-map.ts');
     const mapDataAng = fs.readFileSync(pegaLocalAngularComponentMapPath, { encoding: 'utf8' });
     let isInMap = true;
 
-    if (mapDataAng.indexOf("AutoComplete") < 0) {
+    if (mapDataAng.indexOf('AutoComplete') < 0) {
       isInMap = false;
     }
-    if (mapDataAng.indexOf("AutoCompleteComponent") < 0) {
+    if (mapDataAng.indexOf('AutoCompleteComponent') < 0) {
       isInMap = false;
     }
-    if (mapDataAng.indexOf("auto-complete") < 0) {
-      isInMap = false;
-    }
-
-    if (mapDataAng.indexOf("Details") < 0) {
-      isInMap = false;
-    }
-    if (mapDataAng.indexOf("DetailsComponent") < 0) {
-      isInMap = false;
-    }
-    if (mapDataAng.indexOf("details") < 0) {
+    if (mapDataAng.indexOf('auto-complete') < 0) {
       isInMap = false;
     }
 
-    if (mapDataAng.indexOf("Todo") < 0) {
+    if (mapDataAng.indexOf('Details') < 0) {
       isInMap = false;
     }
-    if (mapDataAng.indexOf("TodoComponent") < 0) {
+    if (mapDataAng.indexOf('DetailsComponent') < 0) {
       isInMap = false;
     }
-    if (mapDataAng.indexOf("todo") < 0) {
+    if (mapDataAng.indexOf('details') < 0) {
+      isInMap = false;
+    }
+
+    if (mapDataAng.indexOf('Todo') < 0) {
+      isInMap = false;
+    }
+    if (mapDataAng.indexOf('TodoComponent') < 0) {
+      isInMap = false;
+    }
+    if (mapDataAng.indexOf('todo') < 0) {
       isInMap = false;
     }
 
     expect(isInMap).toBeTruthy();
-
   }, 100000);
 
   it('npm run deleteAll Local override verify removed from map', async () => {
@@ -171,43 +164,41 @@ describe('override publish and deleteAll local override', () => {
     // const doesExist = fs.existsSync(createFile);
     // expect(doesExist).not.toBeTruthy();
 
-
     // verify removed from map
-    const pegaLocalAngularComponentMapPath = path.join(path.resolve(),  'sdk-local-component-map.ts');
+    const pegaLocalAngularComponentMapPath = path.join(path.resolve(), 'sdk-local-component-map.ts');
     const mapDataAng = fs.readFileSync(pegaLocalAngularComponentMapPath, { encoding: 'utf8' });
     let isInMap = false;
 
-    if (mapDataAng.indexOf("AutoComplete") >= 0) {
+    if (mapDataAng.indexOf('AutoComplete') >= 0) {
       isInMap = true;
     }
-    if (mapDataAng.indexOf("AutoCompleteComponent") >= 0) {
+    if (mapDataAng.indexOf('AutoCompleteComponent') >= 0) {
       isInMap = true;
     }
-    if (mapDataAng.indexOf("auto-complete") >= 0) {
-      isInMap = true;
-    }
-
-    if (mapDataAng.indexOf("Details") >= 0) {
-      isInMap = true;
-    }
-    if (mapDataAng.indexOf("DetialsComponent") >= 0) {
-      isInMap = true;
-    }
-    if (mapDataAng.indexOf("details") >= 0) {
+    if (mapDataAng.indexOf('auto-complete') >= 0) {
       isInMap = true;
     }
 
-    if (mapDataAng.indexOf("Todo") >= 0) {
+    if (mapDataAng.indexOf('Details') >= 0) {
       isInMap = true;
     }
-    if (mapDataAng.indexOf("TodoComponent") >= 0) {
+    if (mapDataAng.indexOf('DetialsComponent') >= 0) {
       isInMap = true;
     }
-    if (mapDataAng.indexOf("todo") >= 0) {
+    if (mapDataAng.indexOf('details') >= 0) {
+      isInMap = true;
+    }
+
+    if (mapDataAng.indexOf('Todo') >= 0) {
+      isInMap = true;
+    }
+    if (mapDataAng.indexOf('TodoComponent') >= 0) {
+      isInMap = true;
+    }
+    if (mapDataAng.indexOf('todo') >= 0) {
       isInMap = true;
     }
 
     expect(isInMap).not.toBeTruthy();
-
   }, 20000);
 });

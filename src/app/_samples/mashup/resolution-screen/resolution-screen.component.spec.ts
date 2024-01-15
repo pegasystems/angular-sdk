@@ -8,9 +8,8 @@ describe('ResolutionScreenComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResolutionScreenComponent ]
-    })
-    .compileComponents();
+      declarations: [ResolutionScreenComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,10 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "../src/app/_components/custom-constellation/**/**/*.ts", 
-    "../src/app/_components/custom-constellation/**/**/*.tsx", 
-    "../src/app/_components/custom-constellation/**/**/*.js", 
-    "../src/app/_components/custom-constellation/**/**/*.jsx"],
+    "../src/app/_components/custom-constellation/**/**/*.ts",
+    "../src/app/_components/custom-constellation/**/**/*.tsx",
+    "../src/app/_components/custom-constellation/**/**/*.js",
+    "../src/app/_components/custom-constellation/**/**/*.jsx"
+  ],
   "exclude": [
     "node_modules",
     "../src/app/**/*.stories.ts",
@@ -19,7 +20,6 @@
     "rootDir": "../src",
     "allowSyntheticDefaultImports": true,
     // "skipLibCheck" must be true in order to not see errors in the @pega/pcore-pconnect-typedefs files themselves
-    "skipLibCheck": true,
+    "skipLibCheck": true
   }
-
 }

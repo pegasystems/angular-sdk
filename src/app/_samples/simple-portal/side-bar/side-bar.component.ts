@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,11 +12,11 @@ import { CaseService, DatapageService, GetLoginStatusService, ProgressSpinnerSer
   standalone: true,
   imports: [CommonModule, MatButtonModule]
 })
-export class SideBarComponent implements OnInit {
+export class SideBarComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
 
-  arButtons$: Array<any> = [];
-  arWorkItems$: Array<any> = [];
+  arButtons$: any[] = [];
+  arWorkItems$: any[] = [];
   worklistSubscription: Subscription;
 
   constructor(
@@ -28,7 +28,7 @@ export class SideBarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.worklistSubscription = this.uwservice.getMessage().subscribe((message) => {
+    this.worklistSubscription = this.uwservice.getMessage().subscribe(message => {
       if (message.update) {
         this.updateWorkList();
       }
@@ -46,21 +46,21 @@ export class SideBarComponent implements OnInit {
     this.cservice.getCaseTypes().subscribe(
       (response: any) => {
         const caseManagement = response.body;
-        const caseTypes = caseManagement['caseTypes'];
+        const caseTypes = caseManagement.caseTypes;
         // const displayableCaseTypes = [];
 
         for (const myCase of caseTypes) {
           if (myCase.CanCreate == 'true') {
-            const oPayload = {};
-            oPayload['caseTypeID'] = myCase.ID;
-            oPayload['processID'] = myCase.startingProcesses[0].ID;
-            oPayload['caption'] = myCase.name;
+            const oPayload: any = {};
+            oPayload.caseTypeID = myCase.ID;
+            oPayload.processID = myCase.startingProcesses[0].ID;
+            oPayload.caption = myCase.name;
 
             this.arButtons$.push(oPayload);
           }
         }
       },
-      (err) => {
+      err => {
         alert(`Errors from get casetypes:${err.errors}`);
         this.glsservice.sendMessage('LoggedOff');
       }
@@ -72,22 +72,22 @@ export class SideBarComponent implements OnInit {
 
     const dsubscription = this.dpservice.getDataPage('D_Worklist', worklistParams).subscribe(
       (response: any) => {
-        const datapageResults = response.body['pxResults'];
+        const datapageResults = response.body.pxResults;
 
         this.arWorkItems$ = [];
 
         for (const myWork of datapageResults) {
-          const oPayload = {};
-          oPayload['caption'] = `${myWork.pxRefObjectInsName} - ${myWork.pxTaskLabel}`;
-          oPayload['pzInsKey'] = myWork.pzInsKey;
-          oPayload['pxRefObjectClass'] = myWork.pxRefObjectClass;
+          const oPayload: any = {};
+          oPayload.caption = `${myWork.pxRefObjectInsName} - ${myWork.pxTaskLabel}`;
+          oPayload.pzInsKey = myWork.pzInsKey;
+          oPayload.pxRefObjectClass = myWork.pxRefObjectClass;
 
           this.arWorkItems$.push(oPayload);
         }
 
         dsubscription.unsubscribe();
       },
-      (err) => {
+      err => {
         alert(`Error form worklist:${err.errors}`);
       }
     );

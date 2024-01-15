@@ -65,54 +65,45 @@ describe('overrideAll list and deleteAll local override', () => {
   }, 10000);
 
   it('compare created to default', async () => {
-
     let assetDir;
     let assetTopDir;
     let componentDir;
-    let category;
     let assetFileList;
     let componentFiles;
-    let componentFileList;
 
-    const categoryList = [ 'designSystemExtension', 'field', 'infra', 'template', 'widget'];
+    const categoryList = ['designSystemExtension', 'field', 'infra', 'template', 'widget'];
 
     categoryList.forEach(category => {
       assetTopDir = path.resolve(`tests/assets/components/createAll/override-sdk/${category}`);
       assetFileList = fs.readdirSync(assetTopDir);
-  
+
       assetFileList.forEach(assetFileDir => {
-  
-          componentDir = path.resolve(`src/app/_components/override-sdk/${category}/${assetFileDir}`);
-          assetDir = path.resolve(`tests/assets/components/createAll/override-sdk/${category}/${assetFileDir}`);
-  
-          if (fs.lstatSync(assetDir).isFile()) {
-            return;
-            
-          }
-  
-          // get files of directory
-          componentFiles = fs.readdirSync(componentDir);
-  
-          // get files of assets
-          // const assetFiles = fs.readdirSync(assetDir);
-  
-          // compare
-          componentFiles.forEach(file => {
-            const componentFilePath = path.join(componentDir, file);
-            const assetFilePath = path.join(assetDir, file);
-  
-            const componentFileData = fs.readFileSync(componentFilePath, { encoding: 'utf8' });
-            const assetFileData = fs.readFileSync(assetFilePath, { encoding: 'utf8' });
-  
-            expect(componentFileData).toEqual(assetFileData);
-          });
+        componentDir = path.resolve(`src/app/_components/override-sdk/${category}/${assetFileDir}`);
+        assetDir = path.resolve(`tests/assets/components/createAll/override-sdk/${category}/${assetFileDir}`);
+
+        if (fs.lstatSync(assetDir).isFile()) {
+          return;
+        }
+
+        // get files of directory
+        componentFiles = fs.readdirSync(componentDir);
+
+        // get files of assets
+        // const assetFiles = fs.readdirSync(assetDir);
+
+        // compare
+        componentFiles.forEach(file => {
+          const componentFilePath = path.join(componentDir, file);
+          const assetFilePath = path.join(assetDir, file);
+
+          const componentFileData = fs.readFileSync(componentFilePath, { encoding: 'utf8' });
+          const assetFileData = fs.readFileSync(assetFilePath, { encoding: 'utf8' });
+
+          expect(componentFileData).toEqual(assetFileData);
+        });
       });
-    })
-
-  
-
+    });
   }, 20000);
-
 
   it('npm run deleteAll Local override', async () => {
     const script = `npm run deleteAll Local override Y`;
