@@ -35,7 +35,6 @@ describe('create build and delete local override', () => {
     const createOverrideFile = path.resolve(path.join(`src/app/_components/override-sdk/field/${fileName}`, `${fileName}.component.ts`));
     const doesOverrideExist = fs.existsSync(createOverrideFile);
     expect(doesOverrideExist).toBeTruthy();
-
   }, 20000);
 
   it('npm run buildComponent override', async () => {
@@ -47,8 +46,8 @@ describe('create build and delete local override', () => {
     expect(stdout).not.toBeNull();
     expect(stderr).not.toBeNull();
 
-    //expect(stdout).toContain(`${newFileNameConstellation} schema is valid`);
- //   expect(stdout).toContain('Compiled successfully.');
+    // expect(stdout).toContain(`${newFileNameConstellation} schema is valid`);
+    // expect(stdout).toContain('Compiled successfully.');
     // done();
   }, 30000);
 

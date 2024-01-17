@@ -8,9 +8,8 @@ describe('BundleSwatchComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ BundleSwatchComponent ]
-    })
-    .compileComponents();
+      declarations: [BundleSwatchComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

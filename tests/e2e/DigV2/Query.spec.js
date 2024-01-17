@@ -1,18 +1,15 @@
-/* eslint-disable no-template-curly-in-string */
-/* eslint-disable no-undef */
-
-const { test, expect } = require("@playwright/test");
-const config = require("../../config");
-const common = require("../../common");
+const { test, expect } = require('@playwright/test');
+const config = require('../../config');
+const common = require('../../common');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto("http://localhost:3500/portal");
+  await page.goto(config.config.baseUrl, { waitUntil: 'networkidle' });
 });
 
-test.describe("E2E test", () => {
-  test("should login, create case and run different test cases for Query", async ({ page }) => {
-    await common.Login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
+test.describe('E2E test', () => {
+  test('should login, create case and run different test cases for Query', async ({ page }) => {
+    await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
     /** Testing announcement banner presence */
     const announcementBanner = page.locator('h2:has-text("Announcements")');
@@ -23,7 +20,7 @@ test.describe("E2E test", () => {
     await expect(worklist).toBeVisible();
 
     /** Hovering over navbar */
-    const navbar = page.locator("app-navbar");
+    const navbar = page.locator('app-navbar');
     await navbar.locator('div[class="psdk-appshell-nav"]').hover();
 
     /** opening all case types */
@@ -63,7 +60,7 @@ test.describe("E2E test", () => {
     await selectedDisplayAs.click();
     await page.locator('mat-option > span:has-text("Table")').click();
 
-    const tableRows = page.locator("app-simple-table table tbody");
+    const tableRows = page.locator('app-simple-table table tbody');
     await expect(tableRows).toBeVisible();
   }, 10000);
 });

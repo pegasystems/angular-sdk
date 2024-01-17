@@ -8,4 +8,4 @@ import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
   providers: [provideRouter(routes), provideHttpClient(), provideAnimations(), { provide: APP_BASE_HREF, useValue: '/' }]
-}).catch((err) => console.error(err));
+}).catch(err => console.error(err));

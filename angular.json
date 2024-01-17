@@ -77,19 +77,19 @@
                 "glob": "*.*",
                 "input": "./src/assets/icons/",
                 "output": "./constellation/assets/icons"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/tinymce",
+                "output": "./tinymce"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": [],
+            "styles": ["src/styles.scss"],
+            "scripts": ["./node_modules/tinymce/tinymce.min.js"],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
-            "allowedCommonJsDependencies" : [
-              "downloadjs",
-              "rxjs/internal/observable/interval"
-            ]
+            "allowedCommonJsDependencies": ["downloadjs", "rxjs/internal/observable/interval"]
           },
           "configurations": {
             "production": {
@@ -145,14 +145,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/assets/mdi.svg"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/assets/mdi.svg"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         },

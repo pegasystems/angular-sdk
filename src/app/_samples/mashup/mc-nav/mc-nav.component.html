@@ -13,6 +13,6 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div *ngIf="bLoggedIn$ == true && bHasPConnect$ == true">
+<div *ngIf="bLoggedIn$ && bHasPConnect$">
   <app-main-screen [pConn$]="pConn$"></app-main-screen>
 </div>

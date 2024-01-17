@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-resolution-screen',
@@ -6,6 +6,4 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./resolution-screen.component.scss'],
   standalone: true
 })
-export class ResolutionScreenComponent implements OnInit {
-  ngOnInit(): void {}
-}
+export class ResolutionScreenComponent {}

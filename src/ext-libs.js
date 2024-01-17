@@ -1,6 +1,6 @@
 const extDefinition = [];
 
-const extWebpack = extDefinition.forEach((lib) => lib.export);
+const extWebpack = extDefinition.forEach(lib => lib.export);
 
 module.exports = { extDefinition, extWebpack };
 

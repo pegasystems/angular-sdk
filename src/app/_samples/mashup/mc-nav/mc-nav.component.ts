@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,15 +36,15 @@ declare global {
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatButtonModule, MainScreenComponent]
 })
-export class MCNavComponent implements OnInit {
+export class MCNavComponent implements OnInit, OnDestroy {
   starterPackVersion$: string = endpoints.SP_VERSION;
   pConn$: typeof PConnect;
 
-  applicationLabel: string = '';
-  bLoggedIn$: boolean = false;
-  bPConnectLoaded$: boolean = false;
-  bHasPConnect$: boolean = false;
-  isProgress$: boolean = false;
+  applicationLabel = '';
+  bLoggedIn$ = false;
+  bPConnectLoaded$ = false;
+  bHasPConnect$ = false;
+  isProgress$ = false;
 
   progressSpinnerSubscription: Subscription;
   resetPConnectSubscription: Subscription;
@@ -75,11 +75,11 @@ export class MCNavComponent implements OnInit {
     sessionStorage.clear();
 
     // handle showing and hiding the progress spinner
-    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe((message) => {
+    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => {
       this.showHideProgress(message.show);
     });
 
-    this.resetPConnectSubscription = this.rpcservice.getMessage().subscribe((message) => {
+    this.resetPConnectSubscription = this.rpcservice.getMessage().subscribe(message => {
       if (message.reset) {
         this.bPConnectLoaded$ = false;
 
@@ -133,7 +133,7 @@ export class MCNavComponent implements OnInit {
   }
 
   startMashup() {
-    PCore.onPCoreReady((renderObj) => {
+    PCore.onPCoreReady(renderObj => {
       console.log('PCore ready!');
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
@@ -156,7 +156,7 @@ export class MCNavComponent implements OnInit {
   initialRender(renderObj) {
     // Need to register the callback function for PCore.registerComponentCreator
     //  This callback is invoked if/when you call a PConnect createComponent
-    PCore.registerComponentCreator((c11nEnv) => {
+    PCore.registerComponentCreator(c11nEnv => {
       // debugger;
 
       // experiment with returning a PConnect that has deferenced the

@@ -1,18 +1,15 @@
-/* eslint-disable no-template-curly-in-string */
-/* eslint-disable no-undef */
-
-const { test, expect } = require("@playwright/test");
-const config = require("../../config");
-const common = require("../../common");
+const { test, expect } = require('@playwright/test');
+const config = require('../../config');
+const common = require('../../common');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto("http://localhost:3500/portal");
+  await page.goto(config.config.baseUrl, { waitUntil: 'networkidle' });
 });
 
-test.describe("E2E test", () => {
-  test("should login, create case and run different test cases for Case Reference", async ({ page }) => {
-    await common.Login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
+test.describe('E2E test', () => {
+  test('should login, create case and run different test cases for Case Reference', async ({ page }) => {
+    await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
     /** Testing announcement banner presence */
     const announcementBanner = page.locator('h2:has-text("Announcements")');
@@ -23,7 +20,7 @@ test.describe("E2E test", () => {
     await expect(worklist).toBeVisible();
 
     /** Hovering over navbar */
-    const navbar = page.locator("app-navbar");
+    const navbar = page.locator('app-navbar');
     await navbar.locator('div[class="psdk-appshell-nav"]').hover();
 
     // /** Creating a Query case-type which will be referred by Complex Fields case type */
@@ -34,11 +31,12 @@ test.describe("E2E test", () => {
     await queryCase.click();
 
     let modal = page.locator('div[id="dialog"]');
+    await modal.waitFor({ state: 'visible' });
 
     /** Value to be typed in the Name input */
-    const name = "John Doe";
+    const name = 'John Doe';
 
-    await modal.locator("input").type(name);
+    await modal.locator('input').fill(name);
     await modal.locator('button:has-text("submit")').click();
 
     // /** Storing case-id of the newly created Query case-type(s), will be used later */
@@ -55,8 +53,9 @@ test.describe("E2E test", () => {
     await queryCase.click();
 
     modal = page.locator('div[id="dialog"]');
+    await modal.waitFor({ state: 'visible' });
 
-    await modal.locator("input").type(name);
+    await modal.locator('input').fill(name);
     await modal.locator('button:has-text("submit")').click();
 
     caseID.push(await page.locator('div[id="caseId"]').textContent());
@@ -80,12 +79,12 @@ test.describe("E2E test", () => {
 
     /** Field sub category tests */
 
-    let selectedSubCategory = await page.locator('mat-select[data-test-id="c2adefb64c594c6b634b3be9a40f6c83"]');
+    const selectedSubCategory = await page.locator('mat-select[data-test-id="c2adefb64c594c6b634b3be9a40f6c83"]');
     await selectedSubCategory.click();
     await page.locator('mat-option > span:has-text("Field")').click();
 
     /** Dropdown-Local field type tests */
-    let selectedTestName = page.locator('mat-select[data-test-id="3e9562266329f358c8fad0ce1094def9"]');
+    const selectedTestName = page.locator('mat-select[data-test-id="3e9562266329f358c8fad0ce1094def9"]');
     await selectedTestName.click();
     await page.locator('mat-option > span:has-text("Dropdown-Local")').click();
 
@@ -146,7 +145,7 @@ test.describe("E2E test", () => {
     await page.locator('mat-option > span:has-text("ListOfRecords")').click();
 
     const selectedRow2 = await page.locator(`tr:has-text("${caseID[1]}")`);
-    await selectedRow2.locator("mat-checkbox").click();
+    await selectedRow2.locator('mat-checkbox').click();
 
     await page.locator('button:has-text("Next")').click();
 

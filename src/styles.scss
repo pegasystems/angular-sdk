@@ -32,13 +32,13 @@ a.mat-mdc-menu-item > mat-icon {
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled),
 .mat-mdc-form-field-focus-overlay {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
-.mat-sort-header-content{
+.mat-sort-header-content {
   justify-content: space-between;
   width: 100%;
 }
-.mat-sort-header-container{
+.mat-sort-header-container {
   justify-content: space-between;
 }

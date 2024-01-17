@@ -3,8 +3,10 @@
   "extends": ["@pega"],
   "parserOptions": {
     "project": "tsconfig.json",
-    "ecmaVersion": 13,
-    "warnOnUnsupportedTypeScriptVersion": false
+    "ecmaVersion": 13
+  },
+  "globals": {
+    "PCore": "readonly"
   },
   "settings": {
     "import/resolver": {
@@ -14,6 +16,10 @@
       }
     }
   },
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "ignorePatterns": [
     "node_modules",
     "packages/*/lib",
@@ -21,7 +27,8 @@
     ".storybook/public",
     "src/app/_components/custom-constellation",
     "src/app/_components/custom-sdk/**/demo.stories.*",
-    "src/app/_components/custom-sdk/**/mock.stories.*"
+    "src/app/_components/custom-sdk/**/mock.stories.*",
+    "**/**/*.json"
   ],
   "rules": {
     // Prettier recommends running separately from a linter.
@@ -29,15 +36,8 @@
     "prettier/prettier": "off",
 
     // Disable rules from shared configs we're not ready for yet.
-    "sonarjs/cognitive-complexity": "off",
-    "sonarjs/no-identical-functions": "off",
+    "sonarjs/cognitive-complexity": ["warn", 20],
     "sonarjs/no-duplicate-string": "off",
-    "sonarjs/no-nested-template-literals": "off",
-
-    //
-    // JA - Override some default lint handling here
-    "@typescript-eslint/array-type": ["error", { "default": "generic" }],
-    // "import/extensions": ["warn", "never"],    // Turning off for now (see below)
 
     //
     // Initial release: turning these off; phase in to "warn" or "error" over time
@@ -53,12 +53,9 @@
     "import/no-unresolved": "off",
     "import/no-useless-path-segments": "off",
     "import/order": "off",
-    "import/prefer-default-export": "off",
-    "import/no-relative-packages": "off",
 
-    "no-else-return": "off",
-    "no-restricted-syntax": "off",
-    "no-underscore-dangle": "off",
+    "no-underscore-dangle": "off", // TODO : adhere to standard naming
+    "no-restricted-syntax": "warn", // TODO : fix for-in loops
 
     "jsx-a11y/alt-text": "off",
     "jsx-a11y/anchor-is-valid": "off",
@@ -66,79 +63,24 @@
     "jsx-a11y/label-has-associated-control": "off",
     "jsx-a11y/no-static-element-interactions": "off",
 
-    "sonarjs/prefer-immediate-return": "off",
-    "sonarjs/no-redundant-boolean": "off",
-
-    "@typescript-eslint/dot-notation": "off", // prefer warn but needs different parserOptions
+    "class-methods-use-this": "off", // TODO ***
     "@typescript-eslint/naming-convention": "off", // prefer warn but needs different parserOptions
     "@typescript-eslint/ban-types": "off", // also, see override below
 
-    //
-    // Initial release: set to error
-    "@typescript-eslint/no-inferrable-types": "off",
+    "import/no-relative-packages": "off", // arnab
+
+    // TODO: Need to be fixed
+    "guard-for-in": "off",
     "eqeqeq": "off",
     "no-alert": "off",
     "no-console": "off",
-    "no-fallthrough": "error",
-    "no-undef": "off",
-    "no-unused-vars": "off",
-    "no-var": "error",
-    "prefer-const": "error",
-    "yoda": "error",
-    "no-irregular-whitespace": "error",
-    "no-empty": "off",
-    "no-new-object": "error",
-
-    "react/jsx-fragments": "error",
-
-    "import/no-mutable-exports": "error",
-    "sonarjs/max-switch-cases": "error",
-    "sonarjs/no-collapsible-if": "error",
-    "sonarjs/no-all-duplicated-branches": "error",
-    "sonarjs/no-duplicated-branches": "error",
-    "sonarjs/no-gratuitous-expressions": "error",
-    "sonarjs/no-ignored-return": "error",
-    "sonarjs/no-small-switch": "off",
-    "sonarjs/prefer-object-literal": "error",
-    "sonarjs/prefer-single-boolean-return": "error",
-    "@typescript-eslint/no-shadow": "error",
-    "array-callback-return": "error",
-    "camelcase": "error",
-    "default-case": "error",
-    "func-names": "error",
-    "no-case-declarations": "error",
-    "no-lonely-if": "error",
-    "no-nested-ternary": "error",
-    "no-plusplus": "off",
-    "no-restricted-globals": "error",
-    "no-restricted-properties": "error",
-    "no-shadow": "error",
-    "radix": "error",
-    "spaced-comment": "error",
-
-    "import/newline-after-import": "error",
-    "sonarjs/no-nested-switch": "error",
-    "@typescript-eslint/no-array-constructor": "error",
-    "@typescript-eslint/no-empty-function": "error",
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-useless-constructor": "error",
-    "@typescript-eslint/no-unused-expressions": "error",
-    "class-methods-use-this": "off",
-    "guard-for-in": "off",
-    "no-unneeded-ternary": "error",
-    "no-unused-expressions": "error",
-    "operator-assignment": "error",
-    "prefer-template": "error",
-    "vars-on-top": "error",
-
-    "no-use-before-define": "off", // doc for @typescript-eslint/no-use-before-define says to turn off the base implementation
-    "@typescript-eslint/no-use-before-define": "error"
+    "no-plusplus": "off"
   },
   "overrides": [
     {
       "files": "*.@(ts|tsx)",
       "rules": {
-        "@typescript-eslint/method-signature-style": ["off", "property"],
+        "@typescript-eslint/method-signature-style": ["error", "property"],
         // "@typescript-eslint/ban-types": [
         //   "warn",
         //   {
@@ -176,6 +118,38 @@
       "rules": {
         "import/prefer-default-export": ["off"]
       }
+    },
+    // angular specific lint rules
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "extends": ["plugin:@angular-eslint/recommended", "plugin:@angular-eslint/template/process-inline-templates"],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/no-output-on-prefix": "off",
+        "import/prefer-default-export": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
     }
   ]
 }

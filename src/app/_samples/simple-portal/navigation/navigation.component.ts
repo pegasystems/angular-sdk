@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,14 +36,14 @@ declare global {
     MainContentComponent
   ]
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnDestroy {
   pConn$: typeof PConnect;
 
-  bLoggedIn$: boolean = false;
-  bPConnectLoaded$: boolean = false;
-  bHasPConnect$: boolean = false;
-  userName$: string = '';
-  isProgress$: boolean = false;
+  bLoggedIn$ = false;
+  bPConnectLoaded$ = false;
+  bHasPConnect$ = false;
+  userName$ = '';
+  isProgress$ = false;
   progressSpinnerSubscription: Subscription;
   resetPConnectSubscription: Subscription;
 
@@ -110,6 +110,7 @@ export class NavigationComponent implements OnInit {
     });
   }
 
+  // eslint-disable-next-line sonarjs/no-identical-functions
   assignmentFinished() {
     setTimeout(() => {
       // update the worklist
@@ -122,7 +123,7 @@ export class NavigationComponent implements OnInit {
   }
 
   startMashup() {
-    PCore.onPCoreReady((renderObj) => {
+    PCore.onPCoreReady(renderObj => {
       // Initialize the SdkComponentMap (local and pega-provided)
       getSdkComponentMap(localSdkComponentMap).then((theComponentMap: any) => {
         console.log(`SdkComponentMap initialized`, theComponentMap);
@@ -141,7 +142,7 @@ export class NavigationComponent implements OnInit {
 
     // Need to register the callback function for PCore.registerComponentCreator
     //  This callback is invoked if/when you call a PConnect createComponent
-    PCore.registerComponentCreator((c11nEnv) => {
+    PCore.registerComponentCreator(c11nEnv => {
       // debugger;
 
       // experiment with returning a PConnect that has deferenced the

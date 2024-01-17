@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
@@ -28,26 +28,26 @@ declare global {
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule, ComponentMapperComponent]
 })
-export class TopAppMashupComponent implements OnInit {
+export class TopAppMashupComponent implements OnInit, OnDestroy {
   pConn$: typeof PConnect;
 
   sComponentName$: string;
-  arChildren$: Array<any>;
-  bPCoreReady$: boolean = false;
+  arChildren$: any[];
+  bPCoreReady$ = false;
 
   store: any;
 
-  bLoggedIn$: boolean = false;
-  bPConnectLoaded$: boolean = false;
-  isProgress$: boolean = false;
+  bLoggedIn$ = false;
+  bPConnectLoaded$ = false;
+  isProgress$ = false;
 
   progressSpinnerSubscription: Subscription;
   resetPConnectSubscription: Subscription;
 
   spinnerTimer: any;
 
-  portalSelectionScreen: boolean = false;
-  availablePortals: Array<string>;
+  portalSelectionScreen = false;
+  availablePortals: string[];
   defaultPortalName: string;
 
   constructor(
@@ -69,7 +69,7 @@ export class TopAppMashupComponent implements OnInit {
 
   initialize() {
     // handle showing and hiding the progress spinner
-    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe((message) => {
+    this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => {
       this.showHideProgress(message.show);
     });
 
@@ -99,7 +99,7 @@ export class TopAppMashupComponent implements OnInit {
   }
 
   startPortal() {
-    PCore.onPCoreReady((renderObj) => {
+    PCore.onPCoreReady(renderObj => {
       // Check that we're seeing the PCore version we expect
       compareSdkPCoreVersions();
 
@@ -131,7 +131,7 @@ export class TopAppMashupComponent implements OnInit {
       this.portalSelectionScreen = true;
       this.defaultPortalName = defaultPortal;
       // Getting current user's access group's available portals list other than excluded portals (relies on Traditional DX APIs)
-      getAvailablePortals().then((portals: Array<string>) => {
+      getAvailablePortals().then((portals: string[]) => {
         this.availablePortals = portals;
       });
     }
@@ -142,7 +142,7 @@ export class TopAppMashupComponent implements OnInit {
 
     // Need to register the callback function for PCore.registerComponentCreator
     // This callback is invoked if/when you call a PConnect createComponent
-    PCore.registerComponentCreator((c11nEnv) => {
+    PCore.registerComponentCreator(c11nEnv => {
       // experiment with returning a PConnect that has deferenced the
       // referenced View if the c11n is a 'reference' component
       // const compType = c11nEnv.getPConnect().getComponentName();
@@ -169,7 +169,7 @@ export class TopAppMashupComponent implements OnInit {
 
     this.pConn$ = props.getPConnect();
     this.sComponentName$ = this.pConn$.getComponentName();
-    this.arChildren$ = this.pConn$.getChildren() as Array<any>;
+    this.arChildren$ = this.pConn$.getChildren() as any[];
     this.bPCoreReady$ = true;
   }
 

@@ -1,11 +1,8 @@
-/* eslint-disable no-template-curly-in-string */
-/* eslint-disable no-undef */
-
 /** We're testing the visibility of tabs within the Case Summary area in the Case View here, more tests to be added in the future. */
 
-const { test, expect } = require("@playwright/test");
-const config = require("../../config");
-const common = require("../../common");
+const { test, expect } = require('@playwright/test');
+const config = require('../../config');
+const common = require('../../common');
 
 // These values represent the visibility(as authored in the app) of the tabs
 const detailsTabVisible = false;
@@ -13,12 +10,12 @@ const caseHistoryTabVisible = true;
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto("http://localhost:3500/portal");
+  await page.goto('http://localhost:3500/portal');
 });
 
-test.describe("E2E test", () => {
-  test("should login, create case and run different test cases for Case View", async ({ page }) => {
-    await common.Login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
+test.describe('E2E test', () => {
+  test('should login, create case and run different test cases for Case View', async ({ page }) => {
+    await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
     /** Testing announcement banner presence */
     const announcementBanner = page.locator('h2:has-text("Announcements")');
@@ -29,7 +26,7 @@ test.describe("E2E test", () => {
     await expect(worklist).toBeVisible();
 
     /** Click on the Create Case button */
-    let createCase = page.locator('mat-list-item[id="create-case-button"]');
+    const createCase = page.locator('mat-list-item[id="create-case-button"]');
     await createCase.click();
 
     /** Creating a Complex Fields case-type */

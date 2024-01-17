@@ -6,12 +6,12 @@ const endpoints = require('../../../sdk-config.json');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto('http://localhost:3500/portal');
+  await page.goto(config.config.baseUrl, { waitUntil: 'networkidle' });
 });
 let caseID;
 test.describe('E2E test', () => {
   test('should login, create and send for discount', async ({ page }) => {
-    await common.Login(config.config.apps.mediaCo.rep.username, config.config.apps.mediaCo.rep.password, page);
+    await common.login(config.config.apps.mediaCo.rep.username, config.config.apps.mediaCo.rep.password, page);
 
     const announcementBanner = page.locator('h2:has-text("Announcements")');
     await expect(announcementBanner).toBeVisible();
@@ -30,15 +30,15 @@ test.describe('E2E test', () => {
 
     const firstNameInput = page.locator('input[data-test-id="BC910F8BDF70F29374F496F05BE0330C"]');
     await firstNameInput.click();
-    await firstNameInput.type('John');
+    await firstNameInput.fill('John');
 
     const middleNameInput = page.locator('input[data-test-id="D3691D297D95C48EF1A2B7D6523EF3F0"]');
     await middleNameInput.click();
-    await middleNameInput.type('');
+    await middleNameInput.fill('');
 
     const lastNameInput = page.locator('input[data-test-id="77587239BF4C54EA493C7033E1DBF636"]');
     await lastNameInput.click();
-    await lastNameInput.type('Doe');
+    await lastNameInput.fill('Doe');
 
     const suffix = page.locator('input[data-test-id="56E6DDD1CB6CEC596B433440DFB21C17"]');
     await suffix.click();
@@ -46,22 +46,22 @@ test.describe('E2E test', () => {
 
     const emailInput = page.locator('input[data-test-id="CE8AE9DA5B7CD6C3DF2929543A9AF92D"]');
     await emailInput.click();
-    await emailInput.type('john@doe.com');
+    await emailInput.fill('john@doe.com');
 
     const serviceDateInput = page.locator('input[data-test-id="E0BA356AE552ACD4326D51E61F4279AC"]');
     await serviceDateInput.click();
     const futureDate = common.getFutureDate();
-    await serviceDateInput.type(futureDate);
+    await serviceDateInput.fill(futureDate);
 
     await page.locator('button:has-text("submit")').click();
 
     const streetInput = page.locator('input[data-test-id="D61EBDD8A0C0CD57C22455E9F0918C65"]');
     await streetInput.click();
-    await streetInput.type('Main St');
+    await streetInput.fill('Main St');
 
     const cityInput = page.locator('input[data-test-id="57D056ED0984166336B7879C2AF3657F"]');
     await cityInput.click();
-    await cityInput.type('Cambridge');
+    await cityInput.fill('Cambridge');
 
     caseID = await page.locator('div[id="caseId"]').textContent();
 
@@ -71,13 +71,13 @@ test.describe('E2E test', () => {
 
     const postalCodeInput = page.locator('input[data-test-id="572ED696F21038E6CC6C86BB272A3222"]');
     await postalCodeInput.click();
-    await postalCodeInput.type('02142');
+    await postalCodeInput.fill('02142');
 
     const phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1F8261D17452A959E013666C5DF45E07"]');
     const countrySelector = phone.locator('button.country-selector');
     await countrySelector.click();
     await page.locator('div.flag.US >> nth=0').click();
-    await phone.locator('input[type="tel"]').type('(201) 555-0123');
+    await phone.locator('input[type="tel"]').fill('(201) 555-0123');
 
     await page.locator('button:has-text("submit")').click();
 
@@ -100,7 +100,7 @@ test.describe('E2E test', () => {
 
     const otherNotes = page.locator('textarea[data-test-id="F4C6F851B00D5518BF888815DE279ABA"]');
     await otherNotes.click();
-    await otherNotes.type('Thanks for the service!');
+    await otherNotes.fill('Thanks for the service!');
 
     const sendToMgr = page.locator('mat-checkbox[data-test-id="C3B43E79AEC2D689F0CF97BD6AFB7DC4"]');
     await sendToMgr.click();
@@ -110,7 +110,8 @@ test.describe('E2E test', () => {
     const attachInputId = await page.locator('div[id="attachment-container"] >> input').getAttribute('id');
     await page.setInputFiles(`#${attachInputId}`, filePath);
 
-    const PCoreVersion = await page.evaluate(() => window.PCore.getPCoreVersion());
+    const pCoreVersion = await page.evaluate(() => window.PCore.getPCoreVersion());
+    const isInfinity23OrHigher = ['8.23.0', '23.1.1'].includes(pCoreVersion);
 
     await Promise.all([
       page.waitForResponse(
@@ -126,7 +127,7 @@ test.describe('E2E test', () => {
       page.waitForResponse(
         `${endpoints.serverConfig.infinityRestServerUrl}${
           endpoints.serverConfig.appAlias ? `/app/${endpoints.serverConfig.appAlias}` : ''
-        }/api/application/v2/cases/${currentCaseID}/attachments${PCoreVersion.includes('8.23') ? '?includeThumbnail=false' : ''}`
+        }/api/application/v2/cases/${currentCaseID}/attachments${isInfinity23OrHigher ? '?includeThumbnail=false' : ''}`
       )
     ]);
 
@@ -138,7 +139,7 @@ test.describe('E2E test', () => {
   }, 10000);
 
   test('should enter a discount value($) and send to tech', async ({ page }) => {
-    await common.Login(config.config.apps.mediaCo.manager.username, config.config.apps.mediaCo.manager.password, page);
+    await common.login(config.config.apps.mediaCo.manager.username, config.config.apps.mediaCo.manager.password, page);
 
     const announcementBanner = page.locator('h2:has-text("Announcements")');
     await expect(announcementBanner).toBeVisible();
@@ -151,7 +152,7 @@ test.describe('E2E test', () => {
 
     const mgrDiscountInput = page.locator('input[data-test-id="D69ECA63310344EDB0D0F9881CF9B662"]');
 
-    await mgrDiscountInput.type('20');
+    await mgrDiscountInput.fill('20');
 
     await page.locator('button:has-text("submit")').click();
 
@@ -159,7 +160,7 @@ test.describe('E2E test', () => {
   }, 10000);
 
   test('should modify(if required) the actual services/packages to be installed and resolve the case', async ({ page }) => {
-    await common.Login(config.config.apps.mediaCo.tech.username, config.config.apps.mediaCo.tech.password, page);
+    await common.login(config.config.apps.mediaCo.tech.username, config.config.apps.mediaCo.tech.password, page);
 
     const announcementBanner = page.locator('h2:has-text("Announcements")');
     await expect(announcementBanner).toBeVisible();
@@ -182,7 +183,7 @@ test.describe('E2E test', () => {
   }, 10000);
 
   test('should show available portals for admin login', async ({ page }) => {
-    await common.Login(config.config.apps.mediaCo.admin.username, config.config.apps.mediaCo.admin.password, page);
+    await common.login(config.config.apps.mediaCo.admin.username, config.config.apps.mediaCo.admin.password, page);
 
     const defaultPortalErrorMessage = page.locator('div[data-test-id="defaultPortalErrorMessage"]');
     await expect(defaultPortalErrorMessage).toBeVisible();

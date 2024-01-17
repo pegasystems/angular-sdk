@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BundleSwatchComponent, ComponentMapperComponent, ProgressSpinnerService, ServerConfigService } from '@pega/angular-sdk-library';
 
@@ -11,15 +11,15 @@ import { ResolutionScreenComponent } from '../resolution-screen/resolution-scree
   standalone: true,
   imports: [CommonModule, BundleSwatchComponent, ComponentMapperComponent, ResolutionScreenComponent]
 })
-export class MainScreenComponent implements OnInit {
+export class MainScreenComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
 
   firstConfig$: any;
   secondConfig$: any;
   thirdConfig$: any;
-  showTriplePlayOptions$: boolean = true;
-  showPega$: boolean = false;
-  showResolution$: boolean = false;
+  showTriplePlayOptions$ = true;
+  showPega$ = false;
+  showResolution$ = false;
 
   constructor(
     private psservice: ProgressSpinnerService,
@@ -102,7 +102,7 @@ export class MainScreenComponent implements OnInit {
     this.showTriplePlayOptions$ = false;
     this.showPega$ = true;
 
-    this.scservice.getSdkConfig().then((sdkConfig) => {
+    this.scservice.getSdkConfig().then(sdkConfig => {
       let mashupCaseType = sdkConfig.serverConfig.appMashupCaseType;
       if (!mashupCaseType) {
         const caseTypes = PCore.getEnvironmentInfo().environmentInfoObject.pyCaseTypeList;
