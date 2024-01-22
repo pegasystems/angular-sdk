@@ -150,6 +150,26 @@
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
+    },
+    {
+      "files": ["**/custom-constellation/**"],
+      "rules": {
+        "eqeqeq": "off",
+        "no-alert": "off",
+        "no-console": "off",
+        "no-fallthrough": "error",
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-var": "off",
+        "yoda": "error",
+        "no-irregular-whitespace": "off",
+        "no-empty": "off",
+        "no-new-object": "off",
+        "@typescript-eslint/no-inferrable-types": "error",
+        // "@typescript-eslint/array-type": ["error", { "default": "generic" }],
+        "@typescript-eslint/array-type": "off",
+        "sonarjs/cognitive-complexity": ["warn", 45]
+      }
     }
   ]
 }
