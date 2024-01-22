@@ -2,6 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "jsx": "react",
     "typeRoots": ["node_modules/@types", "node_modules/@pega"],
     "types": ["pcore-pconnect-typedefs", "jasmine"],
     "baseUrl": "./",
