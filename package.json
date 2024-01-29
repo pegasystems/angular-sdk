@@ -54,8 +54,8 @@
     "mapAll": "dx-component-builder-sdk mapAll && npm run fix:format",
     "override": "dx-component-builder-sdk override",
     "overrideAll": "dx-component-builder-sdk overrideAll",
-    "publish": "npm run fix:format && dx-component-builder-sdk publish",
-    "publishAll": "npm run fix:format && dx-component-builder-sdk publishAll",
+    "publish": "npm run fix:format && dx-component-builder-sdk publish && npm run fix:format",
+    "publishAll": "npm run fix:format && dx-component-builder-sdk publishAll && npm run fix:format",
     "rename": "dx-component-builder-sdk rename",
     "scanAndFix": "dx-component-builder-sdk scanAndFix && npm run fix:format",
     "startStorybook": "ng run angularsdk:storybook"
