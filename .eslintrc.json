@@ -25,9 +25,8 @@
     "packages/*/lib",
     "!.storybook",
     ".storybook/public",
-    "src/app/_components/custom-constellation",
     "src/app/_components/custom-sdk/**/demo.stories.*",
-    "src/app/_components/custom-sdk/**/mock.stories.*",
+    "src/app/_components/custom-sdk/**/mock.*",
     "**/**/*.json"
   ],
   "rules": {
@@ -151,8 +150,20 @@
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     },
+    // associated components eslint rules to match DXCB
     {
-      "files": ["**/custom-constellation/**"],
+      "files": ["**/custom-constellation/**/*.@(js|jsx)"],
+      "rules": {
+        "import/no-relative-packages": "error",
+        "@typescript-eslint/no-shadow": "error",
+        "react/jsx-fragments": "off",
+        "no-undef": "error",
+        "no-console": "error",
+        "sonarjs/cognitive-complexity": ["warn", 50]
+      }
+    },
+    {
+      "files": ["**/custom-constellation/**/*.@(ts|tsx)"],
       "rules": {
         "eqeqeq": "off",
         "no-alert": "off",
@@ -165,6 +176,7 @@
         "no-irregular-whitespace": "off",
         "no-empty": "off",
         "no-new-object": "off",
+        "react/jsx-fragments": "off",
         "@typescript-eslint/no-inferrable-types": "error",
         // "@typescript-eslint/array-type": ["error", { "default": "generic" }],
         "@typescript-eslint/array-type": "off",
