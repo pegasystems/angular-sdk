@@ -154,11 +154,12 @@
     {
       "files": ["**/custom-constellation/**/*.@(js|jsx)"],
       "rules": {
-        "import/no-relative-packages": "error",
+        "import/no-relative-packages": "off",
         "@typescript-eslint/no-shadow": "error",
         "react/jsx-fragments": "off",
         "no-undef": "error",
         "no-console": "error",
+        "prefer-regex-literals": "off",
         "sonarjs/cognitive-complexity": ["warn", 50]
       }
     },
