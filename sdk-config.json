@@ -36,10 +36,8 @@
       "clientId": "10095186356008396159",
       "grantType": "authCode",
       "redirectUri": "https://localhost:4010/",
-      "_cert": "./keys/sdk-a.crt",
-      "_key": "./keys/sdk-a.key",
-      "cert": "/Users/gagnp/keys/private.crt",
-      "key": "/Users/gagnp/keys/private.key"
+      "cert": "./keys/sdk-a.crt",
+      "key": "./keys/sdk-a.key"
     },
     "componentDefaults": {
       "organization": "Pega",
