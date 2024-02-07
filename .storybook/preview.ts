@@ -10,6 +10,14 @@ class MockingAngularPConnectService {
     return {
       unsubscribeFn: () => {
         /* nothing */
+      },
+      actions: {
+        onChange: () => {
+          /* nothing */
+        },
+        onBlur: () => {
+          /* nothing */
+        }
       }
     };
   };
