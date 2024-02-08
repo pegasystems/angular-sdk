@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BundleSwatchComponent, ComponentMapperComponent, ProgressSpinnerService, ServerConfigService } from '@pega/angular-sdk-library';
+import { BundleSwatchComponent, ComponentMapperComponent, ProgressSpinnerService, ServerConfigService } from '@pega/angular-sdk-components';
 
 import { ResolutionScreenComponent } from '../resolution-screen/resolution-screen.component';
 

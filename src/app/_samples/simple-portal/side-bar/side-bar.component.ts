@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
-import { CaseService, DatapageService, GetLoginStatusService, ProgressSpinnerService, UpdateWorklistService } from '@pega/angular-sdk-library';
+import { CaseService, DatapageService, GetLoginStatusService, ProgressSpinnerService, UpdateWorklistService } from '@pega/angular-sdk-components';
 
 @Component({
   selector: 'app-side-bar',

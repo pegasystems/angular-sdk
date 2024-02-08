@@ -1,5 +1,5 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AngularPConnectService, getSdkComponentMap } from '@pega/angular-sdk-library';
+import { AngularPConnectService, getSdkComponentMap } from '@pega/angular-sdk-components';
 import { Preview, applicationConfig } from '@storybook/angular';
 
 getSdkComponentMap();

@@ -17,7 +17,7 @@ import {
   compareSdkPCoreVersions,
   endpoints,
   getSdkComponentMap
-} from '@pega/angular-sdk-library';
+} from '@pega/angular-sdk-components';
 
 import { MainScreenComponent } from '../main-screen/main-screen.component';
 import localSdkComponentMap from '../../../../../sdk-local-component-map';
