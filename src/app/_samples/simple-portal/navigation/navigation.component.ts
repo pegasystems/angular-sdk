@@ -8,7 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 
 import { loginIfNecessary, logout } from '@pega/auth/lib/sdk-auth-manager';
-import { ServerConfigService, UpdateWorklistService, compareSdkPCoreVersions, getSdkComponentMap } from '@pega/angular-sdk-library';
+import { ServerConfigService, UpdateWorklistService, compareSdkPCoreVersions, getSdkComponentMap } from '@pega/angular-sdk-components';
 
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { MainContentComponent } from '../main-content/main-content.component';

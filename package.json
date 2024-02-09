@@ -77,7 +77,7 @@
     "@angular/router": "^16.2.12",
     "@mdi/angular-material": "^7.2.96",
     "@mdi/svg": "^7.4.47",
-    "@pega/angular-sdk-library": "file:pega-angular-sdk-library-8.23.10.tgz",
+    "@pega/angular-sdk-components": "file:pega-angular-sdk-components-8.23.10.tgz",
     "@pega/auth": "^0.1.6",
     "@pega/constellationjs": "~23.1.1",
     "@pega/cosmos-react-condition-builder": "^4.2.0",
