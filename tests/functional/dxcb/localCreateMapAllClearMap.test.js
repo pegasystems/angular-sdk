@@ -197,7 +197,7 @@ describe('create mapAll clearMap custom local', () => {
     const mapDataAng = fs.readFileSync(pegaLocalAngularComponentMapPath, { encoding: 'utf8' });
 
     // blank map
-    const blankMap = path.join(path.resolve(), 'node_modules/@pega/angular-sdk-library', 'sdk-local-component-map.ts');
+    const blankMap = path.join(path.resolve(), 'node_modules/@pega/angular-sdk-components', 'sdk-local-component-map.ts');
     const blankMapData = fs.readFileSync(blankMap, { encoding: 'utf8' });
 
     expect(mapDataAng).toEqual(blankMapData);

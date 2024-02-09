@@ -10,7 +10,7 @@ import {
   ServerConfigService,
   compareSdkPCoreVersions,
   getSdkComponentMap
-} from '@pega/angular-sdk-library';
+} from '@pega/angular-sdk-components';
 
 import localSdkComponentMap from '../../../../../sdk-local-component-map';
 

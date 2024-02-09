@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { endpoints } from '@pega/angular-sdk-library';
+import { endpoints } from '@pega/angular-sdk-components';
 import { TopAppMashupComponent } from './_samples/full-portal/top-app-mashup/top-app-mashup.component';
 import { NavigationComponent } from './_samples/simple-portal/navigation/navigation.component';
 import { MCNavComponent } from './_samples/mashup/mc-nav/mc-nav.component';

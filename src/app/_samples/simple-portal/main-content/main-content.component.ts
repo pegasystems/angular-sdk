@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentMapperComponent } from '@pega/angular-sdk-library';
+import { ComponentMapperComponent } from '@pega/angular-sdk-components';
 
 @Component({
   selector: 'app-main-content',
