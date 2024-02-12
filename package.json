@@ -43,7 +43,7 @@
     "test-report": "playwright show-report",
     "_comment_DXCB_commands": "The following are public commands to run the integrated DX Component Builder",
     "authenticate": "dx-component-builder-sdk authenticate",
-    "buildAllComponents": " dx-component-builder-sdk buildAllComponents",
+    "buildAllComponents": "dx-component-builder-sdk buildAllComponents",
     "buildComponent": "dx-component-builder-sdk buildComponent",
     "clearMap": "dx-component-builder-sdk clearMap",
     "create": "dx-component-builder-sdk create",
