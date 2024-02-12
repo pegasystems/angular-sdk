@@ -1,6 +1,6 @@
 {
   "name": "angular-sdk",
-  "version": "8.23.10",
+  "version": "23.1.10",
   "scripts": {
     "build:prod": "run-p -l lint prod-build-angularsdk",
     "build:prod:ci": "npm run clean && npm install && npm run build:prod",
@@ -77,7 +77,7 @@
     "@angular/router": "^16.2.12",
     "@mdi/angular-material": "^7.2.96",
     "@mdi/svg": "^7.4.47",
-    "@pega/angular-sdk-components": "file:pega-angular-sdk-components-8.23.10.tgz",
+    "@pega/angular-sdk-components": "file:pega-angular-sdk-components-23.1.10.tgz",
     "@pega/auth": "^0.1.6",
     "@pega/constellationjs": "~23.1.1",
     "@pega/cosmos-react-condition-builder": "^4.2.0",
@@ -107,7 +107,7 @@
     "@angular/cli": "^16.2.11",
     "@angular/compiler-cli": "^16.2.12",
     "@angular/language-service": "^16.2.12",
-    "@pega/angular-sdk-overrides": "file:pega-angular-sdk-overrides-8.23.10.tgz",
+    "@pega/angular-sdk-overrides": "file:pega-angular-sdk-overrides-23.1.10.tgz",
     "@pega/configs": "^0.6.0",
     "@pega/dx-component-builder-sdk": "file:pega-dx-component-builder-sdk-23.1.12.tgz",
     "@pega/eslint-config": "^0.7.1",
