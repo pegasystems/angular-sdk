@@ -1,15 +1,16 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BundleSwatchComponent, ComponentMapperComponent, ProgressSpinnerService, ServerConfigService } from '@pega/angular-sdk-components';
+import { ComponentMapperComponent, ProgressSpinnerService, ServerConfigService } from '@pega/angular-sdk-components';
 
 import { ResolutionScreenComponent } from '../resolution-screen/resolution-screen.component';
+import { BundleSwatchComponent } from '../bundle-swatch/bundle-swatch.component';
 
 @Component({
   selector: 'app-main-screen',
   templateUrl: './main-screen.component.html',
   styleUrls: ['./main-screen.component.scss'],
   standalone: true,
-  imports: [CommonModule, BundleSwatchComponent, ComponentMapperComponent, ResolutionScreenComponent]
+  imports: [CommonModule, BundleSwatchComponent, ResolutionScreenComponent, ComponentMapperComponent]
 })
 export class MainScreenComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
