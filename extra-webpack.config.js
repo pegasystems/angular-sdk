@@ -1,5 +1,5 @@
 // eslint-disable-next-line strict
-const ExternalsManifest = require('./utils/externalsManifest');
+const ExternalsManifest = require('./scripts/externalsManifest');
 const extLibs = require('./src/ext-libs');
 
 // comment this code out, if you have an "ENOENT: no such file or directory" build error and re-build
