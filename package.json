@@ -107,7 +107,7 @@
     "@angular/language-service": "^16.2.12",
     "@pega/angular-sdk-overrides": "file:pega-angular-sdk-overrides-23.1.10.tgz",
     "@pega/configs": "^0.6.0",
-    "@pega/dx-component-builder-sdk": "file:pega-dx-component-builder-sdk-23.1.12.tgz",
+    "@pega/dx-component-builder-sdk": "~0.23.10",
     "@pega/eslint-config": "^0.7.1",
     "@pega/pcore-pconnect-typedefs": "~2.1.1",
     "@pega/prettier-config": "^0.6.0",
