@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 /*@import "@angular/material/prebuilt-themes/pink-bluegrey.css";*/
+@import '@angular/material/theming';
 
+.theme {
+  @import './theme.scss';
+  @include angular-material-theme($my-theme);
+  @include generate-theme-vars($my-theme);
+}
 html,
 body {
   height: 100%;

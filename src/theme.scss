@@ -1,0 +1,78 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$my-primary: mat.define-palette(mat.$deep-purple-palette, 500);
+$my-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent
+    ),
+    typography: mat.define-typography-config(),
+    density: 0
+  )
+);
+
+$my-typography: mat.define-typography-config();
+@include mat.typography-hierarchy($my-typography);
+
+@mixin generate-theme-vars($theme) {
+  $primary: mat-color(map-get($theme, primary));
+  --app-primary-color: #{$primary};
+  --app-primary-dark-color: #4527a0;
+  --app-primary-light-color: #b499fc;
+  --app-secondary-color: #ffc400;
+  --app-neutral-color: grey;
+  --app-neutral-light-color: lightgrey;
+  --app-neutral-dark-color: #262626;
+  --app-error-light-color: #e57373;
+  --app-warning-color: #ff9800;
+  --app-warning-color-dark: #f57c00;
+
+  --app-background-color: whitesmoke;
+  --app-form-color: white;
+
+  --app-alert-error-color: rgb(82, 21, 8);
+  --app-alert-error-border-color: rgb(207, 53, 22);
+  --app-alert-warning-color: rgb(102, 60, 0);
+  --app-alert-warning-border-color: #ff9800;
+  --app-alert-success-color: rgb(2, 46, 9);
+  --app-alert-success-border-color: rgb(6, 116, 23);
+  --app-alert-info-color: rgb(13, 60, 97);
+  --app-alert-info-border-color: #2196f3;
+  --app-black-color: rgb(0, 0, 0);
+  --app-lavender-color: lavender;
+  --app-swatch-background: #fafafa;
+  --app-swatch-channel-background: #b00b55;
+  --app-swtach-package-background: #333000;
+  --app-banner-text-color: darkslategray;
+  --app-label-color: rgba(0, 0, 0, 0.54);
+  --app-label-selected-color: rgba(0, 0, 0, 0.87);
+  --app-dialog-background-color: rgba(100, 100, 100, 0.4);
+  --app-box-shadow-color: #777;
+  --app-multi-step-border-color: rgba(0, 0, 0, 0.12);
+  --app-table-header-background-color: #f5f5f5;
+  --app-pulse-message-background-color: #dddddd;
+  --app-pulse-message-color: #aaaaaa;
+  --app-assignment-status-color: darkslategray;
+  --app-divider-color: #414141;
+  --app-field-header-color: rgba(0, 0, 0, 0.8);
+  --app-details-status-color: #4c5a67;
+  --app-details-status-background: #e9eef3;
+
+  // svg filter colors that match above, go here to generate https://codepen.io/sosuke/pen/Pjoqqp
+  --app-primary-color-filter: invert(23%) sepia(23%) saturate(6785%) hue-rotate(250deg) brightness(93%) contrast(88%);
+  --app-primary-dark-color-filter: invert(19%) sepia(20%) saturate(6809%) hue-rotate(242deg) brightness(100%) contrast(106%);
+  --app-secondary-color-filter: invert(83%) sepia(31%) saturate(4626%) hue-rotate(360deg) brightness(103%) contrast(104%);
+  --app-neutral-color-filter: invert(55%) sepia(25%) saturate(0%) hue-rotate(269deg) brightness(87%) contrast(91%);
+  --app-neutral-light-color-filter: invert(69%) sepia(74%) saturate(0%) hue-rotate(205deg) brightness(102%) contrast(103%);
+  --app-white-color-filter: invert(100%) sepia(99%) saturate(0%) hue-rotate(144deg) brightness(109%) contrast(101%);
+
+  --app-nav-bg: #262626;
+  --app-nav-color: #d9d9d9;
+  --app-nav-width: 5rem;
+  --app-nav-width-expanded: 15.625rem;
+}
