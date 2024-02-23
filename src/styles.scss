@@ -5,7 +5,8 @@
 @import '@angular/material/theming';
 @import './containerStyles.scss';
 
-.theme {
+html,
+body {
   @import './theme.scss';
   @include angular-material-theme($my-theme);
   @include generate-theme-vars($my-theme);
@@ -49,4 +50,8 @@ a.mat-mdc-menu-item > mat-icon {
 }
 .mat-sort-header-container {
   justify-content: space-between;
+}
+
+.mdc-button {
+  line-height: inherit !important;
 }
