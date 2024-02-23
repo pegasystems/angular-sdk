@@ -1,0 +1,78 @@
+/* flow-conatiner styles */
+app-flow-container {
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  h5 {
+    font-size: 0.8rem;
+  }
+
+  .psdk-case-view-divider {
+    border-bottom: 0.0625rem solid var(--app-neutral-light-color);
+  }
+
+  .psdk-flow-container-top {
+    background-color: var(--app-form-color);
+    padding: 0rem 0.625rem;
+    border-radius: 0.3125rem;
+  }
+  .psdk-flow-container {
+    padding-left: 2.1875rem;
+  }
+
+  .psdk-message-card {
+    margin: 10px;
+  }
+
+  .psdk-icon {
+    width: 1.6rem;
+    display: inline-block;
+    padding: 0rem 0.6rem;
+    filter: var(--app-primary-color-filter);
+  }
+}
+
+/* modal-view-conatiner styles */
+app-modal-view-container {
+  .psdk-dialog-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--app-dialog-background-color);
+    position: fixed;
+    z-index: 999;
+    top: 0px;
+    left: 0px;
+  }
+
+  .psdk-modal-view-container-top {
+    display: block;
+    margin: auto;
+    min-width: 650px;
+    background-color: var(--app-form-color);
+    border: 1px solid var(--app-inverse-form-color);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px 3px var(--app-box-shadow-color);
+    overflow-y: auto;
+  }
+
+  .psdk-dialog-float {
+    position: absolute;
+  }
+}
+
+/* view-conatiner styles */
+app-view-container {
+  h3 {
+    margin-left: 0.8rem;
+  }
+
+  .psdk-view-container-top {
+    padding: 0;
+  }
+}
