@@ -7,3 +7,4 @@
 **/*.svg
 **/assets
 **/index.html
+**/storybook-*.html
