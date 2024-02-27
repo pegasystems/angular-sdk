@@ -57,6 +57,7 @@ test.describe('E2E test', () => {
 
     await modal.locator('input').fill(name);
     await modal.locator('button:has-text("submit")').click();
+    await expect(modal).not.toBeVisible();
 
     caseID.push(await page.locator('div[id="caseId"]').textContent());
 
@@ -131,19 +132,29 @@ test.describe('E2E test', () => {
     /** SingleRecord mode type tests */
     await selectedTestName.click();
     await page.locator('mat-option > span:has-text("SingleRecord")').click();
-    const selectedRow = await page.locator(`tr:has-text("${caseID[1]}")`);
+    let table = page.locator('table[id="list-view"]');
+    await expect(table.getByText(' Case ID ')).toBeVisible();
+    await page.locator('input[id="search"]').pressSequentially(caseID[0], { delay: 100 });
+    const selectedRow = await page.locator(`tr:has-text("${caseID[0]}")`);
     await selectedRow.locator("td >> input[type='radio']").click();
 
     await page.locator('button:has-text("Next")').click();
 
-    await expect(page.locator(`text="${caseID[1]}"`)).toBeVisible();
+    await expect(page.locator(`text="${caseID[0]}"`)).toBeVisible();
 
     await page.locator('button:has-text("Previous")').click();
 
     /** ListOfRecords mode type tests */
     await selectedTestName.click();
     await page.locator('mat-option > span:has-text("ListOfRecords")').click();
+    table = page.locator('table[id="list-view"]');
+    await expect(table.getByText(' Case ID ')).toBeVisible();
+    await page.locator('input[id="search"]').pressSequentially(caseID[0]);
+    const selectedRow1 = await page.locator(`tr:has-text("${caseID[0]}")`);
+    await selectedRow1.locator('mat-checkbox').click();
 
+    await page.locator('input[id="search"]').clear();
+    await page.locator('input[id="search"]').pressSequentially(caseID[1]);
     const selectedRow2 = await page.locator(`tr:has-text("${caseID[1]}")`);
     await selectedRow2.locator('mat-checkbox').click();
 
