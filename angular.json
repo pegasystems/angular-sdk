@@ -155,7 +155,7 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "angularsdk:build",
-            "compodocArgs": ["-d", "."],
+            "compodocArgs": ["-d", "./storybook-assets"],
             "port": 6006
           }
         },
