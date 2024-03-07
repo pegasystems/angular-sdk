@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {},
-  "files": ["src/main.ts", "src/polyfills.ts"],
+  "files": ["src/main.ts"],
   "include": ["src/**/*.ts"],
   "exclude": ["src/test.ts", "src/**/*.spec.ts", "src/**/mock.ts", "src/app/_components/custom-constellation/**"]
 }
