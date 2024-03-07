@@ -1,13 +1,22 @@
-// eslint-disable-next-line strict
-const ExternalsManifest = require('./scripts/externalsManifest');
-const extLibs = require('./src/ext-libs');
+'use strict';
+
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // comment this code out, if you have an "ENOENT: no such file or directory" build error and re-build
 // to see the real Angular errors, then uncomment onces fixed
 module.exports = config => {
   config.plugins.push(
-    new ExternalsManifest({
-      externals: extLibs.extDefinition
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: './node_modules/@pega/auth/lib/oauth-client/authDone.html',
+          to: './auth.html'
+        },
+        {
+          from: './node_modules/@pega/auth/lib/oauth-client/authDone.js',
+          to: './'
+        }
+      ]
     })
   );
   return config;

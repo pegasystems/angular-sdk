@@ -23,21 +23,11 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              {
-                "glob": "authDone.{html,js}",
-                "input": "./node_modules/@pega/auth/lib/oauth-client",
-                "output": "./"
-              },
-              {
-                "glob": "mdi.svg",
-                "input": "./node_modules/@mdi/angular-material",
-                "output": "./assets"
-              },
               {
                 "glob": "sdk-config.json",
                 "input": "./",
@@ -89,7 +79,7 @@
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
-            "allowedCommonJsDependencies": ["downloadjs", "rxjs/internal/observable/interval"]
+            "allowedCommonJsDependencies": ["downloadjs", "dayjs", "fast-deep-equal"]
           },
           "configurations": {
             "production": {
@@ -110,27 +100,27 @@
               ]
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "aot": true,
-              "extractLicenses": true,
               "vendorChunk": true,
-              "buildOptimizer": true
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
-          "options": {
-            "browserTarget": "angularsdk:build:development",
-            "port": 3500
-          },
           "configurations": {
             "production": {
               "browserTarget": "angularsdk:build:production"
+            },
+            "development": {
+              "browserTarget": "angularsdk:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -141,11 +131,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets", "src/assets/mdi.svg"],
+            "inlineStyleLanguage": "scss",
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
             "scripts": []
           }
