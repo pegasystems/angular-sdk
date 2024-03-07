@@ -34,7 +34,6 @@
     "start-component-config-server": "http-server ./distAuthoring --port 4502 --cors -d false",
     "start-component-config-server-https": "http-server ./distAuthoring --port 4502 --cors -d false --ssl --cert private.pem --key private.key",
     "test": "node ./scripts/playwright-message.js && playwright test --project=chromium MediaCo/portal MediaCo/embedded",
-    "_test:functional": "npm run test:functional:local:sdk-a --prefix node_modules/@pega/dx-component-builder-sdk",
     "test:headed": "playwright test --headed --project=chromium MediaCo/portal MediaCo/embedded",
     "test-report": "playwright show-report",
     "_comment_DXCB_commands": "The following are public commands to run the integrated DX Component Builder",
@@ -54,7 +53,10 @@
     "publishAll": "dx-component-builder-sdk publishAll",
     "rename": "dx-component-builder-sdk rename",
     "scanAndFix": "dx-component-builder-sdk scanAndFix",
-    "startStorybook": "ng run angularsdk:storybook"
+    "startStorybook": "ng run angularsdk:storybook",
+    "_comment_internal_only" : "for commands below are for INTERNAL use",
+    "_test:functional": "npm run test:functional:local:sdk-a --prefix node_modules/@pega/dx-component-builder-sdk"
+
   },
   "private": true,
   "dependencies": {
@@ -105,7 +107,7 @@
     "@angular/language-service": "^16.2.12",
     "@pega/angular-sdk-overrides": "~0.23.3",
     "@pega/configs": "^0.6.0",
-    "@pega/dx-component-builder-sdk": "~0.23.13",
+    "@pega/dx-component-builder-sdk": "~0.23.14",
     "@pega/eslint-config": "^0.7.1",
     "@pega/pcore-pconnect-typedefs": "~2.1.1",
     "@pega/prettier-config": "^0.6.0",
