@@ -54,7 +54,7 @@
     "rename": "dx-component-builder-sdk rename",
     "scanAndFix": "dx-component-builder-sdk scanAndFix",
     "startStorybook": "ng run angularsdk:storybook",
-    "_comment_internal_only" : "for commands below are for INTERNAL use",
+    "_comment_internal_only" : "commands below are for INTERNAL use",
     "_test:functional": "npm run test:functional:local:sdk-a --prefix node_modules/@pega/dx-component-builder-sdk"
 
   },
