@@ -1,5 +1,3 @@
-@import '../../../_shared/styles.scss';
-
 .toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -11,7 +9,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: whitesmoke;
+  background-color: var(--app-background-color);
   position: fixed;
   z-index: 99999;
   top: 0px;
@@ -31,7 +29,7 @@
 .psdk-aside {
   height: calc(100% - 64px);
   width: 12.5rem;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid var(--app-neutral-light-color);
 }
 
 .psdk-main {
