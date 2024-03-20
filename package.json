@@ -11,8 +11,6 @@
     "start-dev-https": "ng serve --port 3500 --ssl --ssl-key private.key --ssl-cert private.pem",
     "start-prod": "ng serve --configuration production --port 3500",
     "start-prod-https": "ng serve --configuration production --port 3500 --ssl --ssl-key private.key --ssl-cert private.pem",
-    "start-prod_old": "http-server ./dist -c-1 --port 3500 --gzip --brotli --cors --proxy http://localhost:3500?",
-    "start-prod-https_old": "http-server ./dist -c-1 --ssl --cert private.pem --key private.key --port 3500 --gzip --brotli --cors --proxy https://localhost:3500?",
     "clean": "echo \"cleaning...\" && npx shx --yes rm -rf ./dist/** ./node_modules ./.angular/cache",
     "lint": "run-p -cl lint:*",
     "lint:es": "eslint --color --cache --cache-location node_modules/.cache/eslint/ src",
