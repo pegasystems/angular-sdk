@@ -81,7 +81,7 @@
     "rxjs": "^6.6.3",
     "styled-components": "^6.1.8",
     "tslib": "^2.6.2",
-    "zone.js": "~0.13.3"
+    "zone.js": "~0.14.4"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^16.0.1",
