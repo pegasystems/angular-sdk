@@ -5,7 +5,7 @@
 The **SDK-A v23.1.10** release is **only compatible with Pega Infinity '23**. This release is related to the [**release/23.1.10** branch of the Angular SDK repository](https://github.com/pegasystems/angular-sdk/tree/release/23.1.10).
 <br>
 
-**Note**: From **SDK-A v23.1.10** onwards, the **main** branch will be the development branch for future versions or the latest version of Infinity. If you are currently using the Angular SDK with Pega Infinity 8.8, please use the [release/8.8.10 branch](https://github.com/pegasystems/angular-sdk/tree/release/8.8.10) instead of the main branch.
+**Note**: From  **SDK-A v23.1.10** onwards, the **main** branch will be the development branch for future versions or the latest version of Infinity. If you are currently using the Angular SDK with Pega Infinity 8.8, please use the [release/8.8.10 branch](https://github.com/pegasystems/angular-sdk/tree/release/8.8.10) instead of the main branch.
 
 The SDK-A v23.1.10 release upgrades the Angular version to Angular 16 and the Material version to Material 16 and allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
 [What's new in SDK-A 23.1.10](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
