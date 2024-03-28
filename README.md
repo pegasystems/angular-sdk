@@ -2,12 +2,12 @@
 
 # Angular SDK - Release Announcement - v23.1.10
 
-The **SDK-A v23.1.10** release is **only compatible with Pega Infinity '23**. This release is related to the [**release/23.1.10** branch of the Angular SDK repository](https://github.com/pegasystems/angular-sdk/tree/release/23.1.10).
+The **SDK-A v23.1.10** release is **only compatible with Pega Infinity '23**. This release is available in the [**release/23.1.10** branch of the Angular SDK repository](https://github.com/pegasystems/angular-sdk/tree/release/23.1.10).
 <br>
 
 **Note**: From **SDK-A v23.1.10** onwards, the **main** branch will be the development branch for future versions or the latest version of Infinity. If you are currently using the Angular SDK with Pega Infinity 8.8, please use the [release/8.8.10 branch](https://github.com/pegasystems/angular-sdk/tree/release/8.8.10) instead of the main branch.
 
-The SDK-A v23.1.10 release upgrades the Angular version to Angular 16 and the Material version to Material 16 and allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
+The SDK-A v23.1.10 release upgrades the Angular version to Angular 16 and the Material version to Material 16. This release allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
 [What's new in SDK-A 23.1.10](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
 <br />
 
@@ -31,12 +31,14 @@ For more information about this release, see [What's new in SDK-A 8.8.10](https:
 
 # Overview of Angular SDK
 
-The **Angular SDK** provides Pega customers with the ability to build DX components that connect Pega’s ConstellationJS Engine APIs to a design system other than Pega's Constellation design system.
+The Angular SDK combined with Pega's client orchestration APIs (ConstellationJS APIs) provides a guided iterative development workflow experience. This accelerates integrating Pega’s Constellation DX API with an alternative (non-Pega) UI. Integrating an alternative design system is achieved using DX Components.
 
-The Angular SDK differs from out-of-the-box Constellation design system because it provides and demonstrates the use of a design system that is not the Pega **Constellation** design system. The alternative design system used in this Angular SDK is [Angular Material](https://material.angular.io/) - open-source components that integrate seamlessly with Angular.
+A DX component consists of the following:
+- Component definition metadata that defines the low code developer configuration experience in App Studio and the parameters passed to the DX component for runtime rendering.
+- Javascript to integrate component parameters, ConstellationJS client APIs, and alternate design system presentational components.
+-	Storybook configuration and mocks for integrating with Infinity to facilitate local component testing before publication, configuration, and testing with the Infinity server.
 
-The Angular SDK is built on a new and modernized UI technology stack (the Constellation JavaScript Engine and Constellation JavaScript API).
-
+The Angular SDK includes a ConstellationJS to Angular bridge and sample DX components. The alternative design system used in the Angular SDK is [Angular Material](https://material.angular.io/). For more information about Constellation SDKs, see the [Constellation SDKs documentation](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/constellation-sdks.html).
 <br>
 
 # Prerequisites
