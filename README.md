@@ -52,7 +52,7 @@ The **Angular SDK** has been tested with:
 - node 18.12.1/18.13.0
 - npm 8.19.2/8.19.3
 
-Future updates to the SDK will support more recent LTS versions of node as the Constellation architecture supports them.
+Future updates to the SDK will support more recent  LTS versions of node as the Constellation architecture supports them.
 
 **Before** installing and running the SDK code, refer to the [Angular SDK Guide](https://community.pega.com/marketplace/component/angular-sdk) in the Pega Marketplace for the procedure to prepare your Infinity server and node environment so you can proceed with the steps in the next section.
 
