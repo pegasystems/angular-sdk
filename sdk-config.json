@@ -8,17 +8,17 @@
 
     "mashupClient_comment": "Client ID and Client secret from the OAuth 2.0 Client Registration record used for mashup use case",
     "mashupClient_comment2": "See SDK Guide for instructions on how to generate and obtain the proper values for the following entries",
-    "mashupClientId": "69184022781147469983",
-    "mashupUserIdentifier": "customer@mediaco",
+    "mashupClientId": "18799884851402567036",
+    "mashupUserIdentifier": "uplusbank",
     "mashupClient_comment3": "Note: mashupPassword requires Base64 encoding",
     "mashupPassword": "",
 
     "portalClientId_comment": "Client ID from the OAuth 2.0 Client Registration record used for portal use case",
-    "portalClientId": "69184022781147469983"
+    "portalClientId": "18799884851402567036"
   },
   "serverConfig": {
     "infinityRestServerUrl_comment": "Full path to Infinity REST server",
-    "infinityRestServerUrl": "https://localhost:1080/prweb",
+    "infinityRestServerUrl": "https://10.225.92.239:8443/prweb",
 
     "appAlias_comment": "appAlias of the application which operators will be accessing (e.g., MediaCo)",
     "appAlias": "",

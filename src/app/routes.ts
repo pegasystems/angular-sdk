@@ -3,6 +3,8 @@ import { endpoints } from '@pega/angular-sdk-components';
 import { TopAppMashupComponent } from './_samples/full-portal/top-app-mashup/top-app-mashup.component';
 import { NavigationComponent } from './_samples/simple-portal/navigation/navigation.component';
 import { MCNavComponent } from './_samples/embedded/mc-nav/mc-nav.component';
+// import { LandingHeaderComponent } from './_samples/landing/landing-header/landing-header.component';
+import { LandingToplevelComponent } from './_samples/landing/landing-toplevel/landing-toplevel.component';
 
 // Adding path to remove "Cannot match routes" error at launch
 //  Tried this at one point... Need to add /app in path now...
@@ -27,5 +29,7 @@ export const routes: Routes = [
   { path: endpoints.EMBEDDED, component: MCNavComponent },
   { path: endpoints.EMBEDDEDHTML, component: MCNavComponent },
   { path: endpoints.MASHUP, component: MCNavComponent },
-  { path: endpoints.MASHUPHTML, component: MCNavComponent }
+  { path: endpoints.MASHUPHTML, component: MCNavComponent },
+  { path: 'landing', component: LandingToplevelComponent },
+  { path: 'landingtest', component: LandingToplevelComponent }
 ];

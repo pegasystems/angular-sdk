@@ -1,0 +1,60 @@
+.col-2 {
+  width: 20%;
+  display: grid;
+}
+
+.col-1 {
+  width: 10%;
+  display: grid;
+}
+
+.subscribe-field {
+  border-bottom: 2px solid #099773;
+  width: 100%;
+  height: 40px;
+  background-color: #e7e0ec;
+  display: block;
+  position: relative;
+  span {
+    line-height: 40px;
+    padding-left: 14px;
+    color: #888888;
+    font-size: 0.8em;
+  }
+
+  svg {
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 8px);
+  }
+}
+
+.col-4 {
+  width: 33%;
+  align-items: center;
+  display: flex;
+  color: white;
+}
+
+.svg-contrast {
+  fill: #ffffff;
+}
+
+.footer-icons {
+  display: flex;
+  svg {
+    padding: 0 0 0 14px;
+  }
+}
+
+.pega-copyright {
+  font-size: 12px;
+}
+
+.footer-settings {
+  justify-content: flex-end;
+  div {
+    font-size: 12px;
+    padding: 0 0 0 14px;
+  }
+}

@@ -1,0 +1,66 @@
+<div style="max-width: 1280px; padding: 0px 24px; margin: auto">
+  <app-landing-header></app-landing-header>
+  <div *ngIf="!showPega$">
+    <section id="section-1" style="margin-top: 100px">
+      <div style="height: 360px; align-items: center; margin-bottom: 50px; display: grid; grid-template-columns: 5fr 5fr">
+        <div style="height: 100%; flex-direction: column; margin: auto; width: 100%; justify-content: center; display: flex">
+          <h3 style="font-size: 3rem; font-weight: 400; line-height: 1.167; font-family: 'Domine', serif !important; color: white; margin-bottom: 0">
+            {{ i18n.homeSection1.text[0] }}
+          </h3>
+          <h3 style="font-size: 3rem; font-weight: 400; line-height: 1.167; font-family: 'Domine', serif !important; color: white; margin-bottom: 0">
+            {{ i18n.homeSection1.text[1] }}
+          </h3>
+          <h6
+            style="
+              font-size: 1.25rem;
+              font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+              font-weight: 500;
+              line-height: 1.6;
+              letter-spacing: 0.0075em;
+              color: rgb(255, 255, 255);
+            "
+          >
+            {{ i18n.homeSection1.tagLine }}
+          </h6>
+          <div *ngIf="caseTypes && caseTypes.length > 0">
+            <button class="create-case-button" mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              GET STARTED NOW
+            </button>
+            <mat-menu #menu="matMenu" overlapTrigger="false">
+              <ng-container *ngFor="let case of caseTypes">
+                <button mat-menu-item (click)="createCase(case)">
+                  {{ case.pyWorkTypeName }}
+                </button>
+              </ng-container>
+            </mat-menu>
+          </div>
+        </div>
+        <div style="height: 100%; margin-top: auto; margin-bottom: auto; margin-left: auto; position: relative">
+          <img class="section1-image" height="340px" src="{{ storage.homeSection1.image }}" />
+          <svg height="360" viewBox="0 0 596 602" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fillRule="evenodd"
+              fill="#F3F98A"
+              className="svg-primary svg-shadow"
+              clipRule="evenodd"
+              d="M307.524 8.77474C427.17 12.0369 507.318 108.166 547.444 213.74C592.46 332.181 621.518 477.479 514.549 553.479C403.186 632.602 249.905 583.561 138.888 504.013C37.5386 431.391 -18.4038 313.209 20.3603 199.369C59.7605 83.6611 177.855 5.23935 307.524 8.77474Z"
+            />
+          </svg>
+        </div>
+      </div>
+    </section>
+    <app-landing-content></app-landing-content>
+    <!-- <button style="cursor: pointer" (click)="createWork()">Get Started</button> -->
+  </div>
+  <div *ngIf="bLoggedIn$ && bHasPConnect$">
+    <div [hidden]="!showPega$">
+      <div class="mc-info">
+        <div class="mc-info-pega">
+          <component-mapper name="RootContainer" [props]="{ pConn$, displayOnlyFA$: true }"></component-mapper>
+          <div style="padding-left: 50px; padding-top: 30px">* - required fields</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-landing-footer></app-landing-footer>
+</div>

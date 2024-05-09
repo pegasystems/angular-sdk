@@ -1,0 +1,20 @@
+<div>
+  <mat-toolbar style="background: none; padding: 10px 20px">
+    <mat-toolbar-row>
+      <img class="toolbar-logo" style="height: 30px; margin-right: 30px" src="{{ storage.logo }}" />
+      <div *ngIf="i18n?.homeMenu" style="display: flex">
+        <div *ngFor="let item of i18n.homeMenu">
+          <button style="background: none; border: none; color: white; font-size: 0.875rem; padding: 6px 16px">{{ item }}</button>
+        </div>
+      </div>
+      <div style="margin-left: auto; align-items: center; color: white">
+        <mat-icon
+          style="font-size: 32px; height: unset; width: unset"
+          aria-hidden="false"
+          aria-label="Account Circle"
+          fontIcon="account_circle"
+        ></mat-icon>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
