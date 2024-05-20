@@ -62,19 +62,6 @@
   width: var(--app-nav-width-expanded);
 }
 
-.psdk-appshell-topnav {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background: var(--app-nav-bg);
-  width: var(--app-nav-width);
-  height: 15%;
-  color: var(--app-nav-color);
-  overflow: hidden;
-  white-space: nowrap;
-  will-change: width;
-}
-
 .psdk-appshell-middlenav {
   display: flex;
   flex-direction: column;
@@ -188,56 +175,4 @@ mat-list-item {
   width: 6rem;
   font-weight: 500;
   border-radius: 4px;
-}
-
-.tag-line {
-  color: white;
-  position: absolute;
-  top: 27rem;
-  font-size: 45px;
-  line-height: 45px;
-  margin-left: 9rem;
-}
-
-.quick-link-ul-list {
-  list-style: none;
-  padding: 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(50ch, 100%), 1fr));
-  display: grid;
-  gap: 3rem;
-}
-
-.quick-link-div {
-  top: 37rem;
-  position: absolute;
-  margin-left: 9rem;
-  margin-right: 9rem;
-}
-
-.quick-link-list {
-  align-items: center;
-  display: flex;
-  // background: #939393;
-  background: #343131;
-  width: 100%;
-  padding: 24px;
-  justify-content: center;
-  border-radius: 8px;
-  border: 1px solid white;
-}
-
-.quick-link-icon {
-  height: 3.5rem;
-}
-
-.quick-link-text {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.quick-link-img-div {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
 }

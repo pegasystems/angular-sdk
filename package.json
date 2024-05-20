@@ -95,7 +95,7 @@
     "@angular/language-service": "^16.2.12",
     "@pega/angular-sdk-overrides": "~23.1.10",
     "@pega/configs": "^0.6.0",
-    "@pega/constellationjs": "~23.1.1",
+    "@pega/constellationjs": "24.1.0-test-20240516",
     "@pega/dx-component-builder-sdk": "~23.1.13",
     "@pega/eslint-config": "^0.7.1",
     "@pega/pcore-pconnect-typedefs": "~2.1.1",

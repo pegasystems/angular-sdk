@@ -1,0 +1,42 @@
+<!-- <div class="wss-quick-create-header">
+  <h1 class="quick-link-heading">{{ heading$ }}</h1>
+  <ul class="quick-link-ul-list">
+    <li *ngFor="let element of actions$" class="quick-link-list">
+      <button mat-raised-button color="primary" class="quick-link-button" mat-icon-button (click)="element.onClick()">
+        <span class="quick-link-button-span">
+          <img *ngIf="element.icon" class="quick-link-icon" [src]="element.icon" />
+          <span>{{ element.label }}</span>
+        </span>
+      </button>
+    </li>
+  </ul>
+</div> -->
+
+<div class="quick-create-section">
+  <div class="container mx-auto tag-line">
+    <div>We're here to get you unstuck,</div>
+    <div>so you can keep exploring.</div>
+  </div>
+  <div class="container mx-auto quick-link-div">
+    <ul class="quick-link-ul-list">
+      <li class="quick-link-list" *ngFor="let element of actions$" class="quick-link-list">
+        <div class="quick-link-button-span">
+          <div class="quick-link-img-div"><img class="quick-link-icon" src="constellation/assets/service.png" /></div>
+          <span class="quick-link-text">{{ element.label }}</span>
+        </div>
+      </li>
+      <!-- <li class="quick-link-list">
+        <span class="quick-link-button-span">
+          <div class="quick-link-img-div"><img class="quick-link-icon" src="constellation/assets/download.png" /></div>
+          <span class="quick-link-text">Download User's Manual</span>
+        </span>
+      </li>
+      <li class="quick-link-list">
+        <span class="quick-link-button-span">
+          <div class="quick-link-img-div"><img class="quick-link-icon" src="constellation/assets/info.png" /></div>
+          <span class="quick-link-text">Troubleshoot Infotainment Issue</span>
+        </span>
+      </li> -->
+    </ul>
+  </div>
+</div>

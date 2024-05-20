@@ -55,3 +55,17 @@ a.mat-mdc-menu-item > mat-icon {
 .mdc-button {
   line-height: inherit !important;
 }
+
+.appshell-top {
+  background:
+    url(./assets/backgroundImg.png) no-repeat,
+    linear-gradient(#151414, #161515);
+  content: '';
+  display: inline-block;
+  vertical-align: bottom;
+  width: 100%;
+  height: 100vh;
+  background-size: 100%;
+  background-position: left -50px;
+  overflow-y: hidden;
+}
