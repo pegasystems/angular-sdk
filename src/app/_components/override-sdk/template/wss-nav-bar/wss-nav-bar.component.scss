@@ -1,0 +1,243 @@
+// // Things related to movement
+// $transition-slow: 0.5s !default;
+// $transition-medium: 0.3s !default;
+// $transition-fast: 0.1s !default;
+// $natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1) !default;
+
+.psdk-nav-divider {
+  border-bottom: 0.0625rem solid var(--app-divider-color);
+  width: 100%;
+  align-items: center;
+}
+
+.psdk-nav-header {
+  display: flex;
+  padding-top: 0.625rem;
+  cursor: pointer;
+  padding-right: 1rem;
+  &:hover {
+    background-color: var(--app-neutral-color);
+  }
+  align-items: center;
+}
+
+.psdk-nav-logo {
+  width: 3.75rem;
+  padding: 0.625rem;
+  margin-right: 1.25rem;
+}
+
+.psdk-nav-svg-icon {
+  filter: var(--app-white-color-filter);
+  width: 1.6rem;
+  padding-right: 0.625rem;
+}
+
+.psdk-nav-portal-name {
+  font-size: 0.875rem;
+}
+
+.psdk-nav-portal-app {
+  font-size: 1.5rem;
+  color: var(--app-nav-color);
+}
+
+.psdk-appshell-nav {
+  z-index: 3;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--app-nav-bg);
+  width: var(--app-nav-width);
+  height: 100%;
+  color: var(--app-nav-color);
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  will-change: width;
+}
+
+.psdk-appshell-nav:hover {
+  width: var(--app-nav-width-expanded);
+}
+
+.psdk-appshell-topnav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--app-nav-bg);
+  width: var(--app-nav-width);
+  height: 15%;
+  color: var(--app-nav-color);
+  overflow: hidden;
+  white-space: nowrap;
+  will-change: width;
+}
+
+.psdk-appshell-middlenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--app-nav-bg);
+  width: var(--app-nav-width);
+  height: 50%;
+  color: var(--app-nav-color);
+  overflow: hidden;
+  white-space: nowrap;
+  //   transition: width $transition-medium $natural-ease;
+  will-change: width;
+}
+
+.psdk-nav-ul-middle {
+  display: block;
+  list-style-type: none;
+  margin: 0rem;
+  padding-inline-start: 30px;
+}
+
+.psdk-nav-li-middle {
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.psdk-icon {
+  padding: 0rem 0.125rem;
+  min-width: unset;
+}
+
+.psdk-nav-button-span {
+  padding: 0 1rem;
+  color: var(--app-nav-color);
+
+  &:hover {
+    background-color: var(--app-neutral-color);
+  }
+}
+
+.psdk-nav-oper-avatar {
+  margin: 0rem;
+  padding: 0rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  max-width: 2.5rem;
+  max-height: 2.5rem;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: inline-flex;
+  background: var(--app-neutral-color);
+  color: var(--app-form-color);
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+mat-list {
+  padding: 0;
+}
+
+.psdk-profile-list-item {
+  padding-left: 24px;
+}
+
+mat-list-item {
+  padding: 20px 30px;
+  padding-right: 0;
+  cursor: pointer !important;
+  height: auto !important;
+
+  &:hover {
+    // background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .flex-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.background-image-style {
+  margin-left: -16px;
+  margin-right: -16px;
+  height: calc(50rem);
+  background-size: cover;
+  background-position: center center;
+}
+
+.psdk-nav-logo {
+  height: 4rem;
+  width: 8rem;
+}
+
+.nav-items {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.login-button {
+  background: white;
+  padding: 6px;
+  font-size: 16px;
+  width: 6rem;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.tag-line {
+  color: white;
+  position: absolute;
+  top: 27rem;
+  font-size: 45px;
+  line-height: 45px;
+  margin-left: 9rem;
+}
+
+.quick-link-ul-list {
+  list-style: none;
+  padding: 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(50ch, 100%), 1fr));
+  display: grid;
+  gap: 3rem;
+}
+
+.quick-link-div {
+  top: 37rem;
+  position: absolute;
+  margin-left: 9rem;
+  margin-right: 9rem;
+}
+
+.quick-link-list {
+  align-items: center;
+  display: flex;
+  // background: #939393;
+  background: #343131;
+  width: 100%;
+  padding: 24px;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid white;
+}
+
+.quick-link-icon {
+  height: 3.5rem;
+}
+
+.quick-link-text {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.quick-link-img-div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
