@@ -159,13 +159,15 @@ mat-list-item {
 }
 
 .psdk-nav-logo {
-  height: 4rem;
+  height: 3rem;
   width: 8rem;
 }
 
 .nav-items {
   font-size: 20px;
   font-weight: bold;
+  margin: 0 2rem;
+  list-style: none;
 }
 
 .login-button {
@@ -173,6 +175,30 @@ mat-list-item {
   padding: 6px;
   font-size: 16px;
   width: 6rem;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 4px;
+}
+
+mat-toolbar {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: none;
+}
+
+.mat-toolbar-row {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  padding: 0rem 6rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+
+.nav-links {
+  color: white;
+  text-decoration: none;
 }
