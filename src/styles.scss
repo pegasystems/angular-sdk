@@ -69,3 +69,19 @@ a.mat-mdc-menu-item > mat-icon {
   background-position: left -50px;
   overflow-y: hidden;
 }
+
+.appshell-main-wss {
+  padding: 0rem 6rem;
+}
+
+.mat-mdc-card {
+  align-items: center;
+  display: flex !important;
+  background: rgba(56, 55, 55, 0.57) !important;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+  justify-content: center;
+  border-radius: 8px !important;
+  border: 1px solid #646464;
+}
