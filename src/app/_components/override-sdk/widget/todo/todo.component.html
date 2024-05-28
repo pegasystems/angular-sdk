@@ -1,0 +1,66 @@
+<div>
+  <mat-card class="todo-card">
+    <div style="color: white; font-size: 24px; line-height: 29px; font-weight: 500; margin-bottom: 1rem">Please let us know how we did!</div>
+    <div class="todo-card-div">
+      <div class="psdk-avatar">
+        <img src="constellation/assets/todo.png" />
+      </div>
+      <div class="psdk-todo-card">
+        <div class="psdk-todo-assignment-title" style="font-size: 16px">U+ Service Satisfaction Survey</div>
+        <div class="psdk-todo-assignment-data">
+          <div>This survey will provide us valuable feedback to ensure we deliver the highest quality service to you and others.</div>
+        </div>
+      </div>
+      <div>
+        <button mat-raised-button class="todo-action-button">Get started</button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+<!-- <div class="psdk-todo">
+  <div class="psdk-todo-header">
+    <div *ngIf="showTodoList$" class="psdk-avatar">{{ this.currentUserInitials$ }}</div>
+    <div id="worklist" class="psdk-todo-text">{{ headerText$ }}</div>
+    <div *ngIf="showTodoList$" class="psdk-assignment-count">{{ assignmentCount$ }}</div>
+  </div>
+  <br /><br />
+  <div *ngIf="showTodoList$" class="psdk-display-divider"></div>
+
+  <div class="psdk-todo-assignments">
+    <div *ngFor="let assignment of arAssignments$">
+      <div class="psdk-todo-assignment">
+        <div class="psdk-avatar">{{ this.currentUserInitials$ }}</div>
+        <div class="psdk-todo-card">
+          <div class="psdk-todo-assignment-title">{{ getAssignmentName(assignment) }}</div>
+          <div class="psdk-todo-assignment-data">
+            <div class="psdk-todo-assignment-task">
+              Task in
+              <button class="psdk-todo-id" style="cursor: pointer" (click)="clickGo(assignment)">
+                {{ assignment.name }} {{ getID(assignment) }}
+              </button>
+              <span *ngIf="assignment.status != undefined">
+                &bull; <span class="psdk-todo-assignment-status">{{ assignment?.status }}</span>
+              </span>
+              &bull; {{ localizedVal('Urgency', localeCategory) }} {{ getPriority(assignment) }}
+            </div>
+          </div>
+        </div>
+        <div class="psdk-todo-assignment-action">
+          <button mat-flat-button color="primary" (click)="clickGo(assignment)">{{ localizedVal('Go', localeCategory) }}</button>
+        </div>
+      </div>
+      <div class="psdk-display-divider"></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="assignmentCount$ > 3">
+  <div *ngIf="bShowMore$; else showLess" class="psdk-todo-show-more">
+    <button mat-stroked-button (click)="_showMore()">Show more</button>
+  </div>
+  <ng-template #showLess>
+    <div class="psdk-todo-show-more">
+      <button mat-stroked-button (click)="_showLess()">Show less</button>
+    </div>
+  </ng-template>
+</div> -->
