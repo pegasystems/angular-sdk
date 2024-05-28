@@ -1,0 +1,29 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <component-mapper *ngIf="bVisible$ !== false" name="FieldValueList" [props]="{ label$, value$, displayMode$ }"></component-mapper>
+</div>
+<ng-template #noDisplayMode>
+  <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
+    <div [formGroup]="formGroup$">
+      <div *ngIf="bVisible$">
+        <mat-form-field appearance="outline" class="psdk-full-width" subscriptSizing="dynamic" [hintLabel]="helperText">
+          <textarea
+            matInput
+            rows="5"
+            [placeholder]="label$"
+            type="text"
+            [attr.data-test-id]="testId"
+            [value]="value$"
+            [required]="bRequired$"
+            [disabled]="bDisabled$"
+            [formControl]="fieldControl"
+            (change)="fieldOnChange($event)"
+          ></textarea>
+          <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noEdit>
+  <component-mapper *ngIf="bVisible$ !== false" name="Text" [props]="{ pConn$, formatAs$: 'text' }"></component-mapper>
+</ng-template>

@@ -6,6 +6,10 @@ import { WssQuickCreateComponent } from 'src/app/_components/override-sdk/design
 import { QuickCreateComponent } from 'src/app/_components/override-sdk/widget/quick-create/quick-create.component';
 import { TodoComponent } from './src/app/_components/override-sdk/widget/todo/todo.component';
 import { ServiceHistoryComponent } from 'src/app/_components/static/service-history/service-history.component';
+import { DropdownComponent } from './src/app/_components/override-sdk/field/dropdown/dropdown.component';
+import { TextAreaComponent } from './src/app/_components/override-sdk/field/text-area/text-area.component';
+import { DateComponent } from './src/app/_components/override-sdk/field/date/date.component';
+import { TimeComponent } from './src/app/_components/override-sdk/field/time/time.component';
 /* import end - DO NOT REMOVE */
 
 // localSdkComponentMap is the JSON object where we'll store the components that are
@@ -17,7 +21,11 @@ const localSdkComponentMap = {
   WssQuickCreate: WssQuickCreateComponent,
   QuickCreate: QuickCreateComponent,
   Todo: TodoComponent,
-  ListView: ServiceHistoryComponent
+  ListView: ServiceHistoryComponent,
+  Dropdown: DropdownComponent,
+  TextArea: TextAreaComponent,
+  Date: DateComponent,
+  Time: TimeComponent
   /* map end - DO NOT REMOVE */
 };
 

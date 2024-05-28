@@ -2,33 +2,64 @@
 
 @include mat.core();
 
-$my-primary: mat.define-palette(mat.$deep-purple-palette, 500);
-$my-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
+// $my-primary: mat.define-palette(mat.$deep-purple-palette, 500);
+// $my-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
 
-$my-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $my-primary,
-      accent: $my-accent
-    ),
-    typography: mat.define-typography-config(),
-    density: 0
-  )
-);
-
-// $my-dark-theme-primary: mat-palette($mat-blue-grey);
-// $my-dark-theme-accent: mat-palette($mat-amber);
-// $my-dark-theme-warn: mat-palette($mat-red);
-
-// $my-theme: mat-dark-theme(
+// $my-theme: mat.define-light-theme(
 //   (
 //     color: (
-//       primary: $my-dark-theme-primary,
-//       accent: $my-dark-theme-accent,
-//       warn: $my-dark-theme-warn
-//     )
+//       primary: $my-primary,
+//       accent: $my-accent
+//     ),
+//     typography: mat.define-typography-config(),
+//     density: 0
 //   )
 // );
+
+$my-dark-theme-primary: mat-palette($mat-blue-grey);
+// $custom-primary: mat-palette(mat-define-palette(#71baff));
+$custom-primary: mat-palette(
+  (
+    50: #e1f3ff,
+    100: #b3e1ff,
+    200: #80cdff,
+    300: #4db8ff,
+    400: #26a9ff,
+    500: #71baff,
+    600: #0098ff,
+    700: #0088e6,
+    800: #0077cc,
+    900: #0059a3,
+    A100: #cce6ff,
+    A200: #99ccff,
+    A400: #66b3ff,
+    A700: #4da6ff,
+    contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+
+      A100: $black-87-opacity,
+      A200: $black-87-opacity,
+      A400: $black-87-opacity,
+      A700: $black-87-opacity
+    )
+  )
+);
+$my-dark-theme-accent: mat-palette($mat-amber);
+$my-dark-theme-warn: mat-palette($mat-red);
+
+$my-theme: mat-dark-theme(
+  (
+    color: (
+      primary: $custom-primary,
+      accent: $custom-primary,
+      warn: $my-dark-theme-warn
+    )
+  )
+);
 
 $my-typography: mat.define-typography-config();
 @include mat.typography-hierarchy($my-typography);
@@ -63,8 +94,9 @@ $my-typography: mat.define-typography-config();
   --app-swatch-channel-background: #b00b55;
   --app-swtach-package-background: #333000;
   --app-banner-text-color: darkslategray;
-  --app-label-color: rgba(0, 0, 0, 0.54);
-  --app-label-selected-color: rgba(0, 0, 0, 0.87);
+  // --app-label-color: rgba(0, 0, 0, 0.54);
+  --app-label-color: white;
+  --app-label-selected-color: #71baff;
   --app-dialog-background-color: rgba(100, 100, 100, 0.4);
   --app-box-shadow-color: #777;
   --app-multi-step-border-color: rgba(0, 0, 0, 0.12);

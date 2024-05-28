@@ -69,6 +69,7 @@ a.mat-mdc-menu-item > mat-icon {
   background-position: left -50px;
   // overflow-y: hidden;
 }
+
 .form-bg {
   background:
     url(./assets/form_bg.jpeg) no-repeat,
@@ -96,4 +97,42 @@ app-flow-container .psdk-flow-container-top {
 .mdc-list-item__secondary-text,
 .mat-mdc-card-title {
   color: #fff !important;
+}
+
+.mdc-text-field {
+  padding: 0px;
+}
+
+.mdc-notched-outline__leading,
+.mdc-notched-outline__notch,
+.mdc-notched-outline__trailing {
+  border-color: white !important;
+}
+
+.mdc-text-field {
+  padding: 0px;
+}
+
+.mdc-notched-outline__leading,
+.mdc-notched-outline__notch,
+.mdc-notched-outline__trailing {
+  border-color: white !important;
+}
+
+.psdk-default-form-one-column {
+  gap: 2rem;
+}
+
+.template-title-container {
+  display: none !important;
+}
+
+app-check-box {
+  .mat-form-field-infix {
+    margin-bottom: 10px !important;
+  }
+  label {
+    color: white !important;
+    font-size: 16px !important;
+  }
 }

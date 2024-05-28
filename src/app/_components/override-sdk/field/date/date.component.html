@@ -1,0 +1,35 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <component-mapper
+    *ngIf="bVisible$ !== false"
+    name="FieldValueList"
+    [props]="{ label$, value$: getFormattedValue(), displayMode$ }"
+  ></component-mapper>
+</div>
+<ng-template #noDisplayMode>
+  <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$">
+      <mat-form-field appearance="outline" class="psdk-full-width" subscriptSizing="dynamic" [hintLabel]="helperText">
+        <mat-label>{{ label$ }}</mat-label>
+        <input
+          matInput
+          #dateInput
+          [attr.data-test-id]="testId"
+          [matDatepicker]="pegadate"
+          [placeholder]="dateFormatInfo.dateFormatStringLC"
+          type="text"
+          [value]="value$"
+          [required]="bRequired$"
+          [formControl]="fieldControl"
+          (dateChange)="fieldOnDateChange($event)"
+          (blur)="fieldOnBlur($event)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="pegadate"></mat-datepicker-toggle>
+        <mat-datepicker #pegadate [startAt]="value$"></mat-datepicker>
+        <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noEdit>
+  <component-mapper *ngIf="bVisible$ !== false" name="Text" [props]="{ pConn$, formatAs$: 'date' }"></component-mapper>
+</ng-template>
