@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, OnDestroy } from '@angular/core';
 import { ComponentMapperComponent } from '@pega/angular-sdk-components';
 import { ServiceCardComponent } from '../service-card/service-card.component';
+
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -10,7 +11,7 @@ import { ServiceCardComponent } from '../service-card/service-card.component';
   standalone: true,
   imports: [CommonModule, ServiceCardComponent, forwardRef(() => ComponentMapperComponent)]
 })
-export class BannerComponent {
+export class BannerComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
   @Input() formGroup$: FormGroup;
 
@@ -20,7 +21,12 @@ export class BannerComponent {
   @Input() backgroundImage: string;
   @Input() layout$: string;
 
-  getUrl() {
-    return `url("constellation/assets/backgroundImg.png")`;
+  ngOnInit() {
+    console.log('ngOnInit');
+    document.getElementsByClassName('appshell-top')[0].classList.remove('form-bg');
+  }
+
+  ngOnDestroy() {
+    document.getElementsByClassName('appshell-top')[0].classList.add('form-bg');
   }
 }

@@ -1,0 +1,14 @@
+<mat-card class="service-history-card">
+  <mat-card-header> <mat-card-title>Your Service History</mat-card-title> </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let folder of folders">
+        <!-- <mat-icon matListItemIcon svgIcon="wrench"></mat-icon> -->
+        <img class="icon" matListItemIcon src="constellation/assets/service.png" />
+        <div matListItemTitle>{{ folder.title }}</div>
+        <div matListItemLine>{{ folder.description }}</div>
+        <img class="arrow-right" src="constellation/assets/arrow-right.svg" />
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

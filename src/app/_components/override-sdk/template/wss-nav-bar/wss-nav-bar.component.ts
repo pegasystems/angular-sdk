@@ -74,10 +74,6 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
     this.initComponent();
   }
 
-  getUrl() {
-    return `url("constellation/assets/backgroundImg.png")`;
-  }
-
   // ngOnDestroy
   //  unsubscribe from Store
   ngOnDestroy(): void {

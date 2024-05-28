@@ -69,6 +69,11 @@ a.mat-mdc-menu-item > mat-icon {
   background-position: left -50px;
   // overflow-y: hidden;
 }
+.form-bg {
+  background:
+    url(./assets/form_bg.jpeg) no-repeat,
+    linear-gradient(#151414, #161515);
+}
 
 app-flow-container .psdk-flow-container-top {
   background: none;
@@ -76,27 +81,19 @@ app-flow-container .psdk-flow-container-top {
   padding: 7rem 36rem;
 }
 
-// app-multi-step {
-//   .psdk-horizontal-step-label-selected {
-//     color: white;
-//   }
+.custom-card {
+  display: flex !important;
+  background: rgba(56, 55, 55, 0.57) !important;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+  justify-content: center;
+  border-radius: 8px !important;
+  border: 1px solid #646464;
+}
 
-//   .psdk-horizontal-step-label {
-//     color: white;
-//   }
-// }
-// .appshell-main-wss {
-//   padding: 0rem 6rem;
-// }
-
-// .mat-mdc-card {
-//   align-items: center;
-//   display: flex !important;
-//   background: rgba(56, 55, 55, 0.57) !important;
-//   width: 100%;
-//   padding: 20px;
-//   cursor: pointer;
-//   justify-content: center;
-//   border-radius: 8px !important;
-//   border: 1px solid #646464;
-// }
+.mdc-list-item__primary-text,
+.mdc-list-item__secondary-text,
+.mat-mdc-card-title {
+  color: #fff !important;
+}
