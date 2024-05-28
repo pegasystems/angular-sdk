@@ -9,9 +9,17 @@
 .psdk-grid-filter-wide-narrow {
   display: grid;
   grid-template-columns: 7fr 3fr;
-  column-gap: calc(2 * 0.5rem);
-  gap: 3em;
+  column-gap: 3em;
+  row-gap: 3em;
   align-items: start;
+
+  ::ng-deep {
+    app-region {
+      display: flex;
+      flex-direction: column;
+      gap: 3em;
+    }
+  }
   // padding: 1rem;
 }
 

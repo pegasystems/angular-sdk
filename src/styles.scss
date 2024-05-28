@@ -67,13 +67,15 @@ a.mat-mdc-menu-item > mat-icon {
   height: 100%;
   background-size: 100%;
   background-position: left -50px;
-  // overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 .form-bg {
-  background:
-    url(./assets/form_bg.jpeg) no-repeat,
-    linear-gradient(#151414, #161515);
+  // background:
+  //   url(./assets/form_bg.jpeg) no-repeat,
+  //   linear-gradient(#151414, #161515);
+
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgb(0 0 0 / 90%)), url(./assets/form_bg.jpeg);
 }
 
 app-flow-container .psdk-flow-container-top {
