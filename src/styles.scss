@@ -64,24 +64,39 @@ a.mat-mdc-menu-item > mat-icon {
   display: inline-block;
   vertical-align: bottom;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-size: 100%;
   background-position: left -50px;
-  overflow-y: hidden;
+  // overflow-y: hidden;
 }
 
-.appshell-main-wss {
-  padding: 0rem 6rem;
+app-flow-container .psdk-flow-container-top {
+  background: none;
+  color: white;
+  padding: 7rem 36rem;
 }
 
-.mat-mdc-card {
-  align-items: center;
-  display: flex !important;
-  background: rgba(56, 55, 55, 0.57) !important;
-  width: 100%;
-  padding: 20px;
-  cursor: pointer;
-  justify-content: center;
-  border-radius: 8px !important;
-  border: 1px solid #646464;
-}
+// app-multi-step {
+//   .psdk-horizontal-step-label-selected {
+//     color: white;
+//   }
+
+//   .psdk-horizontal-step-label {
+//     color: white;
+//   }
+// }
+// .appshell-main-wss {
+//   padding: 0rem 6rem;
+// }
+
+// .mat-mdc-card {
+//   align-items: center;
+//   display: flex !important;
+//   background: rgba(56, 55, 55, 0.57) !important;
+//   width: 100%;
+//   padding: 20px;
+//   cursor: pointer;
+//   justify-content: center;
+//   border-radius: 8px !important;
+//   border: 1px solid #646464;
+// }

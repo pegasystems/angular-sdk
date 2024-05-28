@@ -107,17 +107,13 @@
   padding: 0rem;
   min-width: 2.5rem;
   min-height: 2.5rem;
-  max-width: 2.5rem;
-  max-height: 2.5rem;
+  max-width: 3rem;
+  max-height: 3rem;
   border-radius: 50%;
   justify-content: center;
-  align-items: center;
   text-align: center;
   display: inline-flex;
-  background: var(--app-neutral-color);
-  color: var(--app-form-color);
   font-weight: normal;
-  font-size: 1rem;
 }
 
 mat-list {
@@ -196,6 +192,7 @@ mat-toolbar {
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .nav-links {

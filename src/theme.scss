@@ -16,6 +16,20 @@ $my-theme: mat.define-light-theme(
   )
 );
 
+// $my-dark-theme-primary: mat-palette($mat-blue-grey);
+// $my-dark-theme-accent: mat-palette($mat-amber);
+// $my-dark-theme-warn: mat-palette($mat-red);
+
+// $my-theme: mat-dark-theme(
+//   (
+//     color: (
+//       primary: $my-dark-theme-primary,
+//       accent: $my-dark-theme-accent,
+//       warn: $my-dark-theme-warn
+//     )
+//   )
+// );
+
 $my-typography: mat.define-typography-config();
 @include mat.typography-hierarchy($my-typography);
 

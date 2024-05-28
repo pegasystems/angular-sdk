@@ -7,7 +7,7 @@
       </div>
     </div>
   </div> -->
-  <div
+  <!-- <div
     [ngClass]="{
       'psdk-grid-filter-1': this.layout$ === 'two-column',
       'psdk-grid-filter-wide-narrow': this.layout$ === 'wide-narrow',
@@ -24,5 +24,22 @@
       [props]="{ pConn$: arChildren$[1].getPConnect(), formGroup$ }"
       errorMsg="Region wants component not yet available: {{ arChildren$[1].getPConnect().getComponentName() }}"
     ></component-mapper>
+  </div> -->
+  <div>
+    <div>
+      <component-mapper
+        [name]="arChildren$[0].getPConnect().getComponentName()"
+        [props]="{ pConn$: arChildren$[0].getPConnect(), formGroup$ }"
+        errorMsg="Region wants component not yet available: {{ arChildren$[0].getPConnect().getComponentName() }}"
+      ></component-mapper>
+    </div>
+    <div class="psdk-grid-filter-wide-narrow">
+      <component-mapper
+        [name]="arChildren$[1].getPConnect().getComponentName()"
+        [props]="{ pConn$: arChildren$[1].getPConnect(), formGroup$ }"
+        errorMsg="Region wants component not yet available: {{ arChildren$[1].getPConnect().getComponentName() }}"
+      ></component-mapper>
+      <service-card></service-card>
+    </div>
   </div>
 </div>

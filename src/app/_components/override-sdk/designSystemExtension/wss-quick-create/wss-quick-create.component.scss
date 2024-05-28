@@ -61,9 +61,102 @@
   font-size: 24px;
 }
 
+// .quick-create-section {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 4rem;
+//   margin-top: 1rem;
+// }
+
 .quick-create-section {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  margin-top: 1rem;
+  gap: 3rem;
+  // margin: 3rem 5rem;
+  padding: 1rem 6rem;
+}
+
+.psdk-grid-filter-wide-narrow {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  column-gap: calc(4 * 0.5rem);
+  row-gap: calc(2 * 0.5rem);
+  align-items: start;
+  // padding: 1rem;
+}
+
+.todo-card {
+  background: black;
+  border: 1px solid #939393;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+}
+
+.todo-card-div {
+  display: inline-flex;
+  width: 100%;
+  padding: 0.625rem 0rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  // padding-top: 1.5rem;
+}
+
+.psdk-avatar {
+  margin: 0rem;
+  padding: 0rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  max-width: 2.5rem;
+  max-height: 2.5rem;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  background: none;
+  // background: url(../../../../../assets/todo.png);
+  color: var(--app-form-color);
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.psdk-todo-card {
+  padding-left: 1.5rem;
+  color: white;
+  width: 100%;
+}
+
+.psdk-todo-assignment-action {
+  display: flex;
+  align-items: center;
+}
+
+.todo-action-button {
+  border-radius: 50px;
+  height: 36px;
+  width: 7.5rem;
+  color: white;
+  background: red;
+  border: 1px solid red;
+}
+
+.quick-link-list {
+  align-items: center;
+  display: flex;
+  background: rgba(139, 148, 164, 0.25);
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1.5px solid #878789;
+  // border: 1px solid #646464;
+}
+
+.service-card {
+  background: rgba(139, 148, 164, 0.25);
+}
+
+.driver-card {
+  background: #2c2b2b;
 }
