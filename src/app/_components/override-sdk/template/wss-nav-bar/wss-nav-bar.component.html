@@ -14,7 +14,7 @@
           </div>
         </mat-list-item>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>{{ localizedVal('Log off', localeCategory) }}</button>
+          <button mat-menu-item (click)="navPanelLogoutClick()">{{ localizedVal('Log off', localeCategory) }}</button>
         </mat-menu>
       </mat-list>
     </ul>

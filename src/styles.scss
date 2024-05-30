@@ -78,10 +78,35 @@ a.mat-mdc-menu-item > mat-icon {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgb(0 0 0 / 90%)), url(./assets/form_bg.jpeg);
 }
 
-app-flow-container .psdk-flow-container-top {
-  background: none;
-  color: white;
-  padding: 7rem 36rem;
+app-flow-container {
+  .psdk-flow-container-top {
+    // background: none;
+    // color: white;
+    // padding: 7rem 36rem;
+    background: none;
+    color: white;
+    padding: 7rem 0rem;
+    width: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .psdk-flow-container-top > div:first-child {
+    width: 40rem;
+  }
+
+  .psdk-flow-container-top > div:first-child:has(.psdk-message-card) {
+    width: 0rem;
+  }
+
+  .psdk-message-card {
+    display: none;
+  }
+
+  .psdk-flow-container-top > div > div > h2:first-child {
+    display: none;
+  }
 }
 
 .custom-card {
@@ -137,4 +162,95 @@ app-check-box {
     color: white !important;
     font-size: 16px !important;
   }
+}
+
+app-confirmation {
+  .confirm-label {
+    display: none;
+  }
+}
+
+app-default-form {
+  .psdk-default-form-instruction-text {
+    p {
+      font-size: 16px;
+    }
+  }
+}
+
+app-radio-buttons {
+  mat-form-field {
+    label {
+      font-size: 18px !important;
+      color: white !important;
+      opacity: 100% !important;
+    }
+
+    mat-radio-group {
+      margin-top: 12px;
+      font-size: 18px;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      padding: 0 !important;
+    }
+  }
+}
+
+app-multi-step {
+  .psdk-horizontal-stepper-header-container {
+    display: none !important;
+  }
+}
+
+app-flow-container .psdk-flow-container {
+  padding-left: 0 !important;
+}
+
+app-action-buttons {
+  .mat-secondary {
+    border-radius: 25px;
+    padding: 20px 30px;
+    border: 1px solid #71baff;
+    color: #71baff !important;
+    min-width: 6rem;
+    margin-right: 8px;
+  }
+
+  .mat-primary {
+    border-radius: 25px;
+    padding: 20px 30px;
+    border: 1px solid #71baff;
+    color: #71baff;
+    min-width: 6rem;
+  }
+
+  .secondary-buttons {
+    .mat-grid-tile-content {
+      justify-content: start !important;
+    }
+  }
+
+  .primary-buttons {
+    .mat-grid-tile-content {
+      justify-content: end !important;
+    }
+  }
+}
+
+app-confirmation {
+  .done-button {
+    .mat-primary {
+      border-radius: 25px;
+      padding: 20px 30px;
+      border: 1px solid #71baff;
+      min-width: 6rem;
+    }
+  }
+}
+
+app-region {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
 }

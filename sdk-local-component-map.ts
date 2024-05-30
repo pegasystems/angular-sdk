@@ -10,6 +10,8 @@ import { DropdownComponent } from './src/app/_components/override-sdk/field/drop
 import { TextAreaComponent } from './src/app/_components/override-sdk/field/text-area/text-area.component';
 import { DateComponent } from './src/app/_components/override-sdk/field/date/date.component';
 import { TimeComponent } from './src/app/_components/override-sdk/field/time/time.component';
+import { MultiStepComponent } from './src/app/_components/override-sdk/infra/multi-step/multi-step.component';
+import { ActionButtonsComponent } from './src/app/_components/override-sdk/infra/action-buttons/action-buttons.component';
 /* import end - DO NOT REMOVE */
 
 // localSdkComponentMap is the JSON object where we'll store the components that are
@@ -25,7 +27,9 @@ const localSdkComponentMap = {
   Dropdown: DropdownComponent,
   TextArea: TextAreaComponent,
   Date: DateComponent,
-  Time: TimeComponent
+  Time: TimeComponent,
+  MultiStep: MultiStepComponent,
+  ActionButtons: ActionButtonsComponent
   /* map end - DO NOT REMOVE */
 };
 

@@ -231,7 +231,7 @@ export class TodoComponent implements OnInit, OnDestroy, OnChanges {
     const sTarget = this.pConn$.getContainerName();
     const sTargetContainerName = sTarget;
 
-    const options: any = { containerName: sTargetContainerName };
+    const options: any = { containerName: sTargetContainerName, pageName: 'pyEmbedAssignment' };
 
     if (classname === null || classname === '') {
       classname = this.pConn$.getCaseInfo().getClassName();
@@ -246,21 +246,33 @@ export class TodoComponent implements OnInit, OnDestroy, OnChanges {
       options.isActionFromToDoList = false;
       options.target = sTarget;
     }
-
+    // options.pageName: 'pyEmbedAssignment'
+    // const options: any = {
+    //   pageName: 'pyEmbedAssignment'
+    // };
     this.psService.sendMessage(true);
-
-    this.pConn$
-      .getActionsApi()
-      .openAssignment(id, classname, options)
+    // this.pConn$
+    PCore.getMashupApi()
+      .openAssignment(id, this.pConn$.getContextName(), options)
       .then(() => {
-        this.psService.sendMessage(false);
-        if (this.bLogging) {
-          console.log(`openAssignment completed`);
-        }
+        console.log('openAssignment rendering is complete');
       })
       .catch(() => {
         this.psService.sendMessage(false);
         this.erService.sendMessage('show', 'Failed to open');
       });
+    // this.pConn$
+    //   .getActionsApi()
+    //   .openAssignment(id, classname, options)
+    //   .then(() => {
+    //     this.psService.sendMessage(false);
+    //     if (this.bLogging) {
+    //       console.log(`openAssignment completed`);
+    //     }
+    //   })
+    //   .catch(() => {
+    //     this.psService.sendMessage(false);
+    //     this.erService.sendMessage('show', 'Failed to open');
+    //   });
   }
 }

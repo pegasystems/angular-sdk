@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="arAssignments$ && arAssignments$.length > 0">
   <mat-card class="todo-card">
     <div style="color: white; font-size: 24px; line-height: 29px; font-weight: 500; margin-bottom: 1rem">Please let us know how we did!</div>
     <div class="todo-card-div">
@@ -6,13 +6,13 @@
         <img src="constellation/assets/todo.png" />
       </div>
       <div class="psdk-todo-card">
-        <div class="psdk-todo-assignment-title" style="font-size: 16px">U+ Service Satisfaction Survey</div>
+        <div class="psdk-todo-assignment-title" style="font-size: 16px">{{ arAssignments$[0].name }} {{ getID(arAssignments$[0]) }}</div>
         <div class="psdk-todo-assignment-data">
           <div>This survey will provide us valuable feedback to ensure we deliver the highest quality service to you and others.</div>
         </div>
       </div>
       <div>
-        <button mat-raised-button class="todo-action-button">Get started</button>
+        <button mat-raised-button class="todo-action-button" color="primary" (click)="clickGo(arAssignments$[0])">Get started</button>
       </div>
     </div>
   </mat-card>

@@ -38,7 +38,9 @@
     <ul class="quick-link-ul-list">
       <mat-card class="quick-link-list" *ngFor="let element of actions$">
         <div (click)="element.onClick()">
-          <div class="quick-link-img-div"><img class="quick-link-icon" src="constellation/assets/service.png" /></div>
+          <div class="quick-link-img">
+            <div class="quick-link-img-div psdk-avatar"><img *ngIf="element.icon" class="quick-link-icon" [src]="element.icon" /></div>
+          </div>
           <span class="quick-link-text">{{ element.label }}</span>
         </div>
       </mat-card>

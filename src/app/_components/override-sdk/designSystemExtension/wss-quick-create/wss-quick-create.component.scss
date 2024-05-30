@@ -5,6 +5,7 @@
   display: grid;
   gap: 3rem;
   margin-top: 3rem;
+  margin-bottom: 0;
 }
 
 .quick-link-button {
@@ -21,7 +22,8 @@
 }
 
 .quick-link-icon {
-  height: 3.5rem;
+  height: 2.5rem;
+  filter: var(--app-white-color-filter);
 }
 
 .quick-link-button-span {
@@ -105,18 +107,14 @@
 .psdk-avatar {
   margin: 0rem;
   padding: 0rem;
-  min-width: 2.5rem;
-  min-height: 2.5rem;
-  max-width: 2.5rem;
-  max-height: 2.5rem;
+  min-width: 4.5rem;
+  min-height: 4.5rem;
+  max-width: 4.5rem;
+  max-height: 4.5rem;
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  display: flex;
-  background: none;
-  // background: url(../../../../../assets/todo.png);
-  color: var(--app-form-color);
+  background: #ce2525;
   font-weight: bold;
   font-size: 1.25rem;
 }
@@ -160,4 +158,12 @@
 
 .driver-card {
   background: #2c2b2b;
+}
+
+.quick-link-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
 }
