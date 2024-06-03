@@ -1,0 +1,15 @@
+<mat-card class="service-history-card">
+  <mat-card-header>
+    <mat-card-title>{{ heading }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let row of data">
+        <!-- <mat-icon matListItemIcon svgIcon="wrench"></mat-icon> -->
+        <img class="icon" matListItemIcon src="constellation/assets/service.png" />
+        <div matListItemTitle>{{ row.ServiceMemberName }}</div>
+        <div matListItemLine>{{ row.ServiceMemberRole }}</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

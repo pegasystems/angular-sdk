@@ -2,10 +2,9 @@
   <mat-toolbar-row class="mat-toolbar-row">
     <div (click)="navPanelButtonClick(homePage)" class="logo"><img src="constellation/assets/logo.png" class="psdk-nav-logo" /></div>
     <ul style="display: flex; align-items: center">
-      <li class="nav-items"><span class="nav-links">Cars</span></li>
-      <li class="nav-items"><span class="nav-links">Trucks</span></li>
-      <li class="nav-items"><span class="nav-links">Dealers</span></li>
-      <li class="nav-items"><span class="nav-links">U+ Connect</span></li>
+      <li class="nav-items" [ngClass]="{ active: page.pyLabel === activePage }" *ngFor="let page of navPages$" (click)="navPanelButtonClick(page)">
+        <span class="nav-links">{{ page.pyLabel }}</span>
+      </li>
 
       <mat-list>
         <mat-list-item [matMenuTriggerFor]="menu" class="psdk-profile-list-item">

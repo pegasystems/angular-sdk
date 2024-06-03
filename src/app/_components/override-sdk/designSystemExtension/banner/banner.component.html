@@ -25,21 +25,28 @@
       errorMsg="Region wants component not yet available: {{ arChildren$[1].getPConnect().getComponentName() }}"
     ></component-mapper>
   </div> -->
-  <div class="banner-children">
-    <div>
+  <div class="banner-children" [ngClass]="landingPageName">
+    <div class="tag-line">
+      <div style="font-size: 35px; margin-bottom: 1.5rem">{{ configProps$.heading }}</div>
+      <div style="font-size: 20px">{{ configProps$.message }}</div>
+    </div>
+    <div class="region-a">
       <component-mapper
         [name]="arChildren$[0].getPConnect().getComponentName()"
         [props]="{ pConn$: arChildren$[0].getPConnect(), formGroup$ }"
         errorMsg="Region wants component not yet available: {{ arChildren$[0].getPConnect().getComponentName() }}"
       ></component-mapper>
     </div>
-    <div class="psdk-grid-filter-wide-narrow">
+    <div class="region-b">
       <component-mapper
         [name]="arChildren$[1].getPConnect().getComponentName()"
         [props]="{ pConn$: arChildren$[1].getPConnect(), formGroup$ }"
         errorMsg="Region wants component not yet available: {{ arChildren$[1].getPConnect().getComponentName() }}"
       ></component-mapper>
-      <service-card></service-card>
+      <!-- <service-card></service-card> -->
+    </div>
+    <div *ngIf="landingPageName === 'tradein'" class="how-it-works-container">
+      <app-how-it-works></app-how-it-works>
     </div>
   </div>
 </div>

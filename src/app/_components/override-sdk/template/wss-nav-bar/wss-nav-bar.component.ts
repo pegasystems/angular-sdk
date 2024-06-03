@@ -29,6 +29,8 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
   @Input() caseTypes$: any[];
   @Input() homePage: any;
 
+  activePage = 'U+ Connect';
+
   // For interaction with AngularPConnect
   angularPConnectData: AngularPConnectData = {};
   configProps$: WssNavBarProps;
@@ -137,7 +139,9 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
   }
 
   navPanelButtonClick(oPageData: any) {
-    const { pyClassName, pyRuleName } = oPageData;
+    const { pyClassName, pyRuleName, pyLabel } = oPageData;
+    this.activePage = pyLabel;
+    console.log(pyLabel);
 
     this.showPage(pyRuleName, pyClassName);
   }

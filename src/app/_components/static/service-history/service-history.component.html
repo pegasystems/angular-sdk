@@ -1,12 +1,14 @@
 <mat-card class="service-history-card">
-  <mat-card-header> <mat-card-title>Your Service History</mat-card-title> </mat-card-header>
+  <mat-card-header>
+    <mat-card-title>{{ heading }}</mat-card-title>
+  </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let folder of folders">
+      <mat-list-item *ngFor="let row of data.slice(0, 3)">
         <!-- <mat-icon matListItemIcon svgIcon="wrench"></mat-icon> -->
         <img class="icon" matListItemIcon src="constellation/assets/service.png" />
-        <div matListItemTitle>{{ folder.title }}</div>
-        <div matListItemLine>{{ folder.description }}</div>
+        <div matListItemTitle>{{ row.pyLabel }}</div>
+        <div matListItemLine>Oil Change, Tire rotation, Check fluids</div>
         <img class="arrow-right" src="constellation/assets/arrow-right.svg" />
       </mat-list-item>
     </mat-list>

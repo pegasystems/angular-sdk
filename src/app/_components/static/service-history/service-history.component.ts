@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-service-history',
@@ -13,6 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./service-history.component.scss']
 })
 export class ServiceHistoryComponent {
+  @Input() heading;
+  @Input() data;
+
   folders: any[] = [
     {
       title: 'Scheduled maintenance',
@@ -27,11 +28,4 @@ export class ServiceHistoryComponent {
       description: 'Replaced front left rotor and brake pads, windshield wipers, and investigated rattle near driver’s side window.'
     }
   ];
-
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
-    this.matIconRegistry.addSvgIcon('wrench', this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icons/pw/wrench.svg'));
-  }
 }

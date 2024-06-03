@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { AngularPConnectService } from '@pega/angular-sdk-library';
-import { getToDoAssignments } from '@pega/angular-sdk-library';
-import { ComponentMapperComponent } from '@pega/angular-sdk-library';
+import { AngularPConnectService } from '@pega/angular-sdk-components';
+import { getToDoAssignments } from '@pega/angular-sdk-components';
+import { ComponentMapperComponent } from '@pega/angular-sdk-components';
 
 declare const window: any;
 
@@ -72,9 +72,6 @@ export class ConfirmationComponent implements OnInit {
     this.label = theConfigProps?.label;
     // Get the inherited props from the parent to determine label settings
     // Not using whatsNext at the moment, need to figure out the use of it
-    const whatsNext = this.datasource?.source;
-    const items = whatsNext?.length > 0 ? whatsNext.map((item) => item.label) : '';
-    const todoProps = { ...theConfigProps, renderTodoInConfirm: true };
     this.toDoList = getToDoAssignments(this.pConn$);
     this.detailProps = { ...theConfigProps, showLabel: false };
     this.showDetails = this.pConn$?.getChildren()?.[0]?.getPConnect()?.getChildren()?.length > 0;
@@ -83,5 +80,6 @@ export class ConfirmationComponent implements OnInit {
   onConfirmViewClose() {
     this.showConfirmView = false;
     this.PCore$.getPubSubUtils().publish(this.PCore$.getConstants().PUB_SUB_EVENTS.CASE_EVENTS.CLOSE_CONFIRM_VIEW, this.rootInfo);
+    window.location.reload();
   }
 }

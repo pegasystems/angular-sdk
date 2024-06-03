@@ -164,6 +164,20 @@ mat-list-item {
   font-weight: bold;
   margin: 0 2rem;
   list-style: none;
+  cursor: pointer;
+}
+
+.nav-items.active {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    border-bottom: 2px solid #fff;
+    width: 100%;
+    bottom: -8px;
+    left: 0;
+  }
 }
 
 .login-button {

@@ -58,15 +58,15 @@ a.mat-mdc-menu-item > mat-icon {
 
 .appshell-top {
   background:
-    url(./assets/backgroundImg.png) no-repeat,
-    linear-gradient(#151414, #161515);
+    radial-gradient(transparent 30%, black 100%),
+    url(./assets/backgroundImg.png) no-repeat;
   content: '';
   display: inline-block;
   vertical-align: bottom;
-  width: 100%;
-  height: 100%;
-  background-size: 100%;
-  background-position: left -50px;
+  width: 100vw;
+  height: 100vh;
+  background-size: 100% 100% !important;
+  background-position: left;
   overflow-y: hidden;
 }
 
@@ -75,7 +75,19 @@ a.mat-mdc-menu-item > mat-icon {
   //   url(./assets/form_bg.jpeg) no-repeat,
   //   linear-gradient(#151414, #161515);
 
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgb(0 0 0 / 90%)), url(./assets/form_bg.jpeg);
+  background:
+    linear-gradient(to top, rgba(0, 0, 0), rgba(0, 0, 0, 0.6)),
+    url(./assets/form_bg.jpeg) no-repeat;
+}
+
+.tradein-bg {
+  background: radial-gradient(transparent 0%, black 50%), url(./assets/tradein-bg.jpeg);
+  background-size: 100%;
+  background-position: 0 100%;
+}
+
+.tradein-bg.form-bg {
+  background: radial-gradient(rgba(0, 0, 0, 0.75) 0%, black 50%), url(./assets/tradein-bg.jpeg);
 }
 
 app-flow-container {
@@ -85,7 +97,7 @@ app-flow-container {
     // padding: 7rem 36rem;
     background: none;
     color: white;
-    padding: 7rem 0rem;
+    padding: 5rem 0rem;
     width: auto !important;
     display: flex;
     align-items: center;
@@ -250,8 +262,56 @@ app-confirmation {
   }
 }
 
-app-region {
-  display: flex;
-  flex-direction: column;
-  gap: 3em;
+.uplusauto {
+  .region-a > component-mapper > app-region {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 3em;
+    position: relative;
+
+    & > div:first-child {
+      grid-column: 1;
+    }
+
+    & > div:nth-child(2) {
+      position: absolute;
+      bottom: calc(-100% - 2em);
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      justify-items: end;
+      gap: 3em;
+      width: 100%;
+
+      & > *:first-child {
+        grid-column: 4;
+        width: 100%;
+      }
+    }
+  }
+
+  .region-b > component-mapper > app-region {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3em;
+    position: relative;
+
+    & > div:first-child {
+      grid-column: 1 / span 3;
+    }
+
+    & > div:nth-child(2) {
+      grid-column: 1 / span 3;
+    }
+
+    & > div:nth-child(3) {
+      grid-column: 4;
+      position: absolute;
+      top: calc(210px + 3em);
+      width: 100%;
+    }
+  }
+}
+
+.psdk-grid-filter {
+  grid-template-columns: 1fr !important;
 }
