@@ -298,6 +298,7 @@ app-confirmation {
 
     & > div:first-child {
       grid-column: 1 / span 3;
+      z-index: 1000;
     }
 
     & > div:nth-child(2) {
@@ -325,4 +326,8 @@ app-radio-buttons {
   .mat-mdc-form-field-infix {
     padding: 0 !important;
   }
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  font-size: 18px !important;
 }
