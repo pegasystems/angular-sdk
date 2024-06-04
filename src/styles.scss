@@ -320,3 +320,9 @@ app-confirmation {
 .mdc-line-ripple::before {
   border: none !important;
 }
+
+app-radio-buttons {
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+  }
+}
