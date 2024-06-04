@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { Utils } from '@pega/angular-sdk-components';
+
+const ICONS = ['profile1.png', 'profile2.png'];
 
 @Component({
   selector: 'app-driver-profiles',
@@ -10,18 +13,15 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './driver-profiles.component.html',
   styleUrls: ['./driver-profiles.component.scss']
 })
-export class DriverProfilesComponent {
+export class DriverProfilesComponent implements OnChanges {
   @Input() heading;
   @Input() data;
 
-  folders: any[] = [
-    {
-      title: 'Scheduled maintenance',
-      description: 'Oil Change, Tire rotation, Check fluids'
-    },
-    {
-      title: 'Recall service',
-      description: 'Performed Service Campain #A12B3 - Faulty window motor'
-    }
-  ];
+  icons;
+
+  constructor(private utils: Utils) {}
+
+  ngOnChanges() {
+    this.icons = ICONS.map(icon => this.utils.getIconPath(this.utils.getSDKStaticContentUrl()) + icon);
+  }
 }

@@ -281,6 +281,7 @@ app-confirmation {
       justify-items: end;
       gap: 3em;
       width: 100%;
+      z-index: 1000;
 
       & > *:first-child {
         grid-column: 4;
@@ -314,4 +315,8 @@ app-confirmation {
 
 .psdk-grid-filter {
   grid-template-columns: 1fr !important;
+}
+
+.mdc-line-ripple::before {
+  border: none !important;
 }

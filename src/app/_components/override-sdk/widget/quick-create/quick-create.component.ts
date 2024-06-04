@@ -63,8 +63,8 @@ export class QuickCreateComponent implements OnInit, OnChanges {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps()) as QuickCreateProps;
 
     this.heading$ = this.configProps$.heading;
-    this.showCaseIcons$ = this.configProps$.showCaseIcons;
-    this.classFilter$ = this.configProps$.classFilter;
+    this.showCaseIcons$ = this.configProps$.showCaseIcons || true;
+    this.classFilter$ = Array.isArray(this.configProps$.classFilter) ? this.configProps$.classFilter : [this.configProps$.classFilter];
 
     const envInfo = PCore.getEnvironmentInfo();
     if (
@@ -73,7 +73,7 @@ export class QuickCreateComponent implements OnInit, OnChanges {
       envInfo.environmentInfoObject.pyCaseTypeList &&
       envInfo.environmentInfoObject.pyCaseTypeList.length > 0
     ) {
-      this.classFilter$.forEach(item => {
+      this.classFilter$?.forEach(item => {
         let icon = this.utils.getImageSrc('polaris-solid', this.utils.getSDKStaticContentUrl());
         let label = '';
         envInfo.environmentInfoObject.pyCaseTypeList.forEach(casetype => {

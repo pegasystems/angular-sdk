@@ -4,9 +4,8 @@
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let row of data">
-        <!-- <mat-icon matListItemIcon svgIcon="wrench"></mat-icon> -->
-        <img class="icon" matListItemIcon src="constellation/assets/service.png" />
+      <mat-list-item *ngFor="let row of data; let i = index">
+        <img class="icon" matListItemIcon [src]="icons[i]" />
         <div matListItemTitle>{{ row.ServiceMemberName }}</div>
         <div matListItemLine>{{ row.ServiceMemberRole }}</div>
       </mat-list-item>

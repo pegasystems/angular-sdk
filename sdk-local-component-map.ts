@@ -14,6 +14,8 @@ import { ActionButtonsComponent } from './src/app/_components/override-sdk/infra
 import { ListViewComponent } from './src/app/_components/override-sdk/template/list-view/list-view.component';
 import { DataReferenceComponent } from './src/app/_components/override-sdk/template/data-reference/data-reference.component';
 import { ConfirmationComponent } from './src/app/_components/override-sdk/template/confirmation/confirmation.component';
+import { TextInputComponent } from './src/app/_components/override-sdk/field/text-input/text-input.component';
+import { IntegerComponent } from './src/app/_components/override-sdk/field/integer/integer.component';
 /* import end - DO NOT REMOVE */
 
 // localSdkComponentMap is the JSON object where we'll store the components that are
@@ -33,7 +35,10 @@ const localSdkComponentMap = {
   ActionButtons: ActionButtonsComponent,
   ListView: ListViewComponent,
   DataReference: DataReferenceComponent,
-  Confirmation: ConfirmationComponent
+  Confirmation: ConfirmationComponent,
+  Pega_Extensions_CaseLauncher: QuickCreateComponent,
+  TextInput: TextInputComponent,
+  Integer: IntegerComponent
   /* map end - DO NOT REMOVE */
 };
 
