@@ -38,9 +38,11 @@ export class BannerComponent implements OnInit, OnDestroy, OnChanges {
       this.landingPageName = this.title.toLocaleLowerCase().replace(/\s/g, '');
       if (this.landingPageName === 'tradein') {
         document.getElementsByClassName('appshell-top')[0].classList.remove('uplusauto');
+        document.getElementsByClassName('appshell-top')[0].classList.remove('profile');
         document.getElementsByClassName('appshell-top')[0].classList.add('tradein-bg');
       } else {
         document.getElementsByClassName('appshell-top')[0].classList.remove('tradein-bg');
+        document.getElementsByClassName('appshell-top')[0].classList.remove('profile');
         document.getElementsByClassName('appshell-top')[0].classList.add('uplusauto');
       }
     }

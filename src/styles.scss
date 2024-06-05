@@ -90,6 +90,10 @@ a.mat-mdc-menu-item > mat-icon {
   background: radial-gradient(rgba(0, 0, 0, 0.75) 0%, black 50%), url(./assets/tradein-bg.jpeg);
 }
 
+.appshell-top.profile {
+  background: #171616 !important;
+}
+
 app-flow-container {
   .psdk-flow-container-top {
     // background: none;

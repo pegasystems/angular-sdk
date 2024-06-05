@@ -16,6 +16,7 @@ import { DataReferenceComponent } from './src/app/_components/override-sdk/templ
 import { ConfirmationComponent } from './src/app/_components/override-sdk/template/confirmation/confirmation.component';
 import { TextInputComponent } from './src/app/_components/override-sdk/field/text-input/text-input.component';
 import { IntegerComponent } from './src/app/_components/override-sdk/field/integer/integer.component';
+import { ProfileComponent } from 'src/app/_components/static/profile/profile.component';
 /* import end - DO NOT REMOVE */
 
 // localSdkComponentMap is the JSON object where we'll store the components that are
@@ -37,6 +38,7 @@ const localSdkComponentMap = {
   DataReference: DataReferenceComponent,
   Confirmation: ConfirmationComponent,
   Pega_Extensions_CaseLauncher: QuickCreateComponent,
+  Pega_Extensions_personaDetails: ProfileComponent,
   TextInput: TextInputComponent,
   Integer: IntegerComponent
   /* map end - DO NOT REMOVE */

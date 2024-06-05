@@ -1,0 +1,47 @@
+<div class="profile-page-container">
+  <div class="left-container">
+    <img src="constellation/assets/icons/profile1.png" />
+  </div>
+  <div class="right-container">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <mat-card-title>Name</mat-card-title>
+      </mat-card-header>
+      <mat-card-content> {{ data?.FullName }} </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <mat-card-title>Username</mat-card-title>
+      </mat-card-header>
+      <mat-card-content> {{ data?.UserName }} </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <mat-card-title>Password</mat-card-title>
+      </mat-card-header>
+      <mat-card-content> ********** </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <mat-card-title>Contact information</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <div class="legend">Phone</div>
+          <div class="group"><img src="constellation/assets/icons/phone.svg" />{{ data?.Phone }} (Primary)</div>
+        </div>
+        <div>
+          <div class="legend">Email</div>
+          <div class="group"><img src="constellation/assets/icons/mail.svg" />{{ data?.Email }}</div>
+        </div>
+        <div>
+          <div class="legend">Address</div>
+          <div class="group"><img src="constellation/assets/icons/home.svg" />{{ data?.Address }}</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

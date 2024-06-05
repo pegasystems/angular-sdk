@@ -1,0 +1,53 @@
+.profile-page-container {
+  display: flex;
+  gap: 5em;
+  width: 50%;
+  margin: auto;
+}
+
+.mat-mdc-card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.left-container {
+  img {
+    border-radius: 50%;
+  }
+}
+
+.right-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  flex: 1 1 auto;
+}
+
+.profile-card {
+  background: rgba(139, 148, 164, 0.25);
+  width: 100%;
+  border-radius: 8px;
+  border: 1.5px solid #878789;
+  padding: 0 10px;
+}
+
+.mat-mdc-card-content {
+  color: #fff;
+  padding-top: 1em;
+}
+
+.legend {
+  font-weight: 700;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 5px 0 15px 0;
+
+  img {
+    height: 20px;
+    filter: var(--app-white-color-filter);
+  }
+}
