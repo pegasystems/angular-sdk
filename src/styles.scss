@@ -336,6 +336,10 @@ app-radio-buttons {
   font-size: 18px !important;
 }
 
+.appshell-main-wss {
+  min-height: auto !important;
+}
+
 // responsiveness for ipad
 @media only screen and (min-device-width: 768px) and (max-device-width: 1180px) and (-webkit-min-device-pixel-ratio: 1) {
   .quick-link-ul-list {
