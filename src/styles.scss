@@ -189,7 +189,7 @@ app-confirmation {
 app-default-form {
   .psdk-default-form-instruction-text {
     p {
-      font-size: 16px;
+      font-size: 18px;
       width: 40rem;
     }
   }
@@ -332,8 +332,16 @@ app-radio-buttons {
   }
 }
 
+app-material-details-fields {
+  .psdk-grid-filter {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+}
+
 .mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
   font-size: 18px !important;
+  color: white !important;
 }
 
 .appshell-main-wss {
