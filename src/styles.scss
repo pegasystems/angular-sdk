@@ -67,7 +67,7 @@ a.mat-mdc-menu-item > mat-icon {
   height: 100vh;
   background-size: 100% 100% !important;
   background-position: left;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .form-bg {
@@ -334,4 +334,52 @@ app-radio-buttons {
 
 .mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
   font-size: 18px !important;
+}
+
+// responsiveness for ipad
+@media only screen and (min-device-width: 768px) and (max-device-width: 1180px) and (-webkit-min-device-pixel-ratio: 1) {
+  .quick-link-ul-list {
+    margin-top: 0 !important;
+  }
+
+  .uplusauto {
+    .region-a > component-mapper > app-region {
+      display: flex;
+      flex-direction: column;
+      gap: 3em;
+      position: relative;
+
+      & > div:nth-child(2) {
+        position: static;
+        display: block;
+      }
+    }
+
+    .region-b > component-mapper > app-region {
+      display: flex;
+      flex-direction: column;
+      gap: 3em;
+      position: relative;
+
+      & > div:nth-child(3) {
+        position: static;
+      }
+    }
+  }
+
+  app-wss-nav-bar {
+    mat-toolbar-row ul {
+      padding-left: 0 !important;
+    }
+
+    .nav-items {
+      margin: 0 1.5rem !important;
+    }
+  }
+
+  app-todo {
+    .mb-3 {
+      margin-bottom: 0 !important;
+    }
+  }
 }
