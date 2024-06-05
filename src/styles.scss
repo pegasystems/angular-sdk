@@ -297,7 +297,7 @@ app-confirmation {
   .region-b > component-mapper > app-region {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 3em;
+    column-gap: 3em;
     position: relative;
 
     & > div:first-child {
