@@ -106,7 +106,7 @@ test.describe('E2E test', () => {
     await sendToMgr.click();
 
     const currentCaseID = await page.locator('div[id="current-caseID"]').textContent();
-    const filePath = path.join(__dirname, '../../../src/assets/cableinfo.png');
+    const filePath = path.join(__dirname, '../../../src/assets/cableinfo.jpg');
     const attachInputId = await page.locator('div[id="attachment-container"] >> input').getAttribute('id');
     await page.setInputFiles(`#${attachInputId}`, filePath);
 
