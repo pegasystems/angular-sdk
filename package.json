@@ -65,7 +65,7 @@
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
     "@pega/angular-sdk-components": "~23.1.10",
-    "@pega/auth": "~0.2.12",
+    "@pega/auth": "~0.2.13",
     "@pega/cosmos-react-condition-builder": "^4.2.0",
     "@pega/cosmos-react-core": "^4.2.0",
     "@pega/cosmos-react-work": "^4.2.0",
