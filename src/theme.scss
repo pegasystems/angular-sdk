@@ -1,6 +1,5 @@
 @use '@angular/material' as mat;
-
-@include mat.core();
+@use '@angular/material-experimental' as matx;
 
 $my-primary: mat.define-palette(mat.$deep-purple-palette, 500);
 $my-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
@@ -16,11 +15,14 @@ $my-theme: mat.define-light-theme(
   )
 );
 
-$my-typography: mat.define-typography-config();
-@include mat.typography-hierarchy($my-typography);
+@include mat.core();
+
+:root {
+  @include mat.all-component-themes($my-theme);
+}
 
 @mixin generate-theme-vars($theme) {
-  $primary: mat-color(map-get($theme, primary));
+  $primary: mat.get-color-from-palette($my-primary);
   --app-primary-color: #{$primary};
   --app-primary-dark-color: #4527a0;
   --app-primary-light-color: #b499fc;

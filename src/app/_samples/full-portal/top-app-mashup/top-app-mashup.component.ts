@@ -169,7 +169,7 @@ export class TopAppMashupComponent implements OnInit, OnDestroy {
 
     this.pConn$ = props.getPConnect();
     this.sComponentName$ = this.pConn$.getComponentName();
-    this.arChildren$ = this.pConn$.getChildren() as any[];
+    this.arChildren$ = this.pConn$.getChildren();
     this.bPCoreReady$ = true;
   }
 

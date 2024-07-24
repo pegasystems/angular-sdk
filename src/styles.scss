@@ -2,13 +2,12 @@
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 // @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 /*@import "@angular/material/prebuilt-themes/pink-bluegrey.css";*/
-@import '@angular/material/theming';
 @import './containerStyles.scss';
+@import 'theme';
+@import '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
 
 html,
 body {
-  @import './theme.scss';
-  @include angular-material-theme($my-theme);
   @include generate-theme-vars($my-theme);
 }
 html,
