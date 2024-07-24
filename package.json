@@ -1,6 +1,6 @@
 {
   "name": "angular-sdk",
-  "version": "23.1.10",
+  "version": "24.1.10",
   "scripts": {
     "_comment_SDK_install_build_run_commands": "The following are public commands to clean, install, build, and run the SDK",
     "build:dev": "npm run _internal-check-node-version && run-p -l fix _internal-build-dev-only",
