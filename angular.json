@@ -114,10 +114,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angularsdk:build:production"
+              "buildTarget": "angularsdk:build:production"
             },
             "development": {
-              "browserTarget": "angularsdk:build:development"
+              "buildTarget": "angularsdk:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -125,7 +125,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angularsdk:build"
+            "buildTarget": "angularsdk:build"
           }
         },
         "test": {

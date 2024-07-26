@@ -106,7 +106,7 @@ export class MainScreenComponent implements OnInit, OnDestroy {
     this.scservice.getSdkConfig().then(sdkConfig => {
       let mashupCaseType = sdkConfig.serverConfig.appMashupCaseType;
       if (!mashupCaseType) {
-        const caseTypes = PCore.getEnvironmentInfo().environmentInfoObject.pyCaseTypeList;
+        const caseTypes = (PCore.getEnvironmentInfo().environmentInfoObject as any).pyCaseTypeList;
         mashupCaseType = caseTypes[0].pyWorkTypeImplementationClassName;
       }
 
@@ -119,9 +119,11 @@ export class MainScreenComponent implements OnInit, OnDestroy {
               }
             : {}
       };
-      (PCore.getMashupApi().createCase(mashupCaseType, PCore.getConstants().APP.APP, options) as Promise<any>).then(() => {
-        console.log('createCase rendering is complete');
-      });
+      PCore.getMashupApi()
+        .createCase(mashupCaseType, PCore.getConstants().APP.APP, options)
+        .then(() => {
+          console.log('createCase rendering is complete');
+        });
     });
   }
 
