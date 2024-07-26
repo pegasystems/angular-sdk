@@ -143,7 +143,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "buildTarget": "angularsdk:build",
+            "browserTarget": "angularsdk:build",
             "compodocArgs": ["-d", "./storybook-assets"],
             "port": 6006
           }
@@ -152,7 +152,7 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": ".storybook",
-            "buildTarget": "angularsdk:build",
+            "browserTarget": "angularsdk:build",
             "compodocArgs": ["-d", "."],
             "outputDir": "storybook-static"
           }
