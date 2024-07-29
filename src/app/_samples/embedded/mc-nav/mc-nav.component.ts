@@ -195,7 +195,8 @@ export class MCNavComponent implements OnInit, OnDestroy {
 
   showHideProgress(bShow: boolean) {
     this.isProgress$ = bShow;
-    this.cdRef.detectChanges();
+    // causing failure on actions buttons in emebedded mode
+    // this.cdRef.detectChanges();
   }
 
   logOff() {
