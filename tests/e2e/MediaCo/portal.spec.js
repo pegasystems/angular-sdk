@@ -8,6 +8,7 @@ test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto(config.config.baseUrl, { waitUntil: 'networkidle' });
 });
+
 let caseID;
 test.describe('E2E test', () => {
   test('should login, create and send for discount', async ({ page }) => {
@@ -110,9 +111,6 @@ test.describe('E2E test', () => {
     const attachInputId = await page.locator('div[id="attachment-container"] >> input').getAttribute('id');
     await page.setInputFiles(`#${attachInputId}`, filePath);
 
-    const pCoreVersion = await page.evaluate(() => window.PCore.getPCoreVersion());
-    const isInfinity23OrHigher = ['8.23.0', '23.1.1'].includes(pCoreVersion);
-
     await Promise.all([
       page.waitForResponse(
         `${endpoints.serverConfig.infinityRestServerUrl}${
@@ -127,15 +125,12 @@ test.describe('E2E test', () => {
       page.waitForResponse(
         `${endpoints.serverConfig.infinityRestServerUrl}${
           endpoints.serverConfig.appAlias ? `/app/${endpoints.serverConfig.appAlias}` : ''
-        }/api/application/v2/cases/${currentCaseID}/attachments${isInfinity23OrHigher ? '?includeThumbnail=false' : ''}`
+        }/api/application/v2/cases/${currentCaseID}/attachments?includeThumbnail=false`
       )
     ]);
 
     const attachmentCount = await page.locator('div[id="attachments-count"]').textContent();
     await expect(Number(attachmentCount)).toBeGreaterThan(0);
-
-    //  Click text=Thank you! The next step in this case has been routed appropriately.
-    await page.locator('text=Thank you! The next step in this case has been routed appropriately.').click();
   }, 10000);
 
   test('should enter a discount value($) and send to tech', async ({ page }) => {
@@ -156,7 +151,8 @@ test.describe('E2E test', () => {
 
     await page.locator('button:has-text("submit")').click();
 
-    await page.locator('text=Thank you! The next step in this case has been routed appropriately.').click();
+    const todo = await page.locator('div[id="worklist"]:has-text("To do")');
+    await expect(todo).toBeVisible();
   }, 10000);
 
   test('should modify(if required) the actual services/packages to be installed and resolve the case', async ({ page }) => {
@@ -188,7 +184,7 @@ test.describe('E2E test', () => {
     const defaultPortalErrorMessage = page.locator('div[data-test-id="defaultPortalErrorMessage"]');
     await expect(defaultPortalErrorMessage).toBeVisible();
 
-    const mediaCoBtn = page.locator('div[class="portal-list-item"] >> text="MediaCo"');
+    const mediaCoBtn = page.locator('div[class="portal-list-item"]>> text="MediaCo"');
     await expect(mediaCoBtn).toBeVisible();
     await mediaCoBtn.click();
 
