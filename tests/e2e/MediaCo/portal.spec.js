@@ -2,7 +2,7 @@ const path = require('path');
 const { test, expect } = require('@playwright/test');
 const config = require('../../config');
 const common = require('../../common');
-const endpoints = require('../../../../../sdk-config.json');
+const endpoints = require('../../../sdk-config.json');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
