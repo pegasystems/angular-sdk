@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
-const config = require('../../config');
-const common = require('../../common');
+const config = require('../../../config');
+const common = require('../../../common');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
@@ -39,7 +39,7 @@ test.describe('E2E test', () => {
     await page.locator('button:has-text("submit")').click();
 
     /** ListOfRecord options type test */
-    const selectedOption = await page.locator('mat-select[data-test-id="c6be2b6191e6660291b6b0c92bd2f0df"]');
+    let selectedOption = await page.locator('mat-select[data-test-id="c6be2b6191e6660291b6b0c92bd2f0df"]');
     await selectedOption.click();
     await page.locator('mat-option > span:has-text("ListOfRecords")').click();
 
@@ -54,9 +54,9 @@ test.describe('E2E test', () => {
     await page.locator('mat-option > span:has-text("Editable")').click();
 
     const PCoreVersion = await page.evaluate(() => window.PCore.getPCoreVersion());
-
+    let editModeType;
     if (!PCoreVersion.includes('8.8')) {
-      const editModeType = await page.locator('mat-select[data-test-id="80c1db3a7b228760228004b1a532c71e"]');
+      editModeType = await page.locator('mat-select[data-test-id="80c1db3a7b228760228004b1a532c71e"]');
       await editModeType.click();
       await page.locator('mat-option > span:has-text("Table rows")').click();
     }
@@ -120,7 +120,7 @@ test.describe('E2E test', () => {
     await page.locator('button[id="delete-button"]').click();
 
     /** Table Edit Modal tests */
-    const editModeType = await page.locator('mat-select[data-test-id="80c1db3a7b228760228004b1a532c71e"]');
+    editModeType = await page.locator('mat-select[data-test-id="80c1db3a7b228760228004b1a532c71e"]');
     await editModeType.click();
     await page.locator('mat-option > span:has-text("Modal")').click();
 
@@ -288,7 +288,59 @@ test.describe('E2E test', () => {
     await expect(fieldGroup.locator('div >> text="03142"')).toBeVisible();
     await expect(fieldGroup.locator('div >> text="+12014440213"')).toBeVisible();
 
+    /** Testing Sorting(both ascending and descending) */
+    selectedOption = page.locator('mat-select[data-test-id="c6be2b6191e6660291b6b0c92bd2f0df"]');
+    await selectedOption.click();
+    await page.locator('mat-option > span:has-text("ListOfRecords")').click();
+
+    selectedSubCategory = await page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
+    await selectedSubCategory.click();
+    await page.locator('mat-option > span:has-text("Table")').click();
+
+    /** Editable mode type tests */
+    selectedEditMode = await page.locator('mat-select[data-test-id="6f64b45d01d11d8efd1693dfcb63b735"]');
+    await selectedEditMode.click();
+    await page.locator('mat-option > span:has-text("Editable")').click();
+
+    editModeType = page.locator('mat-select[data-test-id="80c1db3a7b228760228004b1a532c71e"]');
+    await editModeType.click();
+    await page.locator('mat-option > span:has-text("Table rows")').click();
+
+    // await page.pause();
+
+    /** Creating row by clicking on `+Add` button */
+    await page.locator('button:has-text("+ Add")').click();
+
+    /** Entering values in the second Row */
+    await page.locator('input[data-test-id="202003240938510823869"] >> nth=1').fill('Main St');
+    await page.locator('input[data-test-id="202003240938510831291"] >> nth=1').fill('Cambridge');
+    await page.locator('input[data-test-id="202003240938510831411"] >> nth=1').fill('MA');
+    await page.locator('input[data-test-id="202003240938510832734"] >> nth=1').fill('02142');
+
+    /** Creating row by clicking on `+Add` button */
+    await page.locator('button:has-text("+ Add")').click();
+
+    /** Entering values in the third Row */
+    await page.locator('input[data-test-id="202003240938510823869"] >> nth=2').fill('');
+    await page.locator('input[data-test-id="202003240938510831291"] >> nth=2').fill('Cambridge');
+    await page.locator('input[data-test-id="202003240938510831411"] >> nth=2').fill('MA');
+    await page.locator('input[data-test-id="202003240938510832734"] >> nth=2').fill('02142');
+
     await page.locator('button:has-text("Next")').click();
+
+    table = page.locator('table[id="readonly-table"]');
+
+    await table.locator('div:has-text("Street") >> nth=0').click();
+
+    let tableCell = table.locator('tbody >> tr >> td >> nth=0');
+    // "---" should come at the top in the ascending order, since it's a Falsy value
+    await expect(await tableCell.textContent()).toBe('---');
+
+    await table.locator('div:has-text("Street") >> nth=0').click();
+
+    tableCell = table.locator('tbody >> tr >> td >> nth=0');
+    // "Main St" should be at the top in the descending order
+    await expect(await tableCell.textContent()).toBe('Main St');
 
     /** Submitting the case */
     await page.locator('button:has-text("submit")').click();
