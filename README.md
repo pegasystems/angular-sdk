@@ -1,35 +1,25 @@
 <p align="center"><img width=60% src="docs/media/AngularSDK-Logo.png">
 
-# Angular SDK - Release Announcement - v23.1.10
+# Angular SDK - Release Announcement - v24.1.10
 
-The **SDK-A v23.1.10** release is **only compatible with Pega Infinity '23**. This release is available in the [**release/23.1.10** branch of the Angular SDK repository](https://github.com/pegasystems/angular-sdk/tree/release/23.1.10).
-<br>
+The **SDK-A v24.1.10** release is **only compatible with Pega Infinity '24.1**. This release is available in the [**release/24.1.10**](https://github.com/pegasystems/angular-sdk/tree/release/24.1.10) branch of the Angular SDK repository.
 
-**Note**: From **SDK-A v23.1.10** onwards, the **main** branch will be the development branch for future versions or the latest version of Infinity. If you are currently using the Angular SDK with Pega Infinity 8.8, please use the [release/8.8.10 branch](https://github.com/pegasystems/angular-sdk/tree/release/8.8.10) instead of the main branch.
+**Note**: The main branch is the active development branch for future versions of Angular SDK.
 
-The SDK-A v23.1.10 release upgrades the Angular version to Angular 16 and the Material version to Material 16. This release allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
-[What's new in SDK-A 23.1.10](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
-<br />
+The SDK-A v24.1.10 release upgrades the Angular version to 17 and the Angular Material version to 17. This release allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
+[What's new in SDK-A 24.1.10](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
+
+This [Angular SDK updates](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html) page provides details about all of the Angular SDK releases.
 
 <hr>
 
-## Previous releases
 
-### Angular SDK - Release Announcement - v8.8.10 - June 2023
-
-This version of the Angular SDK uses <strong>Angular 15 and Material 15</strong>, and <strong>only</strong> supports Pega Infinity&trade; 8.8.0 and higher versions. This is a <strong>significant update</strong> to the Angular SDK <strong>main</strong> branch. We strongly advise current SDK users to prepare for converting their changes to the SDK code to Angular 15.
-
-For more information about this release, see [What's new in SDK-A 8.8.10](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html#d8250e70).
-
-
-
----
 
 ***IMPORTANT:***  If you are upgrading from a previous version of Angular SDK, please follow the guidelines documented in [Upgrading Angular SDK](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/upgrading-angular-sdk.html).
 
 ---
 
-# Overview of Angular SDK
+# Overview
 
 The Angular SDK combined with Pega's client orchestration APIs (ConstellationJS APIs) provides a guided iterative development workflow experience. This accelerates integrating Pega’s Constellation DX API with an alternative (non-Pega) UI. Integrating an alternative design system is achieved using DX Components.
 
@@ -45,14 +35,16 @@ The Angular SDK includes a ConstellationJS to Angular bridge and sample DX compo
 
 ## Pega Infinity Server and Constellation architecture-enabled Application
 
-This version of the Angular SDK assumes that you have access to a Pega Infinity server (**23.1.0+**) running an application that is configured to run using the Constellation UI service. _(If you need to use Infinity 8.8.x, please use the **release/8.8.10** branch instead of this **main** branch.)_
+This version of the Angular SDK assumes that you have access to a Pega Infinity server (**24.1.0+**) running an application that is configured to run using the Constellation UI service. 
+- If you need to use Infinity 23.1.x, please use the **release/23.1.10** branch.
+- If you need to use Infinity 8.8.x, please use the **release/8.8.10** branch.
 
 The **MediaCo** sample application is already configured as a Constellation architecture-based application and can be found in the Angular SDK download associated with this repo which is available in the [Angular SDK Pega Marketplace page](https://community.pega.com/marketplace/components/angular-sdk). The OAuth 2.0 Client Registration records associated with the **MediaCo** application are available in the same Angular SDK download. For more information about the MediaCo sample application, see [MediaCo sample application](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/mediaco-sample-application.html).
 
 The **Angular SDK** has been tested with:
 
-- node 18.12.1/18.13.0
-- npm 8.19.2/8.19.3
+- node 20.12.1
+- npm 10.5.0
 
 Future updates to the SDK will support more recent LTS versions of node as the Constellation architecture supports them.
 
