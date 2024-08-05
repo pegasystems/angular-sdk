@@ -68,7 +68,7 @@
     "@pega/angular-sdk-components": "~0.24.4",
     "@pega/auth": "~0.2.13",
     "@pega/cosmos-react-condition-builder": "^4.2.0",
-    "@pega/cosmos-react-core": "^4.2.0",
+    "@pega/cosmos-react-core": "^6.0.10",
     "@pega/cosmos-react-work": "^4.2.0",
     "@tinymce/tinymce-angular": "^8.0.1",
     "core-js": "^3.37.1",
