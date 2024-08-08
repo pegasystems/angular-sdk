@@ -103,7 +103,7 @@
     "@pega/dx-component-builder-sdk": "~0.24.4",
     "@pega/eslint-config": "^0.7.1",
     "@pega/pcore-pconnect-typedefs": "~3.0.0",
-    "@pega/prettier-config": "^0.7.2",
+    "@pega/prettier-config": "^0.13.1",
     "@playwright/test": "^1.40.1",
     "@storybook/addon-a11y": "^7.6.7",
     "@storybook/addon-essentials": "^7.6.7",
