@@ -97,7 +97,7 @@
     "@angular/cli": "^17.3.8",
     "@angular/compiler-cli": "^17.3.12",
     "@angular/language-service": "^17.3.12",
-    "@pega/angular-sdk-overrides": "~0.24.7",
+    "@pega/angular-sdk-overrides": "~23.1.10",
     "@pega/configs": "^0.7.2",
     "@pega/constellationjs": "24.1.1",
     "@pega/dx-component-builder-sdk": "~0.24.4",
