@@ -142,7 +142,7 @@
     "postcss": "^8.4.33",
     "replace-in-file": "^7.1.0",
     "shx": "^0.3.4",
-    "storybook": "^7.6.7",
+    "storybook": "^8.2.8",
     "style-loader": "^3.3.4",
     "stylelint": "^16.1.0",
     "tinymce": "^7.2.1",
