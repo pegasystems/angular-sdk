@@ -64,7 +64,7 @@
     "@angular/platform-browser": "^17.3.12",
     "@angular/platform-browser-dynamic": "^17.3.12",
     "@angular/router": "^17.3.12",
-    "@danielmoncada/angular-datetime-picker": "^17.0.0",
+    "@danielmoncada/angular-datetime-picker": "^18.1.0",
     "@pega/angular-sdk-components": "~24.1.10",
     "@pega/auth": "~0.2.14",
     "@pega/cosmos-react-condition-builder": "^4.2.0",
