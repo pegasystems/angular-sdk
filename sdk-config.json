@@ -7,10 +7,12 @@
 
     "mashupClient_comment": "Client ID and Client secret from the OAuth 2.0 Client Registration record used for mashup use case",
     "mashupClient_comment2": "See SDK Guide for instructions on how to generate and obtain the proper values for the following entries",
+    "mashupClientId_XXX": "",
     "mashupClientId": "69184022781147469983",
     "mashupUserIdentifier": "customer@mediaco",
     "mashupClient_comment3": "Note: mashupPassword requires Base64 encoding",
-    "mashupPassword": "",
+    "mashupPassword": "cGVnYQ==",
+    "customAuthType_XXX": "NoAuthHeader",
 
     "portalClientId_comment": "Client ID from the OAuth 2.0 Client Registration record used for portal use case",
     "portalClientId": "69184022781147469983"
@@ -18,10 +20,10 @@
 
   "serverConfig": {
     "infinityRestServerUrl_comment": "Full path to Infinity REST server",
-    "infinityRestServerUrl": "https://localhost:1080/prweb",
+    "infinityRestServerUrl": "https://dxaui24.lab.pega.com/prweb",
 
     "appAlias_comment": "appAlias of the application which operators will be accessing (e.g., MediaCo)",
-    "appAlias": "",
+    "appAlias": "MediaCo",
 
     "sdkContentServerUrl_comment": "If specified, the given URL will be used. If left blank, window.location.origin will be used.",
     "sdkContentServerUrl": "",
@@ -30,7 +32,9 @@
     "appPortal": "",
 
     "appMashupCaseType_comment": "If specified, uses this case type for mashup.  Otherwise, uses the first case type found for the app",
-    "appMashupCaseType": "",
+    "appMashupCaseType": "DIXL-MediaCo-Work-NewService",
+    "appMashupAssignmentID": "ASSIGN-WORKLIST DIXL-MEDIACO-WORK N-121103!MASHUP",
+    "appMashupCaseID": "DIXL-MEDIACO-WORK N-121103",
 
     "excludePortals_comment": "Array of specific portals to avoid attempting to load with SDK",
     "excludePortals": ["pxExpress", "Developer", "pxPredictionStudio", "pxAdminStudio", "pyCaseWorker", "pyCaseManager7"]

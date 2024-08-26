@@ -127,7 +127,49 @@ export class MainScreenComponent implements OnInit, OnDestroy {
     });
   }
 
+  openAssignment(sLevel: string) {
+    this.showTriplePlayOptions$ = false;
+    this.showPega$ = true;
+
+    this.scservice.getSdkConfig().then(sdkConfig => {
+      const mashupAssignmentID = sdkConfig.serverConfig.appMashupAssignmentID;
+
+      const options: any = {
+        pageName: 'pyEmbedAssignment'
+      };
+      PCore.getMashupApi()
+        .openAssignment(mashupAssignmentID, PCore.getConstants().APP.APP, options)
+        .then(() => {
+          console.log('openAssignment rendering is complete');
+        });
+    });
+  }
+
+  openCase(sLevel: string) {
+    this.showTriplePlayOptions$ = false;
+    this.showPega$ = true;
+
+    this.scservice.getSdkConfig().then(sdkConfig => {
+      const mashupCaseID = sdkConfig.serverConfig.appMashupAssignmentID;
+
+      const options: any = {
+        pageName: 'pyEmbedAssignment'
+      };
+      PCore.getMashupApi()
+        .openCase(mashupCaseID, PCore.getConstants().APP.APP, options)
+        .then(() => {
+          console.log('openCase rendering is complete');
+        });
+    });
+  }
+
   onShopNow(sLevel: string) {
-    this.createWork(sLevel);
+    if (sLevel === 'Basic') {
+      this.createWork(sLevel);
+    } else if (sLevel === 'Silver') {
+      this.openAssignment(sLevel);
+    } else {
+      this.openCase(sLevel);
+    }
   }
 }
