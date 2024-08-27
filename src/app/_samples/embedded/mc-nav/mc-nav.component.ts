@@ -126,6 +126,10 @@ export class MCNavComponent implements OnInit, OnDestroy {
       sdkSetAuthHeader(`Basic ${sB64}`);
     }
 
+    if (!sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === 'NoAuthHeader') {
+      sdkSetAuthHeader('Bearer PNC');
+    }
+
     // Login if needed, without doing an initial main window redirect
     // eslint-disable-next-line no-restricted-globals
     const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);

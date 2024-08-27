@@ -106,7 +106,7 @@ export class MainScreenComponent implements OnInit, OnDestroy {
     this.scservice.getSdkConfig().then(sdkConfig => {
       let mashupCaseType = sdkConfig.serverConfig.appMashupCaseType;
       if (!mashupCaseType) {
-        const caseTypes = PCore.getEnvironmentInfo().environmentInfoObject.pyCaseTypeList;
+        const caseTypes = (PCore.getEnvironmentInfo().environmentInfoObject as any).pyCaseTypeList;
         mashupCaseType = caseTypes[0].pyWorkTypeImplementationClassName;
       }
 
@@ -125,7 +125,49 @@ export class MainScreenComponent implements OnInit, OnDestroy {
     });
   }
 
+  openAssignment() {
+    this.showTriplePlayOptions$ = false;
+    this.showPega$ = true;
+
+    this.scservice.getSdkConfig().then(sdkConfig => {
+      const mashupAssignmentID = sdkConfig.serverConfig.appMashupAssignmentID;
+
+      const options: any = {
+        pageName: 'pyEmbedAssignment'
+      };
+      PCore.getMashupApi()
+        .openAssignment(mashupAssignmentID, PCore.getConstants().APP.APP, options)
+        .then(() => {
+          console.log('openAssignment rendering is complete');
+        });
+    });
+  }
+
+  openCase() {
+    this.showTriplePlayOptions$ = false;
+    this.showPega$ = true;
+
+    this.scservice.getSdkConfig().then(sdkConfig => {
+      const mashupCaseID = sdkConfig.serverConfig.appMashupAssignmentID;
+
+      const options: any = {
+        pageName: 'pyEmbedAssignment'
+      };
+      PCore.getMashupApi()
+        .openCase(mashupCaseID, PCore.getConstants().APP.APP, options)
+        .then(() => {
+          console.log('openCase rendering is complete');
+        });
+    });
+  }
+
   onShopNow(sLevel: string) {
-    this.createWork(sLevel);
+    if (sLevel === 'Basic') {
+      this.createWork(sLevel);
+    } else if (sLevel === 'Silver') {
+      this.openAssignment();
+    } else {
+      this.openCase();
+    }
   }
 }
