@@ -11,21 +11,21 @@
     "mashupClient_comment": "Client ID and Client secret from the OAuth 2.0 Client Registration record used for mashup use case",
     "mashupClient_comment2": "See SDK Guide for instructions on how to generate and obtain the proper values for the following entries",
     "mashupClientId_XXX": "",
-    "mashupClientId": "45583318620898083668",
-    "mashupUserIdentifier": "SDKThemeUser",
+    "mashupClientId": "69184022781147469983",
+    "mashupUserIdentifier": "admin@mediaco",
     "mashupClient_comment3": "Note: mashupPassword requires Base64 encoding",
-    "mashupPassword": "SW5zdGFsbEAxMg==",
+    "mashupPassword": "",
     "customAuthType_XXX": "NoAuthHeader",
 
     "portalClientId_comment": "Client ID from the OAuth 2.0 Client Registration record used for portal use case",
-    "portalClientId": "45583318620898083668"
+    "portalClientId": "69184022781147469983"
   },
   "serverConfig": {
     "infinityRestServerUrl_comment": "Full path to Infinity REST server",
-    "infinityRestServerUrl": "https://10.60.215.134:8443/prweb",
+    "infinityRestServerUrl": "https://dxaui23.lab.pega.com/prweb",
 
     "appAlias_comment": "appAlias of the application which operators will be accessing (e.g., MediaCo)",
-    "appAlias": "testui-kit-app",
+    "appAlias": "MediaCo",
 
     "sdkContentServerUrl_comment": "If specified, the given URL will be used. If left blank, window.location.origin will be used.",
     "sdkContentServerUrl": "",
@@ -34,9 +34,9 @@
     "appPortal": "",
 
     "appMashupCaseType_comment": "If specified, uses this case type for mashup.  Otherwise, uses the first case type found for the app",
-    "appMashupCaseType": "OYPTVV-TestUIKi-Work-C11nInTrad",
-    "appMashupAssignmentID": "ASSIGN-WORKLIST OYPTVV-TESTUIKI-WORK C-15005!STAGE1_FLOW",
-    "appMashupCaseID": "DIXL-MEDIACO-WORK N-121103",
+    "appMashupCaseType": "DIXL-MediaCo-Work-NewService",
+    "appMashupAssignmentID": "ASSIGN-WORKLIST DIXL-MEDIACO-WORK N-171015!SERVICE_FLOW",
+    "appMashupCaseID": "DIXL-MEDIACO-WORK N-171015",
 
     "excludePortals_comment": "Array of specific portals to avoid attempting to load with SDK",
     "excludePortals": ["pxExpress", "Developer", "pxPredictionStudio", "pxAdminStudio", "pyCaseWorker", "pyCaseManager7"]
