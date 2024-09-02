@@ -101,7 +101,7 @@
     "@pega/configs": "^0.7.2",
     "@pega/constellationjs": "24.1.1",
     "@pega/dx-component-builder-sdk": "~24.1.11",
-    "@pega/eslint-config": "^0.7.1",
+    "@pega/eslint-config": "^0.14.0",
     "@pega/pcore-pconnect-typedefs": "~3.0.0",
     "@pega/prettier-config": "^0.7.2",
     "@playwright/test": "^1.40.1",
