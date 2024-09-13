@@ -59,8 +59,11 @@
   color: var(--app-banner-text-color);
 }
 
+.mc-info-image-container {
+  padding: 20px;
+}
+
 .mc-info-image {
-  width: 700px;
-  margin: 20px;
+  width: 100%;
   border-radius: 10px;
 }
