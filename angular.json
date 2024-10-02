@@ -23,7 +23,9 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -49,12 +51,12 @@
                 "output": "./constellation"
               },
               {
-                "glob": "constellation-core.*",
+                "glob": "constellation-core*",
                 "input": "./node_modules/@pega/constellationjs/dist/",
                 "output": "./constellation/prerequisite"
               },
               {
-                "glob": "constellation-core.*.*",
+                "glob": "constellation-core*.*",
                 "input": "./node_modules/@pega/constellationjs/dist/",
                 "output": "./constellation/prerequisite"
               },
@@ -74,12 +76,21 @@
                 "output": "./tinymce"
               }
             ],
-            "styles": ["src/styles.scss"],
-            "scripts": ["./node_modules/tinymce/tinymce.min.js"],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": [
+              "./node_modules/tinymce/tinymce.min.js"
+            ],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
-            "allowedCommonJsDependencies": ["lodash.clonedeep", "downloadjs", "dayjs", "fast-deep-equal"]
+            "allowedCommonJsDependencies": [
+              "lodash.clonedeep",
+              "downloadjs",
+              "dayjs",
+              "fast-deep-equal"
+            ]
           },
           "configurations": {
             "production": {
@@ -131,11 +142,19 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
@@ -144,7 +163,10 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "angularsdk:build",
-            "compodocArgs": ["-d", "./storybook-assets"],
+            "compodocArgs": [
+              "-d",
+              "./storybook-assets"
+            ],
             "port": 6006
           }
         },
@@ -153,7 +175,10 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "angularsdk:build",
-            "compodocArgs": ["-d", "."],
+            "compodocArgs": [
+              "-d",
+              "."
+            ],
             "outputDir": "storybook-static"
           }
         },

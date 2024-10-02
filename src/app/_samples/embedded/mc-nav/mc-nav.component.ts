@@ -7,7 +7,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription, interval } from 'rxjs';
 
-import { loginIfNecessary, logout, sdkSetAuthHeader } from '@pega/auth/lib/sdk-auth-manager';
+import { PegaAuth } from '@pega/auth';
+import { logout, sdkSetAuthHeader } from '@pega/auth/lib/sdk-auth-manager';
+// import { loginIfNecessary, logout, sdkSetAuthHeader } from '@pega/auth/lib/sdk-auth-manager';
 import {
   ProgressSpinnerService,
   ResetPConnectService,
@@ -129,7 +131,58 @@ export class MCNavComponent implements OnInit, OnDestroy {
     // Login if needed, without doing an initial main window redirect
     // eslint-disable-next-line no-restricted-globals
     const sAppName = location.pathname.substring(location.pathname.indexOf('/') + 1);
-    loginIfNecessary({ appName: sAppName, mainRedirect: false });
+    // loginIfNecessary({ appName: sAppName, mainRedirect: false });
+    //
+
+    const sdkConfigServer = await this.scservice.getSdkConfigServer();
+
+    new PegaAuth({
+      redirectUri: `${window.origin}/auth.html`,
+      tokenUri: `${sdkConfigServer.infinityRestServerUrl}/PRRestService/oauth2/v1/token`,
+      authorizeUri: `${sdkConfigServer.infinityRestServerUrl}/PRRestService/oauth2/v1/authorize`,
+      clientId: sdkConfigAuth.mashupClientId,
+      noPKCE: false,
+      appAlias: sdkConfigServer.appAlias,
+      serverType: 'infinity'
+    })
+      .login()
+      .then(oauth2Response => {
+        if (!oauth2Response) return;
+
+        sdkSetAuthHeader(`${oauth2Response.token_type} ${oauth2Response.access_token}`);
+        PCore.setBehaviorOverride('dynamicLoadComponents', false);
+        PCore.getInitialiser()
+          // @ts-ignore
+          .getBootstrapConfig(sdkConfigServer.infinityRestServerUrl, {
+            token_type: oauth2Response.token_type,
+            access_token: oauth2Response.access_token
+          })
+          .then(bootstrapResponse => {
+            console.log(JSON.parse(bootstrapResponse.pyConfigJSON));
+            PCore.getInitialiser().init({
+              ...JSON.parse(bootstrapResponse.pyConfigJSON),
+              serviceConfig: {
+                appStaticContentServer: 'https://localhost:8000',
+                staticContentServer: 'https://localhost:3500',
+                appAlias: sdkConfigServer.appAlias
+              },
+              restServerConfig: sdkConfigServer.infinityRestServerUrl,
+              customRendering: true,
+              renderingMode: 'noPortal',
+              noHistory: true,
+              isSdk: true,
+              enableRouting: false,
+              dynamicLoadComponents: false,
+              dynamicSemanticUrl: false,
+              noPortal: true
+            });
+            this.bLoggedIn$ = true;
+            // @ts-ignore
+            PCore.getInitialiser().initCoreContainers();
+            // start the portal
+            this.startMashup();
+          });
+      });
   }
 
   startMashup() {
@@ -149,8 +202,28 @@ export class MCNavComponent implements OnInit, OnDestroy {
         this.initialRender(renderObj);
       });
     });
+    // @ts-ignore
+    //
+    const rootMashUp = {
+      type: 'RootContainer',
+      config: {
+        renderingMode: 'noPortal'
+      },
+      children: [
+        {
+          type: 'ViewContainer',
+          config: {
+            routingInfo: '@ROUTING_INFO',
+            name: 'primary'
+          }
+        }
+      ]
+    };
 
-    window.myLoadMashup('app-root', false); // this is defined in bootstrap shell that's been loaded already
+    // @ts-expect-error
+    PCore.getBootstrapUtils().loadRootComponent('app-root', rootMashUp);
+    // PCore.getInitialiser().launchMashup('app-root', false);
+    // window.myLoadMashup('app-root', false); // this is defined in bootstrap shell that's been loaded already
   }
 
   initialRender(renderObj) {

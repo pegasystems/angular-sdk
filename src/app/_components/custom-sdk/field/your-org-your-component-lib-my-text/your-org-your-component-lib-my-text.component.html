@@ -1,0 +1,20 @@
+<div *ngIf="bVisible$ && bHasForm$">
+  <div [formGroup]="formGroup$">
+    <mat-form-field class="psdk-full-width" subscriptSizing="dynamic" [hintLabel]="helperText">
+      <mat-label>{{ label$ }}</mat-label>
+      <input
+        matInput
+        [placeholder]="placeholder"
+        type="text"
+        [value]="value$"
+        [required]="bRequired$"
+        [readonly]="bReadonly$"
+        [attr.data-test-id]="testId"
+        [formControl]="fieldControl"
+        (change)="fieldOnChange($event)"
+        (blur)="fieldOnBlur($event)"
+      />
+      <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+  </div>
+</div>

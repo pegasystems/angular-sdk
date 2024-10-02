@@ -4,8 +4,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "allowJs": true,
-    "typeRoots": ["node_modules/@types", "node_modules/@pega"],
-    "types": ["pcore-pconnect-typedefs", "jasmine"],
+    "types": ["@pega/pcore-pconnect-typedefs", "jasmine"],
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -22,14 +21,17 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2022",
-    "module": "ES2022",
+    "target": "esnext",
+    "module": "esnext",
     "useDefineForClassFields": false,
-    "lib": ["ES2022", "dom"],
+    "lib": ["esnext", "dom"],
     // Update to usage of "import type" so these can inherit "error" and true from @pega/tsconfig.
     "importsNotUsedAsValues": "remove",
     "strictPropertyInitialization": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+"plugins": [
+    {"name": "@angular/language-service"}
+]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
