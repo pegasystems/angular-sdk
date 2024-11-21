@@ -5,12 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Subscription, interval } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { loginIfNecessary, logout, sdkSetAuthHeader } from '@pega/auth/lib/sdk-auth-manager';
 import {
   ProgressSpinnerService,
-  ResetPConnectService,
   ServerConfigService,
   UpdateWorklistService,
   Utils,
@@ -40,7 +39,7 @@ export class MCNavComponent implements OnInit, OnDestroy {
   starterPackVersion$: string = endpoints.SP_VERSION;
   pConn$: typeof PConnect;
 
-  applicationLabel = '';
+  applicationLabel: string | undefined = '';
   bLoggedIn$ = false;
   bPConnectLoaded$ = false;
   bHasPConnect$ = false;
@@ -52,7 +51,6 @@ export class MCNavComponent implements OnInit, OnDestroy {
   constructor(
     private cdRef: ChangeDetectorRef,
     private psservice: ProgressSpinnerService,
-    private rpcservice: ResetPConnectService,
     private uwservice: UpdateWorklistService,
     private titleService: Title,
     private scservice: ServerConfigService
@@ -77,22 +75,6 @@ export class MCNavComponent implements OnInit, OnDestroy {
     // handle showing and hiding the progress spinner
     this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => {
       this.showHideProgress(message.show);
-    });
-
-    this.resetPConnectSubscription = this.rpcservice.getMessage().subscribe(message => {
-      if (message.reset) {
-        this.bPConnectLoaded$ = false;
-
-        const timer = interval(1000).subscribe(() => {
-          // this.getPConnectAndUpdate();
-          window.myLoadMashup('app-root', false);
-
-          // update the worklist
-          this.uwservice.sendMessage(true);
-
-          timer.unsubscribe();
-        });
-      }
     });
 
     // Add event listener for when logged in and constellation bootstrap is loaded
@@ -139,7 +121,7 @@ export class MCNavComponent implements OnInit, OnDestroy {
       compareSdkPCoreVersions();
       this.applicationLabel = PCore.getEnvironmentInfo().getApplicationLabel();
 
-      this.titleService.setTitle(this.applicationLabel);
+      this.titleService.setTitle(this.applicationLabel ?? '');
 
       // Initialize the SdkComponentMap (local and pega-provided)
       getSdkComponentMap(localSdkComponentMap).then((theComponentMap: any) => {
