@@ -12,7 +12,7 @@ import { ComponentMapperComponent } from '@pega/angular-sdk-components';
 export class MainContentComponent implements OnInit {
   @Input() pConn$: typeof PConnect;
 
-  sComponentName$: string;
+  sComponentName$: string | undefined;
 
   ngOnInit(): void {
     if (this.pConn$) {

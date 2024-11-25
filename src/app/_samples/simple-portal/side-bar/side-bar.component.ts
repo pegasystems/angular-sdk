@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
-import { CaseService, DatapageService, GetLoginStatusService, ProgressSpinnerService, UpdateWorklistService } from '@pega/angular-sdk-components';
+import { CaseService, DatapageService, ProgressSpinnerService, UpdateWorklistService } from '@pega/angular-sdk-components';
 
 @Component({
   selector: 'app-side-bar',
@@ -21,7 +21,6 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private psservice: ProgressSpinnerService,
-    private glsservice: GetLoginStatusService,
     private uwservice: UpdateWorklistService,
     private dpservice: DatapageService,
     private cservice: CaseService
@@ -62,7 +61,6 @@ export class SideBarComponent implements OnInit, OnDestroy {
       },
       err => {
         alert(`Errors from get casetypes:${err.errors}`);
-        this.glsservice.sendMessage('LoggedOff');
       }
     );
   }
