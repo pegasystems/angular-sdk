@@ -31,7 +31,7 @@ declare global {
 export class TopAppMashupComponent implements OnInit, OnDestroy {
   pConn$: typeof PConnect;
 
-  sComponentName$: string;
+  sComponentName$: string | undefined;
   arChildren$: any[];
   bPCoreReady$ = false;
 
@@ -48,7 +48,7 @@ export class TopAppMashupComponent implements OnInit, OnDestroy {
 
   portalSelectionScreen = false;
   availablePortals: string[];
-  defaultPortalName: string;
+  defaultPortalName: string | undefined;
 
   constructor(
     private psservice: ProgressSpinnerService,

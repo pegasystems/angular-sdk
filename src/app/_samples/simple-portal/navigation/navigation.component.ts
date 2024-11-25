@@ -110,7 +110,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
     });
   }
 
-  // eslint-disable-next-line sonarjs/no-identical-functions
   assignmentFinished() {
     setTimeout(() => {
       // update the worklist
