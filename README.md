@@ -15,6 +15,7 @@ This [Angular SDK updates](https://docs.pega.com/bundle/constellation-sdk/page/c
 
 
 
+
 ***IMPORTANT:***  If you are upgrading from a previous version of Angular SDK, please follow the guidelines documented in [Upgrading Angular SDK](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/upgrading-angular-sdk.html).
 
 ---
@@ -35,7 +36,7 @@ The Angular SDK includes a ConstellationJS to Angular bridge and sample DX compo
 
 ## Pega Infinity Server and Constellation architecture-enabled Application
 
-This version of the Angular SDK assumes that you have access to a Pega Infinity server (**24.1.0+**) running an application that is configured to run using the Constellation UI service. 
+This version of the Angular SDK assumes that you have access to a Pega Infinity server (**24.1.0+**) running an application that is configured to run using the Constellation UI service.
 - If you need to use Infinity 23.1.x, please use the **release/23.1.10** branch.
 - If you need to use Infinity 8.8.x, please use the **release/8.8.10** branch.
 
