@@ -109,7 +109,7 @@
     "@storybook/addon-essentials": "^7.6.7",
     "@storybook/addon-interactions": "^7.6.7",
     "@storybook/addon-links": "^7.6.7",
-    "@storybook/angular": "^7.6.7",
+    "@storybook/angular": "^8.4.5",
     "@storybook/blocks": "^7.6.7",
     "@storybook/jest": "^0.2.3",
     "@storybook/testing-library": "^0.2.2",
