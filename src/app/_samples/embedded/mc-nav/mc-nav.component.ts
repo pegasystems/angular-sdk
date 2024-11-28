@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 
-import { loginIfNecessary, logout, sdkSetAuthHeader } from '@pega/auth/lib/sdk-auth-manager';
+import { loginIfNecessary, logout, sdkSetAuthHeader, sdkSetCustomTokenParamsCB } from '@pega/auth/lib/sdk-auth-manager';
 import {
   ProgressSpinnerService,
   ServerConfigService,
@@ -91,13 +91,13 @@ export class MCNavComponent implements OnInit, OnDestroy {
 
     const sdkConfigAuth = await this.scservice.getSdkConfigAuth();
 
-    if (!sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === 'Basic') {
+    if ((sdkConfigAuth.mashupGrantType === 'none' || !sdkConfigAuth.mashupClientId) && sdkConfigAuth.customAuthType === 'Basic') {
       // Service package to use custom auth with Basic
       const sB64 = window.btoa(`${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}`);
       sdkSetAuthHeader(`Basic ${sB64}`);
     }
 
-    if (!sdkConfigAuth.mashupClientId && sdkConfigAuth.customAuthType === 'BasicTO') {
+    if ((sdkConfigAuth.mashupGrantType === 'none' || !sdkConfigAuth.mashupClientId) && sdkConfigAuth.customAuthType === 'BasicTO') {
       const now = new Date();
       const expTime = new Date(now.getTime() + 5 * 60 * 1000);
       let sISOTime = `${expTime.toISOString().split('.')[0]}Z`;
@@ -106,6 +106,14 @@ export class MCNavComponent implements OnInit, OnDestroy {
       // Service package to use custom auth with Basic
       const sB64 = window.btoa(`${sdkConfigAuth.mashupUserIdentifier}:${window.atob(sdkConfigAuth.mashupPassword)}:${sISOTime}`);
       sdkSetAuthHeader(`Basic ${sB64}`);
+    }
+
+    if (sdkConfigAuth.mashupGrantType === 'customBearer' && sdkConfigAuth.customAuthType === 'CustomIdentifier') {
+      // Use custom bearer with specific custom parameter to set the desired operator via
+      //  a userIdentifier property.  (Caution: highly insecure...being used for simple demonstration)
+      sdkSetCustomTokenParamsCB(() => {
+        return { userIdentifier: sdkConfigAuth.mashupUserIdentifier };
+      });
     }
 
     // Login if needed, without doing an initial main window redirect
