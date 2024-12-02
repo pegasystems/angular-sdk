@@ -48,7 +48,8 @@
     "_internal-copy-index": "shx cp dist/index.html dist/simpleportal.html && shx cp dist/index.html dist/portal.html && shx cp dist/index.html dist/fullportal.html && shx cp dist/index.html dist/embedded.html && shx cp dist/index.html dist/mashup.html",
     "_internal-install-sdk": "echo \"installing...\" && npm install --loglevel notice",
     "_internal-test-functional": "npm run test:functional:local:sdk-a --prefix node_modules/@pega/dx-component-builder-sdk",
-    "_internal-build-jest-assets": "dx-component-builder-sdk buildJestAssets"
+    "_internal-build-jest-assets": "dx-component-builder-sdk buildJestAssets".
+    "_internal-test-quarantine": "dx-component-builder-sdk quarantine"
   },
   "private": true,
   "dependencies": {
@@ -67,9 +68,9 @@
     "@danielmoncada/angular-datetime-picker": "^18.1.0",
     "@pega/angular-sdk-components": "~0.242.1",
     "@pega/auth": "~0.2.19",
-    "@pega/cosmos-react-condition-builder": "^4.2.0",
-    "@pega/cosmos-react-core": "^4.2.0",
-    "@pega/cosmos-react-work": "^4.2.0",
+    "@pega/cosmos-react-condition-builder": "^7.0.4",
+    "@pega/cosmos-react-core": "^7.0.4",
+    "@pega/cosmos-react-work": "^7.0.4",
     "@tinymce/tinymce-angular": "^8.0.1",
     "core-js": "^3.39.0",
     "dayjs": "^1.11.13",
@@ -100,7 +101,7 @@
     "@pega/angular-sdk-overrides": "~0.242.1",
     "@pega/configs": "^0.16.2",
     "@pega/constellationjs": "24.1.1",
-    "@pega/dx-component-builder-sdk": "~24.1.11",
+    "@pega/dx-component-builder-sdk": "~0.242.10",
     "@pega/eslint-config": "^0.16.2",
     "@pega/pcore-pconnect-typedefs": "3.2.1",
     "@pega/prettier-config": "^0.16.2",
