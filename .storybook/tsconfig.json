@@ -7,6 +7,6 @@
     "emitDecoratorMetadata": false
   },
   "exclude": ["../src/test.ts", "../src/**/*.spec.ts"],
-  "include": ["../src/**/*", "./preview.ts"],
+  "include": ["../src/**/*", "./preview.ts", "../__mocks__/*"],
   "files": ["./typings.d.ts"]
 }
