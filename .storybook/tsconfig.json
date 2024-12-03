@@ -6,7 +6,7 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": false
   },
-  "exclude": ["../src/test.ts", "../src/**/*.spec.ts"],
+  "exclude": ["../src/test.ts", "../src/**/*.spec.ts", "../src/app/_components/custom-constellation/**"],
   "include": ["../src/**/*", "./preview.ts", "../__mocks__/*"],
   "files": ["./typings.d.ts"]
 }
