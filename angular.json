@@ -60,6 +60,11 @@
               },
               {
                 "glob": "*.*",
+                "input": "./node_modules/@pega/constellationjs/dist/js",
+                "output": "./constellation/prerequisite/js"
+              },
+              {
+                "glob": "*.*",
                 "input": "./src/assets/",
                 "output": "./constellation/assets"
               },
