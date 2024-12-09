@@ -14,12 +14,12 @@ const config: StorybookConfig = {
   docs: {
     autodocs: 'tag'
   },
-  webpackFinal: async (config) => {
+  webpackFinal: async config => {
     if (config.resolve?.alias) {
       config.resolve.alias['@pega/auth/lib/sdk-auth-manager'] = path.resolve(__dirname, '../__mocks__/authManager.tsx');
     }
 
     return config;
-  },
+  }
 };
 export default config;

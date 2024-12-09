@@ -229,7 +229,7 @@ test.describe('E2E test', () => {
     await selectProducts.click();
     await page.getByRole('option', { name: 'Mobile' }).click();
     await selectProducts.click();
-    await page.getByRole('option', { name: 'Telivision' }).click();
+    await page.getByRole('option', { name: 'Television' }).click();
     await expect(selectProducts).toBeVisible();
 
     await page.locator('button:has-text("Next")').click();
@@ -237,12 +237,12 @@ test.describe('E2E test', () => {
     assignment = page.locator('app-default-form');
 
     await expect(assignment.locator('td >> text="Mobile"')).toBeVisible();
-    await expect(assignment.locator('td >> text="Telivision"')).toBeVisible();
+    await expect(assignment.locator('td >> text="Television"')).toBeVisible();
 
     await page.locator('button:has-text("Previous")').click();
 
     await expect(page.locator('mat-chip-row:has-text("Mobile")')).toBeVisible();
-    await expect(page.locator('mat-chip-row:has-text("Telivision")')).toBeVisible();
+    await expect(page.locator('mat-chip-row:has-text("Television")')).toBeVisible();
 
     let deleteProduct = await page.locator('mat-chip-row:has-text("Mobile")');
     await deleteProduct.locator('button:has-text("cancel")').click();
@@ -253,7 +253,7 @@ test.describe('E2E test', () => {
 
     await page.locator('button:has-text("Previous")').click();
 
-    deleteProduct = await page.locator('mat-chip-row:has-text("Telivision")');
+    deleteProduct = await page.locator('mat-chip-row:has-text("Television")');
     await deleteProduct.locator('button:has-text("cancel")').click();
 
     /** Checkbox group mode type test */
