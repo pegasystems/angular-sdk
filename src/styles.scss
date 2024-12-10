@@ -10,6 +10,7 @@ html,
 body {
   @include generate-theme-vars($my-theme);
 }
+
 html,
 body {
   height: 100%;
@@ -43,6 +44,14 @@ a.mat-mdc-menu-item > mat-icon {
   background-color: transparent !important;
 }
 
+.mdc-text-field {
+  padding: 0 !important;
+}
+
+.psdk-radio-vertical > .mat-mdc-radio-button .mdc-radio {
+  padding: 10px 0 !important;
+}
+
 .mat-sort-header-content {
   justify-content: space-between;
   width: 100%;
@@ -51,6 +60,29 @@ a.mat-mdc-menu-item > mat-icon {
   justify-content: space-between;
 }
 
+.psdk-grid-filter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: calc(2 * 0.5rem);
+  row-gap: calc(2 * 0.5rem);
+  align-items: start;
+}
+
+.psdk-grid-label {
+  color: rgba(0, 0, 0, 0.54);
+}
+.psdk-value {
+  margin: 8px 0px;
+}
+
 .mdc-button {
   line-height: inherit !important;
+}
+
+.mat-mdc-form-field {
+  margin: 8px 0;
+}
+
+.ngx-mat-tel-input-container button {
+  margin-top: auto;
 }
