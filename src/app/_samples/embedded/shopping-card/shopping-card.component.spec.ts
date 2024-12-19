@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { BundleSwatchComponent } from './bundle-swatch.component';
+import { ShoppingCardComponent } from './shopping-card.component';
 
-describe('BundleSwatchComponent', () => {
-  let component: BundleSwatchComponent;
-  let fixture: ComponentFixture<BundleSwatchComponent>;
+describe('ShoppingCardComponent', () => {
+  let component: ShoppingCardComponent;
+  let fixture: ComponentFixture<ShoppingCardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [BundleSwatchComponent]
+      declarations: [ShoppingCardComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BundleSwatchComponent);
+    fixture = TestBed.createComponent(ShoppingCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

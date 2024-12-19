@@ -3,9 +3,9 @@
     <div class="mc-banner">Combine TV, Internet, and Voice for the best deal</div>
 
     <div style="display: flex; justify-content: space-evenly">
-      <app-bundle-swatch [swatchConfig$]="firstConfig$" (ShopNowButtonClick)="onShopNow($event)"></app-bundle-swatch>
-      <app-bundle-swatch [swatchConfig$]="secondConfig$" (ShopNowButtonClick)="onShopNow($event)"></app-bundle-swatch>
-      <app-bundle-swatch [swatchConfig$]="thirdConfig$" (ShopNowButtonClick)="onShopNow($event)"></app-bundle-swatch>
+      <ng-container *ngFor="let option of shoppingOptionsList">
+        <app-shopping-card [option]="option" (onShopNowButtonClick)="onShopNow($event)"></app-shopping-card>
+      </ng-container>
     </div>
   </div>
   <div [hidden]="!showPega$">
