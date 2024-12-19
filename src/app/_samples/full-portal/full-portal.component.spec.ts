@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { TopAppMashupComponent } from './top-app-mashup.component';
+import { FullPortalComponent } from './full-portal.component';
 
-describe('TopAppMashupComponent', () => {
-  let component: TopAppMashupComponent;
-  let fixture: ComponentFixture<TopAppMashupComponent>;
+describe('FullPortalComponent', () => {
+  let component: FullPortalComponent;
+  let fixture: ComponentFixture<FullPortalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TopAppMashupComponent]
+      declarations: [FullPortalComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TopAppMashupComponent);
+    fixture = TestBed.createComponent(FullPortalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,12 @@
+<div class="progress-box" *ngIf="isProgress$">
+  <mat-spinner class="progress-spinner"></mat-spinner>
+</div>
+
+<div *ngIf="bLoggedIn$; else loading">
+  <app-header></app-header>
+  <app-main-screen *ngIf="bHasPConnect$" [pConn$]="pConn$"></app-main-screen>
+</div>
+
+<ng-template #loading>
+  <div>Loading...</div>
+</ng-template>

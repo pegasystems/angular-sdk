@@ -12,7 +12,7 @@ import {
   getSdkComponentMap
 } from '@pega/angular-sdk-components';
 
-import localSdkComponentMap from '../../../../../sdk-local-component-map';
+import localSdkComponentMap from '../../../../sdk-local-component-map';
 
 declare global {
   interface Window {
@@ -22,13 +22,13 @@ declare global {
 }
 
 @Component({
-  selector: 'app-top-app-mashup',
-  templateUrl: './top-app-mashup.component.html',
-  styleUrls: ['./top-app-mashup.component.scss'],
+  selector: 'app-full-portal',
+  templateUrl: './full-portal.component.html',
+  styleUrls: ['./full-portal.component.scss'],
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule, ComponentMapperComponent]
 })
-export class TopAppMashupComponent implements OnInit, OnDestroy {
+export class FullPortalComponent implements OnInit, OnDestroy {
   pConn$: typeof PConnect;
 
   sComponentName$: string | undefined;

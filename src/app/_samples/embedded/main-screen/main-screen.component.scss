@@ -60,7 +60,7 @@
 }
 
 .mc-info-image {
-  width: 700px;
+  width: calc(100% - 40px);
   margin: 20px;
   border-radius: 10px;
 }
