@@ -1,8 +1,0 @@
-<div>
-  <b>{{ heading }}</b>
-  <div>
-    <div *ngIf="item.children.getPConnect().getRawMetadata().type.toLowerCase() == 'region'">
-      <app-region [pConn$]="item.children.getPConnect()" [formGroup$]="formGroup$"></app-region>
-    </div>
-  </div>
-</div>
