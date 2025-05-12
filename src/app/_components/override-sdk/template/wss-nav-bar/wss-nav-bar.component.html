@@ -1,0 +1,21 @@
+<mat-toolbar>
+  <mat-toolbar-row class="mat-toolbar-row">
+    <div (click)="navPanelButtonClick(homePage)" class="logo"><img src="constellation/assets/logo.png" class="psdk-nav-logo" /></div>
+    <ul style="display: flex; align-items: center">
+      <li class="nav-items" [ngClass]="{ active: page.pyLabel === activePage }" *ngFor="let page of navPages$" (click)="navPanelButtonClick(page)">
+        <span class="nav-links">{{ page.pyLabel }}</span>
+      </li>
+
+      <mat-list>
+        <mat-list-item [matMenuTriggerFor]="menu" class="psdk-profile-list-item">
+          <div class="flex-box">
+            <div class="psdk-nav-oper-avatar"><img src="constellation/assets/driver1.png" /></div>
+          </div>
+        </mat-list-item>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="navPanelLogoutClick()">{{ localizedVal('Log off', localeCategory) }}</button>
+        </mat-menu>
+      </mat-list>
+    </ul>
+  </mat-toolbar-row>
+</mat-toolbar>

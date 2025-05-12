@@ -1,0 +1,32 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <component-mapper
+    *ngIf="bVisible$ !== false"
+    name="FieldValueList"
+    [props]="{ label$, value$: this.localizedValue, displayMode$ }"
+  ></component-mapper>
+</div>
+<ng-template #noDisplayMode>
+  <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$">
+      <mat-form-field appearance="outline" class="psdk-full-width" subscriptSizing="dynamic" [hintLabel]="helperText">
+        <mat-label>{{ label$ }}</mat-label>
+        <mat-select
+          [value]="value$"
+          [required]="bRequired$"
+          [attr.data-test-id]="testId"
+          (selectionChange)="fieldOnChange($event)"
+          [formControl]="fieldControl"
+        >
+          <mat-option *ngFor="let opt of options$" [value]="opt.key">
+            {{ getLocalizedOptionValue(opt) }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noEdit>
+  <component-mapper *ngIf="bVisible$ !== false" name="Text" [props]="{ pConn$, formatAs$: 'text' }"></component-mapper>
+</ng-template>

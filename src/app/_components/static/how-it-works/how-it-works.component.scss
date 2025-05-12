@@ -1,0 +1,28 @@
+.sections-container {
+  color: #fff;
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+  width: 250px;
+  gap: 1em;
+
+  .description {
+    text-align: center;
+    font-size: 20px;
+  }
+}
+
+.vr {
+  width: 1px;
+  height: 60px;
+  background-color: #fff;
+}

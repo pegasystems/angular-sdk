@@ -1,0 +1,28 @@
+<div>
+  <div><component-mapper name="AlertBanner" [props]="{ banners }" [parent]="this"></component-mapper></div>
+  <div *ngIf="bHasNavigation$" class="psdk-stepper">
+    <component-mapper
+      name="MultiStep"
+      [props]="{
+        pConn$: newPConn$,
+        formGroup$,
+        arChildren$,
+        arMainButtons$,
+        arSecondaryButtons$,
+        bIsVertical$,
+        arCurrentStepIndicies$,
+        arNavigationSteps$
+      }"
+      [parent]="this"
+      [outputEvents]="{ actionButtonClick: onActionButtonClick }"
+    ></component-mapper>
+  </div>
+  <div *ngIf="!bHasNavigation$">
+    <component-mapper
+      name="AssignmentCard"
+      [props]="{ pConn$: newPConn$, formGroup$, arChildren$, arMainButtons$, arSecondaryButtons$, updateToken$ }"
+      [parent]="this"
+      [outputEvents]="{ actionButtonClick: onActionButtonClick }"
+    ></component-mapper>
+  </div>
+</div>
