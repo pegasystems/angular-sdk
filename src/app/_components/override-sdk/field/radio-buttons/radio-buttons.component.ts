@@ -234,7 +234,6 @@ export class RadioButtonsComponent implements OnInit, OnDestroy {
 
   getErrorMessage() {
     let errMessage = '';
-    console.log('errMessage1', errMessage);
     // look for validation messages for json, pre-defined or just an error pushed from workitem (400)
     if (this.fieldControl.hasError('message')) {
       errMessage = this.angularPConnectData.validateMessage ?? '';

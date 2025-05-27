@@ -15,7 +15,6 @@
       <input matInput [placeholder]="placeholder" style="display: none" />
       <mat-radio-group
         [value]="value$"
-        [required]="bRequired$"
         [formControl]="fieldControl"
         [attr.data-test-id]="testId"
         class="{{ bInline$ ? 'psdk-radio-horizontal' : 'psdk-radio-vertical' }}"
@@ -31,9 +30,8 @@
           {{ getLocalizedOptionValue(opt) }}
         </mat-radio-button>
       </mat-radio-group>
-      <!-- {{fieldControl.invalid}} test
-      {{getErrorMessage()}} -->
-      <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+      <div class="error" *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</div>
+      <!-- <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error> -->
     </mat-form-field>
   </div>
 </ng-template>

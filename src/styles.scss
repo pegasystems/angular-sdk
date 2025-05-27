@@ -519,3 +519,9 @@ app-banner {
 .mat-mdc-form-field-error {
   color: #f44336 !important;
 }
+
+app-check-box {
+  .mat-mdc-option .mat-pseudo-checkbox-minimal {
+    display: none;
+  }
+}
