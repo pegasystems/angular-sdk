@@ -1,0 +1,46 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <component-mapper
+    *ngIf="bVisible$ !== false"
+    name="FieldValueList"
+    [props]="{ label$: caption$, value$: value$ ? trueLabel$ : falseLabel$, displayMode$ }"
+  ></component-mapper>
+</div>
+<ng-template #noDisplayMode>
+  <div *ngIf="bHasForm$; else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$">
+      <div class="mat-form-field-infix" *ngIf="showLabel$">
+        <span>
+          <label class="mat-form-field-label psdk-label-readonly" [ngClass]="{ ' file-label': bRequired$ }">{{ label$ }}</label>
+        </span>
+      </div>
+      <div *ngIf="selectionMode === 'multi'; else single">
+        <mat-option *ngFor="let item of listOfCheckboxes">
+          <mat-checkbox
+            [labelPosition]="'after'"
+            [checked]="item.selected"
+            [attr.data-test-id]="testId + ':' + item.value"
+            (change)="handleChangeMultiMode($event, item)"
+            (blur)="fieldOnBlur($event)"
+            >{{ item.text ?? item.value }}
+          </mat-checkbox>
+        </mat-option>
+      </div>
+      <ng-template #single>
+        <mat-checkbox
+          [labelPosition]="'after'"
+          [checked]="isChecked$"
+          [attr.data-test-id]="testId"
+          [formControl]="fieldControl"
+          (change)="fieldOnChange($event)"
+          (blur)="fieldOnBlur($event)"
+          >{{ caption$ }}</mat-checkbox
+        >
+        <p *ngIf="helperText">{{ helperText }}</p>
+      </ng-template>
+      <mat-error style="display: block; margin-top: 1rem" *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noEdit>
+  <component-mapper *ngIf="bVisible$ !== false" name="Text" [props]="{ pConn$, formatAs$: 'text' }"></component-mapper>
+</ng-template>

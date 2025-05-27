@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
@@ -53,7 +54,8 @@ export class FullPortalComponent implements OnInit, OnDestroy {
   constructor(
     private psservice: ProgressSpinnerService,
     private ngZone: NgZone,
-    private scservice: ServerConfigService
+    private scservice: ServerConfigService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -67,6 +69,15 @@ export class FullPortalComponent implements OnInit, OnDestroy {
     this.resetPConnectSubscription.unsubscribe();
   }
 
+  doRedirectDone() {
+    // const redirectUrl: any = sessionStorage.getItem('url');
+    // console.log('this doRedirectDone', redirectUrl);
+    // console.log('this doRedirectDone', this.router);
+    // this.router.navigateByUrl(redirectUrl);
+    // sessionStorage.removeItem('url');
+    // loginIfNecessary({ appName: 'portal', mainRedirect: true});
+  }
+
   initialize() {
     // handle showing and hiding the progress spinner
     this.progressSpinnerSubscription = this.psservice.getMessage().subscribe(message => {
@@ -76,6 +87,7 @@ export class FullPortalComponent implements OnInit, OnDestroy {
     // Add event listener for when logged in and constellation bootstrap is loaded
     document.addEventListener('SdkConstellationReady', () => {
       this.bLoggedIn$ = true;
+      // sessionStorage.setItem('isLoggedIn', 'true');
       // start the portal
       this.startPortal();
     });
@@ -87,8 +99,16 @@ export class FullPortalComponent implements OnInit, OnDestroy {
 
     /* Login if needed */
     const sAppName = window.location.pathname.substring(window.location.pathname.indexOf('/') + 1);
+    // const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    // const redirected = sessionStorage.getItem('redirected');
+    // if (isLoggedIn !== 'true' && redirected !== 'true') {
+    //   sessionStorage.setItem('url', window.location.pathname);
+    //   this.router.navigateByUrl('/portal');
+    // }
+    // sessionStorage.setItem('redirected', 'true');
+    // loginIfNecessary({ appName: sAppName, mainRedirect: true });
+    // loginIfNecessary({ appName: sAppName, mainRedirect: true, redirectDoneCB: this.doRedirectDone.bind(this), enableSemanticUrls: true});
     loginIfNecessary({ appName: sAppName, mainRedirect: true });
-
     /* Check if portal is specified as a query parameter */
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);

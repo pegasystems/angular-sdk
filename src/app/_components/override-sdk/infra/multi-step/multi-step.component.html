@@ -1,5 +1,5 @@
 <div *ngIf="bShow$">
-  <div *ngIf="bIsVertical$" class="psdk-vertical-stepper">
+  <!-- <div *ngIf="bIsVertical$" class="psdk-vertical-stepper">
     <div *ngFor="let mainStep of arNavigationSteps$; let i = index" class="psdk-vertical-step">
       <div class="psdk-vertical-step-header">
         <div class="{{ _getVIconClass(mainStep.visited_status) }}">
@@ -43,9 +43,9 @@
         </ng-container>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div *ngIf="!bIsVertical$" class="psdk-horizontal-stepper">
+  <div class="psdk-horizontal-stepper">
     <div class="psdk-horizontal-stepper-header-container">
       <ng-container *ngFor="let mainStep of arNavigationSteps$; let i = index">
         <div class="psdk-horizontal-step-header">

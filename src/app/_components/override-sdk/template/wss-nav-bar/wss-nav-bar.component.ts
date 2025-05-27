@@ -120,7 +120,7 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
       this.navPages$.forEach(page => {
         page.iconName = this.utils.getImageSrc(page.pxPageViewIcon, this.utils.getSDKStaticContentUrl());
       });
-
+      console.log('navPages$', this.navPages$);
       this.actionsAPI = this.pConn$.getActionsApi();
       this.createWork = this.actionsAPI.createWork.bind(this.actionsAPI);
       this.showPage = this.actionsAPI.showPage.bind(this.actionsAPI);

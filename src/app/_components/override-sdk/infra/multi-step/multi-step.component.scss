@@ -1,6 +1,6 @@
-.psdk-case-view-divider {
-  border-bottom: 0.0625rem solid var(--app-neutral-light-color);
-}
+// .psdk-case-view-divider {
+//   border-bottom: 0.0625rem solid var(--app-neutral-light-color);
+// }
 
 .psdk-icon {
   padding: 0rem 0.125rem;
@@ -117,7 +117,7 @@ mat-horizontal-stepper {
   text-overflow: ellipsis;
   min-width: 50px;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -129,7 +129,7 @@ mat-horizontal-stepper {
   text-overflow: ellipsis;
   min-width: 50px;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -152,7 +152,7 @@ mat-horizontal-stepper {
   border-left-style: solid;
   top: -16px;
   bottom: -16px;
-  border-left-color: var(--app-multi-step-border-color);
+  border-left-color: var(--app-primary-color);
 }
 
 .psdk-horizontal-stepper {

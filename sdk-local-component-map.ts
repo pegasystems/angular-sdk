@@ -17,6 +17,13 @@ import { TextInputComponent } from './src/app/_components/override-sdk/field/tex
 import { IntegerComponent } from './src/app/_components/override-sdk/field/integer/integer.component';
 import { ProfileComponent } from 'src/app/_components/static/profile/profile.component';
 import { AssignmentComponent } from './src/app/_components/override-sdk/infra/assignment/assignment.component';
+import { BannerPageComponent } from './src/app/_components/override-sdk/template/banner-page/banner-page.component';
+import { RadioButtonsComponent } from './src/app/_components/override-sdk/field/radio-buttons/radio-buttons.component';
+import { DefaultFormComponent } from './src/app/_components/override-sdk/template/default-form/default-form.component';
+import { CheckBoxComponent } from './src/app/_components/override-sdk/field/check-box/check-box.component';
+import { CurrencyComponent } from './src/app/_components/override-sdk/field/currency/currency.component';
+import { AppAnnouncementComponent } from './src/app/_components/override-sdk/widget/app-announcement/app-announcement.component';
+import { RegionComponent } from './src/app/_components/override-sdk/infra/region/region.component';
 /* import end - DO NOT REMOVE */
 
 // localSdkComponentMap is the JSON object where we'll store the components that are
@@ -41,7 +48,14 @@ const localSdkComponentMap = {
   Pega_Extensions_personaDetails: ProfileComponent,
   TextInput: TextInputComponent,
   Integer: IntegerComponent,
-  Assignment: AssignmentComponent
+  Assignment: AssignmentComponent,
+  DefaultPage: BannerPageComponent,
+  RadioButtons: RadioButtonsComponent,
+  DefaultForm: DefaultFormComponent,
+  Checkbox: CheckBoxComponent,
+  Currency: CurrencyComponent,
+  AppAnnouncement: AppAnnouncementComponent,
+  Region: RegionComponent
   /* map end - DO NOT REMOVE */
 };
 

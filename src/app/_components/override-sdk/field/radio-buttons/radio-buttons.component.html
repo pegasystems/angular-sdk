@@ -1,0 +1,39 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <component-mapper
+    *ngIf="bVisible$ !== false"
+    name="FieldValueList"
+    [props]="{ label$, value$: this.localizedValue, displayMode$ }"
+  ></component-mapper>
+</div>
+<ng-template #noDisplayMode>
+  <div [formGroup]="formGroup$" *ngIf="bVisible$">
+    <mat-form-field class="psdk-radio-form" subscriptSizing="dynamic" [hintLabel]="helperText">
+      <span class="psdk-label-wrapper-readonly">
+        <label class="psdk-label-readonly" [ngClass]="{ ' file-label': bRequired$ }">{{ label$ }}</label>
+      </span>
+      <!-- <mat-label>{{label$}}</mat-label> -->
+      <input matInput [placeholder]="placeholder" style="display: none" />
+      <mat-radio-group
+        [value]="value$"
+        [required]="bRequired$"
+        [formControl]="fieldControl"
+        [attr.data-test-id]="testId"
+        class="{{ bInline$ ? 'psdk-radio-horizontal' : 'psdk-radio-vertical' }}"
+      >
+        <mat-radio-button
+          *ngFor="let opt of options$"
+          [checked]="isSelected(opt.key)"
+          [disabled]="bReadonly$"
+          [value]="opt.key"
+          (change)="fieldOnChange($event)"
+          class="psdk-radio-button"
+        >
+          {{ getLocalizedOptionValue(opt) }}
+        </mat-radio-button>
+      </mat-radio-group>
+      <!-- {{fieldControl.invalid}} test
+      {{getErrorMessage()}} -->
+      <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+  </div>
+</ng-template>

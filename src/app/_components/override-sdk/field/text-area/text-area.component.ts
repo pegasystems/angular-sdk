@@ -69,6 +69,7 @@ export class TextAreaComponent implements OnInit, OnDestroy {
       // add control to formGroup
       this.formGroup$.addControl(this.controlName$, this.fieldControl);
       this.fieldControl.setValue(this.value$);
+
       this.bHasForm$ = true;
     } else {
       this.bReadonly$ = true;
@@ -104,9 +105,11 @@ export class TextAreaComponent implements OnInit, OnDestroy {
 
   // updateSelf
   updateSelf(): void {
+    // clearing out the validations
+    this.fieldControl.clearValidators();
     // moved this from ngOnInit() and call this from there instead...
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps()) as TextAreaProps;
-
+    console.log('text-area this.configProps$', this.configProps$);
     if (this.configProps$.value != undefined) {
       this.value$ = this.configProps$.value;
     }

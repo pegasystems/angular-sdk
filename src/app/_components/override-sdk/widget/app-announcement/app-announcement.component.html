@@ -1,0 +1,15 @@
+<article class="psdk-announcement">
+  <h2>{{ configProps$.header }}</h2>
+  <div>
+    <p>{{ configProps$.description }}</p>
+    <div>
+      <!-- <h3>{{ configProps$.label }}</h3> -->
+      <ul>
+        <li *ngFor="let detail of details$">{{ detail }}</li>
+      </ul>
+    </div>
+  </div>
+  <a *ngIf="configProps$.whatsnewlink != ''" mat-raised-button color="primary" class="psdk-announcement-button" [href]="configProps$.whatsnewlink"
+    >Learn more about our services</a
+  >
+</article>

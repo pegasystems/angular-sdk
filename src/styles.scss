@@ -44,9 +44,9 @@ a.mat-mdc-menu-item > mat-icon {
   background-color: transparent !important;
 }
 
-.mdc-text-field {
-  padding: 0 !important;
-}
+// .mdc-text-field {
+//   padding: 0 !important;
+// }
 
 .psdk-radio-vertical > .mat-mdc-radio-button .mdc-radio {
   padding: 10px 0 !important;
@@ -173,29 +173,37 @@ app-flow-container {
   color: #fff !important;
 }
 
-.mdc-text-field {
-  padding: 0px;
+// .mdc-text-field {
+//   padding: 0px;
+// }
+
+// .mdc-notched-outline__leading,
+// .mdc-notched-outline__notch,
+// .mdc-notched-outline__trailing {
+//   border-color: white !important;
+// }
+
+// .mdc-text-field {
+//   padding: 0px;
+// }
+
+.mdc-floating-label {
+  font-size: 14px !important;
 }
 
-.mdc-notched-outline__leading,
-.mdc-notched-outline__notch,
-.mdc-notched-outline__trailing {
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
   border-color: white !important;
 }
 
-.mdc-text-field {
-  padding: 0px;
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
+  border-left: 0px !important;
 }
 
-.mdc-notched-outline__leading,
-.mdc-notched-outline__notch,
-.mdc-notched-outline__trailing {
-  border-color: white !important;
-}
-
-.psdk-default-form-one-column {
-  gap: 2rem;
-}
+// .psdk-default-form-one-column {
+//   gap: 2rem;
+// }
 
 .template-title-container {
   display: none !important;
@@ -237,6 +245,13 @@ app-radio-buttons {
     mat-radio-group {
       margin-top: 12px;
       font-size: 18px;
+      mat-radio-button {
+        .mat-internal-form-field {
+          label {
+            padding-left: 8px !important;
+          }
+        }
+      }
     }
 
     .mat-mdc-text-field-wrapper {
@@ -263,13 +278,14 @@ app-action-buttons {
     color: #71baff !important;
     min-width: 6rem;
     margin-right: 8px;
+    background: none !important;
   }
 
   .mat-primary {
     border-radius: 25px;
     padding: 20px 30px;
     border: 1px solid #71baff;
-    color: #71baff;
+    color: #381e72 !important;
     min-width: 6rem;
   }
 
@@ -297,38 +313,69 @@ app-confirmation {
   }
 }
 
+// .uplusauto {
+//   .region-a > component-mapper > app-region {
+//     display: grid;
+//     grid-template-columns: 1fr;
+//     row-gap: 3em;
+//     position: relative;
+
+//     & > div:first-child {
+//       grid-column: 1;
+//     }
+
+//     & > div:nth-child(2) {
+//       position: absolute;
+//       bottom: calc(-100% - 2em);
+//       display: grid;
+//       grid-template-columns: repeat(4, minmax(0, 1fr));
+//       justify-items: end;
+//       gap: 3em;
+//       width: 100%;
+//       z-index: 1000;
+
+//       & > *:first-child {
+//         grid-column: 4;
+//         width: 100%;
+//       }
+//     }
+//   }
+
+//   .region-b > component-mapper > app-region {
+//     display: grid;
+//     grid-template-columns: repeat(4, minmax(0, 1fr));
+//     column-gap: 3em;
+//     position: relative;
+
+//     & > div:first-child {
+//       grid-column: 1 / span 3;
+//       z-index: 1000;
+//     }
+
+//     & > div:nth-child(2) {
+//       grid-column: 1 / span 3;
+//     }
+
+//     & > div:nth-child(3) {
+//       grid-column: 4;
+//       position: absolute;
+//       top: calc(210px + 3em);
+//       width: 100%;
+//     }
+//   }
+// }
+
 .uplusauto {
   .region-a > component-mapper > app-region {
     display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 3em;
-    position: relative;
-
-    & > div:first-child {
-      grid-column: 1;
-    }
-
-    & > div:nth-child(2) {
-      position: absolute;
-      bottom: calc(-100% - 2em);
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      justify-items: end;
-      gap: 3em;
-      width: 100%;
-      z-index: 1000;
-
-      & > *:first-child {
-        grid-column: 4;
-        width: 100%;
-      }
-    }
+    grid-template-columns: 3fr 7fr;
+    gap: 3rem;
   }
 
   .region-b > component-mapper > app-region {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 3em;
+    column-gap: 3rem;
     position: relative;
 
     & > div:first-child {
@@ -338,12 +385,24 @@ app-confirmation {
 
     & > div:nth-child(2) {
       grid-column: 1 / span 3;
+      z-index: 1000;
     }
 
     & > div:nth-child(3) {
       grid-column: 4;
+      width: 100%;
       position: absolute;
-      top: calc(210px + 3em);
+    }
+
+    & > div:nth-child(4) {
+      grid-column: 1 / span 3;
+      z-index: 1000;
+    }
+
+    & > div:nth-child(5) {
+      grid-column: 4;
+      position: absolute;
+      top: calc(228px + 3em);
       width: 100%;
     }
   }
@@ -380,49 +439,83 @@ app-material-details-fields {
 }
 
 // responsiveness for ipad
-@media only screen and (max-device-width: 1180px) and (-webkit-min-device-pixel-ratio: 1) {
-  .quick-link-ul-list {
-    margin-top: 0 !important;
-  }
+// @media only screen and (max-device-width: 1180px) and (-webkit-min-device-pixel-ratio: 1) {
+//   .quick-link-ul-list {
+//     margin-top: 0 !important;
+//   }
 
-  .uplusauto {
+//   .uplusauto {
+//     .region-a > component-mapper > app-region {
+//       display: flex;
+//       flex-direction: column;
+//       gap: 3em;
+//       position: relative;
+
+//       & > div:nth-child(2) {
+//         position: static;
+//         display: block;
+//       }
+//     }
+
+//     .region-b > component-mapper > app-region {
+//       display: flex;
+//       flex-direction: column;
+//       gap: 3em;
+//       position: relative;
+
+//       & > div:nth-child(3) {
+//         position: static;
+//       }
+//     }
+//   }
+
+//   app-wss-nav-bar {
+//     mat-toolbar-row ul {
+//       padding-left: 0 !important;
+//     }
+
+//     .nav-items {
+//       margin: 0 1.5rem !important;
+//     }
+//   }
+
+//   app-todo {
+//     .mb-3 {
+//       margin-bottom: 0 !important;
+//     }
+//   }
+// }
+
+app-currency {
+  .mat-mdc-form-field {
+    .mdc-text-field {
+      padding: 0 !important;
+    }
+  }
+}
+
+.psdk-case-view-divider {
+  border-bottom: 0px !important;
+}
+
+app-assignment-card {
+  display: block;
+  padding-left: 1rem;
+}
+
+app-banner {
+  .tradein {
     .region-a > component-mapper > app-region {
-      display: flex;
-      flex-direction: column;
-      gap: 3em;
-      position: relative;
-
-      & > div:nth-child(2) {
-        position: static;
-        display: block;
-      }
-    }
-
-    .region-b > component-mapper > app-region {
-      display: flex;
-      flex-direction: column;
-      gap: 3em;
-      position: relative;
-
-      & > div:nth-child(3) {
-        position: static;
+      wss-quick-create {
+        .quick-link-div {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(min(50ch, 100%), 1fr)) !important;
+        }
       }
     }
   }
+}
 
-  app-wss-nav-bar {
-    mat-toolbar-row ul {
-      padding-left: 0 !important;
-    }
-
-    .nav-items {
-      margin: 0 1.5rem !important;
-    }
-  }
-
-  app-todo {
-    .mb-3 {
-      margin-bottom: 0 !important;
-    }
-  }
+.mat-mdc-form-field-error {
+  color: #f44336 !important;
 }

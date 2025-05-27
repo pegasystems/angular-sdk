@@ -43,6 +43,7 @@ export class DataReferenceComponent implements OnInit, OnDestroy {
   constructor(private angularPConnect: AngularPConnectService) {}
 
   ngOnInit(): void {
+    console.log('DataReferenceComponent ngOnInit');
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
     this.children = this.pConn$.getChildren();

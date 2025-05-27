@@ -21,13 +21,13 @@
     "infinityRestServerUrl": "https://pw25-selfservice.pegademo.com/prweb",
 
     "appAlias_comment": "appAlias of the application which operators will be accessing (e.g., MediaCo)",
-    "appAlias": "uplus-auto",
+    "appAlias": "",
 
     "sdkContentServerUrl_comment": "If specified, the given URL will be used. If left blank, window.location.origin will be used.",
     "sdkContentServerUrl": "",
 
     "appPortal_comment": "If specified, the given appPortal will be loaded. If left blank, the operator's default Portal is used. Ignored for Embedded use",
-    "appPortal": "",
+    "appPortal": "UAutoCustomerPortal",
 
     "appMashupCaseType_comment": "If specified, uses this case type for mashup.  Otherwise, uses the first case type found for the app",
     "appMashupCaseType": "",

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { interval } from 'rxjs';
 import { AngularPConnectService, AngularPConnectData } from '@pega/angular-sdk-components';
 import { Utils } from '@pega/angular-sdk-components';
 import { ComponentMapperComponent } from '@pega/angular-sdk-components';
@@ -105,6 +104,7 @@ export class TextInputComponent implements OnInit, OnDestroy {
   // updateSelf
   updateSelf(): void {
     // moved this from ngOnInit() and call this from there instead...
+    this.fieldControl.clearValidators();
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps()) as TextInputProps;
 
     if (this.configProps$.value != undefined) {
@@ -151,20 +151,20 @@ export class TextInputComponent implements OnInit, OnDestroy {
     }
 
     // trigger display of error message with field control
-    if (this.angularPConnectData.validateMessage != null && this.angularPConnectData.validateMessage != '') {
-      const timer = interval(100).subscribe(() => {
-        this.fieldControl.setErrors({ message: true });
-        this.fieldControl.markAsTouched();
+    // if (this.angularPConnectData.validateMessage != null && this.angularPConnectData.validateMessage != '') {
+    //   const timer = interval(100).subscribe(() => {
+    //     this.fieldControl.setErrors({ message: true });
+    //     this.fieldControl.markAsTouched();
 
-        timer.unsubscribe();
-      });
-    }
+    //     timer.unsubscribe();
+    //   });
+    // }
   }
 
   fieldOnChange() {
-    this.pConn$.clearErrorMessages({
-      property: this.propName
-    });
+    // this.pConn$.clearErrorMessages({
+    //   property: this.propName
+    // });
   }
 
   fieldOnBlur(event: any) {

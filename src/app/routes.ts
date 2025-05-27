@@ -15,7 +15,8 @@ import { NavigationComponent } from './_samples/simple-portal/navigation/navigat
 
 export const routes: Routes = [
   { path: '', component: EmbeddedComponent },
-  { path: endpoints.PORTAL, component: FullPortalComponent },
+  { path: 'portal', component: FullPortalComponent },
+  // { path: '**', component: FullPortalComponent },
   { path: endpoints.PORTALHTML, component: FullPortalComponent },
   { path: endpoints.FULLPORTAL, component: FullPortalComponent },
   { path: endpoints.FULLPORTALHTML, component: FullPortalComponent },

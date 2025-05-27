@@ -1,11 +1,12 @@
 .quick-link-ul-list {
   list-style: none;
   padding: 0;
-  grid-template-columns: repeat(auto-fill, minmax(min(50ch, 100%), 1fr));
-  display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(min(50ch, 100%), 1fr));
+  // display: grid;
   gap: 3rem;
   margin-top: 3rem;
   margin-bottom: 0;
+  display: flex;
 }
 
 .quick-link-button {
@@ -141,7 +142,7 @@
   border: 1.5px solid #878789;
   flex: 1 1;
   min-width: 300px;
-
+  width: 473px !important;
   mat-card {
     flex: 1 1;
   }

@@ -1,0 +1,40 @@
+<div *ngIf="displayMode$; else noDisplayMode">
+  <component-mapper *ngIf="bVisible$ !== false" name="FieldValueList" [props]="{ label$, value$: formattedValue, displayMode$ }"></component-mapper>
+</div>
+<ng-template #noDisplayMode>
+  <div *ngIf="bHasForm$; else noEdit">
+    <div [formGroup]="formGroup$" *ngIf="bVisible$" class="psdk-currency-field">
+      <mat-form-field class="psdk-full-width" subscriptSizing="dynamic" [hintLabel]="helperText">
+        <mat-label>{{ label$ }}</mat-label>
+        <div class="psdk-currency-input">
+          <input
+            style="margin-top: -1rem"
+            type="text"
+            matInput
+            currencyMask
+            [options]="{
+              prefix: currencySymbol,
+              thousands: thousandSeparator,
+              decimal: decimalSeparator,
+              align: 'left',
+              nullable: true,
+              precision: decimalPrecision,
+              inputMode: inputMode
+            }"
+            [placeholder]="placeholder"
+            [formControlName]="controlName$"
+            [required]="bRequired$"
+            [formControl]="fieldControl"
+            [attr.data-test-id]="testId"
+            (blur)="fieldOnBlur($event)"
+            [readonly]="bReadonly$"
+          />
+        </div>
+        <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noEdit>
+  <component-mapper *ngIf="bVisible$ !== false" name="Text" [props]="{ pConn$, formatAs$: 'text' }"></component-mapper>
+</ng-template>

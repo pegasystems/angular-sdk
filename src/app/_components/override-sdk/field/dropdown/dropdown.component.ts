@@ -210,12 +210,12 @@ export class DropdownComponent implements OnInit, OnDestroy {
 
     this.componentReference = this.pConn$.getStateProps().value;
 
-    const optionsList = [...this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject())];
-    optionsList?.unshift({ key: 'Select', value: this.pConn$.getLocalizedValue('Select...', '', '') });
-    this.options$ = optionsList;
-    if (this.value$ === '' && !this.bReadonly$) {
-      this.value$ = 'Select';
-    }
+    // const optionsList = [...this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject())];
+    // optionsList?.unshift({ key: 'Select', value: this.pConn$.getLocalizedValue('Select...', '', '') });
+    // this.options$ = optionsList;
+    // if (this.value$ === '' && !this.bReadonly$) {
+    //   this.value$ = 'Select';
+    // }
 
     if (this.theDatasource) {
       const optionsList = [...this.utils.getOptionList(this.configProps$, this.pConn$.getDataObject())];
@@ -315,9 +315,8 @@ export class DropdownComponent implements OnInit, OnDestroy {
           optionsData?.unshift({ key: 'Select', value: this.pConn$.getLocalizedValue('Select...', '', '') });
           this.options$ = optionsData;
         });
-    });
+      });
   }
-
 
   isSelected(buttonValue: string): boolean {
     return this.value$ === buttonValue;

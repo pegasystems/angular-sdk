@@ -2,8 +2,13 @@
   <mat-toolbar-row class="mat-toolbar-row">
     <div (click)="navPanelButtonClick(homePage)" class="logo"><img src="constellation/assets/logo.png" class="psdk-nav-logo" /></div>
     <ul style="display: flex; align-items: center">
-      <li class="nav-items" [ngClass]="{ active: page.pyLabel === activePage }" *ngFor="let page of navPages$" (click)="navPanelButtonClick(page)">
-        <span class="nav-links">{{ page.pyLabel }}</span>
+      <li
+        class="nav-items"
+        [ngClass]="{ active: page.pyDefaultHeading === activePage }"
+        *ngFor="let page of navPages$"
+        (click)="navPanelButtonClick(page)"
+      >
+        <span class="nav-links">{{ page.pyDefaultHeading }}</span>
       </li>
 
       <mat-list>

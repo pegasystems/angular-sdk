@@ -1,0 +1,29 @@
+h2 {
+  font-size: 1.2rem;
+  margin-block-start: 0rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+ul {
+  padding-inline-start: 20px;
+}
+
+.psdk-announcement {
+  // background-color: var(--app-form-color);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #939393;
+  background: rgba(113, 186, 255, 0.1);
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.psdk-announcement-button {
+  border-radius: 50px;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #381e72 !important;
+}
