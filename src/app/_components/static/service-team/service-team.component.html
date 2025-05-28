@@ -1,13 +1,18 @@
 <mat-card class="service-history-card">
   <mat-card-header>
-    <mat-card-title>{{ heading }}</mat-card-title>
+    <mat-card-title>Your Service Team</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let row of data; let i = index">
-        <img class="icon" matListItemIcon [src]="icons[i]" />
-        <div matListItemTitle>{{ row.ServiceMemberName }}</div>
-        <div matListItemLine>{{ row.ServiceMemberRole }}</div>
+      <mat-list-item>
+        <img class="icon" matListItemIcon src="constellation/assets/icons/teammate1.png" />
+        <div matListItemTitle>Emily Davis</div>
+        <div matListItemLine>Support Staff</div>
+      </mat-list-item>
+      <mat-list-item>
+        <img class="icon" matListItemIcon src="constellation/assets/icons/teammate2.png" />
+        <div matListItemTitle>Mike Brown</div>
+        <div matListItemLine>Team Leader</div>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

@@ -38,14 +38,23 @@
         errorMsg="Region wants component not yet available"
       ></component-mapper>
     </div>
-    <div class="region-b">
-      <ng-container *ngIf="arChildren$ && arChildren$.length > 1">
-        <component-mapper
-          [name]="arChildren$[1].getPConnect().getComponentName()"
-          [props]="{ pConn$: arChildren$[1].getPConnect(), formGroup$, fromBanner }"
-          errorMsg="Region wants component not yet available"
-        ></component-mapper>
-      </ng-container>
+    <div class="region-b-new">
+      <div>
+        <ng-container *ngIf="arChildren$ && arChildren$.length > 1">
+          <component-mapper
+            [name]="arChildren$[1].getPConnect().getComponentName()"
+            [props]="{ pConn$: arChildren$[1].getPConnect(), formGroup$, fromBanner }"
+            errorMsg="Region wants component not yet available"
+          ></component-mapper>
+        </ng-container>
+      </div>
+      <div
+        *ngIf="this.configProps$.title === 'U+ Connect' || this.configProps$.title === 'Customer Self-service Home Page'"
+        style="display: grid; gap: 3rem"
+      >
+        <app-service-team></app-service-team>
+        <app-driver-profiles></app-driver-profiles>
+      </div>
     </div>
     <div *ngIf="landingPageName === 'tradein'" class="how-it-works-container">
       <app-how-it-works></app-how-it-works>

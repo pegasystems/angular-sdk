@@ -372,6 +372,12 @@ app-confirmation {
     gap: 3rem;
   }
 
+  .region-a.three-casetypes > component-mapper > app-region {
+    gap: 3rem;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+
   .region-b > component-mapper > app-region {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -395,8 +401,11 @@ app-confirmation {
     }
 
     & > div:nth-child(4) {
-      grid-column: 1 / span 3;
-      z-index: 1000;
+      // grid-column: 1 / span 3;
+      // z-index: 1000;
+      grid-column: 4;
+      position: absolute;
+      width: 100%;
     }
 
     & > div:nth-child(5) {

@@ -97,3 +97,9 @@
   width: 100%;
   left: 0;
 }
+
+.region-b-new {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 3rem;
+}

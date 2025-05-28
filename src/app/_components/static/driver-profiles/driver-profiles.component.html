@@ -1,14 +1,18 @@
 <mat-card class="service-history-card">
   <mat-card-header>
-    <mat-card-title>{{ heading }}</mat-card-title>
+    <mat-card-title>Your Driver Profiles</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let row of data.slice(0, 2); let i = index">
-        <!-- <mat-icon matListItemIcon svgIcon="wrench"></mat-icon> -->
-        <img class="icon" matListItemIcon [src]="icons[i]" />
-        <div matListItemTitle>{{ row.FirstName }}</div>
-        <div matListItemLine>{{ row.DriverRole }}</div>
+      <mat-list-item>
+        <img class="icon" matListItemIcon src="constellation/assets/icons/profile1.png" />
+        <div matListItemTitle>Jane Smith</div>
+        <div matListItemLine>Primary Driver</div>
+      </mat-list-item>
+      <mat-list-item>
+        <img class="icon" matListItemIcon src="constellation/assets/icons/profile2.png" />
+        <div matListItemTitle>Bob Smith</div>
+        <div matListItemLine>Additional Driver</div>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

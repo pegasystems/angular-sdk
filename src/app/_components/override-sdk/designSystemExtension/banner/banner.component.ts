@@ -4,13 +4,22 @@ import { Component, Input, forwardRef, OnInit, OnDestroy, SimpleChanges, OnChang
 import { ComponentMapperComponent } from '@pega/angular-sdk-components';
 import { ServiceCardComponent } from '../service-card/service-card.component';
 import { HowItWorksComponent } from 'src/app/_components/static/how-it-works/how-it-works.component';
+import { DriverProfilesComponent } from 'src/app/_components/static/driver-profiles/driver-profiles.component';
+import { ServiceTeamComponent } from 'src/app/_components/static/service-team/service-team.component';
 
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.scss'],
   standalone: true,
-  imports: [CommonModule, ServiceCardComponent, forwardRef(() => ComponentMapperComponent), HowItWorksComponent]
+  imports: [
+    CommonModule,
+    ServiceCardComponent,
+    DriverProfilesComponent,
+    ServiceTeamComponent,
+    forwardRef(() => ComponentMapperComponent),
+    HowItWorksComponent
+  ]
 })
 export class BannerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pConn$: typeof PConnect;
@@ -34,7 +43,6 @@ export class BannerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('BannerComponent changes:', changes);
     const { title } = changes;
     this.fromBanner = false;
     let { currentValue } = title;
@@ -61,9 +69,16 @@ export class BannerComponent implements OnInit, OnDestroy, OnChanges {
     this.fromBanner = true;
     const tempRegion1 = [...this.arChildren$[0].getPConnect().getChildren()];
     const tempRegion2 = [...this.arChildren$[1].getPConnect().getChildren()];
-    const [ref] = tempRegion2.splice(1, 1);
+    tempRegion2.splice(1, 1);
+    tempRegion1.slice(tempRegion1.length - 1, 1);
     this.arChildren$[0].getPConnect()._children = tempRegion2;
-    this.arChildren$[1].getPConnect()._children = [...tempRegion1, ref];
+    this.arChildren$[1].getPConnect()._children = tempRegion1;
+    const casetypesCount = this.arChildren$[0].getPConnect()?._children[0]?.getPConnect()?.meta?.config?.classFilter?.length;
+    if (casetypesCount === 3) {
+      document.getElementsByClassName('region-a')[0].classList.add('three-casetypes');
+    } else {
+      document.getElementsByClassName('region-a')[0].classList.remove('three-casetypes');
+    }
   }
 
   ngOnDestroy() {
