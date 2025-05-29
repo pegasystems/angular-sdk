@@ -417,9 +417,16 @@ app-confirmation {
   }
 }
 
-.psdk-grid-filter {
-  grid-template-columns: 1fr !important;
+app-app-shell {
+  .tradein-bg {
+    .psdk-grid-filter {
+      grid-template-columns: 1fr !important;
+    }
+  }
 }
+// .psdk-grid-filter {
+//   grid-template-columns: 1fr !important;
+// }
 
 .mdc-line-ripple::before {
   border: none !important;
