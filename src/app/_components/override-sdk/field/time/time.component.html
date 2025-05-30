@@ -4,21 +4,41 @@
 <ng-template #noDisplayMode>
   <div *ngIf="!bReadonly$ && bHasForm$; else noEdit">
     <div [formGroup]="formGroup$" *ngIf="bVisible$">
-      <mat-form-field appearance="outline" class="psdk-full-width" subscriptSizing="dynamic" [hintLabel]="helperText">
-        <mat-label>{{ label$ }}</mat-label>
-        <mat-select
-          [placeholder]="placeholder"
-          [required]="bRequired$"
-          [attr.data-test-id]="testId"
-          [formControl]="fieldControl"
-          (selectionChange)="fieldOnBlur($event)"
-        >
-          <mat-option *ngFor="let time of timeOptions" [value]="time.value">
-            {{ time.display }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
-      </mat-form-field>
+      <div class="time-picker-container">
+        <mat-form-field appearance="outline" class="psdk-time-input" subscriptSizing="dynamic" [hintLabel]="helperText">
+          <mat-label>{{ label$ }}</mat-label>
+          <input
+            matInput
+            type="time"
+            [placeholder]="placeholder"
+            [required]="bRequired$"
+            [attr.data-test-id]="testId + '-input'"
+            [formControl]="fieldControl"
+            (blur)="fieldOnBlur($event)"
+            step="1800"
+          />
+          <button type="button" mat-icon-button matSuffix (click)="toggleTimeDropdown($event)" (mousedown)="$event.preventDefault()" tabindex="-1">
+            <mat-icon>schedule</mat-icon>
+          </button>
+          <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+
+        <div class="time-dropdown mat-elevation-z4" *ngIf="showTimeDropdown" [style.top.px]="dropdownTop" [style.left.px]="dropdownLeft">
+          <div class="time-options-container">
+            <button
+              *ngFor="let time of timeOptions"
+              type="button"
+              class="time-option"
+              [class.selected]="fieldControl.value === time.value"
+              (click)="onTimeSelected(time)"
+              (keydown.enter)="onTimeSelected(time)"
+              (keydown.space)="onTimeSelected(time); $event.preventDefault()"
+            >
+              {{ time.display }}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ng-template>

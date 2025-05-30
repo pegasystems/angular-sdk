@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectorRef, forwardRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, forwardRef, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { interval } from 'rxjs';
 import { AngularPConnectData, AngularPConnectService } from '@pega/angular-sdk-components';
 import { Utils } from '@pega/angular-sdk-components';
@@ -21,7 +23,16 @@ interface TimeProps extends PConnFieldProps {
   templateUrl: './time.component.html',
   styleUrls: ['./time.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, forwardRef(() => ComponentMapperComponent)]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    forwardRef(() => ComponentMapperComponent)
+  ]
 })
 export class TimeComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
@@ -33,6 +44,11 @@ export class TimeComponent implements OnInit, OnDestroy {
 
   // Time options for dropdown with 30-minute intervals
   timeOptions: { value: string; display: string }[] = [];
+
+  // Dropdown state properties
+  showTimeDropdown = false;
+  dropdownTop = 0;
+  dropdownLeft = 0;
 
   label$ = '';
   value$: string;
@@ -48,14 +64,15 @@ export class TimeComponent implements OnInit, OnDestroy {
   helperText: string;
   placeholder: string;
 
-  fieldControl = new FormControl('', null);
+  fieldControl = new FormControl('');
   actionsApi: Object;
   propName: string;
   formattedValue$: any;
   constructor(
     private angularPConnect: AngularPConnectService,
     private cdRef: ChangeDetectorRef,
-    private utils: Utils
+    private utils: Utils,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -179,12 +196,78 @@ export class TimeComponent implements OnInit, OnDestroy {
 
   fieldOnBlur(event: any) {
     let value = event?.value || event?.target?.value;
-    console.log('fieldOnBlur', value);
-    const hhmmPattern = /^\d{2}:\d{2}$/;
-    if (hhmmPattern.test(value)) {
-      value = `${value}:00`; // append ":00"
+
+    // Only mark as touched for validation if we're not showing the dropdown
+    if (!this.showTimeDropdown) {
+      this.fieldControl.markAsTouched();
     }
-    handleEvent(this.actionsApi, 'changeNblur', this.propName, value);
+
+    // Don't trigger changeNblur if value is empty and the dropdown is showing
+    // This prevents the "Cannot be blank" error when clicking the clock icon
+    if (!(this.showTimeDropdown && !value)) {
+      const hhmmPattern = /^\d{2}:\d{2}$/;
+      if (hhmmPattern.test(value)) {
+        value = `${value}:00`; // append ":00"
+      }
+
+      handleEvent(this.actionsApi, 'changeNblur', this.propName, value);
+    }
+  }
+
+  // Toggle the time dropdown when the icon is clicked
+  toggleTimeDropdown(event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault(); // Prevent any default behavior
+    this.showTimeDropdown = !this.showTimeDropdown;
+
+    // Prevent validation errors from showing when opening the dropdown
+    if (this.showTimeDropdown) {
+      // If the field was touched but has a value, we don't want to show validation errors
+      if (this.fieldControl.value) {
+        this.fieldControl.markAsUntouched();
+      }
+
+      // Position the dropdown below the input field (not including validation messages)
+      const inputElement = this.elementRef.nativeElement.querySelector('.psdk-time-input');
+      const rect = inputElement.getBoundingClientRect();
+
+      // Position right below the input field itself, ignoring any validation messages
+      // Get the input wrapper element's position for more accurate positioning
+      const inputWrapper = this.elementRef.nativeElement.querySelector('.mat-mdc-form-field-flex');
+      const inputWrapperRect = inputWrapper ? inputWrapper.getBoundingClientRect() : rect;
+
+      this.dropdownTop = inputWrapperRect.bottom;
+      this.dropdownLeft = rect.left;
+
+      // Set timeout to allow for DOM update and then set width
+      setTimeout(() => {
+        const dropdown = this.elementRef.nativeElement.querySelector('.time-dropdown');
+        if (dropdown) {
+          dropdown.style.width = `${rect.width}px`;
+        }
+      });
+    }
+  }
+
+  // Handle clicks outside to close the dropdown
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showTimeDropdown && !this.elementRef.nativeElement.contains(event.target)) {
+      this.showTimeDropdown = false;
+    }
+  }
+
+  // Handle time selection from dropdown
+  onTimeSelected(time: { value: string; display: string }) {
+    this.fieldControl.setValue(time.value);
+    this.showTimeDropdown = false;
+
+    const hhmmPattern = /^\d{2}:\d{2}$/;
+    if (hhmmPattern.test(time.value)) {
+      time.value = `${time.value}:00`; // append ":00"
+    }
+
+    handleEvent(this.actionsApi, 'changeNblur', this.propName, time.value);
   }
 
   getErrorMessage() {
@@ -202,12 +285,12 @@ export class TimeComponent implements OnInit, OnDestroy {
     return errMessage;
   }
 
-  // Generate time options with 30-minute intervals (12:00 AM, 12:30 AM, 01:00 AM, etc.)
+  // Generate time options with hourly intervals (12:00 AM, 01:00 AM, 02:00 AM, etc.)
   generateTimeOptions(): void {
     this.timeOptions = [];
 
     for (let hour = 0; hour < 24; hour++) {
-      // For both 00 and 30 minutes
+      // Use hourly intervals instead of 30-minute intervals
       for (let minutes = 0; minutes < 60; minutes += 30) {
         const hourDisplay = hour === 0 || hour === 12 ? 12 : hour % 12;
         const period = hour < 12 ? 'AM' : 'PM';
