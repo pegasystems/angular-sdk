@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { interval } from 'rxjs';
 import { AngularPConnectData, AngularPConnectService } from '@pega/angular-sdk-components';
 import { Utils } from '@pega/angular-sdk-components';
@@ -20,7 +21,7 @@ interface TimeProps extends PConnFieldProps {
   templateUrl: './time.component.html',
   styleUrls: ['./time.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, forwardRef(() => ComponentMapperComponent)]
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, forwardRef(() => ComponentMapperComponent)]
 })
 export class TimeComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
@@ -29,6 +30,9 @@ export class TimeComponent implements OnInit, OnDestroy {
   // Used with AngularPConnect
   angularPConnectData: AngularPConnectData = {};
   configProps$: TimeProps;
+
+  // Time options for dropdown with 30-minute intervals
+  timeOptions: { value: string; display: string }[] = [];
 
   label$ = '';
   value$: string;
@@ -58,6 +62,9 @@ export class TimeComponent implements OnInit, OnDestroy {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
     this.controlName$ = this.angularPConnect.getComponentID(this);
+
+    // Generate the time options for the dropdown
+    this.generateTimeOptions();
 
     // Then, continue on with other initialization
     // call updateSelf when initializing
@@ -171,11 +178,7 @@ export class TimeComponent implements OnInit, OnDestroy {
   }
 
   fieldOnBlur(event: any) {
-    let value = event?.target?.value;
-    const hhmmPattern = /^\d{2}:\d{2}$/;
-    if (hhmmPattern.test(value)) {
-      value = `${value}:00`; // append ":00"
-    }
+    const value = event?.value || event?.target?.value;
     console.log('fieldOnBlur', value);
     handleEvent(this.actionsApi, 'changeNblur', this.propName, value);
   }
@@ -193,5 +196,31 @@ export class TimeComponent implements OnInit, OnDestroy {
       errMessage = this.fieldControl.errors.toString();
     }
     return errMessage;
+  }
+
+  // Generate time options with 30-minute intervals (12:00 AM, 12:30 AM, 01:00 AM, etc.)
+  generateTimeOptions(): void {
+    this.timeOptions = [];
+
+    for (let hour = 0; hour < 24; hour++) {
+      // For both 00 and 30 minutes
+      for (let minutes = 0; minutes < 60; minutes += 30) {
+        const hourDisplay = hour === 0 || hour === 12 ? 12 : hour % 12;
+        const period = hour < 12 ? 'AM' : 'PM';
+
+        // Format the time values
+        const hourFormatted = hourDisplay.toString().padStart(2, '0');
+        const minuteFormatted = minutes.toString().padStart(2, '0');
+
+        // 24-hour format for value (HH:MM)
+        const hourValue = hour.toString().padStart(2, '0');
+        const value = `${hourValue}:${minuteFormatted}`;
+
+        // 12-hour format for display (HH:MM AM/PM)
+        const display = `${hourFormatted}:${minuteFormatted} ${period}`;
+
+        this.timeOptions.push({ value, display });
+      }
+    }
   }
 }

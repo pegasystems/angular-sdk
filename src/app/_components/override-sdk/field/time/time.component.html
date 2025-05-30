@@ -6,17 +6,17 @@
     <div [formGroup]="formGroup$" *ngIf="bVisible$">
       <mat-form-field appearance="outline" class="psdk-full-width" subscriptSizing="dynamic" [hintLabel]="helperText">
         <mat-label>{{ label$ }}</mat-label>
-        <input
-          matInput
+        <mat-select
           [placeholder]="placeholder"
-          type="time"
-          [value]="value$"
           [required]="bRequired$"
           [attr.data-test-id]="testId"
           [formControl]="fieldControl"
-          (change)="fieldOnChange()"
-          (blur)="fieldOnBlur($event)"
-        />
+          (selectionChange)="fieldOnBlur($event)"
+        >
+          <mat-option *ngFor="let time of timeOptions" [value]="time.value">
+            {{ time.display }}
+          </mat-option>
+        </mat-select>
         <mat-error *ngIf="fieldControl.invalid">{{ getErrorMessage() }}</mat-error>
       </mat-form-field>
     </div>
