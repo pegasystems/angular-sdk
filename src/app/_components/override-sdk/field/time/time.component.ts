@@ -178,8 +178,12 @@ export class TimeComponent implements OnInit, OnDestroy {
   }
 
   fieldOnBlur(event: any) {
-    const value = event?.value || event?.target?.value;
+    let value = event?.value || event?.target?.value;
     console.log('fieldOnBlur', value);
+    const hhmmPattern = /^\d{2}:\d{2}$/;
+    if (hhmmPattern.test(value)) {
+      value = `${value}:00`; // append ":00"
+    }
     handleEvent(this.actionsApi, 'changeNblur', this.propName, value);
   }
 
