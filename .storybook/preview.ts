@@ -1,7 +1,6 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AngularPConnectService, getSdkComponentMap } from '@pega/angular-sdk-components';
 import { Preview, applicationConfig } from '@storybook/angular';
-
 import setPCoreMocks from '../__mocks__/pcoreMocks';
 
 setPCoreMocks();
