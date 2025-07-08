@@ -102,7 +102,7 @@
     "@pega/angular-sdk-overrides": "~24.2.10",
     "@pega/configs": "^0.16.2",
     "@pega/constellationjs": "~24.2.0",
-    "@pega/dx-component-builder-sdk": "~24.1.11",
+    "@pega/dx-component-builder-sdk": "~0.242.16",
     "@pega/eslint-config": "^0.16.2",
     "@pega/pcore-pconnect-typedefs": "3.2.1",
     "@pega/prettier-config": "^0.16.2",

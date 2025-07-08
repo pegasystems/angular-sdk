@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 export default function setPCoreMocks() {
   if (!window.PCore) {
     window.PCore = {} as any;
