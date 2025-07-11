@@ -8,7 +8,14 @@ const config = {
     reactDocgen: 'react-docgen-typescript'
   },
 
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions', '@chromatic-com/storybook'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    {
+      name: '@storybook/addon-docs',
+      options: { mdxBabelOptions: { babelrc: true, configFile: true } }
+    }
+  ],
   framework: '@storybook/react-webpack5',
 
   webpackFinal: async config => {

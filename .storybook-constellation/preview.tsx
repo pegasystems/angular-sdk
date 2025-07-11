@@ -38,7 +38,10 @@ const parameters = {
       }
     ]
   },
-  tags: ['!autodocs']
+  docs: {
+    source: { type: 'code' },
+    codePanel: true
+  }
 };
 
 const preview: Preview = {
