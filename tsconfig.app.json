@@ -2,6 +2,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {},
   "files": ["src/main.ts"],
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/test.ts", "src/**/*.spec.ts", "src/**/mock.ts", "src/app/_components/custom-constellation/**"]
+  "include": ["src/**/*d.ts"],
+  "exclude": ["src/test.ts", "src/**/*.spec.ts", "src/**/mock.ts"]
 }
