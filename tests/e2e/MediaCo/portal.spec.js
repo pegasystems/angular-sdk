@@ -2,7 +2,6 @@ const path = require('path');
 const { test, expect } = require('@playwright/test');
 const config = require('../../config');
 const common = require('../../common');
-const endpoints = require('../../../sdk-config.json');
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
@@ -110,25 +109,15 @@ test.describe('E2E test', () => {
     const filePath = path.join(__dirname, '../../../src/assets/cableinfo.jpg');
     const attachInputId = await page.locator('div[id="attachment-container"] >> input').getAttribute('id');
     await page.setInputFiles(`#${attachInputId}`, filePath);
-
-    await Promise.all([
-      page.waitForResponse(
-        `${endpoints.serverConfig.infinityRestServerUrl}${
-          endpoints.serverConfig.appAlias ? `/app/${endpoints.serverConfig.appAlias}` : ''
-        }/api/application/v2/attachments/upload`
-      )
-    ]);
+    await page.waitForTimeout(5000);
+    await expect(page.locator('mat-spinner')).not.toBeVisible();
 
     await page.locator('button:has-text("submit")').click();
 
-    await Promise.all([
-      page.waitForResponse(
-        `${endpoints.serverConfig.infinityRestServerUrl}${
-          endpoints.serverConfig.appAlias ? `/app/${endpoints.serverConfig.appAlias}` : ''
-        }/api/application/v2/cases/${currentCaseID}/attachments?includeThumbnail=false`
-      )
-    ]);
+    const todo = page.locator('div[id="worklist"]');
+    await expect(todo.getByText('To do')).toBeVisible();
 
+    await page.waitForTimeout(5000);
     const attachmentCount = await page.locator('div[id="attachments-count"]').textContent();
     await expect(Number(attachmentCount)).toBeGreaterThan(0);
   }, 10000);
