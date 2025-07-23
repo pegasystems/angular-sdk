@@ -29,6 +29,7 @@ export class MainScreenComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // Subscribe to the EVENT_CANCEL event to handle the assignment cancellation
     PCore.getPubSubUtils().subscribe(
       PCore.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL,
       () => {
@@ -37,19 +38,20 @@ export class MainScreenComponent implements OnInit, OnDestroy {
       'cancelAssignment'
     );
 
+    // Subscribe to the END_OF_ASSIGNMENT_PROCESSING event to handle assignment completion
     PCore.getPubSubUtils().subscribe(
-      'assignmentFinished',
+      PCore.getConstants().PUB_SUB_EVENTS.CASE_EVENTS.END_OF_ASSIGNMENT_PROCESSING,
       () => {
         this.assignmentFinished();
       },
-      'assignmentFinished'
+      'endOfAssignmentProcessing'
     );
   }
 
   ngOnDestroy() {
     PCore.getPubSubUtils().unsubscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'cancelAssignment');
 
-    PCore.getPubSubUtils().unsubscribe('assignmentFinished', 'assignmentFinished');
+    PCore.getPubSubUtils().unsubscribe(PCore.getConstants().PUB_SUB_EVENTS.CASE_EVENTS.END_OF_ASSIGNMENT_PROCESSING, 'endOfAssignmentProcessing');
   }
 
   cancelAssignment() {
@@ -71,8 +73,7 @@ export class MainScreenComponent implements OnInit, OnDestroy {
     this.scservice.getSdkConfig().then(sdkConfig => {
       let mashupCaseType = sdkConfig.serverConfig.appMashupCaseType;
       if (!mashupCaseType) {
-        // @ts-ignore - Object is possibly 'null'
-        const caseTypes: any = PCore.getEnvironmentInfo().environmentInfoObject.pyCaseTypeList;
+        const caseTypes: any = PCore.getEnvironmentInfo().environmentInfoObject?.pyCaseTypeList;
         mashupCaseType = caseTypes[0].pyWorkTypeImplementationClassName;
       }
 
