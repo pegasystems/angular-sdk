@@ -13,8 +13,6 @@ test.beforeEach(async ({ page }) => {
   await page.goto(config.config.baseUrl, { waitUntil: 'networkidle' });
 });
 
-const endpoints = require('../../../../sdk-config.json');
-
 test.describe('E2E test', () => {
   let attributes;
 
@@ -103,14 +101,6 @@ test.describe('E2E test', () => {
     const multipleAttachment = page.locator('div[id="attachment-container"]');
     await expect(singleAttachment.locator('button:has-text("Choose files")')).toBeVisible();
     await page.setInputFiles(`#AttachmentList`, [cableChatFilePath, cableInfoFilePath]);
-
-    await Promise.all([
-      page.waitForResponse(
-        `${endpoints.serverConfig.infinityRestServerUrl}${
-          endpoints.serverConfig.appAlias ? `/app/${endpoints.serverConfig.appAlias}` : ''
-        }/api/application/v2/attachments/upload`
-      )
-    ]);
 
     await expect(page.locator('div >> text="cableinfo.jpg"')).toBeVisible();
     await expect(page.locator('div >> text="cablechat.jpg"')).toBeVisible();

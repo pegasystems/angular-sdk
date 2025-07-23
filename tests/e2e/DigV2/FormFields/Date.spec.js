@@ -54,6 +54,7 @@ test.describe('E2E test', () => {
     await requiredDate.click();
     const futureDate = common.getFutureDate();
     await requiredDate.fill(futureDate);
+    requiredDate.blur();
 
     await expect(page.locator('mat-error')).toBeHidden();
 

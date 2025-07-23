@@ -60,6 +60,7 @@ test.describe('E2E test', () => {
       .padStart(2, '0')} AM`;
     await requiredDateTime.click();
     await requiredDateTime.pressSequentially(formattedDate);
+    requiredDateTime.blur();
 
     await expect(page.locator('mat-error')).toBeHidden();
 

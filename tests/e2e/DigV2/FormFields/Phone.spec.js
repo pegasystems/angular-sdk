@@ -59,7 +59,8 @@ test.describe('E2E test', () => {
     await expect(page.locator('mat-error')).toBeVisible();
 
     const requiredPhone = page.locator('ngx-mat-intl-tel-input[data-test-id="af983eaa1b85b015a7654702abd0b249"] >> input');
-    requiredPhone.fill('6175551212');
+    await requiredPhone.fill('6175551212');
+    requiredPhone.blur();
     await expect(page.locator('mat-error')).toBeHidden();
 
     /** Selecting Disable from the Sub Category dropdown */
