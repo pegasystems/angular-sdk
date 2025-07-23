@@ -105,7 +105,6 @@ test.describe('E2E test', () => {
     const sendToMgr = page.locator('mat-checkbox[data-test-id="C3B43E79AEC2D689F0CF97BD6AFB7DC4"]');
     await sendToMgr.click();
 
-    const currentCaseID = await page.locator('div[id="current-caseID"]').textContent();
     const filePath = path.join(__dirname, '../../../src/assets/cableinfo.jpg');
     const attachInputId = await page.locator('div[id="attachment-container"] >> input').getAttribute('id');
     await page.setInputFiles(`#${attachInputId}`, filePath);
@@ -114,8 +113,8 @@ test.describe('E2E test', () => {
 
     await page.locator('button:has-text("submit")').click();
 
-    const todo = page.locator('div[id="worklist"]');
-    await expect(todo.getByText('To do')).toBeVisible();
+    const todo = await page.locator('div[class="psdk-todo-assignments"]');
+    await expect(todo).toBeVisible();
 
     await page.waitForTimeout(5000);
     const attachmentCount = await page.locator('div[id="attachments-count"]').textContent();
@@ -140,7 +139,7 @@ test.describe('E2E test', () => {
 
     await page.locator('button:has-text("submit")').click();
 
-    const todo = await page.locator('div[id="worklist"]:has-text("To do")');
+    const todo = await page.locator('div[class="psdk-todo-assignments"]');
     await expect(todo).toBeVisible();
   }, 10000);
 
