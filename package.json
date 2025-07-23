@@ -152,5 +152,9 @@
     "ts-node": "~10.9.2",
     "typescript": "^5.4.5",
     "webpack": "^5.96.1"
+  },
+  "overrides": {
+    "@angular/core": "^18.2.12",
+    "esbuild": "^0.25.0"
   }
 }
