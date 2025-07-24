@@ -7,7 +7,7 @@ export default function setPCoreMocks() {
     return {
       getUseLocale: () => 'en-GB',
       getLocale: () => 'en-GB',
-      getTimeZone: () => ''
+      getTimeZone: () => 'America/New_York'
     } as any;
   };
 
