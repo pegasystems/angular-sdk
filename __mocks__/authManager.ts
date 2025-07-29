@@ -1,4 +1,6 @@
+// @ts-nocheck
 /** This file contains the Mocks for the various auth-manager APIs */
+
 export function getHomeUrl() {
   /* nothing */
 }

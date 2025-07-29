@@ -1,3 +1,5 @@
+// @ts-nocheck
+/** This file contains the Mocks for the various pcore APIs */
 export default function setPCoreMocks() {
   if (!window.PCore) {
     window.PCore = {} as any;
