@@ -19,7 +19,7 @@ const config: StorybookConfig = {
   },
   webpackFinal: async config => {
     if (config.resolve?.alias) {
-      config.resolve.alias['@pega/auth/lib/sdk-auth-manager'] = path.resolve(__dirname, '../__mocks__/authManager.tsx');
+      config.resolve.alias['@pega/auth/lib/sdk-auth-manager'] = path.resolve(__dirname, '../__mocks__/authManager.ts');
     }
 
     return config;
