@@ -72,7 +72,7 @@
     "@pega/cosmos-react-condition-builder": "^7.0.4",
     "@pega/cosmos-react-core": "^7.0.4",
     "@pega/cosmos-react-work": "^7.0.4",
-    "@tinymce/tinymce-angular": "^8.0.1",
+    "@tinymce/tinymce-angular": "^9.0.0",
     "core-js": "^3.39.0",
     "dayjs": "^1.11.13",
     "downloadjs": "^1.4.7",
