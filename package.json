@@ -71,7 +71,7 @@
     "@pega/auth": "~0.2.28",
     "@pega/cosmos-react-condition-builder": "^7.0.4",
     "@pega/cosmos-react-core": "^7.0.4",
-    "@pega/cosmos-react-work": "^7.0.4",
+    "@pega/cosmos-react-work": "^8.2.1",
     "@tinymce/tinymce-angular": "^8.0.1",
     "core-js": "^3.39.0",
     "dayjs": "^1.11.13",
