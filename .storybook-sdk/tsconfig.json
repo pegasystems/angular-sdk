@@ -7,6 +7,6 @@
     "emitDecoratorMetadata": false
   },
   "exclude": ["../src/test.ts", "../src/**/*.spec.ts"],
-  "include": ["../src/**/*", "./preview.ts", "../__mocks__/*"],
+  "include": ["../src/app/_components/custom-sdk/**/*", "./preview.ts", "../__mocks__/*"],
   "files": ["./typings.d.ts"]
 }
