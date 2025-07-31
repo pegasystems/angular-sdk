@@ -7,8 +7,8 @@ export default function setPCoreMocks() {
 
   window.PCore.getEnvironmentInfo = () => {
     return {
-      getUseLocale: () => 'en-GB',
-      getLocale: () => 'en-GB',
+      getUseLocale: () => 'en-US',
+      getLocale: () => 'en-US',
       getTimeZone: () => 'America/New_York'
     } as any;
   };
