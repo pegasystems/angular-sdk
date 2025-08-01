@@ -55,6 +55,8 @@ test.describe('E2E test', () => {
     // );
     // attributes = await common.getAttributes(notrequiredPhone);
     // await expect(attributes.includes('required')).toBeFalsy();
+
+    await page.locator('ngx-mat-intl-tel-input[data-test-id="af983eaa1b85b015a7654702abd0b249"] >> input').click();
     await page.locator('button:has-text("submit")').click();
     await expect(page.locator('mat-error')).toBeVisible();
 
