@@ -103,7 +103,7 @@
     "@pega/angular-sdk-overrides": "~0.242.12",
     "@pega/configs": "^0.16.2",
     "@pega/constellationjs": "~24.2.2",
-    "@pega/dx-component-builder-sdk": "~0.242.23",
+    "@pega/dx-component-builder-sdk": "~24.2.14",
     "@pega/pcore-pconnect-typedefs": "~3.2.2",
     "@playwright/test": "^1.40.1",
     "@storybook/addon-a11y": "8.6.14",
