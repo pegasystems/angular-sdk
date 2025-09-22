@@ -6,7 +6,6 @@ import { ComponentMapperComponent } from '@pega/angular-sdk-components';
   selector: 'app-main-content',
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.scss'],
-  standalone: true,
   imports: [CommonModule, ComponentMapperComponent]
 })
 export class MainContentComponent implements OnInit {
