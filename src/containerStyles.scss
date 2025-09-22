@@ -9,12 +9,12 @@ app-flow-container {
   }
 
   .psdk-case-view-divider {
-    border-bottom: 0.0625rem solid var(--app-neutral-light-color);
+    border-bottom: 0.0625rem solid var(--mat-sys-outline-variant);
   }
 
   .psdk-flow-container-top {
-    background-color: var(--app-form-color);
-    padding: 0rem 0.625rem;
+    background-color: var(--mat-sys-surface-container);
+    padding: 0.5rem 0.625rem;
     border-radius: 0.3125rem;
   }
   .psdk-flow-container {
@@ -42,7 +42,7 @@ app-modal-view-container {
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: var(--app-dialog-background-color);
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     z-index: 999;
     top: 0px;
@@ -53,11 +53,11 @@ app-modal-view-container {
     display: block;
     margin: auto;
     min-width: 650px;
-    background-color: var(--app-form-color);
-    border: 1px solid var(--app-inverse-form-color);
+    background-color: var(--mat-sys-surface-container);
+    border: 1px solid var(--mat-sys-outline-variant);
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px 3px var(--app-box-shadow-color);
+    box-shadow: 0 0 10px 3px var(--mat-sys-level3);
     overflow-y: auto;
   }
 
