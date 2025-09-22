@@ -1,0 +1,329 @@
+@use '@angular/material' as mat;
+
+// Theme classes
+.dark-theme {
+  /* Primary palette variables */
+  --mat-sys-primary: #ff00ff;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #810081;
+  --mat-sys-on-primary-container: #ffd7f5;
+  --mat-sys-inverse-primary: #a900a9;
+  --mat-sys-primary-fixed: #ffd7f5;
+  --mat-sys-primary-fixed-dim: #ffabf3;
+  --mat-sys-on-primary-fixed: #380038;
+  --mat-sys-on-primary-fixed-variant: #810081;
+
+  /* Secondary palette variables */
+  --mat-sys-secondary: #ffabf3;
+  --mat-sys-on-secondary: #5b005b;
+  --mat-sys-secondary-container: #810081;
+  --mat-sys-on-secondary-container: #ffd7f5;
+  --mat-sys-secondary-fixed: #ffd7f5;
+  --mat-sys-secondary-fixed-dim: #ffabf3;
+  --mat-sys-on-secondary-fixed: #380038;
+  --mat-sys-on-secondary-fixed-variant: #810081;
+  --app-sys-secondary-button-background: var(--mat-sys-on-primary);
+  --app-sys-secondary-button-border: var(--mat-sys-primary);
+
+  /* Tertiary palette variables */
+  --mat-sys-tertiary: #ffb3b4;
+  --mat-sys-on-tertiary: #680016;
+  --mat-sys-tertiary-container: #920023;
+  --mat-sys-on-tertiary-container: #ffdad9;
+  --mat-sys-tertiary-fixed: #ffdad9;
+  --mat-sys-tertiary-fixed-dim: #ffb3b4;
+  --mat-sys-on-tertiary-fixed: #40000a;
+  --mat-sys-on-tertiary-fixed-variant: #920023;
+
+  /* Neutral palette variables */
+  --mat-sys-background: #0b112b;
+  --mat-sys-on-background: #dde1ff;
+  --mat-sys-surface: #0b112b;
+  --mat-sys-surface-dim: #0b112b;
+  --mat-sys-surface-bright: #323853;
+  --mat-sys-surface-container-low: #141a34;
+  --mat-sys-surface-container-lowest: #060c26;
+  --mat-sys-surface-container: #181e38;
+  --mat-sys-surface-container-high: #232843;
+  --mat-sys-surface-container-highest: #2e334f;
+  --mat-sys-on-surface: #dde1ff;
+  --mat-sys-shadow: #000000;
+  --mat-sys-scrim: #000000;
+  --mat-sys-surface-tint: #ffabf3;
+  --mat-sys-inverse-surface: #dde1ff;
+  --mat-sys-inverse-on-surface: #292f4a;
+  --mat-sys-outline: #8a8faf;
+  --mat-sys-outline-variant: #404562;
+  --mat-sys-neutral10: #141a34; /* Variable used for the form field native select option text color */
+
+  /* Error palette variables */
+  --mat-sys-error: #ff0000;
+  --mat-sys-on-error: #ff0000;
+  --mat-sys-error-container: #ff0000;
+  --mat-sys-on-error-container: #ff0000;
+
+  /* Neutral variant palette variables */
+  --mat-sys-surface-variant: #404562;
+  --mat-sys-on-surface-variant: #c0c5e7;
+  --mat-sys-neutral-variant20: #292f4a; /* Variable used for the sidenav scrim (container background shadow when opened) */
+
+  /* TYPOGRAPHY SYSTEM VARIABLES */
+
+  /* Typography variables. Only used in the different typescale system variables. */
+  --mat-sys-brand-font-family: Roboto; /* The font-family to use for brand text. */
+  --mat-sys-plain-font-family: Roboto; /* The font-family to use for plain text. */
+  --mat-sys-bold-font-weight: 700; /* The font-weight to use for bold text. */
+  --mat-sys-medium-font-weight: 500; /* The font-weight to use for medium text. */
+  --mat-sys-regular-font-weight: 400; /* The font-weight to use for regular text. */
+
+  /* Typescale variables. */
+  /* Warning: Risk of reduced fidelity from using the composite typography tokens (ex. --mat-sys-body-large) since
+     tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+  --mat-sys-body-large: var(--mat-sys-body-large-weight) var(--mat-sys-body-large-size) / var(--mat-sys-body-large-line-height)
+    var(--mat-sys-body-large-font);
+  --mat-sys-body-large-font: var(--mat-sys-plain-font-family);
+  --mat-sys-body-large-line-height: 1.5rem;
+  --mat-sys-body-large-size: 1rem;
+  --mat-sys-body-large-tracking: 0.031rem;
+  --mat-sys-body-large-weight: var(--mat-sys-regular-font-weight);
+
+  /* Body medium typescale */
+  --mat-sys-body-medium: var(--mat-sys-body-medium-weight) var(--mat-sys-body-medium-size) / var(--mat-sys-body-medium-line-height)
+    var(--mat-sys-body-medium-font);
+  --mat-sys-body-medium-font: var(--mat-sys-plain-font-family);
+  --mat-sys-body-medium-line-height: 1.25rem;
+  --mat-sys-body-medium-size: 0.875rem;
+  --mat-sys-body-medium-tracking: 0.016rem;
+  --mat-sys-body-medium-weight: var(--mat-sys-regular-font-weight);
+
+  /* Body small typescale */
+  --mat-sys-body-small: var(--mat-sys-body-small-weight) var(--mat-sys-body-small-size) / var(--mat-sys-body-small-line-height)
+    var(--mat-sys-body-small-font);
+  --mat-sys-body-small-font: var(--mat-sys-plain-font-family);
+  --mat-sys-body-small-line-height: 1rem;
+  --mat-sys-body-small-size: 0.75rem;
+  --mat-sys-body-small-tracking: 0.025rem;
+  --mat-sys-body-small-weight: var(--mat-sys-regular-font-weight);
+
+  /* Display large typescale */
+  --mat-sys-display-large: var(--mat-sys-display-large-weight) var(--mat-sys-display-large-size) / var(--mat-sys-display-large-line-height)
+    var(--mat-sys-display-large-font);
+  --mat-sys-display-large-font: var(--mat-sys-brand-font-family);
+  --mat-sys-display-large-line-height: 4rem;
+  --mat-sys-display-large-size: 3.562rem;
+  --mat-sys-display-large-tracking: -0.016rem;
+  --mat-sys-display-large-weight: var(--mat-sys-regular-font-weight);
+
+  /* Display medium typescale */
+  --mat-sys-display-medium: var(--mat-sys-display-medium-weight) var(--mat-sys-display-medium-size) / var(--mat-sys-display-medium-line-height)
+    var(--mat-sys-display-medium-font);
+  --mat-sys-display-medium-font: var(--mat-sys-brand-font-family);
+  --mat-sys-display-medium-line-height: 3.25rem;
+  --mat-sys-display-medium-size: 2.812rem;
+  --mat-sys-display-medium-tracking: 0;
+  --mat-sys-display-medium-weight: var(--mat-sys-regular-font-weight);
+
+  /* Display small typescale */
+  --mat-sys-display-small: var(--mat-sys-display-small-weight) var(--mat-sys-display-small-size) / var(--mat-sys-display-small-line-height)
+    var(--mat-sys-display-small-font);
+  --mat-sys-display-small-font: var(--mat-sys-brand-font-family);
+  --mat-sys-display-small-line-height: 2.75rem;
+  --mat-sys-display-small-size: 2.25rem;
+  --mat-sys-display-small-tracking: 0;
+  --mat-sys-display-small-weight: var(--mat-sys-regular-font-weight);
+
+  /* Headline large typescale */
+  --mat-sys-headline-large: var(--mat-sys-headline-large-weight) var(--mat-sys-headline-large-size) / var(--mat-sys-headline-large-line-height)
+    var(--mat-sys-headline-large-font);
+  --mat-sys-headline-large-font: var(--mat-sys-brand-font-family);
+  --mat-sys-headline-large-line-height: 2.5rem;
+  --mat-sys-headline-large-size: 2rem;
+  --mat-sys-headline-large-tracking: 0;
+  --mat-sys-headline-large-weight: var(--mat-sys-regular-font-weight);
+
+  /* Headline medium typescale */
+  --mat-sys-headline-medium: var(--mat-sys-headline-medium-weight) var(--mat-sys-headline-medium-size) / var(--mat-sys-headline-medium-line-height)
+    var(--mat-sys-headline-medium-font);
+  --mat-sys-headline-medium-font: var(--mat-sys-brand-font-family);
+  --mat-sys-headline-medium-line-height: 2.25rem;
+  --mat-sys-headline-medium-size: 1.75rem;
+  --mat-sys-headline-medium-tracking: 0;
+  --mat-sys-headline-medium-weight: var(--mat-sys-regular-font-weight);
+
+  /* Headline small typescale */
+  --mat-sys-headline-small: var(--mat-sys-headline-small-weight) var(--mat-sys-headline-small-size) / var(--mat-sys-headline-small-line-height)
+    var(--mat-sys-headline-small-font);
+  --mat-sys-headline-small-font: var(--mat-sys-brand-font-family);
+  --mat-sys-headline-small-line-height: 2rem;
+  --mat-sys-headline-small-size: 1.5rem;
+  --mat-sys-headline-small-tracking: 0;
+  --mat-sys-headline-small-weight: var(--mat-sys-regular-font-weight);
+
+  /* Label large typescale */
+  --mat-sys-label-large: var(--mat-sys-label-large-weight) var(--mat-sys-label-large-size) / var(--mat-sys-label-large-line-height)
+    var(--mat-sys-label-large-font);
+  --mat-sys-label-large-font: var(--mat-sys-plain-font-family);
+  --mat-sys-label-large-line-height: 1.25rem;
+  --mat-sys-label-large-size: 0.875rem;
+  --mat-sys-label-large-tracking: 0.006rem;
+  --mat-sys-label-large-weight: var(--mat-sys-medium-font-weight);
+  --mat-sys-label-large-weight-prominent: var(--mat-sys-bold-font-weight);
+
+  /* Label medium typescale */
+  --mat-sys-label-medium: var(--mat-sys-label-medium-weight) var(--mat-sys-label-medium-size) / var(--mat-sys-label-medium-line-height)
+    var(--mat-sys-label-medium-font);
+  --mat-sys-label-medium-font: var(--mat-sys-plain-font-family);
+  --mat-sys-label-medium-line-height: 1rem;
+  --mat-sys-label-medium-size: 0.75rem;
+  --mat-sys-label-medium-tracking: 0.031rem;
+  --mat-sys-label-medium-weight: var(--mat-sys-medium-font-weight);
+  --mat-sys-label-medium-weight-prominent: var(--mat-sys-bold-font-weight);
+
+  /* Label small typescale */
+  --mat-sys-label-small: var(--mat-sys-label-small-weight) var(--mat-sys-label-small-size) / var(--mat-sys-label-small-line-height)
+    var(--mat-sys-label-small-font);
+  --mat-sys-label-small-font: var(--mat-sys-plain-font-family);
+  --mat-sys-label-small-line-height: 1rem;
+  --mat-sys-label-small-size: 0.688rem;
+  --mat-sys-label-small-tracking: 0.031rem;
+  --mat-sys-label-small-weight: var(--mat-sys-medium-font-weight);
+
+  /* Title large typescale */
+  --mat-sys-title-large: var(--mat-sys-title-large-weight) var(--mat-sys-title-large-size) / var(--mat-sys-title-large-line-height)
+    var(--mat-sys-title-large-font);
+  --mat-sys-title-large-font: var(--mat-sys-brand-font-family);
+  --mat-sys-title-large-line-height: 1.75rem;
+  --mat-sys-title-large-size: 1.375rem;
+  --mat-sys-title-large-tracking: 0;
+  --mat-sys-title-large-weight: var(--mat-sys-regular-font-weight);
+
+  /* Title medium typescale */
+  --mat-sys-title-medium: var(--mat-sys-title-medium-weight) var(--mat-sys-title-medium-size) / var(--mat-sys-title-medium-line-height)
+    var(--mat-sys-title-medium-font);
+  --mat-sys-title-medium-font: var(--mat-sys-plain-font-family);
+  --mat-sys-title-medium-line-height: 1.5rem;
+  --mat-sys-title-medium-size: 1rem;
+  --mat-sys-title-medium-tracking: 0.009rem;
+  --mat-sys-title-medium-weight: var(--mat-sys-medium-font-weight);
+
+  /* Title small typescale */
+  --mat-sys-title-small: var(--mat-sys-title-small-weight) var(--mat-sys-title-small-size) / var(--mat-sys-title-small-line-height)
+    var(--mat-sys-title-small-font);
+  --mat-sys-title-small-font: var(--mat-sys-plain-font-family);
+  --mat-sys-title-small-line-height: 1.25rem;
+  --mat-sys-title-small-size: 0.875rem;
+  --mat-sys-title-small-tracking: 0.006rem;
+  --mat-sys-title-small-weight: var(--mat-sys-medium-font-weight);
+
+  /* ELEVATION SYSTEM VARIABLES */
+
+  /* Box shadow colors. Only used in the elevation level system variables. */
+  --mat-sys-umbra-color: color-mix(in srgb, var(--mat-sys-shadow), transparent 80%);
+  --mat-sys-penumbra-color: color-mix(in srgb, var(--mat-sys-shadow), transparent 86%);
+  --mat-sys-ambient-color: color-mix(in srgb, var(--mat-sys-shadow), transparent 88%);
+
+  /* Elevation level system variables. These are used as the value for box-shadow CSS property. */
+  --mat-sys-level0:
+    0px 0px 0px 0px var(--mat-sys-umbra-color), 0px 0px 0px 0px var(--mat-sys-penumbra-color), 0px 0px 0px 0px var(--mat-sys-ambient-color);
+  --mat-sys-level1:
+    0px 2px 1px -1px var(--mat-sys-umbra-color), 0px 1px 1px 0px var(--mat-sys-penumbra-color), 0px 1px 3px 0px var(--mat-sys-ambient-color);
+  --mat-sys-level2:
+    0px 3px 3px -2px var(--mat-sys-umbra-color), 0px 3px 4px 0px var(--mat-sys-penumbra-color), 0px 1px 8px 0px var(--mat-sys-ambient-color);
+  --mat-sys-level3:
+    0px 3px 5px -1px var(--mat-sys-umbra-color), 0px 6px 10px 0px var(--mat-sys-penumbra-color), 0px 1px 18px 0px var(--mat-sys-ambient-color);
+  --mat-sys-level4:
+    0px 5px 5px -3px var(--mat-sys-umbra-color), 0px 8px 10px 1px var(--mat-sys-penumbra-color), 0px 3px 14px 2px var(--mat-sys-ambient-color);
+  --mat-sys-level5:
+    0px 7px 8px -4px var(--mat-sys-umbra-color), 0px 12px 17px 2px var(--mat-sys-penumbra-color), 0px 5px 22px 4px var(--mat-sys-ambient-color);
+
+  /* SHAPE SYSTEM VARIABLES */
+  --mat-sys-corner-extra-large: 28px;
+  --mat-sys-corner-extra-large-top: 28px 28px 0 0;
+  --mat-sys-corner-extra-small: 4px;
+  --mat-sys-corner-extra-small-top: 4px 4px 0 0;
+  --mat-sys-corner-full: 9999px;
+  --mat-sys-corner-large: 16px;
+  --mat-sys-corner-large-end: 0 16px 16px 0;
+  --mat-sys-corner-large-start: 16px 0 0 16px;
+  --mat-sys-corner-large-top: 16px 16px 0 0;
+  --mat-sys-corner-medium: 12px;
+  --mat-sys-corner-none: 0;
+  --mat-sys-corner-small: 8px;
+
+  /* STATE SYSTEM VARIABLES */
+  --mat-sys-dragged-state-layer-opacity: 0.16;
+  --mat-sys-focus-state-layer-opacity: 0.12;
+  --mat-sys-hover-state-layer-opacity: 0.08;
+  --mat-sys-pressed-state-layer-opacity: 0.12;
+}
+
+.azure-theme {
+  @include mat.theme(
+    (
+      color: mat.$azure-palette,
+      typography: Roboto,
+      density: 0
+    )
+  );
+}
+
+.default-theme {
+  @include mat.theme(
+    (
+      color: mat.$violet-palette,
+      typography: Roboto,
+      density: 0
+    )
+  );
+}
+
+.green-theme {
+  @include mat.theme(
+    (
+      color: mat.$green-palette,
+      typography: Roboto,
+      density: 0
+    )
+  );
+}
+
+.red-theme {
+  @include mat.theme(
+    (
+      color: mat.$red-palette,
+      typography: Roboto,
+      density: 0
+    )
+  );
+}
+
+//Mixins
+@mixin generate-theme-vars() {
+  --app-alert-error-color: rgb(82, 21, 8);
+  --app-alert-error-border-color: rgb(207, 53, 22);
+  --app-alert-warning-color: rgb(102, 60, 0);
+  --app-alert-warning-border-color: #ff9800;
+  --app-alert-success-color: rgb(2, 46, 9);
+  --app-alert-success-border-color: rgb(6, 116, 23);
+  --app-alert-info-color: rgb(13, 60, 97);
+  --app-alert-info-border-color: #2196f3;
+  //   // svg filter colors that match above, go here to generate https://codepen.io/sosuke/pen/Pjoqqp
+  --app-primary-color-filter: invert(23%) sepia(23%) saturate(6785%) hue-rotate(250deg) brightness(93%) contrast(88%);
+  --app-primary-dark-color-filter: invert(19%) sepia(20%) saturate(6809%) hue-rotate(242deg) brightness(100%) contrast(106%);
+  --app-secondary-color-filter: invert(83%) sepia(31%) saturate(4626%) hue-rotate(360deg) brightness(103%) contrast(104%);
+  --app-neutral-color-filter: invert(55%) sepia(25%) saturate(0%) hue-rotate(269deg) brightness(87%) contrast(91%);
+  --app-neutral-light-color-filter: invert(69%) sepia(74%) saturate(0%) hue-rotate(205deg) brightness(102%) contrast(103%);
+  --app-white-color-filter: invert(100%) sepia(99%) saturate(0%) hue-rotate(144deg) brightness(109%) contrast(101%);
+
+  --app-nav-bg: #262626;
+  --app-nav-color: #d9d9d9;
+  --app-nav-width: 5rem;
+  --app-nav-width-expanded: 15.625rem;
+}
+
+//Material overrides
+@include mat.button-toggle-overrides(
+  (
+    shape: rectangle
+  )
+);
