@@ -8,7 +8,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  standalone: true,
   imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule]
 })
 export class HeaderComponent implements OnInit {

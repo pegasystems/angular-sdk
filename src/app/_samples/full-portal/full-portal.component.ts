@@ -25,7 +25,6 @@ declare global {
   selector: 'app-full-portal',
   templateUrl: './full-portal.component.html',
   styleUrls: ['./full-portal.component.scss'],
-  standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule, ComponentMapperComponent]
 })
 export class FullPortalComponent implements OnInit, OnDestroy {

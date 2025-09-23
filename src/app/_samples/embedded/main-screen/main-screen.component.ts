@@ -11,7 +11,6 @@ import { shoppingOptions } from '../utils';
   selector: 'app-main-screen',
   templateUrl: './main-screen.component.html',
   styleUrls: ['./main-screen.component.scss'],
-  standalone: true,
   imports: [CommonModule, ShoppingCardComponent, ComponentMapperComponent, ResolutionScreenComponent]
 })
 export class MainScreenComponent implements OnInit, OnDestroy {
