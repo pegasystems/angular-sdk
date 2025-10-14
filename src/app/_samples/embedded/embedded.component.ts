@@ -103,13 +103,11 @@ export class EmbeddedComponent implements OnInit, OnDestroy {
     // Change to reflect new use of arg in the callback:
     const { props } = renderObj;
 
-    this.pConn$ = props.getPConnect();
-
     this.ngZone.run(() => {
+      this.pConn$ = props.getPConnect();
       this.bHasPConnect$ = true;
+      this.showHideProgress(false);
     });
-
-    this.showHideProgress(false);
   }
 
   showHideProgress(bShow: boolean) {
