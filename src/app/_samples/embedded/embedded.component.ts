@@ -109,8 +109,6 @@ export class EmbeddedComponent implements OnInit, OnDestroy {
       this.bHasPConnect$ = true;
     });
 
-    this.bHasPConnect$ = true;
-
     this.showHideProgress(false);
   }
 
