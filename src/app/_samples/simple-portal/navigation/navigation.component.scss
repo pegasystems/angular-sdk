@@ -29,7 +29,7 @@
 .psdk-aside {
   height: calc(100% - 64px);
   width: 12.5rem;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid var(--mat-sys-outline-variant);
 }
 
 .psdk-main {
