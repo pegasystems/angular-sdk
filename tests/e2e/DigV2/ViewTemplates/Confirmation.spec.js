@@ -11,26 +11,12 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for Confirmation', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = await page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
+    await common.verifyHomePage(page);
 
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
-
-    /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a View Templates case-type */
-    const complexFieldsCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("View Templates")');
-    await complexFieldsCase.click();
+    await common.createCase('View Templates', page);
 
     /** Selecting User Reference from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.locator('mat-option > span:has-text("Confirmation")').click();
+    await common.selectCategory('Confirmation', page);
 
     const caseID = await page.locator('div[id="caseId"]').textContent();
 
@@ -49,7 +35,7 @@ test.describe('E2E test', () => {
     await cityInput.click();
     await cityInput.fill('Cambridge');
 
-    const phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1F8261D17452A959E013666C5DF45E07"]');
+    const phone = page.locator('mat-tel-input[data-test-id="1F8261D17452A959E013666C5DF45E07"]');
     const countrySelector = phone.locator('button.country-selector');
     await countrySelector.click();
     await page.locator('div.flag.US >> nth=0').click();

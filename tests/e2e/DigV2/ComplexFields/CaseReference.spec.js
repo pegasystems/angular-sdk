@@ -11,24 +11,10 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for Case Reference', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
-
-    /** Hovering over navbar */
-    const navbar = page.locator('app-navbar');
-    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
+    await common.verifyHomePage(page);
 
     // /** Creating a Query case-type which will be referred by Complex Fields case type */
-    let createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    let queryCase = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Query")');
-    await queryCase.click();
+    await common.createCase('Query', page);
 
     let modal = page.locator('div[id="dialog"]');
     await modal.waitFor({ state: 'visible' });
@@ -46,12 +32,7 @@ test.describe('E2E test', () => {
     caseID.push(await page.locator('div[id="caseId"]').textContent());
 
     /** Creating another Query case-type which will be used for ListOfRecords mode */
-    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
-    createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    queryCase = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Query")');
-    await queryCase.click();
+    await common.createCase('Query', page);
 
     modal = page.locator('div[id="dialog"]');
     await modal.waitFor({ state: 'visible' });
@@ -64,18 +45,10 @@ test.describe('E2E test', () => {
 
     /** Creating a Complex Fields case-type */
     /** opening all case types */
-    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
-    createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a Complex Fields case-type */
-    const complexFieldsCaseBtn = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Complex Fields")');
-    await complexFieldsCaseBtn.click();
+    await common.createCase('Complex Fields', page);
 
     /** Selecting CaseReference from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.locator('mat-option > span:has-text("CaseReference")').click();
+    await common.selectCategory('CaseReference', page);
 
     await page.locator('button:has-text("submit")').click();
 
@@ -150,12 +123,12 @@ test.describe('E2E test', () => {
     await page.locator('mat-option > span:has-text("ListOfRecords")').click();
     table = page.locator('table[id="list-view"]');
     await expect(table.getByText(' Case ID ')).toBeVisible();
-    await page.locator('input[id="search"]').pressSequentially(caseID[0]);
+    await page.locator('input[id="search"]').pressSequentially(caseID[0], { delay: 100 });
     const selectedRow1 = await page.locator(`tr:has-text("${caseID[0]}")`);
     await selectedRow1.locator('mat-checkbox').click();
 
     await page.locator('input[id="search"]').clear();
-    await page.locator('input[id="search"]').pressSequentially(caseID[1]);
+    await page.locator('input[id="search"]').pressSequentially(caseID[1], { delay: 100 });
     const selectedRow2 = await page.locator(`tr:has-text("${caseID[1]}")`);
     await selectedRow2.locator('mat-checkbox').click();
 
