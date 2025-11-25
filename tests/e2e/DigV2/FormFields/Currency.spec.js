@@ -18,31 +18,16 @@ test.describe('E2E test', () => {
   test('should login, create case and run the Currency tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a Form Field case-type */
-    const formFieldCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldCase.click();
+    await common.createCase('Form Field', page);
 
     /** Selecting Currency from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.getByRole('option', { name: 'Currency' }).click();
+    await common.selectCategory('Currency', page);
 
     /** Selecting Required from the Sub Category dropdown */
-    let selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Required' }).click();
+    await common.selectSubCategory('Required', page);
 
     /** Required tests */
     const notRequiredCurrency = page.locator('input[data-test-id="cab671a0ad307780a2de423a3d19924e"]');
@@ -54,9 +39,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('required')).toBeTruthy();
 
     /** Selecting Disable from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Disable' }).click();
+    await common.selectSubCategory('Disable', page);
 
     // /** Disable tests */
     const alwaysDisabledCurrency = page.locator('input[data-test-id="0d14f3717305e0238966749e6a853dad"]');
@@ -76,9 +59,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('disabled')).toBeFalsy();
 
     /** Selecting Update from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Update' }).click();
+    await common.selectSubCategory('Update', page);
 
     /** Update tests */
     const readonlyCurrency = page.locator('input[data-test-id="32bc05c9bac42b8d76ea72511afa89d0"]');
@@ -99,9 +80,7 @@ test.describe('E2E test', () => {
     await expect(await currencyAsDecimal.inputValue()).toBe('$20.00');
 
     /** Selecting Visibility from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Visibility' }).click();
+    await common.selectSubCategory('Visibility', page);
 
     /** Visibility tests */
     await expect(page.locator('input[data-test-id="756f918704ee7dcd859928f068d02633"]')).toBeVisible();

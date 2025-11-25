@@ -18,31 +18,16 @@ test.describe('E2E test', () => {
   test('should login, create case and run the Decimal tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a Form Field case-type */
-    const formFieldCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldCase.click();
+    await common.createCase('Form Field', page);
 
     /** Selecting Decimal from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.getByRole('option', { name: 'Decimal' }).click();
+    await common.selectCategory('Decimal', page);
 
     /** Selecting Required from the Sub Category dropdown */
-    let selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Required' }).click();
+    await common.selectSubCategory('Required', page);
 
     await page.locator('button:has-text("submit")').click();
 
@@ -64,9 +49,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('required')).toBeFalsy();
 
     /** Selecting Disable from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Disable' }).click();
+    await common.selectSubCategory('Disable', page);
 
     // /** Disable tests */
     const alwaysDisabledDecimal = page.locator('input[data-test-id="a8216a966548578ad7e015a05ae518f5"]');
@@ -86,9 +69,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('disabled')).toBeFalsy();
 
     /** Selecting Update from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Update' }).click();
+    await common.selectSubCategory('Update', page);
 
     /** Update tests */
     // const readonlyDecimal = page.locator(
@@ -109,9 +90,7 @@ test.describe('E2E test', () => {
     await expect(await decimalAsCurrency.inputValue()).toBe('$20.00');
 
     /** Selecting Visibility from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Visibility' }).click();
+    await common.selectSubCategory('Visibility', page);
 
     /** Visibility tests */
     await expect(page.locator('input[data-test-id="847e3fd45a1aca1c3242d2735124eb9a"]')).toBeVisible();

@@ -11,29 +11,12 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for Inline Dashboard template', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = await page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
-
-    /** Hovering over navbar */
-    const navbar = page.locator('app-navbar');
-    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
+    await common.createCase('Complex Fields', page);
 
-    /** Creating a Complex Fields case-type */
-    const complexFieldsCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Complex Fields")');
-    await complexFieldsCase.click();
-
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.locator('mat-option >> span').getByText('DataReference', { exact: true }).click();
+    await common.selectCategory('DataReference', page, true);
 
     const caseID = await page.locator('div[id="caseId"]').textContent();
 

@@ -9,25 +9,12 @@ test.describe('E2E test', () => {
   test('should login, create case and run the Optional Action tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
+    await common.createCase('Form Field', page);
 
-    /** Creating a Form Field case-type */
-    const formFieldsCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldsCase.click();
-
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.getByRole('option', { name: 'TextInput' }).click();
+    await common.selectCategory('TextInput', page);
 
     const actions = page.locator('button:has-text("Actions...")');
     await actions.click();
@@ -45,7 +32,6 @@ test.describe('E2E test', () => {
     await page.locator('button:has-text("Submit")').click();
 
     await page.locator('button:has-text("Go")').click();
-    await selectedCategory.click();
   }, 10000);
 });
 

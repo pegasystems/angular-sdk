@@ -1,4 +1,4 @@
-const { test } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 const common = require('../../common');
 const config = require('../../config');
 
@@ -9,74 +9,72 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('E2E test', () => {
   test('should launch, select a service plan and fill details', async ({ page }) => {
-    const silverPlan = page.locator('button:has-text("SHOP NOW") >> nth=0');
+    const silverPlan = page.locator('button:has-text("Buy now") >> nth=0');
     await silverPlan.click();
 
-    const firstNameInput = page.locator('input[data-test-id="BC910F8BDF70F29374F496F05BE0330C"]');
-    await firstNameInput.click();
-    await firstNameInput.fill('John');
+    const storageOption = page.locator('mat-card:has-text("128 gb")');
+    await storageOption.click();
 
-    const middleNameInput = page.locator('input[data-test-id="D3691D297D95C48EF1A2B7D6523EF3F0"]');
-    await middleNameInput.click();
-    await middleNameInput.fill('');
+    const colorOption = page.locator('mat-card:has-text("Caribbean blue")');
+    await colorOption.click();
 
-    const lastNameInput = page.locator('input[data-test-id="77587239BF4C54EA493C7033E1DBF636"]');
-    await lastNameInput.click();
-    await lastNameInput.fill('Doe');
+    await page.locator('button:has-text("Next")').click();
 
-    const suffix = page.locator('input[data-test-id="56E6DDD1CB6CEC596B433440DFB21C17"]');
-    await suffix.click();
-    await page.locator('mat-option:has-text("Jr")').click();
+    await expect(page.locator('mat-label:has-text("Would you like to keep your number or generate a new one?")')).toBeVisible();
+    await page.locator('mat-radio-button:has-text("Keep my number") input[type="radio"]').check();
 
-    const emailInput = page.locator('input[data-test-id="CE8AE9DA5B7CD6C3DF2929543A9AF92D"]');
-    await emailInput.click();
-    await emailInput.fill('john@doe.com');
+    await expect(page.locator('mat-label:has-text("Do you have a trade-in?")')).toBeVisible();
+    await page.locator('mat-radio-button:has-text("Yes") input[type="radio"]').check();
 
-    await page.locator('button:has-text("next")').click();
+    const paymentOption = page.locator('mat-card:has-text("Monthly")');
+    await paymentOption.click();
 
-    const streetInput = page.locator('input[data-test-id="D61EBDD8A0C0CD57C22455E9F0918C65"]');
-    await streetInput.click();
-    await streetInput.fill('Main St');
+    await page.locator('button:has-text("Next")').click();
 
-    await page.locator('button:has-text("previous")').click();
+    await common.fillTextInput(page, 'BC910F8BDF70F29374F496F05BE0330C', 'John');
 
-    await page.locator('h2:has-text("Customer Info")').click();
+    await common.fillTextInput(page, '77587239BF4C54EA493C7033E1DBF636', 'Doe');
 
-    await page.locator('button:has-text("next")').click();
+    await common.selectDateFromPicker(page, '6', 'June', '2000');
 
-    await page.locator('h2:has-text("Customer Address")').click();
+    await common.fillTextInput(page, '643a860f992333b8600ea264aca7c4fc', 'Johndoe@gmail.com');
 
-    const cityInput = page.locator('input[data-test-id="57D056ED0984166336B7879C2AF3657F"]');
-    await cityInput.click();
-    await cityInput.fill('Cambridge');
-
-    const state = page.locator('mat-select[data-test-id="46A2A41CC6E552044816A2D04634545D"]');
-    await state.click();
-    await page.locator('mat-option:has-text("MA")').click();
-
-    const postalCodeInput = page.locator('input[data-test-id="572ED696F21038E6CC6C86BB272A3222"]');
-    await postalCodeInput.click();
-    await postalCodeInput.fill('02142');
-
-    const phone = page.locator('ngx-mat-intl-tel-input[data-test-id="1F8261D17452A959E013666C5DF45E07"]');
-    const countrySelector = phone.locator('button.country-selector');
+    const phoneControl = page.locator('mat-tel-input[data-test-id="1e4dbc7eaa78468a3bc1448a3d68d906"]');
+    const countrySelector = phoneControl.locator('button');
     await countrySelector.click();
-    await page.locator('div.flag.US >> nth=0').click();
-    await phone.locator('input[type="tel"]').fill('(201) 555-0123');
+    await page.locator('text=United States >> nth=0').click();
+    const phoneInput = phoneControl.locator('input');
+    await phoneInput.click();
+    await phoneInput.fill('6175551212');
 
-    await page.locator('button:has-text("next")').click();
+    await page.locator('button:has-text("Next")').click();
 
-    const dataServiceInput = page.locator('input[data-test-id="1321FA74451B96BC02663B0EF96CCBB9"]');
-    await dataServiceInput.click();
-    const futureDate = common.getFutureDate();
-    await dataServiceInput.fill(futureDate);
+    await common.fillTextInput(page, 'c2b63e85bd5e4dc9b6cf5a4693847e06', 'John Doe');
 
-    await page.locator('button:has-text("next")').click();
+    await common.fillTextInput(page, 'a44217022190f5734b2f72ba1e4f8a79', '1234567');
 
-    await page.locator('button:has-text("submit")').click();
+    await common.selectDateFromPicker(page, '6', 'June', '2030');
 
-    //  Click text=Thank you! The next step in this case has been routed appropriately.
-    await page.locator('text=Thanks for selecting a package with us. ').click();
+    await page.locator('button:has-text("Next")').click();
+
+    // Enter Street
+    await common.fillTextInput(page, 'D61EBDD8A0C0CD57C22455E9F0918C65', '123 Main St');
+    // Enter Apartment
+    await common.fillTextInput(page, '73786cb2bc433cfb06603ab61f15e04e', 'Apt 4');
+    // Enter city
+    await common.fillTextInput(page, '57D056ED0984166336B7879C2AF3657F', 'Anytown');
+    // Enter state
+    await common.fillTextInput(page, '46A2A41CC6E552044816A2D04634545D', 'New York');
+    // Enter postal code
+    await common.fillTextInput(page, '572ED696F21038E6CC6C86BB272A3222', '12345');
+
+    await page.locator('button:has-text("Submit")').click();
+
+    const paragraphElement = page.locator('.resolution-card p');
+    await expect(paragraphElement).toBeVisible();
+    await expect(paragraphElement).toHaveText(
+      ' We have received your order of a Oceonix 25. It will ship out within 1 business day to Apt 4. Your tracking information will be sent to Johndoe@gmail.com.  Thank you for your business! '
+    );
   }, 10000);
 });
 
