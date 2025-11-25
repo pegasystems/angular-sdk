@@ -60,7 +60,9 @@ export class EmbeddedComponent implements OnInit, OnDestroy {
     // Add event listener for when logged in and constellation bootstrap is loaded
     document.addEventListener('SdkConstellationReady', () => this.handleSdkConstellationReady());
 
-    const { authConfig } = await getSdkConfig();
+    const { authConfig, theme } = await getSdkConfig();
+    document.body.classList.remove(...['light', 'dark']);
+    document.body.classList.add(theme || 'dark');
 
     initializeAuthentication(authConfig);
 
