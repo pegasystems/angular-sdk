@@ -1,117 +1,86 @@
-.mc-swatch-header {
-  display: flex;
-  flex-direction: row;
+:host {
+  display: block;
 }
 
-.mc-swatch-package {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 210px;
-  height: 70px;
-  background-color: var(--app-swatch-package-background);
-  color: var(--mat-sys-on-primary);
-  padding: 5px;
-}
-
-.mc-swatch-package .mc-swatch-play {
-  letter-spacing: normal;
-  font-size: 25px;
-}
-
-.mc-swatch-package .mc-swatch-level {
-  letter-spacing: normal;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.mc-swatch-channels {
-  letter-spacing: normal;
-  background-color: var(--app-swatch-channel-background);
-  width: 100px;
+.plan-card {
+  background-color: var(--mat-sys-surface-container);
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  height: 100%;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.plan-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: linear-gradient(to bottom, var(--mat-sys-primary), var(--mat-sys-secondary)) border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.phone-image {
+  margin-bottom: 1.5rem;
+  height: 150px;
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.mc-swatch-channels .mc-swatch-count {
-  letter-spacing: normal;
-  font-size: 40px;
-  font-weight: bold;
+.phone-image img {
+  max-height: 100%;
+  width: auto;
 }
 
-.mc-swatch-channels .mc-swatch-label {
-  letter-spacing: normal;
-  font-size: 17px;
+.plan-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
-.mc-swatch-body {
-  letter-spacing: normal;
-  border: 1px solid var(--mat-sys-outline-variant);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 20px;
-}
-
-.mc-swatch-body .mc-swatch-banner {
-  letter-spacing: normal;
-  font-weight: bold;
-  font-size: 15px;
-  padding: 5px;
-}
-
-.mc-swatch-body .mc-swatch-price {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.mc-swatch-body .mc-swatch-from-group {
-  height: 90px;
-}
-
-.mc-swatch-body .mc-swatch-from {
+.save-amount {
   color: var(--mat-sys-primary);
-  text-align: right;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
-.mc-swatch-body .mc-swatch-currency {
-  letter-spacing: normal;
-  color: var(--mat-sys-primary);
-  font-size: 30px;
-  font-weight: bold;
-  font-family: Tahoma;
+.monthly-price {
+  font-size: 1rem;
+  color: var(--mat-sys-on-surface);
 }
 
-.mc-swatch-body .mc-swatch-dollars {
-  letter-spacing: normal;
-  color: var(--mat-sys-primary);
-  font-size: 90px;
-  font-weight: bold;
-  font-family: Tahoma;
+.tenure,
+.retail-price {
+  font-size: 0.8rem;
+  color: var(--mat-sys-on-surface-variant);
 }
 
-.mc-swatch-body .mc-swatch-monthly {
-  display: flex;
-  flex-direction: column;
+.tenure {
+  margin-bottom: 1rem;
 }
 
-.mc-swatch-body .mc-swatch-cents {
-  letter-spacing: normal;
-  color: var(--mat-sys-primary);
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.mc-swatch-body .mc-swatch-shop-button {
-  color: var(--mat-sys-on-primary);
-  background-color: var(--mat-sys-primary);
-  font-size: 25px;
-  font-weight: bold;
-  border-radius: 25px;
-  border: 0px;
-  margin: 20px;
-  padding: 10px 30px;
+.retail-price {
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
 }

@@ -1,46 +1,96 @@
-.toolbar-spacer {
-  flex: 1 1 auto;
-}
-
-.example-container {
-  min-height: 100%;
-  height: 100%;
-}
-
-.psdk-aside {
-  height: calc(100% - 64px);
-  width: 12.5rem;
-  border-right: 1px solid var(--mat-sys-outline-variant);
-}
-
-.psdk-main {
-  height: calc(100% - 64px);
-  width: calc(100% - 12.5rem);
-}
-
-.mc-toolbar {
-  position: fixed;
-  height: 100px;
-  z-index: 5;
-  top: 0;
-  left: 0;
-  font-size: 40px;
-}
-
-.mc-toolbar-row {
-  height: 100px;
-}
-
-.mc-main {
-  display: flex;
-  height: calc(100% - 100px);
-  top: 100px;
+header {
+  background-color: var(--mat-sys-surface);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  padding: 1rem 0;
   position: relative;
+  z-index: 100;
 }
 
-.mc-icon {
-  padding: 0px 10px 0px 20px;
-  font-size: 60px;
-  height: 80px;
-  width: 60px;
+nav.container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo img {
+  height: 35px;
+  width: auto;
+  vertical-align: middle;
+}
+
+.nav-menu {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links,
+.nav-extra {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.profile-avatar {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--mat-sys-on-surface);
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* --- Responsive Mobile Menu --- */
+@media (max-width: 768px) {
+  /* Hide the full nav menu on mobile */
+  .nav-links,
+  .nav-extra {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    z-index: 1001;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: var(--mat-sys-surface-container-highest);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-menu.active .nav-links,
+  .nav-menu.active .nav-extra {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    text-align: center;
+  }
 }

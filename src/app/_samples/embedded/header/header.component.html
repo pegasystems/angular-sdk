@@ -1,8 +1,33 @@
-<mat-toolbar color="primary" class="mc-toolbar">
-  <mat-toolbar-row class="mc-toolbar-row">
-    {{ applicationLabel }}
-    <mat-icon class="mc-icon">router</mat-icon>
+<header>
+  <nav class="container">
+    <a href="/" class="logo">
+      <img src="./assets/img/MediaCoLogo.png" alt="MediaCo Logo" />
+    </a>
 
-    <span class="toolbar-spacer"> </span>
-  </mat-toolbar-row>
-</mat-toolbar>
+    <div class="nav-menu" [ngClass]="isMenuOpen ? 'active' : ''">
+      <ul class="nav-links">
+        <li><a href="/">Mobile</a></li>
+        <li><a href="/">Internet</a></li>
+        <li><a href="/">Coverage</a></li>
+        <li><a href="/">Deals</a></li>
+      </ul>
+
+      <ul class="nav-extra">
+        <li><a href="/">Contact and support</a></li>
+        <li><a href="/">Find a store</a></li>
+        <li><a href="/" class="cart-link">Cart</a></li>
+        <li>
+          <a class="profile-link" aria-label="User Profile">
+            <img src="./assets/img/UserProfile.png" alt="User Profile" class="profile-avatar" />
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Open menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 6H20M4 12H20M4 18H20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </button>
+  </nav>
+</header>
