@@ -76,3 +76,15 @@ a.mat-mdc-menu-item > mat-icon {
 .mat-mdc-form-field {
   margin: 8px 0;
 }
+
+.pega-part-of-page .psdk-flow-container-top {
+  max-width: 1400px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 16px;
+}
+
+.pega-part-of-page .psdk-horizontal-stepper-header-container {
+  display: none !important;
+}

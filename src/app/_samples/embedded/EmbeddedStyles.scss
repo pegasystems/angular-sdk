@@ -1,0 +1,80 @@
+/* Card padding override */
+.mat-mdc-card {
+  padding: 8px;
+}
+
+/* Additional card content refinements */
+.mat-mdc-card-content:last-child {
+  padding-bottom: 0px !important;
+}
+.mat-mdc-card-content:first-child {
+  padding-top: 0px !important;
+}
+
+.details-communication-field {
+  color: var(--mat-sys-primary);
+}
+
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body override */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+  line-height: 1.6;
+}
+
+/* Container utility */
+.container {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* List and link styling */
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: var(--mat-sys-on-background);
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: var(--mat-sys-primary);
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+  color: var(--mat-sys-on-background);
+  font-weight: 600;
+}
+
+/* Button styling */
+.btn {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--mat-sys-primary), var(--mat-sys-secondary), var(--mat-sys-primary));
+  background-size: 200% auto;
+  color: var(--mat-sys-on-primary) !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  text-align: center;
+  font-weight: 600;
+  border: none;
+  transition:
+    background-position 0.4s ease-in-out,
+    transform 0.3s ease;
+}
+.btn:hover {
+  background-position: right center;
+  transform: scale(1.05);
+  color: var(--mat-sys-on-primary);
+}
