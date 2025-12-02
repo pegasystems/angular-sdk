@@ -41,6 +41,7 @@
     "test": "node ./scripts/playwright-message.js && playwright test --project=chromium MediaCo/portal MediaCo/embedded",
     "test:headed": "playwright test --headed --project=chromium MediaCo/portal MediaCo/embedded",
     "test-report": "playwright show-report",
+    "_internal-update-dependencies": "node scripts/update-dependencies.js",
     "_comment_internal_SDK_scripts": "The following commands are for internal use and are intended to be called only from public scripts above",
     "_internal-compress-angularsdk": "node ./scripts/compress-with-assets.mjs",
     "_internal-build-dev-only": "shx rm -rf ./dist && ng build --configuration development && npm run _internal-copy-index",
