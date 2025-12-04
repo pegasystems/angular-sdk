@@ -1,17 +1,13 @@
 // Statically load all "local" components that aren't yet in the npm package
 
-import sdkMediaCoComponentMap from 'sdk-mediaco-component-map';
-
-import sdkConfig from './sdk-config.json';
+// import sdkMediaCoComponentMap from 'sdk-mediaco-component-map';
 /* import end - DO NOT REMOVE */
 
 // localSdkComponentMap is the JSON object where we'll store the components that are
 // found locally. If not found here, we'll look in the Pega-provided component map
 
-const isMediaCoApp = sdkConfig.app === 'mediaco';
-
 const localSdkComponentMap = {
-  ...(isMediaCoApp ? { ...sdkMediaCoComponentMap } : {})
+  // ...sdkMediaCoComponentMap
   /* map end - DO NOT REMOVE */
 };
 
