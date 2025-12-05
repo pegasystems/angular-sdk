@@ -1,23 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
-// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-/*@import "@angular/material/prebuilt-themes/pink-bluegrey.css";*/
-@import './containerStyles.scss';
-@import 'theme';
 @import '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
-
-html,
-body {
-  @include generate-theme-vars($my-theme);
-}
+@import 'containerStyles';
+@import 'themes';
 
 html,
 body {
   height: 100%;
-}
-body {
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  @include generate-theme-vars();
 }
 
 button.mat-mdc-menu-item {
@@ -81,8 +75,4 @@ a.mat-mdc-menu-item > mat-icon {
 
 .mat-mdc-form-field {
   margin: 8px 0;
-}
-
-.ngx-mat-tel-input-container button {
-  margin-top: auto;
 }

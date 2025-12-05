@@ -55,10 +55,11 @@ export class FullPortalComponent implements OnInit, OnDestroy {
     private scservice: ServerConfigService
   ) {}
 
-  ngOnInit() {
-    this.scservice.readSdkConfig().then(() => {
-      this.initialize();
-    });
+  async ngOnInit() {
+    const { theme } = await this.scservice.readSdkConfig();
+    document.body.classList.remove(...['light', 'dark']);
+    document.body.classList.add(theme || 'dark');
+    this.initialize();
   }
 
   ngOnDestroy() {
