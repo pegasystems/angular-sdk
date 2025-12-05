@@ -1,0 +1,179 @@
+.sidenav-container {
+  height: 100vh; /* Full viewport height */
+}
+
+.sidenav {
+  /* Smooth transition for the width change */
+  transition: width 0.2s ease-in-out;
+  // background-color: #f5f5f5; /* Optional: just to see the boundary */
+  overflow-x: hidden; /* Prevents horizontal scroll when text is hiding */
+}
+
+/* Ensure icons stay centered or aligned nicely when collapsed */
+mat-nav-list {
+  padding-top: 0;
+}
+
+.menu-item-text {
+  margin-left: 10px;
+  white-space: nowrap; /* Prevents text wrapping during animation */
+}
+
+.content-padding {
+  padding: 20px;
+}
+
+.horizontal-list {
+  display: flex;
+  flex-direction: row; /* This turns the list sideways */
+  padding: 0;
+  overflow-x: auto; /* Adds a scrollbar if items overflow */
+  /* Control the exact distance between items here */
+  gap: 8px;
+
+  /* VITAL: Add a little vertical padding so the scaling doesn't hit the top/bottom edge */
+  //padding: 10px 0;
+
+  /* Ensure the list itself doesn't hide the vertical overflow of the icons */
+  //overflow-y: visible;
+}
+
+/* Optional: Adjust item spacing */
+.horizontal-list mat-list-item {
+  width: auto; /* Stop items from trying to be full width */
+
+  /* vital: overrides Angular Material's default item padding */
+  padding: 0 !important;
+
+  //overflow: visible !important; /* Allow the icon to expand outside this box */
+  //position: relative; /* Required for z-index to work */
+}
+
+/* Targeted fix for the internal container (common in many Angular Material versions) */
+// .horizontal-list mat-list-item ::ng-deep .mat-list-item-content {
+//   justify-content: center !important; /* Horizontally center */
+//   align-items: center !important; /* Vertically center */
+//   display: flex !important;
+// }
+
+/* 1. Make the animation smooth */
+.horizontal-list mat-list-item .circle-icon {
+  transition: transform 0.2s ease-in-out;
+  /* Optional: ensure the origin is center so it grows outwards evenly */
+  transform-origin: center;
+}
+
+/* 2. Scale the icon up when hovering the list item */
+.horizontal-list mat-list-item:hover .circle-icon {
+  transform: scale(1.2); /* Zooms in by 20% - adjust this number as needed */
+  cursor: pointer; /* Changes cursor to pointer to indicate interactivity */
+}
+
+// .horizontal-list mat-list-item:hover {
+//   /* High z-index ensures the scaled icon floats ON TOP of its neighbors */
+//   z-index: 100;
+// }
+
+.circle-icon {
+  /* 1. Make it a circle */
+  background: linear-gradient(135deg, rgb(255, 179, 217) 0%, rgb(255, 196, 232) 100%);
+  // background-color: #e0e0e0; /* Light grey background */
+  border-radius: 50%; /* The magic property for circles */
+
+  /* 2. Define the size of the circle */
+  width: 40px;
+  height: 40px;
+
+  /* 3. Center the icon inside the circle */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 4. Optional: Contrast and Spacing */
+  color: #333; /* Darker icon color */
+  margin-right: 8px; /* Space between circle and text */
+}
+
+/* Base styles for the item container */
+.nav-item-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+  transition: all 0.2s ease-in-out;
+
+  /*
+     EXPANDED MODE (Default)
+     Icon left, Text right
+  */
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: left;
+
+  .psdk-nav-button-span {
+    margin-left: 10px; /* Spacing between icon and text */
+    opacity: 1;
+    display: block;
+  }
+
+  ::ng-deep .mat-mdc-button-persistent-ripple::before {
+    background-color: transparent !important;
+  }
+}
+
+/*
+   COLLAPSED MODE
+   Icon top, Text bottom, Centered
+*/
+.collapsed-mode .nav-item-container {
+  flex-direction: column; /* Stacks items vertically */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  // height: 5rem;
+
+  /* Adjust text for small space */
+  .psdk-nav-button-span {
+    margin-left: 0;
+    margin-top: 4px; /* Spacing between icon and text */
+    font-size: 0.85rem; /* Smaller text to fit 5rem width */
+    line-height: 1.2;
+    white-space: normal; /* Allow wrapping if needed */
+    max-width: 100%;
+  }
+}
+
+/* Optional: Add spacing below the toggle button if needed */
+.toggle-header {
+  margin-bottom: 10px;
+}
+
+/*
+   ICON BORDER STYLES
+   Apply to the mat-icon-button inside the container
+*/
+// .nav-item-container button[mat-icon-button] {
+//   /* Add transparent border initially to prevent layout shift on hover */
+//   border: 2px solid transparent;
+//   border-radius: 50%; /* Ensure the border is circular */
+//   transition:
+//     border-color 0.2s ease,
+//     background-color 0.2s;
+// }
+
+/* Hover and Active states for the Icon */
+// .nav-item-container:hover button[mat-icon-button],
+// .nav-item-container button[mat-icon-button]:active,
+// .nav-item-container button[mat-icon-button]:focus {
+//   border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+//   background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
+// }
+
+.nav-item-container:hover,
+.nav-item-container:active,
+.nav-item-container:focus,
+.nav-item-container.selected {
+  border-radius: 16px;
+  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+  background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
+}

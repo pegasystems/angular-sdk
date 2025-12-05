@@ -1,0 +1,30 @@
+<div style="margin-bottom: '2rem'">
+  <div class="background-image-style" [ngStyle]="{ 'background-image': getUrl() }">
+    <div class="background-style content">
+      <div>
+        <h1 class="title">{{ title }}</h1>
+        <p class="message">{{ message }}</p>
+      </div>
+    </div>
+  </div>
+  <div
+    [ngClass]="{
+      'psdk-grid-filter-1': this.layout$ === 'two-column',
+      'psdk-grid-filter-wide-narrow': this.layout$ === 'wide-narrow',
+      'psdk-grid-filter-narrow-wide': this.layout$ === 'narrow-wide'
+    }"
+  >
+    <component-mapper
+      *ngIf="arChildren$[0]"
+      [name]="arChildren$[0].getPConnect().getComponentName()"
+      [props]="{ pConn$: arChildren$[0].getPConnect(), formGroup$ }"
+      errorMsg="Region wants component not yet available: {{ arChildren$[0].getPConnect().getComponentName() }}"
+    ></component-mapper>
+    <component-mapper
+      *ngIf="arChildren$[1]"
+      [name]="arChildren$[1].getPConnect().getComponentName()"
+      [props]="{ pConn$: arChildren$[1].getPConnect(), formGroup$ }"
+      errorMsg="Region wants component not yet available: {{ arChildren$[1].getPConnect().getComponentName() }}"
+    ></component-mapper>
+  </div>
+</div>
