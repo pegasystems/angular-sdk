@@ -12,20 +12,10 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for RichText', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Creating a RichText Editor case-type */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    const richTextCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("RichText Editor")');
-    await richTextCase.click();
+    await common.createCase('RichText Editor', page);
 
     const instructionText = page.locator('div[id="instruction-text"]');
 

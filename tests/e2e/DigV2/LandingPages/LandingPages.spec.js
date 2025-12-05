@@ -10,21 +10,9 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for My Work landing page', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
+    await common.verifyHomePage(page);
 
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
-
-    /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a View Templates case-type */
-    const viewTemplatesCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("View Templates")');
-    await viewTemplatesCase.click();
+    await common.createCase('View Templates', page);
 
     await page.locator('h2:has-text("Select Test")').click();
     /** Extract caseID from CaseView */
@@ -54,30 +42,16 @@ test.describe('E2E test', () => {
   test('should login, create case and come back to Home landing page and run tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
+    await common.verifyHomePage(page);
 
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
-
-    /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a View Templates case-type */
-    const viewTemplatesCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("View Templates")');
-    await viewTemplatesCase.click();
+    await common.createCase('View Templates', page);
 
     /** Click on the `Home` landing page */
     const homeLandingPage = page.locator('mat-list-item > span:has-text("Home")');
     await homeLandingPage.click();
 
     /** Test whether Home has loaded as expected */
-    await expect(announcementBanner).toBeVisible();
-
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
   }, 10000);
 });
 
