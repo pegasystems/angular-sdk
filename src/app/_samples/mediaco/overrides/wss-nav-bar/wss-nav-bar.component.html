@@ -1,0 +1,75 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav #drawer class="sidenav" mode="side" opened="true" [style.width]="collapsed ? '5rem' : '15rem'">
+    <!-- Add [class.collapsed-mode]="collapsed" here -->
+    <mat-nav-list [class.collapsed-mode]="collapsed">
+      <!-- Toggle Button -->
+      <div class="nav-item-container toggle-header" (click)="toggleMenu()">
+        <button type="button" mat-icon-button [disableRipple]="true">
+          <mat-icon>{{ collapsed ? 'menu' : 'cancel' }}</mat-icon>
+        </button>
+      </div>
+
+      <!-- Home Button -->
+      <!-- <div mat-list-item> -->
+      <!-- Added 'nav-item-container' class for specific styling -->
+      <div class="flex-box nav-item-container toggle-header" [class.selected]="activePage === 'Self-service Main page'">
+        <button type="button" mat-icon-button [disableRipple]="true" (click)="navPanelButtonClick(homePage)">
+          <mat-icon>home</mat-icon>
+        </button>
+        <!-- Only show text if you want it in collapsed mode too, otherwise hide or style it -->
+        <div mat-button class="psdk-nav-button-span">Home</div>
+      </div>
+      <!-- </div> -->
+
+      <!-- Dynamic Pages -->
+      <div *ngFor="let page of navPages$">
+        <div class="flex-box mat-list-item nav-item-container toggle-header" [class.selected]="activePage === page.pyLabel">
+          <button type="button" mat-icon-button [disableRipple]="true" (click)="navPanelButtonClick(page)">
+            <mat-icon>dashboard</mat-icon>
+          </button>
+          <div mat-button class="psdk-nav-button-span">{{ page.pyDefaultHeading }}</div>
+        </div>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- Top Toolbar -->
+    <mat-toolbar *ngIf="activePage === 'Self-service Main page'" style="position: relative; background: transparent">
+      <mat-toolbar-row mat-icon-button style="justify-content: space-between">
+        <div class="psdk-nav-header" (click)="navPanelButtonClick(homePage)">
+          <div>
+            <img src="{{ portalLogoImage$ }}" class="psdk-nav-logo" />
+          </div>
+          <div class="psdk-nav-portal-info">
+            <div class="psdk-nav-portal-app">{{ appName$ }}</div>
+          </div>
+        </div>
+
+        <div>
+          <mat-list class="horizontal-list">
+            <mat-list-item [matMenuTriggerFor]="menu" class="psdk-profile-list-item">
+              <div class="flex-box">
+                <mat-icon class="circle-icon">person</mat-icon>
+              </div>
+            </mat-list-item>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="navPanelLogoutClick()">{{ localizedVal('Log off', localeCategory) }}</button>
+            </mat-menu>
+            <mat-list-item>
+              <div class="flex-box">
+                <mat-icon class="circle-icon">notifications</mat-icon>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div *ngFor="let kid of arChildren$">
+      <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'">
+        <component-mapper name="ViewContainer" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

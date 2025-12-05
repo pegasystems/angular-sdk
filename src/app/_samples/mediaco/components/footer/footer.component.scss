@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Base Layout & Typography
+   ========================================================================== */
+:host {
+  font-family: sans-serif;
+}
+
+.site-footer {
+  background-color: rgb(247, 242, 250);
+  color: #333;
+  padding: 40px 0;
+}
+
+.footer-container {
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 30px;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 220px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding-top: 1rem;
+  }
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  font-size: 14px;
+}
+
+.copyright {
+  color: #555;
+}
+
+/* ==========================================================================
+   Component Styles
+   ========================================================================== */
+
+/* Social Media Icons */
+.social-icons {
+  display: flex;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    background-color: #edeaf2;
+    border-radius: 50%;
+    text-decoration: none;
+
+    svg {
+      fill: #333;
+    }
+
+    &:hover {
+      background-color: #6750a4;
+
+      svg {
+        fill: #fff !important;
+      }
+
+      .mat-icon {
+        color: #fff;
+      }
+    }
+  }
+}
+
+/* Navigation Links (Quick Links / Support) */
+.footer-column mat-nav-list a {
+  background-color: transparent !important;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+/* Contact Information */
+.contact-info {
+  padding-top: 1rem;
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    font-size: 14px;
+
+    .mat-icon {
+      margin-right: 10px;
+      color: #6750a4;
+    }
+  }
+}
+
+/* Bottom Links (Terms of Service, etc.) */
+.footer-bottom-links a {
+  color: #555;
+  text-decoration: none;
+  margin-left: 20px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+    color: #6750a4;
+  }
+}
+
+/* ==========================================================================
+   Angular Material ::ng-deep Overrides
+   ========================================================================== */
+
+/* Social Icon Sizing */
+::ng-deep .social-icons .mat-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  svg {
+    height: auto;
+    width: auto;
+  }
+}
+
+/* Nav List Spacing & Text */
+::ng-deep .mat-mdc-nav-list .mat-mdc-list-item {
+  padding-left: 0;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  color: rgb(73, 69, 79) !important;
+  font-size: 0.9rem !important;
+}
+
+::ng-deep .mdc-list-item:hover::before {
+  background-color: transparent !important;
+}
+
+::ng-deep .mdc-list-item__primary-text:hover {
+  color: #6750a4 !important;
+  background-color: transparent !important;
+}

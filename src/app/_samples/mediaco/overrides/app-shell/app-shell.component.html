@@ -1,0 +1,11 @@
+<div class="appshell-top">
+  <div *ngIf="bShowAppShell$ && portalTemplate !== 'wss'">
+    <component-mapper name="NavBar" [props]="{ pConn$, appName$, pages$, caseTypes$ }"></component-mapper>
+  </div>
+  <div *ngIf="bShowAppShell$ && portalTemplate === 'wss'">
+    <component-mapper
+      name="WssNavBar"
+      [props]="{ pConn$, appName$, homePage: pages$[0], pages$: links, caseTypes$, arChildren$, portalLogoImage$: imageURL }"
+    ></component-mapper>
+  </div>
+</div>
