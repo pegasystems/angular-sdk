@@ -1,0 +1,11 @@
+<mat-card class="m-card">
+  <div class="m-row">
+    <div class="m-icon" [ngClass]="'bg-' + index">
+      <img class="m-icon-img" [src]="data.icon" [ngClass]="'color-' + index" />
+    </div>
+    <div class="m-content">
+      <div class="m-title">{{ data.title }}</div>
+      <div class="m-desc">{{ data.description }}</div>
+    </div>
+  </div>
+</mat-card>
