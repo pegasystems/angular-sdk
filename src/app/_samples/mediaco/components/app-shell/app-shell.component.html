@@ -8,4 +8,7 @@
       [props]="{ pConn$, appName$, homePage: pages$[0], pages$: links, caseTypes$, arChildren$, portalLogoImage$: imageURL }"
     ></component-mapper>
   </div>
+  <div *ngIf="portalTemplate === 'wss'">
+    <app-footer></app-footer>
+  </div>
 </div>

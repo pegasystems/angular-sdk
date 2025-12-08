@@ -28,8 +28,7 @@
     // Update to usage of "import type" so these can inherit "error" and true from @pega/tsconfig.
     "importsNotUsedAsValues": "remove",
     "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "resolveJsonModule": true
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
