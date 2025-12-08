@@ -8,7 +8,7 @@
 .site-footer {
   background-color: rgb(247, 242, 250);
   color: #333;
-  padding: 40px 0;
+  padding: 30px 0;
 }
 
 .footer-container {
@@ -21,7 +21,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 2rem;
-  margin-bottom: 30px;
+  margin-bottom: 2.5rem;
 }
 
 .footer-column {
@@ -40,7 +40,7 @@
     font-size: 14px;
     line-height: 1.6;
     margin-bottom: 20px;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
   }
 }
 
@@ -99,6 +99,7 @@
   background-color: transparent !important;
   text-decoration: none;
   transition: transform 0.3s ease;
+  border-radius: 0;
 
   &:hover {
     transform: translateX(4px);
@@ -153,6 +154,12 @@
 /* Nav List Spacing & Text */
 ::ng-deep .mat-mdc-nav-list .mat-mdc-list-item {
   padding-left: 0;
+  height: 100%;
+  margin-bottom: 0.5rem;
+}
+
+::ng-deep .mat-mdc-nav-list .mat-mdc-list-item:last-child {
+  margin-bottom: 0;
 }
 
 ::ng-deep .mdc-list-item__primary-text {
