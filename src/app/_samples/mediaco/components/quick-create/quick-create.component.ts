@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Utils } from '@pega/angular-sdk-components';
-import { getQuicklinksData } from './quick-create.utils';
+import { QUICK_LINKS_DATA } from './quick-create.utils';
 
 interface QuickCreateProps {
   // If any, enter additional props that only exist on this component
@@ -100,8 +100,8 @@ export class QuickCreateComponent implements OnInit, OnChanges {
     } else {
       this.cases$ = defaultCases;
     }
-    const cardsData = getQuicklinksData(this.utils);
-    const cardMap = new Map(cardsData.map(card => [card.title, card]));
+
+    const cardMap = new Map(QUICK_LINKS_DATA.map(card => [card.title, card]));
 
     const mergedCases = this.cases$.map(caseItem => {
       const matchingCard = cardMap.get(caseItem.label);
@@ -116,5 +116,9 @@ export class QuickCreateComponent implements OnInit, OnChanges {
 
   updateSelf() {
     this.initComponent();
+  }
+
+  getImagePath(iconName: string): string {
+    return this.utils.getImageSrc(iconName, this.utils.getSDKStaticContentUrl());
   }
 }

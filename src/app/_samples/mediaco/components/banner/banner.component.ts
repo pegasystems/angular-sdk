@@ -14,6 +14,7 @@ export class BannerComponent {
   @Input() formGroup$: FormGroup;
 
   @Input() arChildren$: any[];
+  @Input() configProps$: any;
   @Input() title: string;
   @Input() message: any;
   @Input() backgroundImage: string;

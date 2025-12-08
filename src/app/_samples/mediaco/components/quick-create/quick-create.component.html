@@ -32,10 +32,10 @@
   <div class="card">
     <div class="card-header" [ngClass]="card.bgClass">
       <div class="watermark">
-        <img class="material-icons" *ngIf="card.icon" [src]="card.icon" />
+        <img class="material-icons" *ngIf="card.icon" [src]="getImagePath(card.icon)" />
       </div>
       <div class="icon-box" [ngStyle]="{ 'background-image': card.gradient }">
-        <img *ngIf="card.icon" class="quick-link-icon" [src]="card.icon" />
+        <img *ngIf="card.icon" class="quick-link-icon" [src]="getImagePath(card.icon)" />
       </div>
     </div>
 
