@@ -8,7 +8,16 @@
       [props]="{ pConn$, appName$, homePage: pages$[0], pages$: links, caseTypes$, arChildren$, portalLogoImage$: imageURL }"
     ></component-mapper>
   </div>
-  <div *ngIf="portalTemplate === 'wss'">
-    <app-footer></app-footer>
+  <div *ngIf="portalTemplate !== 'wss'" class="appshell-main">
+    <div *ngFor="let kid of arChildren$">
+      <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'">
+        <component-mapper name="ViewContainer" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
+      </div>
+    </div>
   </div>
+
+  <!-- footer is part of WssNavBar component hence commented -->
+  <!-- <div *ngIf="portalTemplate === 'wss'">
+    <app-footer></app-footer>
+  </div> -->
 </div>
