@@ -38,7 +38,7 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
   @Input() appName$: string;
   @Input() pages$: any[];
-  // @Input() caseTypes$: any[];
+  @Input() caseTypes$: any[];
   @Input() homePage: any;
   @Input() arChildren$: any[];
   @Input() portalLogoImage$: string;

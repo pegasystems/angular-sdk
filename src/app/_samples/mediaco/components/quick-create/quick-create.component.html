@@ -1,0 +1,51 @@
+<div class="main-container">
+  <div class="content-wrapper">
+    <div class="section-header">
+      <div class="title-group">
+        <h3>Get started</h3>
+        <div class="active-line"></div>
+      </div>
+    </div>
+    <div class="masonry-wrapper">
+      <!-- Left Column -->
+      <div class="masonry-column">
+        <ng-container *ngFor="let card of cases$; let i = index">
+          <ng-container *ngIf="i % 2 === 0">
+            <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: card }"></ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <!-- Right Column -->
+      <div class="masonry-column">
+        <ng-container *ngFor="let card of cases$; let i = index">
+          <ng-container *ngIf="i % 2 === 1">
+            <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: card }"></ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #cardTemplate let-card>
+  <div class="card">
+    <div class="card-header" [ngClass]="card.bgClass">
+      <div class="watermark">
+        <img class="material-icons" *ngIf="card.icon" [src]="getImagePath(card.icon)" />
+      </div>
+      <div class="icon-box" [ngStyle]="{ 'background-image': card.gradient }">
+        <img *ngIf="card.icon" class="quick-link-icon" [src]="getImagePath(card.icon)" />
+      </div>
+    </div>
+
+    <div class="card-body">
+      <h4 class="title">{{ card.title }}</h4>
+      <p style="font-size: 14px">{{ card.description }}</p>
+      <button class="action-btn" (click)="card.onClick()">
+        Get Started
+        <span class="material-icons arrow-icon">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -2,7 +2,6 @@ import { Component, OnInit, Input, NgZone, forwardRef, OnDestroy } from '@angula
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { FooterComponent } from '../footer/footer.component';
 import { AngularPConnectData, AngularPConnectService, Utils } from '@pega/angular-sdk-components';
 import { ErrorMessagesService } from '@pega/angular-sdk-components';
 import { ComponentMapperComponent } from '@pega/angular-sdk-components';
@@ -32,7 +31,7 @@ interface AppShellProps {
   selector: 'app-app-shell',
   templateUrl: './app-shell.component.html',
   styleUrls: ['./app-shell.component.scss'],
-  imports: [CommonModule, MatSnackBarModule, FooterComponent, forwardRef(() => ComponentMapperComponent)]
+  imports: [CommonModule, MatSnackBarModule, forwardRef(() => ComponentMapperComponent)]
 })
 export class AppShellComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
