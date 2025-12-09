@@ -32,18 +32,12 @@
       </div>
     </div>
   </div>
-
-  <div class="text-right">
-    <button mat-button color="primary" *ngIf="referenceDataPage !== 'D_TrendingItemsList' && template === 'Table'" (click)="openShowAll()">
-      Show All
-    </button>
-  </div>
 </div>
 <div *ngIf="template === 'Gallery'">
   <div class="carousel-constraint-wrapper">
     <app-carousel *ngIf="sourceList" [data]="sourceList"></app-carousel>
   </div>
-  <div class="carousel-footer">
-    <button mat-button color="primary" (click)="openShowAll()">Show All</button>
-  </div>
+</div>
+<div class="carousel-footer">
+  <a mat-button color="primary" *ngIf="referenceDataPage !== 'D_TrendingItemsList'" (click)="openShowAll()">Show All</a>
 </div>

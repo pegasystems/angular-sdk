@@ -203,6 +203,14 @@ $primary-purple: #9c27b0;
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  padding: 0 16px 10px 16px;
+  padding: 10px 0 10px 16px; /* Right padding removed */
   box-sizing: border-box;
+  text-decoration: none;
+  color: rgb(103, 80, 164); /* Color updated */
+}
+
+/* This applies when you hover your mouse over the link */
+.carousel-footer:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

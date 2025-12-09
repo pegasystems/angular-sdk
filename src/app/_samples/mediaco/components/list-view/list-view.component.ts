@@ -5,7 +5,6 @@ import { Utils } from '@pega/angular-sdk-components';
 import { CarouselComponent } from '../carousel/carousel.component';
 import { GalleryGridComponent } from '../gallery-grid/gallery-grid.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatButton } from '@angular/material/button';
 
 interface ListViewProps {
   inheritedProps: any;
@@ -31,7 +30,7 @@ interface ListViewProps {
 
 @Component({
   selector: 'app-list-view',
-  imports: [CommonModule, CarouselComponent, MatButton],
+  imports: [CommonModule, CarouselComponent],
   templateUrl: './list-view.component.html',
   styleUrl: './list-view.component.scss',
   providers: [Utils]
