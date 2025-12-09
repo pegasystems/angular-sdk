@@ -2,6 +2,7 @@
 import { AppShellComponent } from './components/app-shell/app-shell.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { ListViewComponent } from './components/list-view/list-view.component';
+import { MultiStepComponent } from './components/multi-step/multi-step.component';
 import { QuickCreateComponent } from './components/quick-create/quick-create.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { WssNavBarComponent } from './components/wss-nav-bar/wss-nav-bar.component';
@@ -15,6 +16,7 @@ const sdkMediaCoComponentMap = {
   AppShell: AppShellComponent,
   Banner: BannerComponent,
   ListView: ListViewComponent,
+  MultiStep: MultiStepComponent,
   QuickCreate: QuickCreateComponent,
   Todo: TodoComponent,
   WssNavBar: WssNavBarComponent
