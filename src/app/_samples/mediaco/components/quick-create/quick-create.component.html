@@ -6,24 +6,10 @@
         <div class="active-line"></div>
       </div>
     </div>
-    <div class="masonry-wrapper">
-      <!-- Left Column -->
-      <div class="masonry-column">
-        <ng-container *ngFor="let card of cases$; let i = index">
-          <ng-container *ngIf="i % 2 === 0">
-            <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: card }"></ng-container>
-          </ng-container>
-        </ng-container>
-      </div>
-
-      <!-- Right Column -->
-      <div class="masonry-column">
-        <ng-container *ngFor="let card of cases$; let i = index">
-          <ng-container *ngIf="i % 2 === 1">
-            <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: card }"></ng-container>
-          </ng-container>
-        </ng-container>
-      </div>
+    <div class="masonry-wrapper" appMasonry [masonryGap]="16" [masonryRowHeight]="1" masonryItemSelector=".card">
+      <ng-container *ngFor="let card of cases$; let i = index">
+        <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: card }"></ng-container>
+      </ng-container>
     </div>
   </div>
 </div>

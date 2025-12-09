@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: calc(2 * 0.5rem);
-  row-gap: 1.5rem;
+  gap: 1.5rem;
   align-items: start;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .background-image-style {
-  margin-left: -16px;
+  margin-left: 1rem;
   margin-right: -16px;
   height: calc(19rem);
   background-size: cover;

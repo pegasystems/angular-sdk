@@ -1,0 +1,303 @@
+.psdk-case-view-divider {
+  border-bottom: 0.0625rem solid var(--mat-sys-outline-variant);
+}
+
+.psdk-icon {
+  padding: 0rem 0.125rem;
+  min-width: unset;
+}
+
+.psdk-current-svg-icon {
+  width: 1rem;
+  filter: var(--app-primary-color-filter);
+}
+
+.psdk-not-current-svg-icon {
+  width: 1rem;
+  filter: var(--app-neutral-color-filter);
+}
+
+mat-vertical-stepper {
+  background-color: transparent;
+}
+mat-horizontal-stepper {
+  background-color: transparent;
+}
+
+.psdk-sub-step-current {
+  padding-left: 0.625rem;
+  font-weight: bold;
+}
+
+.psdk-sub-step-not-current {
+  padding-left: 0.625rem;
+}
+
+.psdk-flow-container-top {
+  padding: 0rem 0.625rem;
+  border-radius: 0.3125rem;
+}
+.psdk-flow-container {
+  padding-left: 2.1875rem;
+}
+
+.psdk-sub-step-list {
+  list-style: none;
+  padding-bottom: 0.625rem;
+}
+
+.psdk-vertical-stepper {
+  background-color: transparent;
+  display: block;
+  text-align: left;
+}
+
+.psdk-vertical-step {
+  display: block;
+}
+
+.psdk-vertical-step-header {
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  padding: 24px 24px;
+}
+
+.psdk-vertical-step-icon {
+  margin-right: 12px;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.psdk-vertical-step-icon-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.psdk-vertical-step-icon-selected {
+  margin-right: 12px;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.psdk-vertical-step-label {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 50px;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.psdk-vertical-step-label-selected {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 50px;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.psdk-vertical-step-body {
+  margin-left: 36px;
+  border: 0;
+  position: relative;
+  display: block;
+  text-align: left;
+}
+.psdk-vertical-step-line {
+  display: block;
+}
+
+.psdk-vertical-step-line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  border-left-width: 1px;
+  border-left-style: solid;
+  top: -16px;
+  bottom: -16px;
+}
+
+.psdk-horizontal-stepper {
+  background-color: transparent;
+  display: block;
+}
+
+.psdk-horizontal-step-icon {
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  flex-shrink: 0;
+  position: relative;
+  display: block;
+  margin-right: 8px;
+  flex: none;
+}
+
+.psdk-horizontal-step-label {
+  display: inline-block;
+  min-width: 50px;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: initial;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(106, 27, 154, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(106, 27, 154, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(106, 27, 154, 0);
+  }
+}
+
+/* --- Main Stepper Container --- */
+.psdk-horizontal-stepper-header-container {
+  display: flex;
+  align-items: flex-start; /* Aligns circles and lines from the top */
+  justify-content: space-around;
+  padding: 24px 0;
+  padding-left: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* --- Individual Step (Circle + Label) --- */
+.psdk-horizontal-step-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px; /* Provides consistent spacing for labels */
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* --- Step Icon Circle (dynamically classed container) --- */
+.psdk-horizontal-step-header > div:first-child {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px; /* Space between circle and label */
+  position: relative;
+  z-index: 2; /* Ensures the circle is on top of the line */
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* --- Icon Content (Number or Checkmark) --- */
+.psdk-horizontal-step-icon-content {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* --- Connecting Line --- */
+.psdk-horizontal-step-line {
+  height: 2px;
+  flex-grow: 1;
+  /* Position the line to be in the vertical middle of the circles */
+  position: relative;
+  top: 19px;
+  z-index: 1;
+  margin: 1rem 0;
+  transition: background-color 0.3s ease;
+}
+
+/* --- 1. Visited/Completed Step (e.g., "Personal Information") --- */
+.psdk-icon-visited {
+  background-color: #5a3a9b; /* Dark Purple */
+  border: 1px solid #5a3a9b;
+}
+
+/* Hide the step number in visited steps */
+.psdk-icon-visited .psdk-horizontal-step-icon-content span {
+  display: none;
+}
+
+/* Create the checkmark using a pseudo-element */
+.psdk-icon-visited::after {
+  content: '✓';
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.psdk-label-visited .psdk-horizontal-step-text-label {
+  color: #333333; /* Dark text for active/completed labels */
+  font-weight: 500;
+}
+
+/* --- 2. Current Step (e.g., "Address") --- */
+.psdk-icon-current {
+  background-color: #5a3a9b; /* Dark Purple */
+  border: 1px solid #5a3a9b;
+  animation: pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+.psdk-icon-current .psdk-horizontal-step-icon-content {
+  color: white; /* White number */
+  // animation: pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+.psdk-label-current .psdk-horizontal-step-text-label {
+  color: #333333; /* Dark text */
+  font-weight: 500;
+}
+
+/* --- 3. Future Step (e.g., "Service") --- */
+.psdk-icon-future {
+  background-color: #e6e0e9; /* Light Gray */
+  border: 1px solid #e6e0e9;
+}
+
+.psdk-icon-future .psdk-horizontal-step-icon-content {
+  color: #49454f;
+}
+
+.psdk-label-future .psdk-horizontal-step-text-label {
+  color: #49454f;
+}
+
+/* --- 4. Connecting Line Color Logic --- */
+
+/* Default line color is gray */
+.psdk-horizontal-step-line {
+  background-color: #e0e0e0;
+}
+
+/*
+ * Use the :has() pseudo-class to style the line following a completed step.
+ * This looks inside a step header for a '.psdk-icon-visited' class and styles
+ * the next sibling element that is a '.psdk-horizontal-step-line'.
+*/
+.psdk-horizontal-step-header:has(.psdk-icon-visited) + .psdk-horizontal-step-line {
+  background-color: #5a3a9b; /* Dark Purple Line */
+  // animation: pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+}
