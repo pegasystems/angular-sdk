@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 import { publicConstants } from '@pega/pcore-pconnect-typedefs/constants';
 import { ProgressSpinnerService } from '@pega/angular-sdk-components';
 import { ErrorMessagesService } from '@pega/angular-sdk-components';
@@ -62,7 +63,7 @@ interface ToDoProps {
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
-  imports: [CommonModule]
+  imports: [CommonModule, MatIcon]
 })
 export class TodoComponent implements OnInit, OnDestroy {
   img = this.utils.getImageSrc('message-circle', this.utils.getSDKStaticContentUrl());

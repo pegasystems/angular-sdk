@@ -39,11 +39,6 @@ $btn-text-color: #5c4498;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(4px);
-
-    .material-icons {
-      font-size: 36px;
-      color: $text-white;
-    }
   }
 }
 
@@ -81,6 +76,10 @@ $btn-text-color: #5c4498;
     display: flex;
     align-items: center;
     gap: 6px;
+    letter-spacing: 0.1px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
   }
 }
 
