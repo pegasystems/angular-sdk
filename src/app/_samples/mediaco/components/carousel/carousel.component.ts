@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-// import { GalleryGridComponent } from '../gallery-grid/gallery-grid.component';
 
 @Component({
   selector: 'app-carousel',
