@@ -1,0 +1,19 @@
+<div *ngIf="surveyCase">
+  <div class="banner-container">
+    <div class="icon-wrapper">
+      <div class="icon-box">
+        <img class="quick-link-icon" [src]="img" />
+      </div>
+    </div>
+    <div class="content-text">
+      <h2>Share Your Experience</h2>
+      <p>Take a quick survey about your recent experience with MediaCo.</p>
+    </div>
+    <div class="action-wrapper">
+      <button (click)="clickGo(surveyCase)" class="start-btn">
+        Start
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+</div>
