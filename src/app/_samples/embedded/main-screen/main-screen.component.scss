@@ -1,66 +1,86 @@
-.mc-banner {
-  font-size: 24px;
-  text-align: center;
+:host {
+  display: block;
   width: 100%;
-  padding: 20px;
-}
-
-.mc-main-screen {
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 100px);
-  position: relative;
-  width: 100%;
-}
-
-.mc-main-div {
-  width: 100%;
-  height: calc(100vh - 100px);
   position: relative;
   top: 100px;
+  height: calc(100vh - 100px);
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.mc-work-button {
-  font-size: 22px;
-  color: var(--mat-sys-primary);
-  text-decoration: underline;
-  padding-top: 10px;
-}
-
-.mc-work-ready {
-  font-size: 22px;
-  padding: 20px 20px 0px 40px;
-}
-
-.mc-info {
-  display: flex;
-  flex-direction: row;
-}
-
-.mc-info-pega {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-}
-
-.mc-info-banner {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
+.hero,
+.plans-section {
+  display: flex !important;
   align-items: center;
+  gap: 3rem;
 }
 
-.mc-info-banner-text {
-  font-size: 30px;
-  line-height: 40px;
-  padding: 20px 20px;
-  color: var(--app-banner-text-color);
+.plans-container {
+  flex-basis: 75%;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
-.mc-info-image {
-  width: calc(100% - 40px);
-  margin: 20px;
-  border-radius: 10px;
+.hero-text {
+  flex-basis: 50%;
+}
+
+.hero-image {
+  flex-basis: 45%;
+  text-align: right;
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.plans-intro {
+  flex-basis: 25%;
+}
+
+.plans-intro h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.plans-intro h2 .highlight {
+  color: var(--mat-sys-primary);
+}
+
+@media (max-width: 1200px) {
+  .plans-section,
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-image {
+    text-align: center;
+  }
+
+  .plans-intro {
+    padding-right: 0;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .plans-container {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+.pega-part-of-page .main-content-area {
+  max-width: 1400px !important;
+  width: 50% !important;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
 }

@@ -4,7 +4,7 @@
 
 <div *ngIf="bLoggedIn$; else loading">
   <app-header></app-header>
-  <app-main-screen *ngIf="bHasPConnect$" [pConn$]="pConn$"></app-main-screen>
+  <app-main-screen class="pega-part-of-page" *ngIf="bHasPConnect$" [pConn$]="pConn$"></app-main-screen>
 </div>
 
 <ng-template #loading>

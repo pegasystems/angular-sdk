@@ -1,16 +1,27 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+export interface PlanOption {
+  name: string;
+  imageSrc: string;
+  saveAmount: string;
+  monthlyPrice: string;
+  tenure: string;
+  retailPrice: string;
+}
 
 @Component({
   selector: 'app-shopping-card',
+  imports: [CommonModule],
   templateUrl: './shopping-card.component.html',
-  styleUrls: ['./shopping-card.component.scss'],
-  standalone: true
+  styleUrls: ['./shopping-card.component.scss', '../EmbeddedStyles.scss']
 })
 export class ShoppingCardComponent {
-  @Input() option: any;
-  @Output() onShopNowButtonClick: EventEmitter<any> = new EventEmitter();
+  @Input() option: PlanOption;
 
-  onShopNowClick(sLevel) {
-    this.onShopNowButtonClick.emit(sLevel);
+  @Output() buyNowClick: EventEmitter<string> = new EventEmitter<string>();
+
+  onBuyNowClick(level: string): void {
+    this.buyNowClick.emit(level);
   }
 }
