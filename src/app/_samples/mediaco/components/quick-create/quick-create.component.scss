@@ -3,9 +3,8 @@ $radius: 16px;
 $primary-purple: #9c27b0;
 $text-dark: #2c2c2c;
 // --- Layout Styles ---
-.main-container {
-  padding: 40px;
-  background-color: #ffffff;
+.quicklinks-container {
+  background-color: transparent;
   min-height: 100vh;
 }
 
@@ -68,18 +67,24 @@ $text-dark: #2c2c2c;
 .card {
   background: #fff;
   border-radius: $radius;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0px 1px 2px 0px #0000004d,
+    0px 2px 6px 2px #00000026;
   border: 1px solid rgba(0, 0, 0, 0.05);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    .icon-box {
+      transition: transform 0.3s ease;
+      transform: scale(1.1) rotateZ(10deg);
+    }
+
+    .arrow-icon-mat {
+      transform: translateX(4px);
+      transition: transform 0.2s ease;
+    }
   }
 }
 
@@ -167,8 +172,10 @@ $text-dark: #2c2c2c;
   }
 }
 
-.icon-box:hover {
-  transform: scale(1.2) rotateZ(10deg);
+.arrow-icon-mat {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
 }
 
 .bg-purple {

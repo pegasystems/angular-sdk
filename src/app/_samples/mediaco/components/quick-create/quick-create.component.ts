@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 import { Utils } from '@pega/angular-sdk-components';
 import { QUICK_LINKS_DATA } from './quick-create.utils';
 
@@ -14,7 +15,7 @@ interface QuickCreateProps {
   selector: 'app-quick-create',
   templateUrl: './quick-create.component.html',
   styleUrls: ['./quick-create.component.scss'],
-  imports: [CommonModule]
+  imports: [CommonModule, MatIcon]
 })
 export class QuickCreateComponent implements OnInit, OnChanges {
   @Input() pConn$: typeof PConnect;

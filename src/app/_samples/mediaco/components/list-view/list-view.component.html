@@ -1,32 +1,42 @@
 <div class="header-container">
-  <h2 class="trending-title">{{ title }}</h2>
-  <button mat-button color="primary" *ngIf="referenceDataPage !== 'D_TrendingItemsList' && template === 'Table'" (click)="openShowAll()">
-    Show All
-  </button>
+  <div class="section-header">
+    <div class="title-group">
+      <h3>{{ title }}</h3>
+      <div class="active-line"></div>
+    </div>
+  </div>
 </div>
-<div *ngIf="template === 'Table'" class="info-container">
-  <div class="info-item" *ngFor="let item of sourceList; index as i">
-    <div class="icon-wrapper" [ngClass]="'bg-' + i">
-      <img *ngIf="item.icon" [src]="item.icon" class="icon-img" [ngClass]="'color-' + i" />
-      <span *ngIf="!item.icon" class="icon-num" [ngClass]="'color-' + i">{{ item.number }}</span>
-    </div>
+<div *ngIf="template === 'Table'">
+  <div class="info-container">
+    <div class="info-item" *ngFor="let item of sourceList; index as i">
+      <div class="icon-wrapper" [ngClass]="'bg-' + i">
+        <img *ngIf="item.icon" [src]="item.icon" class="icon-img" [ngClass]="'color-' + i" />
+        <span *ngIf="!item.icon" class="icon-num" [ngClass]="'color-' + i">{{ item.number }}</span>
+      </div>
 
-    <div class="content">
-      <div class="title-row">
-        <span class="title">{{ item.title }}</span>
-        <span class="dot" *ngIf="item.title_subtext"></span>
-        <span *ngIf="item.title_subtext" class="sub-text">{{ item.title_subtext }}</span>
+      <div class="content">
+        <div class="title-row">
+          <span class="title">{{ item.title }}</span>
+          <span class="dot" *ngIf="item.title_subtext"></span>
+          <span *ngIf="item.title_subtext" class="sub-text">{{ item.title_subtext }}</span>
+        </div>
+        <div class="description">
+          <span>{{ item.description }}</span>
+          <span class="dot" *ngIf="item.description_subtext"></span>
+          <span *ngIf="item.description_subtext" class="sub-text">{{ item.description_subtext }}</span>
+        </div>
       </div>
-      <div class="description">
-        <span>{{ item.description }}</span>
-        <span class="dot" *ngIf="item.description_subtext"></span>
-        <span *ngIf="item.description_subtext" class="sub-text">{{ item.description_subtext }}</span>
+      <div class="extra-content" *ngIf="item.rating" style="margin-left: auto">
+        <img [src]="utils.getImageSrc('star-solid', utils.getSDKStaticContentUrl())" class="star" />&nbsp;
+        {{ item.rating }}
       </div>
     </div>
-    <div class="extra-content" *ngIf="item.rating" style="margin-left: auto">
-      <img [src]="utils.getImageSrc('star-solid', utils.getSDKStaticContentUrl())" class="star" />&nbsp;
-      {{ item.rating }}
-    </div>
+  </div>
+
+  <div class="text-right">
+    <button mat-button color="primary" *ngIf="referenceDataPage !== 'D_TrendingItemsList' && template === 'Table'" (click)="openShowAll()">
+      Show All
+    </button>
   </div>
 </div>
 <div *ngIf="template === 'Gallery'">

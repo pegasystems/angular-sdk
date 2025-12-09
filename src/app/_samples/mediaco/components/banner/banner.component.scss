@@ -2,8 +2,14 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: calc(2 * 0.5rem);
-  row-gap: calc(2 * 0.5rem);
+  row-gap: 1.5rem;
   align-items: start;
+}
+
+.psdk-main-content-section {
+  background: #fff;
+  padding: 40px 44px 16px;
+  border-top-left-radius: 28px;
 }
 
 .psdk-grid-filter-wide-narrow {
