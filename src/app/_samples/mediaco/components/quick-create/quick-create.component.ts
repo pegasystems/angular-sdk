@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Utils } from '@pega/angular-sdk-components';
 import { QUICK_LINKS_DATA } from './quick-create.utils';
+import { MasonryDirective } from '../../directives/masonry.directive';
 
 interface QuickCreateProps {
   // If any, enter additional props that only exist on this component
@@ -15,7 +16,7 @@ interface QuickCreateProps {
   selector: 'app-quick-create',
   templateUrl: './quick-create.component.html',
   styleUrls: ['./quick-create.component.scss'],
-  imports: [CommonModule, MatIcon]
+  imports: [CommonModule, MatIcon, MasonryDirective]
 })
 export class QuickCreateComponent implements OnInit, OnChanges {
   @Input() pConn$: typeof PConnect;
@@ -27,6 +28,7 @@ export class QuickCreateComponent implements OnInit, OnChanges {
   showCaseIcons$?: boolean;
   classFilter$: any;
   cases$: any = [];
+
   constructor(private utils: Utils) {}
 
   ngOnInit() {
