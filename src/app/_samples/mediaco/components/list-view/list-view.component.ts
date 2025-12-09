@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // import { Utils } from '@pega/angular-sdk-components/src/public-api';
 import { Utils } from '@pega/angular-sdk-components';
-import { CarouselComponent } from '../Carousel-component/carousel.component';
+import { CarouselComponent } from '../carousel/carousel.component';
 import { GalleryGridComponent } from '../gallery-grid/gallery-grid.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
@@ -30,13 +30,13 @@ interface ListViewProps {
 }
 
 @Component({
-  selector: 'app-mediaco-list-view',
+  selector: 'app-list-view',
   imports: [CommonModule, CarouselComponent, MatButton],
-  templateUrl: './mediaco-list-view.component.html',
-  styleUrl: './mediaco-list-view.component.scss',
+  templateUrl: './list-view.component.html',
+  styleUrl: './list-view.component.scss',
   providers: [Utils]
 })
-export class MediacoListViewComponent implements OnInit {
+export class ListViewComponent implements OnInit {
   @Input() pConn$: typeof PConnect;
   @Input() bInForm$ = true;
   @Input() payload;
