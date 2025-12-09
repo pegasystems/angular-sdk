@@ -1,0 +1,197 @@
+.info-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px 25px;
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 25px;
+    right: 25px;
+    height: 1px;
+    background-color: #e5e7eb;
+  }
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.info-item {
+  transition: background-color 0.3s ease;
+}
+
+.info-item:hover {
+  background-color: #f6f5f5;
+}
+
+.info-item .icon-wrapper {
+  transition: transform 0.3s ease;
+}
+
+.info-item:hover .icon-wrapper {
+  transform: scale(1.1);
+}
+
+.description {
+  color: #4b5563;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.icon-num {
+  margin: auto;
+}
+
+.star-icon {
+  color: #ffc107;
+}
+
+/* Background colors for each icon */
+.bg-0 {
+  background-color: #ede9fe;
+} /* Light purple */
+.bg-1 {
+  background-color: #fce7f3;
+} /* Light pink */
+.bg-2 {
+  background-color: #e0f2fe;
+} /* Light blue */
+.bg-3 {
+  background-color: #ffedd5;
+} /* Light orange */
+.bg-4 {
+  background-color: #f3e8ff;
+} /* Lavender */
+.bg-5 {
+  background-color: #d1fae5;
+} /* Light green */
+
+.color-0 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(250deg) saturate(500%);
+} /* Dark purple */
+.color-1 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(320deg) saturate(500%);
+} /* Dark pink */
+.color-2 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(190deg) saturate(500%);
+} /* Dark blue */
+.color-3 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(25deg) saturate(500%);
+} /* Dark orange */
+.color-4 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(120deg) saturate(500%);
+} /* Dark green */
+.color-5 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(90deg) saturate(500%);
+} /* Dark green */
+
+.star {
+  filter: brightness(0) saturate(100%) invert(60%) sepia(92%) saturate(748%) hue-rotate(1deg) brightness(101%);
+  height: 16px;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  background-color: #9ca3af;
+  border-radius: 50%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 12px;
+  height: 48px;
+  width: 400px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.sub-text {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.extra-content {
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.trending-title {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #222; /* Dark text color */
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px; /* Space for underline */
+}
+
+.trending-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px; /* Thickness of underline */
+  background: linear-gradient(to right, #a41a61, #ff4fc3);
+  /* Dark pink (#d6006e) to lighter pink (#ff4fc3) */
+  border-radius: 2px; /* Rounded edges */
+}
+
+.carousel-constraint-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+
+  /* This stops the component from stretching the page, but keeps it visible */
+  overflow: hidden;
+  position: relative;
+}
+.carousel-footer {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 0 16px 10px 16px;
+  box-sizing: border-box;
+}
