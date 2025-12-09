@@ -1,7 +1,17 @@
+$text-dark: #2c2c2c;
+$primary-purple: #9c27b0;
+
 .info-container {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0px 1px 2px 0px #0000004d,
+    0px 1px 3px 1px #00000026;
+}
+
+.text-right {
+  text-align: right;
+  margin-bottom: 16px;
 }
 
 .info-item {
@@ -158,25 +168,26 @@
   align-items: center;
 }
 
-.trending-title {
-  font-size: 2rem;
-  font-weight: 500;
-  color: #222; /* Dark text color */
-  position: relative;
-  display: inline-block;
-  padding-bottom: 8px; /* Space for underline */
-}
+.section-header {
+  display: flex;
+  margin-bottom: 32px;
+  padding: 0 4px;
 
-.trending-title::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 4px; /* Thickness of underline */
-  background: linear-gradient(to right, #a41a61, #ff4fc3);
-  /* Dark pink (#d6006e) to lighter pink (#ff4fc3) */
-  border-radius: 2px; /* Rounded edges */
+  .title-group {
+    h3 {
+      font-size: 22px;
+      font-weight: 400;
+      color: $text-dark;
+      margin: 0 0 4px 0;
+    }
+
+    .active-line {
+      height: 4px;
+      background-color: $primary-purple;
+      width: 100%;
+      border-radius: 2px;
+    }
+  }
 }
 
 .carousel-constraint-wrapper {

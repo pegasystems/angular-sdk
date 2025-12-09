@@ -177,3 +177,8 @@ mat-nav-list {
   border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
   background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
 }
+
+.mat-drawer-container,
+.mat-drawer {
+  background-color: #fef7ff !important;
+}
