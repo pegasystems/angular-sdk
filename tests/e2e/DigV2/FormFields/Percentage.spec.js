@@ -18,31 +18,15 @@ test.describe('E2E test', () => {
   test('should login, create case and run the Percentage tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
+    await common.createCase('Form Field', page);
 
-    /** Creating a Form Field case-type */
-    const formFieldCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldCase.click();
-
-    /** Selecting Percentage from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.getByRole('option', { name: 'Percentage' }).click();
+    await common.selectCategory('Percentage', page);
 
     /** Selecting Required from the Sub Category dropdown */
-    let selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Required' }).click();
+    await common.selectSubCategory('Required', page);
 
     await page.locator('button:has-text("submit")').click();
     await expect(page.locator('mat-error')).toBeVisible();
@@ -57,9 +41,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('required')).toBeFalsy();
 
     /** Selecting Disable from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Disable' }).click();
+    await common.selectSubCategory('Disable', page);
 
     // /** Disable tests */
     const alwaysDisabledPercentage = page.locator('input[data-test-id="7900b3bd0ac7a6a59b1f5fe9b23749c4"]');
@@ -79,9 +61,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('disabled')).toBeFalsy();
 
     /** Selecting Update from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Update' }).click();
+    await common.selectSubCategory('Update', page);
 
     /** Update tests */
     // const readonlyPercentage = page.locator(
@@ -97,9 +77,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('readonly')).toBeFalsy();
 
     /** Selecting Visibility from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Visibility' }).click();
+    await common.selectSubCategory('Visibility', page);
 
     /** Visibility tests */
     await expect(page.locator('input[data-test-id="bc2c3cb45ab755e262b381abbb0307fa"]')).toBeVisible();

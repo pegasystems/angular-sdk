@@ -12,26 +12,13 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for Dynamic Tabs', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = await page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a View Templates case-type */
-    const complexFieldsCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("View Templates")');
-    await complexFieldsCase.click();
+    await common.createCase('View Templates', page);
 
     /** Selecting Dynamic Tabs from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.locator('mat-option > span:has-text("Dynamic Tabs")').click();
+    await common.selectCategory('Dynamic Tabs', page);
 
     await page.locator('button:has-text("submit")').click();
 

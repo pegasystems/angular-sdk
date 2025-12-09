@@ -1,0 +1,19 @@
+<div class="dialog-content">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>All Content</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="data.dataPage === 'D_CarouselitemList'" mat-dialog-content class="grid-container">
+    <div class="grid-item" *ngFor="let item of data.items">
+      <img [src]="item.ImageURL" alt="Item Image" />
+      <p>{{ item.Carouselheading }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="data.dataPage === 'D_AccountHistoryList'" class="grid">
+    <table-template-card *ngFor="let item of data.items; trackBy: trackByTitle; index as i" [data]="item" [index]="i"> </table-template-card>
+  </div>
+</div>

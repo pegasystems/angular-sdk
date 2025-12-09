@@ -18,31 +18,19 @@ test.describe('E2E test', () => {
   test('should login, create case and run the URL tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a Form Field case-type */
-    const formFieldCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldCase.click();
+    await common.createCase('Form Field', page);
 
     /** Selecting Text Input from the Category dropdown */
+    await common.selectCategory('TimeOnly', page);
     const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
     await selectedCategory.click();
     await page.getByRole('option', { name: 'URL' }).click();
 
     /** Selecting Required from the Sub Category dropdown */
-    let selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Required' }).click();
+    await common.selectSubCategory('Required', page);
 
     /** Required tests */
     const requiredURL = page.locator('input[data-test-id="20815fd8b2e59e25b75185515b126212"]');
@@ -54,9 +42,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('required')).toBeFalsy();
 
     /** Selecting Disable from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Disable' }).click();
+    await common.selectSubCategory('Disable', page);
 
     // /** Disable tests */
     const alwaysDisabledURL = page.locator('input[data-test-id="922758766489b064688aba17552c566d"]');
@@ -76,9 +62,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('disabled')).toBeFalsy();
 
     /** Selecting Update from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Update' }).click();
+    await common.selectSubCategory('Update', page);
 
     /** Update tests */
     // const readonlyURL = page.locator('input[data-test-id="6180c34fa2ef0cbfe3459b6f94b89d62"]');
@@ -90,7 +74,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('readonly')).toBeFalsy();
 
     /** Validation tests */
-    const validationMsg = 'Please enter a valid URL including the protocol (http://, https://, ftp://, etc.)';
+    const validationMsg = 'Enter a valid url';
     await EditableURL.fill('InvalidUrl');
     await EditableURL.blur();
     await expect(page.locator(`mat-error:has-text("${validationMsg}")`)).toBeVisible();
@@ -99,9 +83,7 @@ test.describe('E2E test', () => {
     await expect(page.locator(`mat-error:has-text("${validationMsg}")`)).toBeHidden();
 
     /** Selecting Visibility from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Visibility' }).click();
+    await common.selectSubCategory('Visibility', page);
 
     /** Visibility tests */
     await expect(page.locator('input[data-test-id="c239893d906b22bc8de9c7f3d0c1e219"]')).toBeVisible();

@@ -1,0 +1,68 @@
+.psdk-grid-filter-1 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: calc(2 * 0.5rem);
+  row-gap: calc(2 * 0.5rem);
+  align-items: start;
+}
+
+.psdk-grid-filter-wide-narrow {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  column-gap: calc(2 * 0.5rem);
+  row-gap: calc(2 * 0.5rem);
+  align-items: start;
+  padding: 1rem;
+}
+
+.psdk-grid-filter-narrow-wide {
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+  column-gap: calc(2 * 0.5rem);
+  row-gap: calc(2 * 0.5rem);
+  align-items: start;
+
+  & > *:nth-child(2) {
+    min-width: 0;
+  }
+}
+
+.background-image-style {
+  margin-left: -16px;
+  margin-right: -16px;
+  height: calc(19rem);
+  background-size: cover;
+  background-position: center center;
+}
+
+.background-style {
+  background-color: transparent;
+  color: var(--app-inverse-form-color);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: calc(0.5rem);
+}
+
+.title {
+  margin: 0rem;
+  font-size: 1.728rem;
+  font-weight: 600;
+}
+
+.message {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.banner-layout {
+  padding: 1rem;
+}

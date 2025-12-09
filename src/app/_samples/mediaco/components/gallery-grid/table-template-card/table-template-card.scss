@@ -1,0 +1,88 @@
+.m-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 14px 16px;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #7c3aed;
+    outline-offset: 4px;
+  }
+}
+
+.m-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.m-icon {
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+}
+
+.m-icon-img {
+  display: block;
+  border-radius: 8px;
+}
+
+.m-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.m-title {
+  font-weight: 600;
+  color: #111827;
+}
+.m-desc {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.bg-0 {
+  background-color: #ede9fe;
+}
+.bg-1 {
+  background-color: #fce7f3;
+}
+.bg-2 {
+  background-color: #e0f2fe;
+}
+.bg-3 {
+  background-color: #ffedd5;
+}
+.bg-4 {
+  background-color: #f3e8ff;
+}
+.bg-5 {
+  background-color: #d1fae5;
+}
+
+.color-0 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(250deg) saturate(500%);
+}
+.color-1 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(320deg) saturate(500%);
+}
+.color-2 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(190deg) saturate(500%);
+}
+.color-3 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(25deg) saturate(500%);
+}
+.color-4 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(120deg) saturate(500%);
+}
+.color-5 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(80%) hue-rotate(90deg) saturate(500%);
+}
