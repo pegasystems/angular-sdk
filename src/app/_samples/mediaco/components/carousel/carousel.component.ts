@@ -31,6 +31,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   originalItems: any[] = [];
   displayItems: any[] = [];
+  isLoading: boolean = true;
+  skeletonItems: any[] = new Array(6).fill(0);
 
   constructor(
     private ngZone: NgZone,
@@ -38,8 +40,22 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['data'] && this.data) {
-      this.buildCarouselItems();
+    if (changes['data']) {
+      if (this.data && this.data.length > 0) {
+        this.buildCarouselItems();
+      } else {
+        this.isLoading = true;
+      }
+    }
+  }
+
+  initializeScroll() {
+    const container = this.scrollContainer?.nativeElement;
+    if (container && container.scrollWidth > 0) {
+      const singleSetWidth = container.scrollWidth / 3;
+      container.scrollLeft = singleSetWidth;
+      // Trigger one calculation to set initial sizes
+      this.onScroll({ target: container } as any);
     }
   }
 
@@ -51,8 +67,10 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
         ...item
       };
     });
+
     this.originalItems = mappedData;
     let loopList = [...mappedData];
+
     // If you have 2 items, we duplicate them until we have at least 12.
     const MIN_ITEMS = 12;
     if (loopList.length > 0) {
@@ -60,8 +78,46 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
         loopList = [...loopList, ...loopList];
       }
     }
-    //CREATE 3 SETS: [Left Buffer] [Middle (Active)] [Right Buffer]
+
     this.displayItems = [...loopList, ...loopList, ...loopList];
+
+    this.preloadImages();
+  }
+
+  //Logic to download all images before showing UI
+  preloadImages() {
+    this.isLoading = true;
+    const uniqueUrls = [...new Set(this.displayItems.map(item => item.img))].filter(url => url);
+
+    let loadedCount = 0;
+    const total = uniqueUrls.length;
+
+    if (total === 0) {
+      this.finishLoading();
+      return;
+    }
+
+    uniqueUrls.forEach(url => {
+      const img = new Image();
+      img.src = url;
+
+      const onImageComplete = () => {
+        loadedCount++;
+        if (loadedCount === total) {
+          this.finishLoading();
+        }
+      };
+
+      img.onload = onImageComplete;
+      img.onerror = onImageComplete;
+    });
+  }
+
+  finishLoading() {
+    this.isLoading = false;
+    setTimeout(() => {
+      this.initializeScroll();
+    }, 0);
   }
 
   ngAfterViewInit() {
@@ -69,13 +125,6 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       const container = this.scrollContainer?.nativeElement;
       if (container) {
         container.addEventListener('scroll', this.onScroll.bind(this));
-        setTimeout(() => {
-          if (container.scrollWidth > 0) {
-            const singleSetWidth = container.scrollWidth / 3;
-            container.scrollLeft = singleSetWidth;
-            this.onScroll({ target: container } as any);
-          }
-        }, 50);
       }
     });
   }
@@ -88,6 +137,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   onScroll(event: Event) {
+    if (this.isLoading) return;
+
     const container = event.target as HTMLElement;
     if (!container) return;
 
@@ -101,6 +152,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       } else if (currentScroll >= singleSetWidth * 2 - 100) {
         container.scrollLeft = currentScroll - singleSetWidth;
       }
+
       const containerRect = container.getBoundingClientRect();
       if (containerRect.width === 0) return;
 

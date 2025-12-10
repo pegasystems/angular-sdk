@@ -1,15 +1,28 @@
 <div class="carousel-host-container">
   <div class="carousel-frame">
     <div class="carousel-scroll-area" #scrollContainer>
-      <div class="card-wrapper" *ngFor="let item of displayItems" #cardItem>
-        <mat-card class="inner-material-card">
-          <img [src]="item.img" alt="Card Image" />
-          <div class="card-overlay">
-            <h3>{{ item.title }}</h3>
-          </div>
-        </mat-card>
-      </div>
+      <ng-container *ngIf="isLoading">
+        <div class="card-wrapper" *ngFor="let item of skeletonItems">
+          <mat-card class="inner-material-card">
+            <!-- Shimmer Animation -->
+            <div class="skeleton-shimmer"></div>
+            <!-- Fake Title Bar -->
+            <div class="card-overlay">
+              <div class="skeleton-text"></div>
+            </div>
+          </mat-card>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoading">
+        <div class="card-wrapper" *ngFor="let item of displayItems" #cardItem>
+          <mat-card class="inner-material-card">
+            <img [src]="item.img" alt="Card Image" />
+            <div class="card-overlay">
+              <h3>{{ item.title }}</h3>
+            </div>
+          </mat-card>
+        </div>
+      </ng-container>
     </div>
   </div>
-  <div class="carousel-footer"></div>
 </div>
