@@ -34,7 +34,7 @@
 }
 
 .background-image-style {
-  height: calc(19rem);
+  height: calc(20rem);
   background-size: cover;
   background-position: center center;
 }
@@ -50,21 +50,21 @@
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding-top: 5rem;
   gap: calc(0.5rem);
 }
 
 .title {
   margin: 0rem;
-  font-size: 1.728rem;
-  font-weight: 600;
+  font-size: 36px;
+  color: #46185a;
+  font-weight: 700;
 }
 
 .message {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 14px;
+  margin-top: 16px;
+  color: #49454f;
 }
 
 .banner-layout {
