@@ -1,8 +1,8 @@
 <div style="margin-bottom: '2rem'">
-  <div class="background-image-style" [ngStyle]="{ 'background-image': getUrl() }">
+  <div class="background-image-style">
     <div class="background-style content">
       <div>
-        <h1 class="title">{{ title }}</h1>
+        <h1 class="title" [innerHTML]="title"></h1>
         <p class="message">{{ message }}</p>
       </div>
     </div>

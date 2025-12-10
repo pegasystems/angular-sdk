@@ -149,6 +149,7 @@ export class TodoComponent implements OnInit, OnDestroy {
 
   deferLoadWorklistItems(responseData) {
     this.arAssignments$ = responseData.data;
+    this.surveyCase = this.surveyAssignment(this.arAssignments$);
   }
 
   surveyAssignment(assignmentsSource: any[]) {

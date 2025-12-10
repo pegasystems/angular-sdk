@@ -65,7 +65,6 @@ mat-nav-list {
 
 /* 2. Scale the icon up when hovering the list item */
 .horizontal-list mat-list-item:hover .circle-icon {
-  transform: scale(1.2); /* Zooms in by 20% - adjust this number as needed */
   cursor: pointer; /* Changes cursor to pointer to indicate interactivity */
 }
 
