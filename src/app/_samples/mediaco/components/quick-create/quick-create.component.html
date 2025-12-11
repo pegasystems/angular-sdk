@@ -7,6 +7,16 @@
       </div>
     </div>
     <div class="masonry-wrapper" appMasonry [masonryGap]="16" [masonryRowHeight]="1" masonryItemSelector=".card">
+      <ng-container *ngIf="!cases$">
+        <div class="card" *ngFor="let item of [1, 2, 3, 4]">
+          <div class="skeleton card-header-skeleton"></div>
+          <div class="card-body">
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-button"></div>
+          </div>
+        </div>
+      </ng-container>
       <ng-container *ngFor="let card of cases$; let i = index">
         <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: card }"></ng-container>
       </ng-container>

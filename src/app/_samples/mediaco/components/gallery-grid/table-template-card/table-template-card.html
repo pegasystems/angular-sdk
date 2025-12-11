@@ -1,7 +1,7 @@
 <mat-card class="m-card">
   <div class="m-row">
-    <div class="m-icon" [ngClass]="'bg-' + index">
-      <img class="m-icon-img" [src]="data.icon" [ngClass]="'color-' + index" />
+    <div class="m-icon" [ngClass]="'bg-' + index%6">
+      <img class="m-icon-img" [src]="data.icon" [ngClass]="'color-' + index%6" />
     </div>
     <div class="m-content">
       <div class="m-title">{{ data.title }}</div>

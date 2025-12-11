@@ -15,10 +15,19 @@
   </div>
   <div *ngIf="template === 'Table'">
     <div class="info-container">
-      <div class="info-item" *ngFor="let item of sourceList; index as i">
-        <div class="icon-wrapper" [ngClass]="'bg-' + i">
-          <img *ngIf="item.icon" [src]="item.icon" class="icon-img" [ngClass]="'color-' + i" />
-          <span *ngIf="!item.icon" class="icon-num" [ngClass]="'color-' + i">{{ item.number }}</span>
+      <div *ngIf="!sourceList">
+        <div class="info-item" *ngFor="let item of [1, 2, 3, 4, 5]">
+          <div class="skeleton icon-wrapper"></div>
+          <div class="content">
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+        </div>
+      </div>
+      <div class="info-item" *ngFor="let item of sourceList | slice: 0 : 5; index as i">
+        <div class="icon-wrapper" [ngClass]="'bg-' + (i % 6)">
+          <img *ngIf="item.icon" [src]="item.icon" class="icon-img" [ngClass]="'color-' + (i % 6)" />
+          <span *ngIf="!item.icon" class="icon-num" [ngClass]="'color-' + (i % 6)">{{ item.number }} </span>
         </div>
 
         <div class="content">
