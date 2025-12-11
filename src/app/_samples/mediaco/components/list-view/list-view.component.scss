@@ -36,6 +36,7 @@ $primary-purple: #9c27b0;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 28px;
 }
 
 .icon-wrapper {
@@ -170,7 +171,6 @@ $primary-purple: #9c27b0;
 
 .section-header {
   display: flex;
-  margin-bottom: 32px;
   padding: 0 4px;
 
   .title-group {
@@ -213,4 +213,9 @@ $primary-purple: #9c27b0;
 .carousel-footer:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.tilt-icon:hover {
+  transform: rotate(15deg);
+  transition: transform 0.1s ease-in-out;
 }

@@ -4,6 +4,8 @@ import { Utils, ListViewComponent as OOTBListViewComponent } from '@pega/angular
 import { CarouselComponent } from '../carousel/carousel.component';
 import { GalleryGridComponent } from '../gallery-grid/gallery-grid.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 interface ListViewProps {
   inheritedProps: any;
@@ -29,7 +31,7 @@ interface ListViewProps {
 
 @Component({
   selector: 'mediaco-list-view',
-  imports: [CommonModule, CarouselComponent, OOTBListViewComponent],
+  imports: [CommonModule, CarouselComponent, OOTBListViewComponent, MatIconButton, MatIcon],
   templateUrl: './list-view.component.html',
   styleUrl: './list-view.component.scss',
   providers: [Utils]

@@ -34,16 +34,16 @@
 }
 
 .background-image-style {
-  height: calc(20rem);
-  background-size: cover;
-  background-position: center center;
+  height: calc(18rem);
+  position: sticky;
+  top: var(--mat-toolbar-standard-height, 64px);
+  background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
+  z-index: 10;
 }
 
 .background-style {
-  background-color: transparent;
   color: var(--app-inverse-form-color);
   width: 100%;
-  height: 100%;
   text-align: center;
 }
 

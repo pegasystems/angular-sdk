@@ -1,12 +1,12 @@
-<div style="margin-bottom: '2rem'">
-  <div class="background-image-style">
-    <div class="background-style content">
-      <div>
-        <h1 class="title" [innerHTML]="title"></h1>
-        <p class="message">{{ message }}</p>
-      </div>
+<div class="background-image-style">
+  <div class="background-style content">
+    <div>
+      <h1 class="title" [innerHTML]="title"></h1>
+      <p class="message">{{ message }}</p>
     </div>
   </div>
+</div>
+<div class="scrollable-content">
   <div
     [ngClass]="{
       'psdk-grid-filter-1 psdk-main-content-section': this.layout$ === 'two-column',
