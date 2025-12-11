@@ -84,7 +84,7 @@
     "@angular-eslint/template-parser": "^20.3.0",
     "@angular/cli": "^19.2.15",
     "@angular/compiler-cli": "^19.2.14",
-    "@angular/language-service": "^19.2.14",
+    "@angular/language-service": "^21.0.4",
     "@chromatic-com/storybook": "^3.2.7",
     "@pega/angular-sdk-overrides": "~0.25.3",
     "@pega/configs": "^0.16.3",
