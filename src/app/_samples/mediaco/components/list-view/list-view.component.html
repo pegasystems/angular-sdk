@@ -7,6 +7,11 @@
         <div class="active-line"></div>
       </div>
     </div>
+    <div *ngIf="referenceDataPage === 'D_AccountHistoryList'" class="arrow-icon">
+      <button mat-icon-button (click)="openShowAll()" class="tilt-icon">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
   </div>
   <div *ngIf="template === 'Table'">
     <div class="info-container">
@@ -41,6 +46,6 @@
     </div>
   </div>
   <div class="carousel-footer">
-    <a mat-button color="primary" *ngIf="referenceDataPage !== 'D_TrendingItemsList'" (click)="openShowAll()">Show All</a>
+    <a mat-button color="primary" *ngIf="referenceDataPage !== 'D_TrendingItemsList' && template === 'Gallery'" (click)="openShowAll()">Show All</a>
   </div>
 </ng-template>
