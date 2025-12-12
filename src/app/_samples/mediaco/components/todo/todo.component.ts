@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { publicConstants } from '@pega/pcore-pconnect-typedefs/constants';
-import { ProgressSpinnerService } from '@pega/angular-sdk-components';
+import { ProgressSpinnerService, TodoComponent as OOTBTodoComponent } from '@pega/angular-sdk-components';
 import { ErrorMessagesService } from '@pega/angular-sdk-components';
 import { Utils } from '@pega/angular-sdk-components';
 import { updateWorkList } from '@pega/angular-sdk-components';
+import { NavbarService } from '../../services/navbar.service';
 
 const fetchMyWorkList = (datapage, fields, numberOfRecords, includeTotalCount, context) => {
   return PCore.getDataPageUtils()
@@ -57,13 +58,14 @@ interface ToDoProps {
   myWorkList?: any;
   label?: string;
   readOnly?: boolean;
+  isMyWorklistChecked?: boolean;
 }
 
 @Component({
-  selector: 'app-todo',
+  selector: 'app-mediaco-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
-  imports: [CommonModule, MatIcon]
+  imports: [CommonModule, MatIcon, OOTBTodoComponent]
 })
 export class TodoComponent implements OnInit, OnDestroy {
   img = this.utils.getImageSrc('message-circle', this.utils.getSDKStaticContentUrl());
@@ -84,10 +86,12 @@ export class TodoComponent implements OnInit, OnDestroy {
   CONSTS: typeof publicConstants;
   bLogging = true;
   surveyCase: any[];
+  isMyWorklistChecked: boolean | undefined;
   constructor(
     private psService: ProgressSpinnerService,
     private erService: ErrorMessagesService,
-    private utils: Utils
+    private utils: Utils,
+    public navbar: NavbarService
   ) {}
 
   ngOnInit() {
@@ -120,7 +124,7 @@ export class TodoComponent implements OnInit, OnDestroy {
 
   updateToDo() {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps()) as ToDoProps;
-
+    this.isMyWorklistChecked = this.configProps$?.isMyWorklistChecked;
     this.headerText$ = this.headerText$ || this.configProps$.headerText;
     this.datasource$ = this.datasource$ || this.configProps$.datasource;
     this.myWorkList$ = this.myWorkList$ || this.configProps$.myWorkList;

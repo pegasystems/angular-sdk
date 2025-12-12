@@ -11,6 +11,7 @@ import { AngularPConnectData, AngularPConnectService, ComponentMapperComponent }
 import { logout } from '@pega/auth/lib/sdk-auth-manager';
 import { Utils } from '@pega/angular-sdk-components';
 import { FooterComponent } from 'src/app/_samples/mediaco/components/footer/footer.component';
+import { NavbarService } from '../../services/navbar.service';
 
 // interface WssNavBarProps {
 //   // If any, enter additional props that only exist on this component
@@ -74,7 +75,8 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
     // private cdRef: ChangeDetectorRef,
     // private psService: ProgressSpinnerService,
     private ngZone: NgZone,
-    private utils: Utils
+    private utils: Utils,
+    private navbarService: NavbarService
   ) {}
 
   ngOnInit(): void {
@@ -163,6 +165,7 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
 
   toggleMenu() {
     this.collapsed = !this.collapsed;
+    this.navbarService.toggleCollapse();
   }
 
   // navPanelCreateButtonClick() {

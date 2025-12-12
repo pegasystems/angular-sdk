@@ -1,19 +1,37 @@
-<div *ngIf="surveyCase">
-  <div class="banner-container">
-    <div class="icon-wrapper">
-      <div class="icon-box">
-        <img class="quick-link-icon" [src]="img" />
+<app-todo
+  *ngIf="!isMyWorklistChecked; else mediacoTodo"
+  [pConn$]="pConn$"
+  [caseInfoID$]="caseInfoID$"
+  [datasource$]="datasource$"
+  [showTodoList$]="showTodoList$"
+  [headerText$]="headerText$"
+  type$="TODO"
+  [context$]="context$"
+  isConfirm="true"
+></app-todo>
+<ng-template #mediacoTodo>
+  <div *ngIf="surveyCase">
+    <div
+      class="banner-container"
+      [ngStyle]="{
+        left: navbar.isCollapsed() ? '32%' : '37%'
+      }"
+    >
+      <div class="icon-wrapper">
+        <div class="icon-box">
+          <img class="quick-link-icon" [src]="img" />
+        </div>
+      </div>
+      <div class="content-text">
+        <h2>Share Your Experience</h2>
+        <p>Take a quick survey about your recent experience with MediaCo.</p>
+      </div>
+      <div class="action-wrapper">
+        <button (click)="clickGo(surveyCase)" class="start-btn">
+          Start
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </div>
     </div>
-    <div class="content-text">
-      <h2>Share Your Experience</h2>
-      <p>Take a quick survey about your recent experience with MediaCo.</p>
-    </div>
-    <div class="action-wrapper">
-      <button (click)="clickGo(surveyCase)" class="start-btn">
-        Start
-        <mat-icon>arrow_forward</mat-icon>
-      </button>
-    </div>
   </div>
-</div>
+</ng-template>
