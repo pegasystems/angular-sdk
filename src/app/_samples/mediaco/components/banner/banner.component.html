@@ -3,7 +3,9 @@
     <div style="justify-content: center; display: inline-grid">
       <h1 class="title" [innerHTML]="title"></h1>
       <p class="message">{{ message }}</p>
-      <ng-template [cdkPortalOutlet]="templatePortal$ | async"></ng-template>
+
+      <!-- The portal content will be rendered here -->
+      <ng-container *cdkPortalOutlet="portal$ | async"></ng-container>
     </div>
   </div>
 </div>

@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Component, Input, forwardRef } from '@angular/core';
+import { PortalModule, TemplatePortal } from '@angular/cdk/portal';
+import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { ComponentMapperComponent } from '@pega/angular-sdk-components';
-import { PortalModule } from '@angular/cdk/portal';
-import { TodoPortalService } from '../../services/todoportal.service';
+import { PortalService } from '../../services/portal.service';
 
 @Component({
   selector: 'app-banner',
@@ -22,11 +24,12 @@ export class BannerComponent {
   @Input() backgroundImage: string;
   @Input() layout$: string;
 
-  public templatePortal$: any;
-  constructor(private todoportalService: TodoPortalService) {}
+  portal$: Observable<TemplatePortal<any> | null>;
+
+  constructor(private portalService: PortalService) {}
 
   ngOnInit() {
-    this.templatePortal$ = this.todoportalService.portal$;
+    this.portal$ = this.portalService.getPortal().pipe(delay(0));
   }
 
   getUrl() {

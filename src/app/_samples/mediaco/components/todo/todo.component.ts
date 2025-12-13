@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, Input, ViewContainerRef, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { MatIcon } from '@angular/material/icon';
 import { publicConstants } from '@pega/pcore-pconnect-typedefs/constants';
 import { ProgressSpinnerService, TodoComponent as OOTBTodoComponent } from '@pega/angular-sdk-components';
 import { ErrorMessagesService } from '@pega/angular-sdk-components';
 import { Utils } from '@pega/angular-sdk-components';
 import { updateWorkList } from '@pega/angular-sdk-components';
-import { TemplatePortal } from '@angular/cdk/portal';
-import { TodoPortalService } from '../../services/todoportal.service';
+import { PortalService } from '../../services/portal.service';
 
 const fetchMyWorkList = (datapage, fields, numberOfRecords, includeTotalCount, context) => {
   return PCore.getDataPageUtils()
@@ -88,10 +88,10 @@ export class TodoComponent implements OnInit, OnDestroy {
   bLogging = true;
   surveyCase: any[];
   isMyWorklistChecked: boolean | undefined;
-  @ViewChild('mediacoTodo') private mediacoTodoTemplate: TemplateRef<any>;
+  @ViewChild('mediacoTodo', { read: TemplateRef }) private mediacoTodoTemplate: TemplateRef<any>;
 
   constructor(
-    private todoportalService: TodoPortalService,
+    private portalService: PortalService,
     private viewContainerRef: ViewContainerRef,
     private psService: ProgressSpinnerService,
     private erService: ErrorMessagesService,
@@ -114,7 +114,7 @@ export class TodoComponent implements OnInit, OnDestroy {
     const portal = new TemplatePortal(this.mediacoTodoTemplate, this.viewContainerRef);
 
     // Set the portal in the shared service
-    this.todoportalService.setPortal(portal);
+    this.portalService.setPortal(portal);
   }
 
   ngOnDestroy() {
@@ -123,6 +123,8 @@ export class TodoComponent implements OnInit, OnDestroy {
     PCore.getPubSubUtils().unsubscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'updateToDo');
     PCore.getPubSubUtils().unsubscribe(CREATE_STAGE_SAVED, CREATE_STAGE_SAVED);
     PCore.getPubSubUtils().unsubscribe(CREATE_STAGE_DELETED, CREATE_STAGE_DELETED);
+
+    this.portalService.clearPortal();
   }
 
   updateList() {
