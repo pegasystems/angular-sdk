@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Component, Input, forwardRef } from '@angular/core';
 import { ComponentMapperComponent } from '@pega/angular-sdk-components';
+import { PortalModule } from '@angular/cdk/portal';
+import { TodoPortalService } from '../../services/todoportal.service';
 
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.scss'],
-  imports: [CommonModule, forwardRef(() => ComponentMapperComponent)]
+  imports: [CommonModule, PortalModule, forwardRef(() => ComponentMapperComponent)]
 })
 export class BannerComponent {
   @Input() pConn$: typeof PConnect;
@@ -19,6 +21,13 @@ export class BannerComponent {
   @Input() message: any;
   @Input() backgroundImage: string;
   @Input() layout$: string;
+
+  public templatePortal$: any;
+  constructor(private todoportalService: TodoPortalService) {}
+
+  ngOnInit() {
+    this.templatePortal$ = this.todoportalService.portal$;
+  }
 
   getUrl() {
     return `url(${this.backgroundImage})`;

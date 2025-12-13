@@ -4,6 +4,7 @@ $text-white: #ffffff;
 $btn-text-color: #5c4498;
 
 .banner-container {
+  width: 670px;
   font-family: $font-family;
   background: linear-gradient(135deg, rgb(103, 80, 164) 0%, rgb(248, 20, 227) 50%, rgb(0, 201, 255) 100%) 0% 0% / 200% 200%;
 
@@ -20,11 +21,6 @@ $btn-text-color: #5c4498;
     text-align: center;
     padding: 32px 24px;
   }
-
-  position: fixed;
-  z-index: 10;
-  // left: 30%;
-  top: 15rem;
 }
 
 .icon-wrapper {
@@ -46,7 +42,7 @@ $btn-text-color: #5c4498;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
 
   h2 {
     margin: 0 0 6px 0;

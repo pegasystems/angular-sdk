@@ -1,5 +1,5 @@
 <app-todo
-  *ngIf="!isMyWorklistChecked; else mediacoTodo"
+  *ngIf="!isMyWorklistChecked"
   [pConn$]="pConn$"
   [caseInfoID$]="caseInfoID$"
   [datasource$]="datasource$"
@@ -8,15 +8,11 @@
   type$="TODO"
   [context$]="context$"
   isConfirm="true"
-></app-todo>
+>
+</app-todo>
 <ng-template #mediacoTodo>
   <div *ngIf="surveyCase">
-    <div
-      class="banner-container"
-      [ngStyle]="{
-        left: navbar.isCollapsed() ? '32%' : '37%'
-      }"
-    >
+    <div class="banner-container">
       <div class="icon-wrapper">
         <div class="icon-box">
           <img class="quick-link-icon" [src]="img" />

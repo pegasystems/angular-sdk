@@ -1,8 +1,9 @@
 <div class="background-image-style">
   <div class="background-style content">
-    <div>
+    <div style="justify-content: center; display: inline-grid">
       <h1 class="title" [innerHTML]="title"></h1>
       <p class="message">{{ message }}</p>
+      <ng-template [cdkPortalOutlet]="templatePortal$ | async"></ng-template>
     </div>
   </div>
 </div>

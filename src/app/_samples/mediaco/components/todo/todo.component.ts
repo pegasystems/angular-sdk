@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewContainerRef, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { publicConstants } from '@pega/pcore-pconnect-typedefs/constants';
@@ -6,7 +6,8 @@ import { ProgressSpinnerService, TodoComponent as OOTBTodoComponent } from '@peg
 import { ErrorMessagesService } from '@pega/angular-sdk-components';
 import { Utils } from '@pega/angular-sdk-components';
 import { updateWorkList } from '@pega/angular-sdk-components';
-import { NavbarService } from '../../services/navbar.service';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { TodoPortalService } from '../../services/todoportal.service';
 
 const fetchMyWorkList = (datapage, fields, numberOfRecords, includeTotalCount, context) => {
   return PCore.getDataPageUtils()
@@ -87,11 +88,14 @@ export class TodoComponent implements OnInit, OnDestroy {
   bLogging = true;
   surveyCase: any[];
   isMyWorklistChecked: boolean | undefined;
+  @ViewChild('mediacoTodo') private mediacoTodoTemplate: TemplateRef<any>;
+
   constructor(
+    private todoportalService: TodoPortalService,
+    private viewContainerRef: ViewContainerRef,
     private psService: ProgressSpinnerService,
     private erService: ErrorMessagesService,
-    private utils: Utils,
-    public navbar: NavbarService
+    private utils: Utils
   ) {}
 
   ngOnInit() {
@@ -103,6 +107,14 @@ export class TodoComponent implements OnInit, OnDestroy {
     PCore.getPubSubUtils().subscribe(CREATE_STAGE_DELETED, () => this.updateList(), CREATE_STAGE_DELETED);
 
     this.updateToDo();
+  }
+
+  ngAfterViewInit() {
+    // Create a TemplatePortal from the template and its view context
+    const portal = new TemplatePortal(this.mediacoTodoTemplate, this.viewContainerRef);
+
+    // Set the portal in the shared service
+    this.todoportalService.setPortal(portal);
   }
 
   ngOnDestroy() {
