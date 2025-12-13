@@ -74,7 +74,6 @@ export class ListViewComponent implements OnInit {
       .getDataAsync(this.referenceDataPage, this.pConn$.getContextName())
       .then(({ data }) => {
         this.modifyListData(data);
-        console.log(data);
       });
   }
 

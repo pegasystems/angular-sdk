@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewContainerRef, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { MatIcon } from '@angular/material/icon';
 import { publicConstants } from '@pega/pcore-pconnect-typedefs/constants';
-import { ProgressSpinnerService } from '@pega/angular-sdk-components';
+import { ProgressSpinnerService, TodoComponent as OOTBTodoComponent } from '@pega/angular-sdk-components';
 import { ErrorMessagesService } from '@pega/angular-sdk-components';
 import { Utils } from '@pega/angular-sdk-components';
 import { updateWorkList } from '@pega/angular-sdk-components';
+import { PortalService } from '../../services/portal.service';
 
 const fetchMyWorkList = (datapage, fields, numberOfRecords, includeTotalCount, context) => {
   return PCore.getDataPageUtils()
@@ -57,13 +59,14 @@ interface ToDoProps {
   myWorkList?: any;
   label?: string;
   readOnly?: boolean;
+  isMyWorklistChecked?: boolean;
 }
 
 @Component({
-  selector: 'app-todo',
+  selector: 'app-mediaco-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
-  imports: [CommonModule, MatIcon]
+  imports: [CommonModule, MatIcon, OOTBTodoComponent]
 })
 export class TodoComponent implements OnInit, OnDestroy {
   img = this.utils.getImageSrc('message-circle', this.utils.getSDKStaticContentUrl());
@@ -84,7 +87,12 @@ export class TodoComponent implements OnInit, OnDestroy {
   CONSTS: typeof publicConstants;
   bLogging = true;
   surveyCase: any[];
+  isMyWorklistChecked: boolean | undefined;
+  @ViewChild('mediacoTodo', { read: TemplateRef }) private mediacoTodoTemplate: TemplateRef<any>;
+
   constructor(
+    private portalService: PortalService,
+    private viewContainerRef: ViewContainerRef,
     private psService: ProgressSpinnerService,
     private erService: ErrorMessagesService,
     private utils: Utils
@@ -101,12 +109,22 @@ export class TodoComponent implements OnInit, OnDestroy {
     this.updateToDo();
   }
 
+  ngAfterViewInit() {
+    // Create a TemplatePortal from the template and its view context
+    const portal = new TemplatePortal(this.mediacoTodoTemplate, this.viewContainerRef);
+
+    // Set the portal in the shared service
+    this.portalService.setPortal(portal);
+  }
+
   ngOnDestroy() {
     const { CREATE_STAGE_SAVED, CREATE_STAGE_DELETED } = PCore.getEvents().getCaseEvent();
 
     PCore.getPubSubUtils().unsubscribe(PCore.getConstants().PUB_SUB_EVENTS.EVENT_CANCEL, 'updateToDo');
     PCore.getPubSubUtils().unsubscribe(CREATE_STAGE_SAVED, CREATE_STAGE_SAVED);
     PCore.getPubSubUtils().unsubscribe(CREATE_STAGE_DELETED, CREATE_STAGE_DELETED);
+
+    this.portalService.clearPortal();
   }
 
   updateList() {
@@ -120,7 +138,7 @@ export class TodoComponent implements OnInit, OnDestroy {
 
   updateToDo() {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps()) as ToDoProps;
-
+    this.isMyWorklistChecked = this.configProps$?.isMyWorklistChecked;
     this.headerText$ = this.headerText$ || this.configProps$.headerText;
     this.datasource$ = this.datasource$ || this.configProps$.datasource;
     this.myWorkList$ = this.myWorkList$ || this.configProps$.myWorkList;
