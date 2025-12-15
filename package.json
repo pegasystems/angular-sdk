@@ -59,7 +59,7 @@
     "@angular/core": "^19.2.14",
     "@angular/forms": "^19.2.14",
     "@angular/platform-browser": "^19.2.14",
-    "@angular/platform-browser-dynamic": "^19.2.14",
+    "@angular/platform-browser-dynamic": "^21.0.5",
     "@angular/router": "^19.2.14",
     "@pega/angular-sdk-components": "~0.25.3",
     "@pega/auth": "~0.2.33",
