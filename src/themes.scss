@@ -267,6 +267,16 @@
   );
 }
 
+.mediaCoTheme {
+  @include mat.theme(
+    (
+      color: mat.$magenta-palette,
+      typography: Roboto,
+      density: 0
+    )
+  );
+}
+
 //Mixins
 @mixin generate-theme-vars() {
   --app-alert-error-color: rgb(82, 21, 8);
