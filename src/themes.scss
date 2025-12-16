@@ -267,7 +267,7 @@
   );
 }
 
-.mediaCoTheme {
+.mediaco {
   @include mat.theme(
     (
       color: mat.$magenta-palette,
