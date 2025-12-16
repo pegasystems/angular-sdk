@@ -43,8 +43,8 @@
           </div>
         </div>
         <div class="extra-content" *ngIf="item.rating" style="margin-left: auto">
-          <img [src]="utils.getImageSrc('star-solid', utils.getSDKStaticContentUrl())" class="star" />&nbsp;
-          {{ item.rating }}
+          <img [src]="utils.getImageSrc('star-solid', utils.getSDKStaticContentUrl())" class="star" />
+          <div>{{ item.rating }}</div>
         </div>
       </div>
     </div>
