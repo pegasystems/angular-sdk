@@ -80,7 +80,7 @@
               },
               "src/assets/img"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", "src/app/_samples/mediaco/mediaCoStyles.scss"],
             "scripts": ["./node_modules/tinymce/tinymce.min.js"],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
