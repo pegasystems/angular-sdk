@@ -9,9 +9,10 @@ app-flow-container {
   }
 
   .psdk-flow-container-top {
-    background-color: var(--mat-sys-surface-container);
+    background-color: #fff;
     padding: 0.5rem 0.625rem;
-    border-radius: 0.3125rem;
+    border-top-left-radius: 2rem;
+    border-bottom: gray 0.0625rem solid;
   }
   .psdk-flow-container {
     padding-left: 2.1875rem;
