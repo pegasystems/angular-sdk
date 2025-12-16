@@ -1,0 +1,15 @@
+<div class="button-bar" *ngIf="arMainButtons$ && arSecondaryButtons$">
+  <div class="left-group">
+    <button
+      *ngFor="let aButton of arSecondaryButtons$"
+      mat-stroked-button
+      class="secondary-button"
+      (click)="buttonClick(aButton.jsAction, 'secondary')"
+    >
+      {{ localizedVal(aButton.name, localeCategory) }}
+    </button>
+    <button *ngFor="let aButton of arMainButtons$" mat-stroked-button class="main-button" (click)="buttonClick(aButton.jsAction, 'secondary')">
+      {{ localizedVal(aButton.name, localeCategory) }}
+    </button>
+  </div>
+</div>
