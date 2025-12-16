@@ -1,0 +1,17 @@
+.mediaCoTheme {
+  // Action Buttons styles for MediaCo sample app - start
+  .button-bar {
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  .right-group {
+    margin-left: 0 !important;
+  }
+
+  .secondary-button {
+    background-color: var(--app-sys-secondary-button-background) !important;
+    border-color: var(--app-sys-secondary-button-border) !important;
+  }
+  // Action Buttons styles for MediaCo sample app - end
+}
