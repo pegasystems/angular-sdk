@@ -12,25 +12,17 @@
         </div>
       </div>
       <div class="{{ _getVBodyClass(i) }}">
-        <ng-container *ngIf="mainStep?.steps">
-          <ul style="padding-inline-start: 0rem; margin-left: -7px">
-            <li *ngFor="let subStep of mainStep.steps" class="psdk-sub-step-list">
-              <div style="display: inline-flex">
-                <img *ngIf="subStep.visited_status == 'current'" class="psdk-current-svg-icon" src="{{ svgCurrent$ }}" />
-                <img *ngIf="subStep.visited_status != 'current'" class="psdk-not-current-svg-icon" src="{{ svgNotCurrent$ }}" />
-                <label *ngIf="subStep.visited_status == 'current'" class="psdk-sub-step-current">{{ subStep.name }}</label>
-                <label *ngIf="subStep.visited_status != 'current'" class="psdk-sub-step-not-current">{{ subStep.name }}</label>
-              </div>
-              <div *ngIf="subStep.visited_status == 'current'">
-                <component-mapper
-                  name="AssignmentCard"
-                  [props]="{ pConn$, formGroup$, arChildren$, arMainButtons$, arSecondaryButtons$ }"
-                  [parent]="this"
-                  [outputEvents]="{ actionButtonClick: onActionButtonClick }"
-                ></component-mapper>
-              </div>
-            </li>
-          </ul>
+        <ng-container *ngIf="mainStep?.steps && mainStep.visited_status == 'current'">
+          <div *ngFor="let subStep of mainStep.steps">
+            <div *ngIf="subStep.visited_status == 'current'">
+              <component-mapper
+                name="AssignmentCard"
+                [props]="{ pConn$, formGroup$, arChildren$, arMainButtons$, arSecondaryButtons$ }"
+                [parent]="this"
+                [outputEvents]="{ actionButtonClick: onActionButtonClick }"
+              ></component-mapper>
+            </div>
+          </div>
         </ng-container>
 
         <ng-container *ngIf="!mainStep?.steps && mainStep.visited_status == 'current'">
@@ -64,25 +56,17 @@
       </ng-container>
     </div>
     <div *ngFor="let mainStep of arNavigationSteps$" class="psdk-horizontal-stepper-body">
-      <ng-container *ngIf="mainStep?.steps">
-        <ul style="padding-inline-start: 0rem; margin-left: 35px">
-          <li *ngFor="let subStep of mainStep.steps" class="psdk-sub-step-list">
-            <div style="display: inline-flex">
-              <img *ngIf="subStep.visited_status == 'current'" class="psdk-current-svg-icon" src="{{ svgCurrent$ }}" />
-              <img *ngIf="subStep.visited_status != 'current'" class="psdk-not-current-svg-icon" src="{{ svgNotCurrent$ }}" />
-              <label *ngIf="subStep.visited_status == 'current'" class="psdk-sub-step-current">{{ subStep.name }}</label>
-              <label *ngIf="subStep.visited_status != 'current'" class="psdk-sub-step-not-current">{{ subStep.name }}</label>
-            </div>
-            <div *ngIf="subStep.visited_status == 'current'">
-              <component-mapper
-                name="AssignmentCard"
-                [props]="{ pConn$, formGroup$, arChildren$, arMainButtons$, arSecondaryButtons$ }"
-                [parent]="this"
-                [outputEvents]="{ actionButtonClick: onActionButtonClick }"
-              ></component-mapper>
-            </div>
-          </li>
-        </ul>
+      <ng-container *ngIf="mainStep?.steps && mainStep.visited_status == 'current'">
+        <div *ngFor="let subStep of mainStep.steps">
+          <div *ngIf="subStep.visited_status == 'current'">
+            <component-mapper
+              name="AssignmentCard"
+              [props]="{ pConn$, formGroup$, arChildren$, arMainButtons$, arSecondaryButtons$ }"
+              [parent]="this"
+              [outputEvents]="{ actionButtonClick: onActionButtonClick }"
+            ></component-mapper>
+          </div>
+        </div>
       </ng-container>
 
       <ng-container *ngIf="!mainStep?.steps && mainStep.visited_status == 'current'">
