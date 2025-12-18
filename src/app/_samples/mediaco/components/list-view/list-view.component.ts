@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
+import { init } from './listViewHelpers';
+
 interface ListViewProps {
   inheritedProps: any;
   title: string | undefined;
@@ -46,6 +48,14 @@ export class ListViewComponent implements OnInit {
   referenceDataPage: string;
   caseTypeToActivityMap: any;
   title: string;
+  payload: any;
+  listContext: any = {};
+  ref: any = {};
+  showDynamicFields: boolean | undefined;
+  cosmosTableRef: any;
+  selectionMode: string | undefined;
+  fieldDefs: any;
+  columns: any[];
 
   constructor(
     public utils: Utils,
@@ -65,11 +75,35 @@ export class ListViewComponent implements OnInit {
     this.configProps$ = this.pConn$.getConfigProps() as ListViewProps;
     this.template = this.configProps$.presets[0]?.template;
     this.title = this.configProps$.title || '';
-    this.getListData();
+    this.showDynamicFields = this.configProps$?.showDynamicFields;
+    this.selectionMode = this.configProps$.selectionMode;
+
+    if (this.configProps$) {
+      if (!this.payload) {
+        this.payload = { referenceList: this.configProps$.referenceList };
+      }
+      init({
+        pConn$: this.pConn$,
+        bInForm$: this.bInForm$,
+        ...this.payload,
+        listContext: this.listContext,
+        ref: this.ref,
+        showDynamicFields: this.showDynamicFields,
+        cosmosTableRef: this.cosmosTableRef,
+        selectionMode: this.selectionMode
+      }).then(response => {
+        this.listContext = response;
+        this.getListData();
+      });
+    }
   }
 
   getListData() {
+    this.fieldDefs = this.listContext.meta.fieldDefs;
     this.referenceDataPage = this.configProps$.referenceList;
+    const componentConfig = this.pConn$.getComponentConfig();
+    const columnFields = componentConfig.presets[0].children[0].children;
+    this.columns = this.getHeaderCells(columnFields, this.fieldDefs);
     PCore.getDataPageUtils()
       .getDataAsync(this.referenceDataPage, this.pConn$.getContextName())
       .then(({ data }) => {
@@ -83,9 +117,9 @@ export class ListViewComponent implements OnInit {
         const caseType = this.caseTypeToActivityMap[item.ActivityType];
         return {
           icon: this.utils.getImageSrc(this.getIcon(caseType), this.utils.getSDKStaticContentUrl()),
-          title: item.ActivityType,
-          title_subtext: this.timeSince(new Date(item.pxUpdateDateTime || item.pxCreateDateTime)),
-          description: item.Description
+          title: this.columns[0] ? item[this.columns[0]?.id] : undefined,
+          title_subtext: this.columns[2] ? this.timeSince(new Date(item[this.columns[2]?.id] || item.pxCreateDateTime)) : undefined,
+          description: this.columns[1] ? item[this.columns[1]?.id] : undefined
         };
       });
       return;
@@ -94,10 +128,10 @@ export class ListViewComponent implements OnInit {
       this.sourceList = data.map((item, index) => {
         return {
           number: index + 1,
-          title: item.Name,
-          description: item.Genere,
-          description_subtext: item.Views + ' views',
-          rating: item.Rating
+          title: this.columns[0] ? item[this.columns[0]?.id] : undefined,
+          description: this.columns[1] ? item[this.columns[1]?.id] : undefined,
+          description_subtext: this.columns[2] ? item[this.columns[2]?.id] + ' views' : undefined,
+          rating: item[this.columns[3]?.id]
         };
       });
       return;
@@ -172,6 +206,35 @@ export class ListViewComponent implements OnInit {
         dataPage: this.referenceDataPage,
         items: this.sourceList
       }
+    });
+  }
+
+  private getHeaderCells(colFields, fields) {
+    const AssignDashObjects = ['Assign-Worklist', 'Assign-WorkBasket'];
+    return colFields.map((field: any, index) => {
+      let theField = field.config.value.substring(field.config.value.indexOf(' ') + 1);
+      if (theField.indexOf('.') === 0) {
+        theField = theField.substring(1);
+      }
+      const colIndex = fields.findIndex(ele => ele.name === theField);
+      const displayAsLink = field.config.displayAsLink;
+      const headerRow: any = {};
+      headerRow.id = fields[index].id;
+      headerRow.type = field.type;
+      headerRow.displayAsLink = displayAsLink;
+      headerRow.numeric = field.type === 'Decimal' || field.type === 'Integer' || field.type === 'Percentage' || field.type === 'Currency' || false;
+      headerRow.disablePadding = false;
+      headerRow.label = fields[index].label;
+      if (colIndex > -1) {
+        headerRow.classID = fields[colIndex].classID;
+      }
+      if (displayAsLink) {
+        headerRow.isAssignmentLink = AssignDashObjects.includes(headerRow.classID);
+        if (field.config.value?.startsWith('@CA')) {
+          headerRow.isAssociation = true;
+        }
+      }
+      return headerRow;
     });
   }
 }
