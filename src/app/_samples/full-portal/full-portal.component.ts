@@ -83,7 +83,7 @@ export class FullPortalComponent implements OnInit, OnDestroy {
     // Add event listener for when logged out
     document.addEventListener('SdkLoggedOut', () => {
       this.bLoggedIn$ = false;
-      sessionStorage.removeItem('asdk_portalName');
+      sessionStorage.clear();
     });
 
     /* Login if needed */
