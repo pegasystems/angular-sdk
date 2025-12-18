@@ -34,11 +34,11 @@
 }
 
 .background-image-style {
-  height: calc(20rem);
   position: sticky;
   top: var(--mat-toolbar-standard-height, 64px);
   background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
   z-index: 10;
+  padding-bottom: 2rem;
 }
 
 .background-style {
