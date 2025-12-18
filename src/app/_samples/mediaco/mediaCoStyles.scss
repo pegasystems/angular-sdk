@@ -14,4 +14,14 @@
     border-color: var(--app-sys-secondary-button-border) !important;
   }
   // Action Buttons styles for MediaCo sample app - end
+
+  // Self Service Case View styles for MediaCo sample app - start
+  .psdk-flow-container-top {
+    background-color: #fff !important;
+    padding: 0.5rem 0.625rem !important;
+    border-radius: 0 !important;
+    border-top-left-radius: 2rem !important;
+    border-bottom: gray 0.0625rem solid !important;
+  }
+  // Self Service Case View styles for MediaCo sample app - end
 }
