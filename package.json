@@ -92,7 +92,7 @@
     "@pega/dx-component-builder-sdk": "~24.2.14",
     "@pega/pcore-pconnect-typedefs": "~4.1.0",
     "@playwright/test": "^1.54.2",
-    "@storybook/addon-a11y": "8.6.14",
+    "@storybook/addon-a11y": "10.1.10",
     "@storybook/addon-essentials": "8.6.14",
     "@storybook/addon-interactions": "8.6.14",
     "@storybook/addon-links": "8.6.14",
