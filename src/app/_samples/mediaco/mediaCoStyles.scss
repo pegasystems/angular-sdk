@@ -2,7 +2,8 @@
   // Action Buttons styles for MediaCo sample app - start
   .button-bar {
     gap: 1rem;
-    margin-top: 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
   }
 
   .right-group {
@@ -14,4 +15,23 @@
     border-color: var(--app-sys-secondary-button-border) !important;
   }
   // Action Buttons styles for MediaCo sample app - end
+
+  // Self Service Case View styles for MediaCo sample app - start
+  .psdk-flow-container-top {
+    background-color: #fff !important;
+    padding: 2rem !important;
+    border-radius: 0 !important;
+    border-top-left-radius: 2rem !important;
+    border-bottom: gray 0.0625rem solid !important;
+
+    h2 {
+      color: #46185a;
+      font-weight: 700;
+      font-size: 36px;
+      padding-left: 1rem;
+      padding-top: 0.75rem;
+      margin: 0;
+    }
+  }
+  // Self Service Case View styles for MediaCo sample app - end
 }
