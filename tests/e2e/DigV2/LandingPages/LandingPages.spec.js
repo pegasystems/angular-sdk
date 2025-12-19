@@ -47,7 +47,7 @@ test.describe('E2E test', () => {
     await common.createCase('View Templates', page);
 
     /** Click on the `Home` landing page */
-    const homeLandingPage = page.locator('mat-list-item > span:has-text("Home")');
+    const homeLandingPage = page.locator('mat-list-item > span').filter({ hasText: /^DigV2$/ });
     await homeLandingPage.click();
 
     /** Test whether Home has loaded as expected */
