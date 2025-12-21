@@ -5,41 +5,31 @@
   "theme": "light",
   "authConfig": {
     "authService": "pega",
-
     "mashupClient_comment": "Client ID and Client secret from the OAuth 2.0 Client Registration record used for mashup use case",
     "mashupClient_comment2": "See SDK Guide for instructions on how to generate and obtain the proper values for the following entries",
     "mashupClientId": "69184022781147469983",
     "mashupUserIdentifier": "customer@mediaco",
     "mashupClient_comment3": "Note: mashupPassword requires Base64 encoding",
     "mashupPassword": "",
-
     "portalClientId_comment": "Client ID from the OAuth 2.0 Client Registration record used for portal use case",
     "portalClientId": "69184022781147469983"
   },
-
   "serverConfig": {
     "infinityRestServerUrl_comment": "Full path to Infinity REST server",
     "infinityRestServerUrl": "https://localhost:1080/prweb",
-
     "appAlias_comment": "appAlias of the application which operators will be accessing (e.g., MediaCo)",
     "appAlias": "",
-
     "sdkContentServerUrl_comment": "If specified, the given URL will be used. If left blank, window.location.origin will be used.",
     "sdkContentServerUrl": "",
-
     "appPortal_comment": "If specified, the given appPortal will be loaded. If left blank, the operator's default Portal is used. Ignored for Embedded use",
     "appPortal": "",
-
     "appMashupCaseType_comment": "If specified, uses this case type for mashup.  Otherwise, uses the first case type found for the app",
     "appMashupCaseType": "DIXL-MediaCo-Work-PurchasePhone",
-
     "excludePortals_comment": "Array of specific portals to avoid attempting to load with SDK",
     "excludePortals": ["pxExpress", "Developer", "pxPredictionStudio", "pxAdminStudio", "pyCaseWorker", "pyCaseManager7"],
-
     "showModalsInEmbeddedMode_comment": "If true, modals will be shown in embedded mode",
     "showModalsInEmbeddedMode": false
   },
-
   "dxcbConfig": {
     "publishAccess": {
       "rulesetName": "CustomDXComponents",
@@ -60,7 +50,6 @@
       "user": "",
       "password": ""
     },
-
     "componentDefaults": {
       "organization": "YourOrg",
       "library": "YourComponentLib",
@@ -71,7 +60,6 @@
       "icon": "",
       "lintAction": "show"
     },
-
     "componentTemplates": {
       "componentTemplates_comment": "Optional paths for location of custom or override templates.",
       "customTemplatesPath": "",

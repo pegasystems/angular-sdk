@@ -24,7 +24,7 @@
     border-top-left-radius: 2rem !important;
     border-bottom: gray 0.0625rem solid !important;
 
-    h2 {
+    h2:nth-child(1) {
       color: #46185a;
       font-weight: 700;
       font-size: 36px;
@@ -34,4 +34,20 @@
     }
   }
   // Self Service Case View styles for MediaCo sample app - end
+
+  // Confirmation screen styles for MediaCo sample app - start
+  .done-button {
+    justify-content: start !important;
+    padding-inline: 1rem;
+
+    button {
+      color: var(--mdc-filled-button-label-text-color, var(--mat-sys-on-primary));
+      background-color: var(--mdc-filled-button-container-color, var(--mat-sys-primary));
+      box-shadow: none;
+    }
+  }
+
+  .confirmation-details {
+    padding-inline: 1rem;
+  }
 }
