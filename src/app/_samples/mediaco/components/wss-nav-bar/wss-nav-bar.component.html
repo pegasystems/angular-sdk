@@ -12,8 +12,12 @@
       <!-- Home Button -->
       <!-- <div mat-list-item> -->
       <!-- Added 'nav-item-container' class for specific styling -->
-      <div class="flex-box nav-item-container toggle-header" [class.selected]="activePage === 'Self-service Main page'">
-        <button type="button" mat-icon-button [disableRipple]="true" (click)="navPanelButtonClick(homePage)">
+      <div
+        class="flex-box nav-item-container toggle-header"
+        (click)="navPanelButtonClick(homePage)"
+        [class.selected]="activePage === 'Self-service Main page'"
+      >
+        <button type="button" mat-icon-button [disableRipple]="true">
           <mat-icon>home</mat-icon>
         </button>
         <!-- Only show text if you want it in collapsed mode too, otherwise hide or style it -->
@@ -23,8 +27,12 @@
 
       <!-- Dynamic Pages -->
       <div *ngFor="let page of navPages$">
-        <div class="flex-box mat-list-item nav-item-container toggle-header" [class.selected]="activePage === page.pyLabel">
-          <button type="button" mat-icon-button [disableRipple]="true" (click)="navPanelButtonClick(page)">
+        <div
+          class="flex-box mat-list-item nav-item-container toggle-header"
+          (click)="navPanelButtonClick(page)"
+          [class.selected]="activePage === page.pyLabel"
+        >
+          <button type="button" mat-icon-button [disableRipple]="true">
             <mat-icon>dashboard</mat-icon>
           </button>
           <div mat-button class="psdk-nav-button-span">{{ page.pyDefaultHeading }}</div>
