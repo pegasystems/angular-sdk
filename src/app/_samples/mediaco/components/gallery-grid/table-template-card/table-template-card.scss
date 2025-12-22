@@ -1,9 +1,9 @@
 .m-card {
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 14px 16px;
-  transition: transform 0.2s;
+  padding: 18px;
+  transition: transform 0.1s;
 
   &:hover {
     transform: scale(1.01);
