@@ -19,20 +19,37 @@
   // Self Service Case View styles for MediaCo sample app - start
   .psdk-flow-container-top {
     background-color: #fff !important;
-    padding: 2rem !important;
-    border-radius: 0 !important;
-    border-top-left-radius: 2rem !important;
-    border-bottom: gray 0.0625rem solid !important;
+    padding: 0 !important;
 
     h2:nth-child(1) {
       color: #46185a;
       font-weight: 700;
-      font-size: 36px;
+      font-size: 20px;
       padding-left: 1rem;
-      padding-top: 0.75rem;
       margin: 0;
     }
   }
+
+  .psdk-self-service-case-view {
+    background-color: #fff !important;
+    padding: 1rem !important;
+    border-radius: 0 !important;
+    border-top-left-radius: 2rem !important;
+  }
+
+  .psdk-self-service-case-view-header {
+    background-color: transparent !important;
+    padding: 0 16px !important;
+    margin: 1rem 0rem;
+  }
+
+  .heading {
+    color: #46185a !important;
+    font-weight: 700;
+    font-size: 30px !important;
+    padding: 2rem 0rem;
+  }
+
   // Self Service Case View styles for MediaCo sample app - end
 
   // Confirmation screen styles for MediaCo sample app - start
