@@ -82,7 +82,7 @@
     "@angular-eslint/eslint-plugin": "^20.3.0",
     "@angular-eslint/eslint-plugin-template": "^20.3.0",
     "@angular-eslint/template-parser": "^20.3.0",
-    "@angular/cli": "^19.2.15",
+    "@angular/cli": "^21.0.4",
     "@angular/compiler-cli": "^19.2.14",
     "@angular/language-service": "^19.2.14",
     "@chromatic-com/storybook": "^3.2.7",
