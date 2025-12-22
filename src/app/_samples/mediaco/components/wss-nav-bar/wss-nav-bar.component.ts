@@ -7,15 +7,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AngularPConnectData, AngularPConnectService, ComponentMapperComponent } from '@pega/angular-sdk-components';
-// import { ProgressSpinnerService } from '@pega/angular-sdk-components';
 import { logout } from '@pega/auth/lib/sdk-auth-manager';
 import { Utils } from '@pega/angular-sdk-components';
 import { FooterComponent } from 'src/app/_samples/mediaco/components/footer/footer.component';
-
-// interface WssNavBarProps {
-//   // If any, enter additional props that only exist on this component
-//   showAppName: boolean;
-// }
 
 @Component({
   selector: 'app-wss-nav-bar',
@@ -45,15 +39,10 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
 
   // For interaction with AngularPConnect
   angularPConnectData: AngularPConnectData = {};
-  // configProps$: WssNavBarProps;
 
   navPages$: any[];
   navExpandCollapse$: string;
   bShowCaseTypes$ = false;
-
-  // portalApp$: string | undefined = '';
-  // portalLogoImage$: string;
-  // showAppName$ = false;
 
   portalOperator$: string | undefined;
   portalOperatorInitials$: string;
@@ -71,8 +60,6 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private angularPConnect: AngularPConnectService,
-    // private cdRef: ChangeDetectorRef,
-    // private psService: ProgressSpinnerService,
     private ngZone: NgZone,
     private utils: Utils
   ) {}
@@ -132,24 +119,13 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
       // making a copy, so can add info
       this.navPages$ = JSON.parse(JSON.stringify(this.pages$));
 
-      // this.navPages$.forEach(page => {
-      //   page.iconName = this.utils.getImageSrc(page.pxPageViewIcon, this.utils.getSDKStaticContentUrl()) ?? 'Dashboard';
-      // });
-
       this.actionsAPI = this.pConn$.getActionsApi();
       this.createWork = this.actionsAPI.createWork.bind(this.actionsAPI);
       this.showPage = this.actionsAPI.showPage.bind(this.actionsAPI);
-      // this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps()) as WssNavBarProps;
       this.logout = this.actionsAPI.logout.bind(this.actionsAPI);
 
-      // const oData = this.pConn$.getDataObject();
-
-      // this.portalLogoImage$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
       this.portalOperator$ = PCore.getEnvironmentInfo().getOperatorName();
       this.portalOperatorInitials$ = this.utils.getInitials(this.portalOperator$ ?? '');
-      // this.showAppName$ = this.configProps$.showAppName;
-
-      // this.portalApp$ = PCore.getEnvironmentInfo().getApplicationLabel();
     });
   }
 
@@ -164,28 +140,6 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
   toggleMenu() {
     this.collapsed = !this.collapsed;
   }
-
-  // navPanelCreateButtonClick() {
-  //   if (this.navExpandCollapse$.indexOf('plus') > 0) {
-  //     this.navExpandCollapse$ = this.utils.getImageSrc('times', this.utils.getSDKStaticContentUrl());
-  //     this.bShowCaseTypes$ = true;
-  //   } else {
-  //     this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.utils.getSDKStaticContentUrl());
-  //     this.bShowCaseTypes$ = false;
-  //   }
-  //   this.cdRef.detectChanges();
-  // }
-
-  // navPanelCreateCaseType(sCaseType: string, sFlowType: string) {
-  //   this.psService.sendMessage(true);
-  //   this.navPanelCreateButtonClick();
-
-  //   const actionInfo = {
-  //     containerName: 'primary',
-  //     flowType: sFlowType || 'pyStartCase'
-  //   };
-  //   this.createWork(sCaseType, actionInfo);
-  // }
 
   navPanelLogoutClick() {
     logout().then(() => {
