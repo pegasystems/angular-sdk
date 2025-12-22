@@ -11,41 +11,46 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  background: #f8f2fb;
 }
 
 .dialog-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
+  padding: 1.5rem 2rem;
   border-bottom: 1px solid #e0e0e0;
-  background: #fff;
   flex-shrink: 0;
 
   h2 {
+    letter-spacing: 0;
+    font-size: 45px;
+    font-weight: 400;
+    line-height: 52px;
     margin: 0;
-    font-size: 22px;
-    font-weight: 500;
   }
 }
 
 .grid-container {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 20px;
   padding: 24px;
   overflow-y: auto;
 }
 
 .grid-item {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 1.5rem;
+  overflow: hidden;
   background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0px 1px 2px 0px #0000004d,
+    0px 2px 6px 2px #00000026;
   transition: transform 0.2s;
   height: 240px;
 
@@ -56,21 +61,22 @@
 
   img {
     width: 100%;
-    height: 160px;
+    height: 100%;
     object-fit: cover;
     display: block;
   }
 
   p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     margin: 0;
     padding: 16px;
-    text-align: center;
     font-weight: 500;
-    color: #333;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #fff;
+    letter-spacing: 0.15px;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
@@ -78,11 +84,19 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
-  padding: 12px;
+  padding: 1.5rem 2rem;
   overflow-y: scroll;
 
   @media (min-width: 900px) {
     grid-template-columns: 1fr 1fr;
     gap: 22px;
   }
+}
+
+.count {
+  color: #6b7280;
+  letter-spacing: 0.25px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
 }
