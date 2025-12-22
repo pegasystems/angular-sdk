@@ -19,6 +19,10 @@
   row-gap: calc(2 * 0.5rem);
   align-items: start;
   padding: 1rem;
+
+  & > *:nth-child(1) {
+    min-width: 0;
+  }
 }
 
 .psdk-grid-filter-narrow-wide {

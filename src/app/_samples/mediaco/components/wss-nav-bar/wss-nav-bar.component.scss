@@ -189,3 +189,11 @@ mat-nav-list {
 .mat-drawer {
   background-color: #fef7ff !important;
 }
+
+.psdk-nav-header {
+  cursor: pointer;
+}
+
+::ng-deep .custom-menu-no-padding .mat-mdc-menu-content {
+  padding: 0 !important;
+}
