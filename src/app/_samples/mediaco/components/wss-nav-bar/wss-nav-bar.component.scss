@@ -11,31 +11,25 @@
 
 /* Ensure icons stay centered or aligned nicely when collapsed */
 mat-nav-list {
-  padding-top: 0;
-}
+  padding-block: 2rem;
+  padding-inline: 0.75rem;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 
-.menu-item-text {
-  margin-left: 10px;
-  white-space: nowrap; /* Prevents text wrapping during animation */
-}
-
-.content-padding {
-  padding: 20px;
+  &.collapsed-mode {
+    padding-inline: 3.5px;
+    align-items: center;
+  }
 }
 
 .horizontal-list {
   display: flex;
-  flex-direction: row; /* This turns the list sideways */
   padding: 0;
-  overflow-x: auto; /* Adds a scrollbar if items overflow */
-  /* Control the exact distance between items here */
+  overflow-x: auto;
   gap: 8px;
-
-  /* VITAL: Add a little vertical padding so the scaling doesn't hit the top/bottom edge */
-  //padding: 10px 0;
-
-  /* Ensure the list itself doesn't hide the vertical overflow of the icons */
-  //overflow-y: visible;
 }
 
 /* Optional: Adjust item spacing */
@@ -44,17 +38,7 @@ mat-nav-list {
 
   /* vital: overrides Angular Material's default item padding */
   padding: 0 !important;
-
-  //overflow: visible !important; /* Allow the icon to expand outside this box */
-  //position: relative; /* Required for z-index to work */
 }
-
-/* Targeted fix for the internal container (common in many Angular Material versions) */
-// .horizontal-list mat-list-item ::ng-deep .mat-list-item-content {
-//   justify-content: center !important; /* Horizontally center */
-//   align-items: center !important; /* Vertically center */
-//   display: flex !important;
-// }
 
 /* 1. Make the animation smooth */
 .horizontal-list mat-list-item .circle-icon {
@@ -67,11 +51,6 @@ mat-nav-list {
 .horizontal-list mat-list-item:hover .circle-icon {
   cursor: pointer; /* Changes cursor to pointer to indicate interactivity */
 }
-
-// .horizontal-list mat-list-item:hover {
-//   /* High z-index ensures the scaled icon floats ON TOP of its neighbors */
-//   z-index: 100;
-// }
 
 .circle-icon {
   /* 1. Make it a circle */
@@ -97,21 +76,12 @@ mat-nav-list {
 .nav-item-container {
   display: flex;
   align-items: center;
-  width: 100%;
-  padding: 8px 0;
+  justify-content: flex-start;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-
-  /*
-     EXPANDED MODE (Default)
-     Icon left, Text right
-  */
-  flex-direction: row;
-  justify-content: flex-start;
-  text-align: left;
+  padding: 8px 8px;
 
   .psdk-nav-button-span {
-    margin-left: 10px; /* Spacing between icon and text */
     opacity: 1;
     display: block;
   }
@@ -119,27 +89,67 @@ mat-nav-list {
   ::ng-deep .mat-mdc-button-persistent-ripple::before {
     background-color: transparent !important;
   }
+
+  &:hover,
+  &.active,
+  &.focus,
+  &.selected {
+    border-radius: 16px;
+    border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+    background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
+  }
+
+  &.selected {
+    color: #6750a4;
+    mat-icon {
+      color: #6750a4;
+    }
+  }
 }
 
-/*
-   COLLAPSED MODE
-   Icon top, Text bottom, Centered
-*/
+.nav-menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+  background-color: rgba(63, 81, 181, 0.1);
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ::ng-deep .mat-mdc-button-persistent-ripple::before {
+    background-color: transparent !important;
+  }
+}
+
+.collapsed-mode .nav-menu-container {
+  margin-inline: 0.75rem;
+}
+
+/* COLLAPSED MODE */
 .collapsed-mode .nav-item-container {
   flex-direction: column; /* Stacks items vertically */
   justify-content: center;
   align-items: center;
   text-align: center;
-  // height: 5rem;
+  width: 100%;
+  padding: 8px 0px;
 
   /* Adjust text for small space */
   .psdk-nav-button-span {
     margin-left: 0;
     margin-top: 4px; /* Spacing between icon and text */
-    font-size: 0.85rem; /* Smaller text to fit 5rem width */
+    font-size: 12px; /* Smaller text to fit 5rem width */
     line-height: 1.2;
     white-space: normal; /* Allow wrapping if needed */
     max-width: 100%;
+    padding-left: revert;
   }
 }
 
@@ -149,41 +159,6 @@ mat-nav-list {
 
 ::ng-deep .collapsed-mode.mat-sidenav-content {
   margin-left: 5.313rem !important;
-}
-
-/* Optional: Add spacing below the toggle button if needed */
-.toggle-header {
-  margin-bottom: 10px;
-}
-
-/*
-   ICON BORDER STYLES
-   Apply to the mat-icon-button inside the container
-*/
-// .nav-item-container button[mat-icon-button] {
-//   /* Add transparent border initially to prevent layout shift on hover */
-//   border: 2px solid transparent;
-//   border-radius: 50%; /* Ensure the border is circular */
-//   transition:
-//     border-color 0.2s ease,
-//     background-color 0.2s;
-// }
-
-/* Hover and Active states for the Icon */
-// .nav-item-container:hover button[mat-icon-button],
-// .nav-item-container button[mat-icon-button]:active,
-// .nav-item-container button[mat-icon-button]:focus {
-//   border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
-//   background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
-// }
-
-.nav-item-container:hover,
-.nav-item-container:active,
-.nav-item-container:focus,
-.nav-item-container.selected {
-  border-radius: 16px;
-  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
-  background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
 }
 
 .mat-drawer-container,
@@ -197,4 +172,26 @@ mat-nav-list {
 
 ::ng-deep .custom-menu-no-padding .mat-mdc-menu-content {
   padding: 0 !important;
+}
+
+/*
+ * Apply flexbox to the mat-sidenav-content to control the layout of its direct children.
+ * We're also ensuring it takes up at least the full height of the viewport.
+ */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .mat-toolbar-multiple-rows {
+    padding-top: 5px;
+  }
+}
+
+/*
+ * This tells the main content area to grow and take up any available
+ * free space, which pushes the footer down.
+ */
+.content-wrapper {
+  flex: 1;
 }
