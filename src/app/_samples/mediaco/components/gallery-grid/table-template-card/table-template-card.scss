@@ -1,9 +1,12 @@
 .m-card {
   border: 1px solid #e0e0e0;
   border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0px 1px 2px 0px #0000004d,
+    0px 2px 6px 2px #00000026;
   padding: 18px;
   transition: transform 0.1s;
+  background: #f3edf7;
 
   &:hover {
     transform: scale(1.01);
@@ -23,8 +26,8 @@
 }
 
 .m-icon {
-  min-width: 48px;
-  min-height: 48px;
+  min-width: 64px;
+  min-height: 64px;
   border-radius: 12px;
   display: grid;
   place-items: center;
@@ -41,12 +44,17 @@
   gap: 4px;
 }
 .m-title {
-  font-weight: 600;
-  color: #111827;
+  letter-spacing: 0;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #1d1b20;
 }
 .m-desc {
-  color: #6b7280;
+  letter-spacing: 0.25px;
   font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 .bg-0 {

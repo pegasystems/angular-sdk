@@ -197,10 +197,10 @@ export class ListViewComponent implements OnInit {
 
   openShowAll() {
     this.dialog.open(GalleryGridComponent, {
-      width: '60vw',
-      height: '70vh',
-      maxWidth: '95vw',
-      maxHeight: '95vh',
+      width: '100%',
+      height: '100%',
+      maxWidth: '1400px',
+      maxHeight: '90vh',
 
       data: {
         dataPage: this.referenceDataPage,
