@@ -37,7 +37,7 @@
       </div>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content [class.collapsed-mode]="collapsed">
+  <mat-sidenav-content [class.collapsed-mode]="collapsed" class="page-container">
     <!-- Top Toolbar -->
 
     <mat-toolbar style="position: sticky; top: 0; z-index: 10">
@@ -71,7 +71,7 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <div *ngFor="let kid of arChildren$">
+    <div class="content-wrapper" *ngFor="let kid of arChildren$">
       <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'">
         <component-mapper name="ViewContainer" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
       </div>

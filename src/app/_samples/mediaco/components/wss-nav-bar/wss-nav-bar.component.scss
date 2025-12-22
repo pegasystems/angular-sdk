@@ -218,3 +218,21 @@ mat-nav-list {
 ::ng-deep .custom-menu-no-padding .mat-mdc-menu-content {
   padding: 0 !important;
 }
+
+/*
+ * Apply flexbox to the mat-sidenav-content to control the layout of its direct children.
+ * We're also ensuring it takes up at least the full height of the viewport.
+ */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/*
+ * This tells the main content area to grow and take up any available
+ * free space, which pushes the footer down.
+ */
+.content-wrapper {
+  flex: 1;
+}
