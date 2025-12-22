@@ -1,16 +1,14 @@
 <mat-sidenav-container class="sidenav-container" autosize>
   <mat-sidenav #drawer class="sidenav" mode="side" opened="true" [style.width]="collapsed ? '5rem' : '15rem'">
-    <!-- Add [class.collapsed-mode]="collapsed" here -->
     <mat-nav-list [class.collapsed-mode]="collapsed">
       <!-- Toggle Button -->
-      <div class="nav-item-container toggle-header" (click)="toggleMenu()">
+      <div class="nav-menu-container toggle-header" (click)="toggleMenu()">
         <button type="button" mat-icon-button [disableRipple]="true">
           <mat-icon>{{ collapsed ? 'menu' : 'cancel' }}</mat-icon>
         </button>
       </div>
 
       <!-- Home Button -->
-      <!-- <div mat-list-item> -->
       <!-- Added 'nav-item-container' class for specific styling -->
       <div class="flex-box nav-item-container toggle-header" [class.selected]="activePage === 'Self-service Main page'">
         <button type="button" mat-icon-button [disableRipple]="true" (click)="navPanelButtonClick(homePage)">
@@ -19,7 +17,6 @@
         <!-- Only show text if you want it in collapsed mode too, otherwise hide or style it -->
         <div mat-button class="psdk-nav-button-span">Home</div>
       </div>
-      <!-- </div> -->
 
       <!-- Dynamic Pages -->
       <div *ngFor="let page of navPages$">

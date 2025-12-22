@@ -44,17 +44,7 @@ mat-nav-list {
 
   /* vital: overrides Angular Material's default item padding */
   padding: 0 !important;
-
-  //overflow: visible !important; /* Allow the icon to expand outside this box */
-  //position: relative; /* Required for z-index to work */
 }
-
-/* Targeted fix for the internal container (common in many Angular Material versions) */
-// .horizontal-list mat-list-item ::ng-deep .mat-list-item-content {
-//   justify-content: center !important; /* Horizontally center */
-//   align-items: center !important; /* Vertically center */
-//   display: flex !important;
-// }
 
 /* 1. Make the animation smooth */
 .horizontal-list mat-list-item .circle-icon {
@@ -67,11 +57,6 @@ mat-nav-list {
 .horizontal-list mat-list-item:hover .circle-icon {
   cursor: pointer; /* Changes cursor to pointer to indicate interactivity */
 }
-
-// .horizontal-list mat-list-item:hover {
-//   /* High z-index ensures the scaled icon floats ON TOP of its neighbors */
-//   z-index: 100;
-// }
 
 .circle-icon {
   /* 1. Make it a circle */
@@ -113,10 +98,61 @@ mat-nav-list {
     margin-left: 10px; /* Spacing between icon and text */
     opacity: 1;
     display: block;
+    padding-left: 1.5rem;
   }
 
   ::ng-deep .mat-mdc-button-persistent-ripple::before {
     background-color: transparent !important;
+  }
+
+  button {
+    padding-left: 1.5rem;
+  }
+}
+
+.nav-menu-container {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  transition: all 0.2s ease-in-out;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: left;
+
+  border-radius: 16px;
+  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+  background-color: rgba(63, 81, 181, 0.1);
+
+  width: 5rem;
+
+  ::ng-deep .mat-mdc-button-persistent-ripple::before {
+    background-color: transparent !important;
+  }
+
+  button {
+    padding-left: 1.5rem;
+  }
+
+  .psdk-nav-button-span {
+    padding-left: 1.5rem;
+  }
+}
+
+.collapsed-mode .nav-menu-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  border-radius: 16px;
+  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+  background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
+
+  button {
+    padding-left: revert;
+  }
+  .psdk-nav-button-span {
+    padding-left: revert;
   }
 }
 
@@ -139,6 +175,11 @@ mat-nav-list {
     line-height: 1.2;
     white-space: normal; /* Allow wrapping if needed */
     max-width: 100%;
+    padding-left: revert;
+  }
+
+  button {
+    padding-left: revert;
   }
 }
 
@@ -154,27 +195,6 @@ mat-nav-list {
 .toggle-header {
   margin-bottom: 10px;
 }
-
-/*
-   ICON BORDER STYLES
-   Apply to the mat-icon-button inside the container
-*/
-// .nav-item-container button[mat-icon-button] {
-//   /* Add transparent border initially to prevent layout shift on hover */
-//   border: 2px solid transparent;
-//   border-radius: 50%; /* Ensure the border is circular */
-//   transition:
-//     border-color 0.2s ease,
-//     background-color 0.2s;
-// }
-
-/* Hover and Active states for the Icon */
-// .nav-item-container:hover button[mat-icon-button],
-// .nav-item-container button[mat-icon-button]:active,
-// .nav-item-container button[mat-icon-button]:focus {
-//   border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
-//   background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
-// }
 
 .nav-item-container:hover,
 .nav-item-container:active,
