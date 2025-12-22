@@ -63,11 +63,11 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <div class="content-wrapper" *ngFor="let kid of arChildren$">
-      <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'">
+    <ng-container *ngFor="let kid of arChildren$">
+      <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'" class="content-wrapper">
         <component-mapper name="ViewContainer" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
       </div>
-    </div>
+    </ng-container>
     <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
