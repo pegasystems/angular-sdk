@@ -1,6 +1,9 @@
 <div class="dialog-content">
   <div class="dialog-header">
-    <h2 mat-dialog-title>All Content</h2>
+    <div>
+      <h2>{{data.dataPage === 'D_AccountHistoryList' ? 'All Activities' : 'Featured Content'}}</h2>
+      <div class="count">{{data.items.length}} items available</div>
+    </div>
     <button mat-icon-button (click)="close()">
       <mat-icon>close</mat-icon>
     </button>
