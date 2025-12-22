@@ -11,31 +11,25 @@
 
 /* Ensure icons stay centered or aligned nicely when collapsed */
 mat-nav-list {
-  padding-top: 0;
-}
+  padding-block: 2rem;
+  padding-inline: 0.75rem;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 
-.menu-item-text {
-  margin-left: 10px;
-  white-space: nowrap; /* Prevents text wrapping during animation */
-}
-
-.content-padding {
-  padding: 20px;
+  &.collapsed-mode {
+    padding-inline: 3.5px;
+    align-items: center;
+  }
 }
 
 .horizontal-list {
   display: flex;
-  flex-direction: row; /* This turns the list sideways */
   padding: 0;
-  overflow-x: auto; /* Adds a scrollbar if items overflow */
-  /* Control the exact distance between items here */
+  overflow-x: auto;
   gap: 8px;
-
-  /* VITAL: Add a little vertical padding so the scaling doesn't hit the top/bottom edge */
-  //padding: 10px 0;
-
-  /* Ensure the list itself doesn't hide the vertical overflow of the icons */
-  //overflow-y: visible;
 }
 
 /* Optional: Adjust item spacing */
@@ -82,104 +76,79 @@ mat-nav-list {
 .nav-item-container {
   display: flex;
   align-items: center;
-  width: 100%;
-  padding: 8px 0;
+  justify-content: flex-start;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-
-  /*
-     EXPANDED MODE (Default)
-     Icon left, Text right
-  */
-  flex-direction: row;
-  justify-content: flex-start;
-  text-align: left;
+  padding: 8px 8px;
 
   .psdk-nav-button-span {
-    margin-left: 10px; /* Spacing between icon and text */
     opacity: 1;
     display: block;
-    padding-left: 1.5rem;
   }
 
   ::ng-deep .mat-mdc-button-persistent-ripple::before {
     background-color: transparent !important;
   }
 
-  button {
-    padding-left: 1.5rem;
+  &:hover,
+  &.active,
+  &.focus,
+  &.selected {
+    border-radius: 16px;
+    border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+    background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
+  }
+
+  &.selected {
+    color: #6750a4;
+    mat-icon {
+      color: #6750a4;
+    }
   }
 }
 
 .nav-menu-container {
   display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 8px 0;
-  transition: all 0.2s ease-in-out;
-  flex-direction: row;
-  justify-content: flex-start;
-  text-align: left;
-
+  width: 56px;
+  height: 56px;
   border-radius: 16px;
   border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
   background-color: rgba(63, 81, 181, 0.1);
 
-  width: 5rem;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   ::ng-deep .mat-mdc-button-persistent-ripple::before {
     background-color: transparent !important;
   }
-
-  button {
-    padding-left: 1.5rem;
-  }
-
-  .psdk-nav-button-span {
-    padding-left: 1.5rem;
-  }
 }
 
 .collapsed-mode .nav-menu-container {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  border-radius: 16px;
-  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
-  background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
-
-  button {
-    padding-left: revert;
-  }
-  .psdk-nav-button-span {
-    padding-left: revert;
-  }
+  margin-inline: 0.75rem;
 }
 
-/*
-   COLLAPSED MODE
-   Icon top, Text bottom, Centered
-*/
+/* COLLAPSED MODE */
 .collapsed-mode .nav-item-container {
   flex-direction: column; /* Stacks items vertically */
   justify-content: center;
   align-items: center;
   text-align: center;
-  // height: 5rem;
+  width: 100%;
+  padding: 8px 0px;
 
   /* Adjust text for small space */
   .psdk-nav-button-span {
     margin-left: 0;
     margin-top: 4px; /* Spacing between icon and text */
-    font-size: 0.85rem; /* Smaller text to fit 5rem width */
+    font-size: 12px; /* Smaller text to fit 5rem width */
     line-height: 1.2;
     white-space: normal; /* Allow wrapping if needed */
     max-width: 100%;
-    padding-left: revert;
-  }
-
-  button {
     padding-left: revert;
   }
 }
@@ -190,20 +159,6 @@ mat-nav-list {
 
 ::ng-deep .collapsed-mode.mat-sidenav-content {
   margin-left: 5.313rem !important;
-}
-
-/* Optional: Add spacing below the toggle button if needed */
-.toggle-header {
-  margin-bottom: 10px;
-}
-
-.nav-item-container:hover,
-.nav-item-container:active,
-.nav-item-container:focus,
-.nav-item-container.selected {
-  border-radius: 16px;
-  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
-  background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
 }
 
 .mat-drawer-container,
@@ -227,6 +182,10 @@ mat-nav-list {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  .mat-toolbar-multiple-rows {
+    padding-top: 5px;
+  }
 }
 
 /*
