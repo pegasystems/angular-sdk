@@ -26,28 +26,26 @@
       font-weight: 700;
       font-size: 20px;
       padding-left: 1rem;
-      margin: 0;
+      margin: 1rem 0 0;
     }
   }
 
   .psdk-self-service-case-view {
     background-color: #fff !important;
-    padding: 1rem !important;
+    padding: 1rem 2rem !important;
     border-radius: 0 !important;
     border-top-left-radius: 2rem !important;
   }
 
   .psdk-self-service-case-view-header {
     background-color: transparent !important;
-    padding: 0 16px !important;
-    margin: 1rem 0rem;
+    padding: 1.5rem 0 0 1rem !important;
   }
 
   .heading {
     color: #46185a !important;
-    font-weight: 700;
-    font-size: 30px !important;
-    padding: 2rem 0rem;
+    font-weight: 700 !important;
+    font-size: 36px !important;
   }
 
   // Self Service Case View styles for MediaCo sample app - end
