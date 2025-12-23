@@ -133,7 +133,7 @@ export class TodoComponent implements OnInit, OnDestroy {
         DATA_PAGES: { D__PY_MY_WORK_LIST }
       }
     } = PCore.getConstants();
-    updateWorkList(getPConnect, getMappedValue(D__PY_MY_WORK_LIST));
+    updateWorkList(this.pConn$, getMappedValue(D__PY_MY_WORK_LIST));
   }
 
   updateToDo() {

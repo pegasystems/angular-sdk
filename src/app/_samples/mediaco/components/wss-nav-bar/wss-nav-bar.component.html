@@ -1,38 +1,35 @@
 <mat-sidenav-container class="sidenav-container" autosize>
   <mat-sidenav #drawer class="sidenav" mode="side" opened="true" [style.width]="collapsed ? '5rem' : '15rem'">
-    <!-- Add [class.collapsed-mode]="collapsed" here -->
     <mat-nav-list [class.collapsed-mode]="collapsed">
       <!-- Toggle Button -->
-      <div class="nav-item-container toggle-header" (click)="toggleMenu()">
+      <div class="nav-menu-container toggle-header" (click)="toggleMenu()">
         <button type="button" mat-icon-button [disableRipple]="true">
-          <mat-icon>{{ collapsed ? 'menu' : 'cancel' }}</mat-icon>
+          <mat-icon>{{ collapsed ? 'menu' : 'close' }}</mat-icon>
         </button>
       </div>
 
       <!-- Home Button -->
-      <!-- <div mat-list-item> -->
       <!-- Added 'nav-item-container' class for specific styling -->
-      <div class="flex-box nav-item-container toggle-header" [class.selected]="activePage === 'Self-service Main page'">
-        <button type="button" mat-icon-button [disableRipple]="true" (click)="navPanelButtonClick(homePage)">
+      <div class="flex-box nav-item-container" (click)="navPanelButtonClick(homePage)" [class.selected]="activePage === 'Self-service Main page'">
+        <button type="button" mat-icon-button [disableRipple]="true">
           <mat-icon>home</mat-icon>
         </button>
         <!-- Only show text if you want it in collapsed mode too, otherwise hide or style it -->
         <div mat-button class="psdk-nav-button-span">Home</div>
       </div>
-      <!-- </div> -->
 
       <!-- Dynamic Pages -->
-      <div *ngFor="let page of navPages$">
-        <div class="flex-box mat-list-item nav-item-container toggle-header" [class.selected]="activePage === page.pyLabel">
-          <button type="button" mat-icon-button [disableRipple]="true" (click)="navPanelButtonClick(page)">
+      <ng-container *ngFor="let page of navPages$">
+        <div class="flex-box mat-list-item nav-item-container" (click)="navPanelButtonClick(page)" [class.selected]="activePage === page.pyLabel">
+          <button type="button" mat-icon-button [disableRipple]="true">
             <mat-icon>dashboard</mat-icon>
           </button>
           <div mat-button class="psdk-nav-button-span">{{ page.pyDefaultHeading }}</div>
         </div>
-      </div>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content [class.collapsed-mode]="collapsed">
+  <mat-sidenav-content [class.collapsed-mode]="collapsed" class="page-container">
     <!-- Top Toolbar -->
 
     <mat-toolbar style="position: sticky; top: 0; z-index: 10">
@@ -66,11 +63,11 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <div *ngFor="let kid of arChildren$">
-      <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'">
+    <ng-container *ngFor="let kid of arChildren$">
+      <div *ngIf="kid.getPConnect().getComponentName() == 'ViewContainer'" class="content-wrapper">
         <component-mapper name="ViewContainer" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
       </div>
-    </div>
+    </ng-container>
     <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
