@@ -10,7 +10,6 @@ $text-dark: #2c2c2c;
 
 .content-wrapper {
   width: 100%;
-  max-width: 1000px;
   display: flex;
   flex-direction: column;
 }
@@ -48,7 +47,6 @@ $text-dark: #2c2c2c;
   grid-auto-rows: 1px;
   gap: $gap-size;
   width: 100%;
-  max-width: 1100px;
   align-items: start;
   grid-auto-flow: row dense;
 
