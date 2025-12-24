@@ -1,9 +1,13 @@
 .psdk-grid-filter-1 {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   column-gap: calc(2 * 0.5rem);
   gap: 1.5rem;
   align-items: start;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .psdk-main-content-section {
@@ -14,7 +18,7 @@
 
 .psdk-grid-filter-wide-narrow {
   display: grid;
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   column-gap: calc(2 * 0.5rem);
   row-gap: calc(2 * 0.5rem);
   align-items: start;
@@ -22,6 +26,10 @@
 
   & > *:nth-child(1) {
     min-width: 0;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 7fr 3fr;
   }
 }
 
