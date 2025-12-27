@@ -19,13 +19,12 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    // Update to usage of "import type" so these can inherit "error" and true from @pega/tsconfig.
     "importsNotUsedAsValues": "remove",
     "strictPropertyInitialization": false,
     "skipLibCheck": true
