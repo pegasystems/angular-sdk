@@ -1,13 +1,13 @@
 <p align="center"><img width=60% src="docs/media/AngularSDK-Logo.png">
 
-# Angular SDK - Release Announcement - v25.1.10
+# Angular SDK - Release Announcement - v25.1.11
 
-The **SDK-A v25.1.10** release is **only compatible with Pega Infinity '25**. This release is available in the [**release/25.1.10**](https://github.com/pegasystems/angular-sdk/tree/release/25.1.10) branch of the Angular SDK repository.
+The **SDK-A v25.1.11** release is **only compatible with Pega Infinity '25**. This release is available in the [**release/25.1.11**](https://github.com/pegasystems/angular-sdk/tree/release/25.1.11) branch of the Angular SDK repository.
 
 **Note**: The main branch is the active development branch for future versions of Angular SDK.
 
-The SDK-A v25.1.10 release allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
-[What's new in SDK-A 25.1.10](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
+The SDK-A v25.1.11 release allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
+[What's new in SDK-A 25.1.11](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
 
 For information on all Angular SDK releases, see [Angular SDK updates](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
 
