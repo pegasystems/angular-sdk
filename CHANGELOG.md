@@ -1,4 +1,4 @@
-# [25.1.11](https://github.com/pegasystems/angular-sdk/tree/release/25.1.11) - Released: 14/01/2026
+# [25.1.11](https://github.com/pegasystems/angular-sdk/tree/release/25.1.11) - Released: 15/01/2026
 
 ## Non Breaking changes
 
