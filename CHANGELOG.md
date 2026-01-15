@@ -1,3 +1,39 @@
+# [25.1.11](https://github.com/pegasystems/angular-sdk/tree/release/25.1.11) - Released: 15/01/2026
+
+## Non Breaking changes
+
+### **Bug fixes**
+
+*   **Location field appeared editable even in a read-only state issue fixed**
+      * Github: [PR-418](https://github.com/pegasystems/angular-sdk-components/pull/418)
+*   **Checkbox required validation handled correctly**
+      * Github: [PR-419](https://github.com/pegasystems/angular-sdk-components/pull/419)
+
+| Package | Updated version |
+| :--- | :--- |
+| **@angular/animations** | 20.3.15 |
+| **@angular/cdk** | 20.2.14 |
+| **@angular/cli** | 20.3.13 |
+| **@angular/common** | 20.3.15 |
+| **@angular/compiler** | 20.3.15 |
+| **@angular/compiler-cli** | 20.3.15 |
+| **@angular/core** | 20.3.15 |
+| **@angular/forms** | 20.3.15 |
+| **@angular/language-service** | 20.3.15 |
+| **@angular/material** | 20.2.14 |
+| **@angular/material-experimental** | 20.2.14 |
+| **@angular/material-moment-adapter** | 20.2.14 |
+| **@angular/platform-browser** | 20.3.15 |
+| **@angular/platform-browser-dynamic** | 20.3.15 |
+| **@angular/router** | 20.3.15 |
+| **@angular-builders/custom-webpack** | 20.0.0 |
+| **@angular-devkit/build-angular** | 20.3.13 |
+| **@angular-devkit/core** | 20.3.13 |
+| **@danielmoncada/angular-datetime-picker**| 20.0.1 |
+| **@pega/auth** | 0.2.34 |
+| **ng-packagr** | 20.3.0 |
+
+
 # [25.1.10](https://github.com/pegasystems/angular-sdk/tree/release/25.1.10) - Released: 26/12/2025
 
 
