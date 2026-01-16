@@ -85,7 +85,7 @@
     "@angular/cli": "^20.3.13",
     "@angular/compiler-cli": "^20.3.15",
     "@angular/language-service": "^20.3.15",
-    "@chromatic-com/storybook": "^3.2.7",
+    "@chromatic-com/storybook": "^5.0.0",
     "@pega/angular-sdk-overrides": "25.1.11",
     "@pega/configs": "^0.16.3",
     "@pega/constellationjs": "~25.1.0",
