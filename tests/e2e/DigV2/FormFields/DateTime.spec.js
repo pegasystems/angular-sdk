@@ -18,31 +18,16 @@ test.describe('E2E test', () => {
   test('should login, create case and run the DateTime tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a Form Field case-type */
-    const formFieldCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldCase.click();
+    await common.createCase('Form Field', page);
 
     /** Selecting Date from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.locator('mat-option >> span').getByText('DateTime', { exact: true }).click();
+    await common.selectCategory('DateTime', page, true);
 
     /** Selecting Required from the Sub Category dropdown */
-    let selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Required' }).click();
+    await common.selectSubCategory('Required', page);
 
     await page.locator('button:has-text("submit")').click();
 
@@ -72,9 +57,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('required')).toBeFalsy();
 
     /** Selecting Disable from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Disable' }).click();
+    await common.selectSubCategory('Disable', page);
 
     // /** Disable tests */
     const alwaysDisabledDateTime = page.locator('input[data-test-id="94d0498d6fd5a5aa2db1145100810fc3"]');
@@ -94,9 +77,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('disabled')).toBeFalsy();
 
     /** Selecting Update from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Update' }).click();
+    await common.selectSubCategory('Update', page);
 
     /** Update tests */
     const editableDateTime = page.locator('input[data-test-id="4e5110fbcaf65441b3e4c763907b5eb8"]');
@@ -106,9 +87,7 @@ test.describe('E2E test', () => {
     await expect(attributes.includes('readonly')).toBeFalsy();
 
     /** Selecting Visibility from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Visibility' }).click();
+    await common.selectSubCategory('Visibility', page);
 
     /** Visibility tests */
     await expect(page.locator('input[data-test-id="f7bace3922d6b19942bcb05f4bbe34ff"]')).toBeVisible();

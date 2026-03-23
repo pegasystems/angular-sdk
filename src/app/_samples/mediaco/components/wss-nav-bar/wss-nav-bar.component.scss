@@ -1,0 +1,198 @@
+.sidenav-container {
+  height: 100vh; /* Full viewport height */
+}
+
+.sidenav {
+  /* Smooth transition for the width change */
+  transition: width 0.2s ease-in-out;
+  // background-color: #f5f5f5; /* Optional: just to see the boundary */
+  overflow-x: hidden; /* Prevents horizontal scroll when text is hiding */
+}
+
+/* Ensure icons stay centered or aligned nicely when collapsed */
+mat-nav-list {
+  padding-block: 2rem;
+  padding-inline: 0.75rem;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &.collapsed-mode {
+    padding-inline: 3.5px;
+    align-items: center;
+  }
+}
+
+.horizontal-list {
+  display: flex;
+  padding: 0;
+  overflow-x: auto;
+  gap: 8px;
+}
+
+/* Optional: Adjust item spacing */
+.horizontal-list mat-list-item {
+  width: auto; /* Stop items from trying to be full width */
+
+  /* vital: overrides Angular Material's default item padding */
+  padding: 0 !important;
+}
+
+/* 1. Make the animation smooth */
+.horizontal-list mat-list-item .circle-icon {
+  transition: transform 0.2s ease-in-out;
+  /* Optional: ensure the origin is center so it grows outwards evenly */
+  transform-origin: center;
+}
+
+/* 2. Scale the icon up when hovering the list item */
+.horizontal-list mat-list-item:hover .circle-icon {
+  cursor: pointer; /* Changes cursor to pointer to indicate interactivity */
+}
+
+.circle-icon {
+  /* 1. Make it a circle */
+  background: linear-gradient(135deg, rgb(255, 179, 217) 0%, rgb(255, 196, 232) 100%);
+  // background-color: #e0e0e0; /* Light grey background */
+  border-radius: 50%; /* The magic property for circles */
+
+  /* 2. Define the size of the circle */
+  width: 40px;
+  height: 40px;
+
+  /* 3. Center the icon inside the circle */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 4. Optional: Contrast and Spacing */
+  color: #333; /* Darker icon color */
+  margin-right: 8px; /* Space between circle and text */
+}
+
+/* Base styles for the item container */
+.nav-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  padding: 8px 8px;
+
+  .psdk-nav-button-span {
+    opacity: 1;
+    display: block;
+  }
+
+  ::ng-deep .mat-mdc-button-persistent-ripple::before {
+    background-color: transparent !important;
+  }
+
+  &:hover,
+  &.active,
+  &.focus,
+  &.selected {
+    border-radius: 16px;
+    border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+    background-color: rgba(63, 81, 181, 0.1); /* Optional: slight background tint */
+  }
+
+  &.selected {
+    color: #6750a4;
+    mat-icon {
+      color: #6750a4;
+    }
+  }
+}
+
+.nav-menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border-color: #3f51b5; /* Change to your preferred color (e.g., primary) */
+  background-color: rgba(63, 81, 181, 0.1);
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ::ng-deep .mat-mdc-button-persistent-ripple::before {
+    background-color: transparent !important;
+  }
+}
+
+.collapsed-mode .nav-menu-container {
+  margin-inline: 0.75rem;
+}
+
+/* COLLAPSED MODE */
+.collapsed-mode .nav-item-container {
+  flex-direction: column; /* Stacks items vertically */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding: 8px 0px;
+
+  /* Adjust text for small space */
+  .psdk-nav-button-span {
+    margin-left: 0;
+    margin-top: 4px; /* Spacing between icon and text */
+    font-size: 12px; /* Smaller text to fit 5rem width */
+    line-height: 1.2;
+    white-space: normal; /* Allow wrapping if needed */
+    max-width: 100%;
+    padding-left: revert;
+  }
+}
+
+::ng-deep .mat-sidenav-content {
+  margin-left: 16rem !important;
+}
+
+::ng-deep .collapsed-mode.mat-sidenav-content {
+  margin-left: 5.313rem !important;
+}
+
+.mat-drawer-container,
+.mat-drawer {
+  background-color: #fef7ff !important;
+}
+
+.psdk-nav-header {
+  cursor: pointer;
+}
+
+::ng-deep .custom-menu-no-padding .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+/*
+ * Apply flexbox to the mat-sidenav-content to control the layout of its direct children.
+ * We're also ensuring it takes up at least the full height of the viewport.
+ */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .mat-toolbar-multiple-rows {
+    padding-top: 5px;
+    min-height: 64px;
+  }
+}
+
+/*
+ * This tells the main content area to grow and take up any available
+ * free space, which pushes the footer down.
+ */
+.content-wrapper {
+  flex: 1;
+}

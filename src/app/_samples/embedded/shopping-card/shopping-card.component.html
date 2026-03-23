@@ -1,47 +1,14 @@
-<div>
-  <div class="mc-swatch-header">
-    <div class="mc-swatch-package">
-      <div class="mc-swatch-play">
-        {{ option.play }}
-      </div>
-      <div class="mc-swatch-level">
-        {{ option.level }}
-      </div>
-    </div>
-    <div class="mc-swatch-channels">
-      <div class="mc-swatch-count">
-        {{ option.channels }}
-      </div>
-      <div class="mc-swatch-label">Channels</div>
-    </div>
+<div class="plan-card">
+  <div class="phone-image">
+    <img [src]="option.imageSrc" [alt]="option.name" />
   </div>
-  <div class="mc-swatch-body">
-    <div class="mc-swatch-banner">
-      {{ option.banner }}
-    </div>
-    <ul>
-      <li>{{ option.channelsFull }} channels plus FREE HD</li>
-      <li>Thousands of On Demand choices</li>
-      <li>Watch on MediaCo App</li>
-      <li>Up to {{ option.internetSpeed }} Internet Speeds</li>
-      <li>Unlimited nationwide calling {{ option.calling }}</li>
-    </ul>
 
-    <div class="mc-swatch-price">
-      <div class="mc-swatch-from-group">
-        <div class="mc-swatch-from">From</div>
-        <div class="mc-swatch-currency">$</div>
-      </div>
+  <h3>{{ option.name }}</h3>
 
-      <div class="mc-swatch-dollars">{{ option.price.substring(0, option.price.indexOf('.')) }}</div>
-      <div class="mc-swatch-monthly">
-        <div class="mc-swatch-cents">{{ option.price.substring(option.price.indexOf('.') + 1) }}</div>
-        <div>for 12 mons</div>
-        <div>when bundled</div>
-      </div>
-    </div>
-    <div>
-      <button class="mc-swatch-shop-button" (click)="onShopNowClick(option.level)">SHOP NOW</button>
-    </div>
-  </div>
+  <p class="save-amount">{{ option.saveAmount }}</p>
+  <p class="monthly-price">{{ option.monthlyPrice }}</p>
+  <p class="tenure">{{ option.tenure }}</p>
+  <p class="retail-price">{{ option.retailPrice }}</p>
+
+  <button type="button" class="btn" (click)="onBuyNowClick(option.name)">Buy now</button>
 </div>

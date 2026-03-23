@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +25,6 @@ declare global {
   templateUrl: './embedded.component.html',
   styleUrls: ['./embedded.component.scss'],
   providers: [Utils],
-  standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatButtonModule, HeaderComponent, MainScreenComponent]
 })
 export class EmbeddedComponent implements OnInit, OnDestroy {
@@ -39,7 +38,10 @@ export class EmbeddedComponent implements OnInit, OnDestroy {
 
   bootstrapShell: any;
 
-  constructor(private psservice: ProgressSpinnerService) {}
+  constructor(
+    private psservice: ProgressSpinnerService,
+    private ngZone: NgZone
+  ) {}
 
   ngOnInit() {
     this.initialize();
@@ -58,7 +60,9 @@ export class EmbeddedComponent implements OnInit, OnDestroy {
     // Add event listener for when logged in and constellation bootstrap is loaded
     document.addEventListener('SdkConstellationReady', () => this.handleSdkConstellationReady());
 
-    const { authConfig } = await getSdkConfig();
+    const { authConfig, theme } = await getSdkConfig();
+    document.body.classList.remove(...['light', 'dark']);
+    document.body.classList.add(theme || 'light');
 
     initializeAuthentication(authConfig);
 
@@ -101,11 +105,11 @@ export class EmbeddedComponent implements OnInit, OnDestroy {
     // Change to reflect new use of arg in the callback:
     const { props } = renderObj;
 
-    this.pConn$ = props.getPConnect();
-
-    this.bHasPConnect$ = true;
-
-    this.showHideProgress(false);
+    this.ngZone.run(() => {
+      this.pConn$ = props.getPConnect();
+      this.bHasPConnect$ = true;
+      this.showHideProgress(false);
+    });
   }
 
   showHideProgress(bShow: boolean) {

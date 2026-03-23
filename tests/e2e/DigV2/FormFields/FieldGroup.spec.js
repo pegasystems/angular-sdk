@@ -12,31 +12,16 @@ test.describe('E2E test', () => {
   test('should login, create case and run the FieldGroup tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a Form Field case-type */
-    const formFieldCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldCase.click();
+    await common.createCase('Form Field', page);
 
     /** Selecting Group from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.getByRole('option', { name: 'Group' }).click();
+    await common.selectCategory('Group', page);
 
     /** Selecting Editable from the Sub Category dropdown */
-    let selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Editable' }).click();
+    await common.selectSubCategory('Editable', page);
 
     // Editable Field Group Tests
     await expect(page.getByText('Field Group with Instructions')).toBeVisible();
@@ -48,9 +33,7 @@ test.describe('E2E test', () => {
     await page.getByRole('option', { name: 'United States' }).click();
 
     /** Selecting ReadOnly from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'ReadOnly' }).click();
+    await common.selectSubCategory('ReadOnly', page);
 
     // ReadOnly Tests
     await expect(page.getByText('ReadOnly Text input')).toBeVisible();
@@ -61,9 +44,7 @@ test.describe('E2E test', () => {
     await expect(page.getByText('United States')).toBeVisible();
 
     /** Selecting Collapsible from the Sub Category dropdown */
-    selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'Collapsible' }).click();
+    await common.selectSubCategory('Collapsible', page);
 
     // Collapsible Tests
     await expect(page.getByText('Collapsible Field Group')).toBeVisible();

@@ -11,30 +11,12 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for User Reference', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
+    await common.verifyHomePage(page);
 
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
-
-    /** Hovering over navbar */
-    const navbar = page.locator('app-navbar');
-    await navbar.locator('div[class="psdk-appshell-nav"]').hover();
-
-    /** opening all case types */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    /** Creating a Complex Fields case-type */
-    const complexFieldsCaseBtn = await page.locator('mat-list-item[id="case-list-item"] > span:has-text("Complex Fields")');
-    await complexFieldsCaseBtn.click();
+    await common.createCase('Complex Fields', page);
 
     /** Selecting User Reference from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.locator('mat-option > span:has-text("UserReference")').click();
+    await common.selectCategory('UserReference', page);
 
     await page.locator('button:has-text("submit")').click();
 

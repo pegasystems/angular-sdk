@@ -1,0 +1,60 @@
+<app-list-view *ngIf="isFromCaseView; else mediacoListView" [pConn$]="pConn$" [bInForm$]="bInForm$"></app-list-view>
+<ng-template #mediacoListView>
+  <div class="header-container">
+    <div class="section-header">
+      <div class="title-group">
+        <h3>{{ title }}</h3>
+        <div class="active-line"></div>
+      </div>
+    </div>
+    <div *ngIf="referenceDataPage === 'D_AccountHistoryList'" class="arrow-icon">
+      <button mat-icon-button (click)="openShowAll()" class="tilt-icon">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="template === 'Table'">
+    <div class="info-container">
+      <div *ngIf="!sourceList">
+        <div class="info-item" *ngFor="let item of [1, 2, 3, 4, 5]">
+          <div class="skeleton icon-wrapper"></div>
+          <div class="content">
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+        </div>
+      </div>
+      <div class="info-item" *ngFor="let item of sourceList | slice: 0 : 5; index as i">
+        <div class="icon-wrapper" [ngClass]="'bg-' + (i % 6)">
+          <img *ngIf="item.icon" [src]="item.icon" class="icon-img" [ngClass]="'color-' + (i % 6)" />
+          <span *ngIf="!item.icon" class="icon-num" [ngClass]="'color-' + (i % 6)">{{ item.number }} </span>
+        </div>
+
+        <div class="content">
+          <div class="title-row">
+            <span class="title">{{ item.title }}</span>
+            <span class="dot" *ngIf="item.title_subtext"></span>
+            <span *ngIf="item.title_subtext" class="sub-text">{{ item.title_subtext }}</span>
+          </div>
+          <div class="description">
+            <span>{{ item.description }}</span>
+            <span class="dot" *ngIf="item.description_subtext"></span>
+            <span *ngIf="item.description_subtext" class="sub-text">{{ item.description_subtext }}</span>
+          </div>
+        </div>
+        <div class="extra-content" *ngIf="item.rating" style="margin-left: auto">
+          <img [src]="utils.getImageSrc('star-solid', utils.getSDKStaticContentUrl())" class="star" />
+          <div>{{ item.rating }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="template === 'Gallery'">
+    <div class="carousel-constraint-wrapper">
+      <app-carousel *ngIf="sourceList" [data]="sourceList"></app-carousel>
+    </div>
+  </div>
+  <div class="carousel-footer">
+    <a mat-button color="primary" *ngIf="referenceDataPage !== 'D_TrendingItemsList' && template === 'Gallery'" (click)="openShowAll()">Show All</a>
+  </div>
+</ng-template>

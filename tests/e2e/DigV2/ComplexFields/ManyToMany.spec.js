@@ -1,8 +1,8 @@
+// Ignoring this test due to this platform bug BUG-834448
 const { test, expect } = require('@playwright/test');
 
 const config = require('../../../config');
 const common = require('../../../common');
-
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto(config.config.baseUrl, { waitUntil: 'networkidle' });
@@ -12,20 +12,10 @@ test.describe('E2E test', () => {
   test('should login, create case and run different test cases for Many to Many', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Creating a Many to Many case-type */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
-
-    const manyToManyCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Many to Many")');
-    await manyToManyCase.click();
+    await common.createCase('Many to Many', page);
 
     const ID = '1234';
     const orderID = await page.locator('input[data-test-id="8f2a855dda1f657670e39f50eab1c10e"]');

@@ -21,11 +21,7 @@ test.describe('E2E test', () => {
     await expect(navLinks.locator('div[class="psdk-nav-button-span"]:has-text("Home")')).toBeVisible();
     await navLinks.locator('div[class="psdk-nav-button-span"]:has-text("Home")').click();
 
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Testing the My Work navigation link */
     await expect(navLinks.locator('div[class="psdk-nav-button-span"]:has-text("My Work")')).toBeVisible();

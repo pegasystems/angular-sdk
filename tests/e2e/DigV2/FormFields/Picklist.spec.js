@@ -12,31 +12,15 @@ test.describe('E2E test', () => {
   test('should login, create case and run the Email tests', async ({ page }) => {
     await common.login(config.config.apps.digv2.user.username, config.config.apps.digv2.user.password, page);
 
-    /** Testing announcement banner presence */
-    const announcementBanner = page.locator('h2:has-text("Announcements")');
-    await expect(announcementBanner).toBeVisible();
-
-    /** Testing worklist presence */
-    const worklist = page.locator('div[id="worklist"]:has-text("My Worklist")');
-    await expect(worklist).toBeVisible();
+    await common.verifyHomePage(page);
 
     /** Click on the Create Case button */
-    const createCase = page.locator('mat-list-item[id="create-case-button"]');
-    await createCase.click();
+    await common.createCase('Form Field', page);
 
-    /** Creating a Form Field case-type */
-    const formFieldCase = page.locator('mat-list-item[id="case-list-item"] > span:has-text("Form Field")');
-    await formFieldCase.click();
+    await common.selectCategory('PickList', page);
 
-    /** Selecting PickList from the Category dropdown */
-    const selectedCategory = page.locator('mat-select[data-test-id="76729937a5eb6b0fd88c42581161facd"]');
-    await selectedCategory.click();
-    await page.getByRole('option', { name: 'PickList' }).click();
-
-    /** Selecting Required from the Sub Category dropdown */
-    const selectedSubCategory = page.locator('mat-select[data-test-id="9463d5f18a8924b3200b56efaad63bda"]');
-    await selectedSubCategory.click();
-    await page.getByRole('option', { name: 'DataPage' }).click();
+    /** Selecting Datapage from the Sub Category dropdown */
+    await common.selectSubCategory('DataPage', page);
 
     /** Dropdown tests */
     const picklistAs = page.locator('mat-select[data-test-id="683ea3aece0dce7e065d31d43f1c269b"]');
