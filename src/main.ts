@@ -9,5 +9,10 @@ import { provideZoneChangeDetection } from '@angular/core';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),provideRouter(routes), provideHttpClient(), provideAnimations(), { provide: APP_BASE_HREF, useValue: '/' }]
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient(),
+    provideAnimations(),
+    { provide: APP_BASE_HREF, useValue: '/' }
+  ]
 }).catch(err => console.error(err));
