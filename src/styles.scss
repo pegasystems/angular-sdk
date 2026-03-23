@@ -63,7 +63,7 @@ a.mat-mdc-menu-item > mat-icon {
 }
 
 .psdk-grid-label {
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--mat-sys-on-background);
 }
 .psdk-value {
   margin: 8px 0px;
