@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'containerStyles';
+@use 'themes';
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
-@import 'containerStyles';
-@import 'themes';
 
 html,
 body {
@@ -11,7 +11,7 @@ body {
   color: var(--mat-sys-on-background);
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  @include generate-theme-vars();
+  @include themes.generate-theme-vars();
 }
 
 button.mat-mdc-menu-item {
@@ -63,7 +63,7 @@ a.mat-mdc-menu-item > mat-icon {
 }
 
 .psdk-grid-label {
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--mat-sys-on-background);
 }
 .psdk-value {
   margin: 8px 0px;

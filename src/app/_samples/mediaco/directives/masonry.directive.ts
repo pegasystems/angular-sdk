@@ -33,7 +33,7 @@ export class MasonryDirective implements AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onWindowResize() {
     // Throttle resize events to avoid excessive recalculations
     if (this.resizeTimeout) {
