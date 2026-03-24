@@ -141,33 +141,29 @@
     "webpack": "^5.101.2"
   },
   "overrides": {
-    "ngx-currency": {
-      "@angular/common": "$@angular/common",
-      "@angular/core": "$@angular/core",
-      "@angular/forms": "$@angular/forms"
-    },
+    "@angular/common": "$@angular/common",
+    "@angular/core": "$@angular/core",
+    "@angular/forms": "$@angular/forms",
+    "rxjs": "$rxjs",
     "mat-tel-input": {
-      "@angular/common": "$@angular/common",
-      "@angular/compiler": "$@angular/compiler",
-      "@angular/core": "$@angular/core",
-      "@angular/forms": "$@angular/forms",
-      "@angular/material": "^21.2.2",
       "@angular/platform-browser": "$@angular/platform-browser",
       "@angular/platform-browser-dynamic": "$@angular/platform-browser-dynamic",
-      "rxjs": "$rxjs"
+      "@angular/core": "$@angular/core",
+      "@angular/common": "$@angular/common",
+      "@angular/forms": "$@angular/forms",
+      "@angular/material": "^21.2.2"
     },
     "@storybook/angular": {
+      "@angular/animations": "$@angular/animations",
       "@angular/cli": "$@angular/cli",
-      "@angular/core": "$@angular/core",
-      "@angular/forms": "$@angular/forms",
       "@angular/common": "$@angular/common",
       "@angular/compiler": "$@angular/compiler",
-      "@angular/animations": "$@angular/animations",
       "@angular/compiler-cli": "$@angular/compiler-cli",
+      "@angular/core": "$@angular/core",
       "@angular/platform-browser": "$@angular/platform-browser",
       "@angular/platform-browser-dynamic": "$@angular/platform-browser-dynamic",
-      "@angular-devkit/core": "$@angular-devkit/core",
-      "@angular-devkit/build-angular": "$@angular-devkit/build-angular"
+      "@angular-devkit/build-angular": "$@angular-devkit/build-angular",
+      "@angular-devkit/core": "$@angular-devkit/core"
     }
   }
 }
