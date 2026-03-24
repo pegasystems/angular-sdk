@@ -146,6 +146,16 @@
       "@angular/core": "$@angular/core",
       "@angular/forms": "$@angular/forms"
     },
+    "mat-tel-input": {
+      "@angular/common": "$@angular/common",
+      "@angular/compiler": "$@angular/compiler",
+      "@angular/core": "$@angular/core",
+      "@angular/forms": "$@angular/forms",
+      "@angular/material": "$@angular/material",
+      "@angular/platform-browser": "$@angular/platform-browser",
+      "@angular/platform-browser-dynamic": "$@angular/platform-browser-dynamic",
+      "rxjs": "$rxjs"
+    },
     "@storybook/angular": {
       "@angular/cli": "$@angular/cli",
       "@angular/core": "$@angular/core",
