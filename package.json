@@ -61,7 +61,7 @@
     "@angular/platform-browser": "^21.2.4",
     "@angular/platform-browser-dynamic": "^21.2.4",
     "@angular/router": "^21.2.4",
-    "@pega/angular-sdk-components": "file:pega-angular-sdk-components-25.1.12.tgz",
+    "@pega/angular-sdk-components": "~0.25.13",
     "@pega/auth": "~0.2.34",
     "@pega/cosmos-react-condition-builder": "^8.4.1",
     "@pega/cosmos-react-core": "^8.4.1",
@@ -86,7 +86,7 @@
     "@angular/compiler-cli": "^21.2.4",
     "@angular/language-service": "^21.2.4",
     "@chromatic-com/storybook": "^3.2.7",
-    "@pega/angular-sdk-overrides": "file:pega-angular-sdk-overrides-25.1.12.tgz",
+    "@pega/angular-sdk-overrides": "~0.25.13",
     "@pega/configs": "^0.16.3",
     "@pega/constellationjs": "~25.1.0",
     "@pega/dx-component-builder-sdk": "25.1.13",
@@ -139,6 +139,7 @@
     "webpack": "^5.101.2"
   },
   "overrides": {
+    "picomatch": "^4.0.4",
     "undici": "^7.24.0",
     "serialize-javascript": "^7.0.4",
     "@angular/animations": "^21.2.4",
@@ -153,40 +154,6 @@
     "@angular-devkit/build-angular": "^21.2.2",
     "@angular-devkit/core": "^21.2.2",
     "@angular/cli": "^21.2.2",
-    "@angular/compiler-cli": "^21.2.4",
-    "rxjs": "^7.8.1",
-    "zone.js": "~0.16.1",
-    "ngx-currency": {
-      "@angular/common": "^21.2.4",
-      "@angular/core": "^21.2.4",
-      "@angular/forms": "^21.2.4"
-    },
-    "mat-tel-input": {
-      "@angular/common": "^21.2.4",
-      "@angular/core": "^21.2.4",
-      "@angular/forms": "^21.2.4",
-      "@angular/cdk": "^21.2.2",
-      "@angular/material": "^21.2.2"
-    },
-    "@danielmoncada/angular-datetime-picker": {
-      "@angular/common": "^21.2.4",
-      "@angular/core": "^21.2.4",
-      "@angular/forms": "^21.2.4",
-      "@angular/cdk": "^21.2.2",
-      "@angular/material": "^21.2.2"
-    },
-    "@storybook/angular": {
-      "@angular-devkit/build-angular": "^21.2.2",
-      "@angular-devkit/core": "^21.2.2",
-      "@angular/cli": "^21.2.2",
-      "@angular/compiler-cli": "^21.2.4",
-      "@angular/animations": "^21.2.4",
-      "@angular/common": "^21.2.4",
-      "@angular/compiler": "^21.2.4",
-      "@angular/core": "^21.2.4",
-      "@angular/forms": "^21.2.4",
-      "@angular/platform-browser": "^21.2.4",
-      "@angular/platform-browser-dynamic": "^21.2.4"
-    }
+    "@angular/compiler-cli": "^21.2.4"
   }
 }
