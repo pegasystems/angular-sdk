@@ -1,3 +1,53 @@
+# [25.1.12](https://github.com/pegasystems/angular-sdk/tree/release/25.1.12) - Released: 27/03/2026
+
+## Breaking changes
+
+*   Upgraded the `Angular` version to 21 and the `Angular Material` version to 21.
+
+
+## Non Breaking changes
+
+### **Bug fixes**
+
+*   **When condition not working for Add & Delete actions in FieldGroupTemplate**
+      * Github: [PR-444](https://github.com/pegasystems/angular-sdk-components/pull/444)
+*   **Confirmation view not getting rendered issue**
+      * Github: [PR-452](https://github.com/pegasystems/angular-sdk-components/pull/452)
+---
+
+### **Dependencies & Infrastructure**
+
+*   The following table lists the packages whose versions have been updated:
+
+| Package | Updated version |
+| :--- | :--- |
+| **@angular/animations** | 21.2.4 |
+| **@angular/cdk** | 21.2.2 |
+| **@angular/cli** | 21.2.2 |
+| **@angular/common** | 21.2.4 |
+| **@angular/compiler** | 21.2.4 |
+| **@angular/compiler-cli** | 21.2.4 |
+| **@angular/core** | 21.2.4 |
+| **@angular/forms** | 21.2.4 |
+| **@angular/language-service** | 21.2.4 |
+| **@angular/material** | 21.2.2 |
+| **@angular/platform-browser** | 21.2.4 |
+| **@angular/platform-browser-dynamic** | 21.2.4 |
+| **@angular/router** | 21.2.4 |
+| **@angular-builders/custom-webpack** | 21.0.3 |
+| **@angular-devkit/build-angular** | 21.2.2 |
+| **@angular-devkit/core** | 21.2.2 |
+| **@angular-eslint/eslint-plugin** | 21.3.1 |
+| **@angular-eslint/eslint-plugin-template** | 21.3.1 |
+| **@angular-eslint/template-parser** | 21.3.1 |
+| **eslint** | 9.36.0 |
+| **jest** | 30.2.0 |
+| **jest-environment-jsdom** | 30.2.0 |
+| **typescript** | 5.9.3 |
+| **typescript-eslint** | 8.48.1 |
+| **zone.js** | 0.16.1 |
+
+
 # [25.1.11](https://github.com/pegasystems/angular-sdk/tree/release/25.1.11) - Released: 15/01/2026
 
 ## Non Breaking changes
