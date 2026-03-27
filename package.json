@@ -130,7 +130,7 @@
     "shx": "^0.4.0",
     "storybook": "^8.6.18",
     "style-loader": "^3.3.4",
-    "stylelint": "^16.1.0",
+    "stylelint": "^17.6.0",
     "tinymce": "^6.8.6",
     "ts-loader": "^9.5.1",
     "ts-node": "~10.9.2",
