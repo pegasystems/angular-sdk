@@ -96,7 +96,7 @@
     "@storybook/addon-essentials": "^8.6.18",
     "@storybook/addon-interactions": "^8.6.18",
     "@storybook/addon-links": "^8.6.18",
-    "@storybook/angular": "^8.6.18",
+    "@storybook/angular": "^10.4.2",
     "@storybook/react": "^8.6.18",
     "@storybook/react-webpack5": "^8.6.18",
     "@types/jasmine": "~5.1.4",
