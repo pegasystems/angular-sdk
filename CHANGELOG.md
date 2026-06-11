@@ -1,3 +1,41 @@
+# [25.1.13](https://github.com/pegasystems/angular-sdk/tree/release/25.1.13) - Released: 11/06/2026
+
+## Breaking changes
+
+*   None.
+
+## Non Breaking changes
+
+### **Bug fixes**
+*   **Fixed the issue where when you configured any action in the EmbeddedData field, and add a record, the configured fields do not appear.**
+      * Github: [PR-479](https://github.com/pegasystems/angular-sdk-components/pull/479)
+*   **Repeating Dynamic Layout list is reset when screen is refreshed**
+      * Github: [PR-473](https://github.com/pegasystems/angular-sdk-components/pull/473)
+*   **EmbeddedData field is not displayed when visibility condition is configured based on an existing field value**
+      * Github: [PR-473](https://github.com/pegasystems/angular-sdk-components/pull/473)
+*   **Unwanted refresh triggers on field value changes**
+      * Github: [PR-473](https://github.com/pegasystems/angular-sdk-components/pull/473)
+*   **Fixed the checkbox required validation issue**
+      * Github: [PR-473](https://github.com/pegasystems/angular-sdk-components/pull/473)
+*   **Console errors triggered when uploading attachment**
+      * Github: [PR-482](https://github.com/pegasystems/angular-sdk-components/pull/482)
+
+*   The following table lists the packages whose versions have been updated:
+
+---
+
+### **Dependencies & Infrastructure**
+
+*   The following table lists the packages whose versions have been updated:
+
+| Package | Updated version |
+| :--- | :--- |
+| **@pega/angular-sdk-components** | 25.1.13 |
+| **@pega/angular-sdk-overrides** | 25.1.13 |
+| **@pega/dx-component-builder-sdk** | 25.1.15 |
+| **@pega/constellationjs** | 25.1.2-4 |
+
+
 # [25.1.12](https://github.com/pegasystems/angular-sdk/tree/release/25.1.12) - Released: 27/03/2026
 
 ## Breaking changes
