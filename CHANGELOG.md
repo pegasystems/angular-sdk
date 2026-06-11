@@ -33,6 +33,7 @@
 | **@pega/angular-sdk-components** | 25.1.13 |
 | **@pega/angular-sdk-overrides** | 25.1.13 |
 | **@pega/dx-component-builder-sdk** | 25.1.15 |
+| **@pega/constellationjs** | 25.1.2-4 |
 
 
 # [25.1.12](https://github.com/pegasystems/angular-sdk/tree/release/25.1.12) - Released: 27/03/2026
