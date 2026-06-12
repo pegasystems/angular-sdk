@@ -1,4 +1,4 @@
-# [25.1.13](https://github.com/pegasystems/angular-sdk/tree/release/25.1.13) - Released: 11/06/2026
+# [25.1.13](https://github.com/pegasystems/angular-sdk/tree/release/25.1.13) - Released: 12/06/2026
 
 ## Breaking changes
 
@@ -19,21 +19,18 @@
       * Github: [PR-473](https://github.com/pegasystems/angular-sdk-components/pull/473)
 *   **Console errors triggered when uploading attachment**
       * Github: [PR-482](https://github.com/pegasystems/angular-sdk-components/pull/482)
-
-*   The following table lists the packages whose versions have been updated:
-
 ---
 
 ### **Dependencies & Infrastructure**
 
-*   The following table lists the packages whose versions have been updated:
+The following table lists the packages whose versions have been updated:
 
 | Package | Updated version |
 | :--- | :--- |
 | **@pega/angular-sdk-components** | 25.1.13 |
 | **@pega/angular-sdk-overrides** | 25.1.13 |
 | **@pega/dx-component-builder-sdk** | 25.1.15 |
-| **@pega/constellationjs** | 25.1.2-4 |
+| **@pega/constellationjs** | 25.1.3 |
 
 
 # [25.1.12](https://github.com/pegasystems/angular-sdk/tree/release/25.1.12) - Released: 27/03/2026
