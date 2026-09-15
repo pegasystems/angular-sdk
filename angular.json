@@ -23,7 +23,7 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -73,15 +73,10 @@
                 "input": "./src/assets/icons/",
                 "output": "./constellation/assets/icons"
               },
-              {
-                "glob": "**/*",
-                "input": "./node_modules/tinymce",
-                "output": "./tinymce"
-              },
               "src/assets/img"
             ],
             "styles": ["src/styles.scss", "src/app/_samples/mediaco/mediaCoStyles.scss"],
-            "scripts": ["./node_modules/tinymce/tinymce.min.js"],
+            "scripts": [],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
@@ -137,7 +132,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
