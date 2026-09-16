@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResolutionScreenComponent } from '../resolution-screen/resolution-screen.component';
 import { ShoppingCardComponent } from '../shopping-card/shopping-card.component';
@@ -21,7 +21,10 @@ export class MainScreenComponent implements OnInit, OnDestroy {
   showTriplePlayOptions$ = true;
   showResolution$ = false;
 
-  constructor(private scservice: ServerConfigService) {}
+  constructor(
+    private scservice: ServerConfigService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     // Subscribe to the EVENT_CANCEL event to handle the assignment cancellation
@@ -42,16 +45,19 @@ export class MainScreenComponent implements OnInit, OnDestroy {
   cancelAssignment() {
     this.showTriplePlayOptions$ = true;
     this.showPega$ = false;
+    this.cdRef.markForCheck();
   }
 
   assignmentFinished() {
     this.showResolution$ = true;
     this.showPega$ = false;
+    this.cdRef.markForCheck();
   }
 
   onShopNow(optionClicked: string) {
     this.showTriplePlayOptions$ = false;
     this.showPega$ = true;
+    this.cdRef.markForCheck();
 
     this.scservice.getSdkConfig().then(sdkConfig => {
       let mashupCaseType = sdkConfig.serverConfig.appMashupCaseType;

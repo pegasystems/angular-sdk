@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   OnDestroy,
   NgZone,
+  ChangeDetectorRef,
   Input,
   OnChanges,
   SimpleChanges,
@@ -36,6 +37,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   constructor(
     private ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
     private dialog: MatDialog
   ) {}
 
@@ -115,6 +117,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   finishLoading() {
     this.isLoading = false;
+    this.cdRef.markForCheck();
     setTimeout(() => {
       this.initializeScroll();
     }, 0);

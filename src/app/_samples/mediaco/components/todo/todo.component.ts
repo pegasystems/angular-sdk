@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ViewContainerRef, ViewChild, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, Input, ViewContainerRef, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatIcon } from '@angular/material/icon';
@@ -95,7 +95,8 @@ export class TodoComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private psService: ProgressSpinnerService,
     private erService: ErrorMessagesService,
-    private utils: Utils
+    private utils: Utils,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -168,6 +169,7 @@ export class TodoComponent implements OnInit, OnDestroy {
   deferLoadWorklistItems(responseData) {
     this.arAssignments$ = responseData.data;
     this.surveyCase = this.surveyAssignment(this.arAssignments$);
+    this.cdRef.markForCheck();
   }
 
   surveyAssignment(assignmentsSource: any[]) {
@@ -233,6 +235,7 @@ export class TodoComponent implements OnInit, OnDestroy {
       .openAssignment(id, classname, options)
       .then(() => {
         this.psService.sendMessage(false);
+        this.cdRef.markForCheck();
         if (this.bLogging) {
           console.log(`openAssignment completed`);
         }
@@ -240,6 +243,7 @@ export class TodoComponent implements OnInit, OnDestroy {
       .catch(() => {
         this.psService.sendMessage(false);
         this.erService.sendMessage('show', 'Failed to open');
+        this.cdRef.markForCheck();
       });
   }
 }

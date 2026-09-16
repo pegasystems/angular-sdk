@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -60,7 +60,7 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private angularPConnect: AngularPConnectService,
-    private ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
     private utils: Utils
   ) {}
 
@@ -110,23 +110,22 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
   }
 
   initComponent() {
-    this.ngZone.run(() => {
-      this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
-      this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.utils.getSDKStaticContentUrl());
+    this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
+    this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.utils.getSDKStaticContentUrl());
 
-      // Then, continue on with other initialization
+    // Then, continue on with other initialization
 
-      // making a copy, so can add info
-      this.navPages$ = JSON.parse(JSON.stringify(this.pages$));
+    // making a copy, so can add info
+    this.navPages$ = JSON.parse(JSON.stringify(this.pages$));
 
-      this.actionsAPI = this.pConn$.getActionsApi();
-      this.createWork = this.actionsAPI.createWork.bind(this.actionsAPI);
-      this.showPage = this.actionsAPI.showPage.bind(this.actionsAPI);
-      this.logout = this.actionsAPI.logout.bind(this.actionsAPI);
+    this.actionsAPI = this.pConn$.getActionsApi();
+    this.createWork = this.actionsAPI.createWork.bind(this.actionsAPI);
+    this.showPage = this.actionsAPI.showPage.bind(this.actionsAPI);
+    this.logout = this.actionsAPI.logout.bind(this.actionsAPI);
 
-      this.portalOperator$ = PCore.getEnvironmentInfo().getOperatorName();
-      this.portalOperatorInitials$ = this.utils.getInitials(this.portalOperator$ ?? '');
-    });
+    this.portalOperator$ = PCore.getEnvironmentInfo().getOperatorName();
+    this.portalOperatorInitials$ = this.utils.getInitials(this.portalOperator$ ?? '');
+    this.cdRef.markForCheck();
   }
 
   navPanelButtonClick(oPageData: any) {
@@ -135,10 +134,12 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
     this.activePage = pyLabel;
 
     this.showPage(pyRuleName, pyClassName);
+    this.cdRef.markForCheck();
   }
 
   toggleMenu() {
     this.collapsed = !this.collapsed;
+    this.cdRef.markForCheck();
   }
 
   navPanelLogoutClick() {
