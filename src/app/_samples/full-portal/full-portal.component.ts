@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
@@ -51,7 +51,7 @@ export class FullPortalComponent implements OnInit, OnDestroy {
 
   constructor(
     private psservice: ProgressSpinnerService,
-    private ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
     private scservice: ServerConfigService
   ) {}
 
@@ -78,12 +78,14 @@ export class FullPortalComponent implements OnInit, OnDestroy {
       this.bLoggedIn$ = true;
       // start the portal
       this.startPortal();
+      this.cdRef.markForCheck();
     });
 
     // Add event listener for when logged out
     document.addEventListener('SdkLoggedOut', () => {
       this.bLoggedIn$ = false;
       sessionStorage.clear();
+      this.cdRef.markForCheck();
     });
 
     /* Login if needed */
@@ -134,6 +136,7 @@ export class FullPortalComponent implements OnInit, OnDestroy {
       // Getting current user's access group's available portals list other than excluded portals (relies on Traditional DX APIs)
       getAvailablePortals().then((portals: string[]) => {
         this.availablePortals = portals;
+        this.cdRef.markForCheck();
       });
     }
   }
@@ -172,6 +175,7 @@ export class FullPortalComponent implements OnInit, OnDestroy {
     this.sComponentName$ = this.pConn$.getComponentName();
     this.arChildren$ = this.pConn$.getChildren();
     this.bPCoreReady$ = true;
+    this.cdRef.markForCheck();
   }
 
   showHideProgress(bShow: boolean) {
@@ -185,9 +189,8 @@ export class FullPortalComponent implements OnInit, OnDestroy {
             this.spinnerTimer = null;
           }
 
-          this.ngZone.run(() => {
-            this.isProgress$ = true;
-          });
+          this.isProgress$ = true;
+          this.cdRef.markForCheck();
         });
       }
     } else {
@@ -199,9 +202,8 @@ export class FullPortalComponent implements OnInit, OnDestroy {
       // don't touch bIsProgress$ unless differnent
       if (bShow != this.isProgress$) {
         // makes sure Angular tracks these changes
-        this.ngZone.run(() => {
-          this.isProgress$ = bShow;
-        });
+        this.isProgress$ = bShow;
+        this.cdRef.markForCheck();
       }
     }
   }
@@ -216,5 +218,6 @@ export class FullPortalComponent implements OnInit, OnDestroy {
   loadSelectedPortal(portal) {
     this.portalSelectionScreen = false;
     window.myLoadPortal('app-root', portal, []); // this is defined in bootstrap shell that's been loaded already
+    this.cdRef.markForCheck();
   }
 }
