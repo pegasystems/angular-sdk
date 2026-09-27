@@ -96,6 +96,7 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-inferrable-types': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/prefer-for-of': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       'no-console': 'off',
       'import/prefer-default-export': 'off'
