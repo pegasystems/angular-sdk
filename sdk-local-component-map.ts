@@ -7,7 +7,7 @@
 // found locally. If not found here, we'll look in the Pega-provided component map
 
 const localSdkComponentMap = {
-  // ...sdkMediaCoComponentMap
+  // ...sdkMediaCoComponentMap,
   /* map end - DO NOT REMOVE */
 };
 
