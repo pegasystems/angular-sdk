@@ -1,168 +1,146 @@
 import { globalIgnores } from 'eslint/config';
-import { fileURLToPath } from 'node:url';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import angular from '@angular-eslint/eslint-plugin';
+import angularTemplate from '@angular-eslint/eslint-plugin-template';
+import angularTemplateParser from '@angular-eslint/template-parser';
 import sonarjs from 'eslint-plugin-sonarjs';
 import importPlugin from 'eslint-plugin-import';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import { defineConfig } from 'eslint/config';
 
+const angularSourceFiles = ['src/app/**/*.ts'];
+const customConstellationFiles = ['src/app/_components/custom-constellation/**/*.{js,jsx,ts,tsx}'];
+
 export default defineConfig([
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
   globalIgnores([
     '**/node_modules',
-    'packages/*/lib',
-    '!**/.storybook',
-    '.storybook/public',
-    '**/demo.stories.jsx',
-    '**/mock.stories.js',
-    '**/demo.stories.tsx',
-    '**/demo.test.tsx',
-    '**/*.test.tsx',
-    '**/mock.stories.ts',
-    '**/*.mdx',
-    '**/webpack.config.js',
-    'src/helpers/config_access.js',
-    '**/*.html',
-    '**/*.css',
+    'dist/*',
+    'lib/*',
+    'src/auth.html',
+    'src/authDone.js',
+    '**/ext-libs.js',
     '**/*.json',
     '**/*.md',
     '**/*.svg',
-    '**/*.zip',
     '**/*.d.ts',
-    '*.storybook/*',
-    '**/*.cjs',
-    '**/*.mjs',
-    '**/paths.js',
-    'dist/*',
-    'lib/*',
-    '**/ext-libs.js'
+    '**/*.mjs'
   ]),
   {
     languageOptions: {
       globals: {
         PCore: 'readonly',
-        window: true,
-        console: true,
-        document: true,
-        fetch: true
+        window: 'readonly',
+        console: 'readonly',
+        document: 'readonly',
+        fetch: 'readonly'
       },
-
-      ecmaVersion: 13,
-      sourceType: 'script',
-
-      parserOptions: {
-        project: 'tsconfig.json',
-        ecmaFeatures: {
-          jsx: true
-        }
-      }
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      parserOptions: { project: 'tsconfig.json', ecmaFeatures: { jsx: true } }
     },
-
     settings: {
       'import/resolver': {
         typescript: {},
-        react: {
-          version: 'detect'
-        },
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx']
-        }
+        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+        react: { version: 'detect' }
       },
-
-      react: {
-        version: 'detect'
-      }
+      react: { version: 'detect' }
     },
-
-    plugins: { sonarjs, import: importPlugin, react, 'react-hooks': reactHooks },
+    plugins: { sonarjs, import: importPlugin },
     rules: {
-      'react/jsx-filename-extension': [0, { extensions: ['.jsx', '*.tsx'] }],
-
-      // Prettier recommends running separately from a linter.
-      // https://prettier.io/docs/en/integrating-with-linters.html#notes
-      'prettier/prettier': 'off',
-
-      // Disable rules from shared configs we're not ready for yet.
       'sonarjs/cognitive-complexity': ['warn', 20],
       'sonarjs/no-duplicate-string': 'off',
-
-      //
-      // Initial release: turning these off; phase in to "warn" or "error" over time
-      //  For "quotes" and "@typescript-eslint/quotes", see override below for .ts/.tsx files
-      'import/extensions': ['off', 'never'],
+      'import/extensions': 'off',
       'import/named': 'off',
       'import/no-cycle': 'off',
       'import/no-duplicates': 'off',
       'import/no-extraneous-dependencies': 'off',
       'import/no-named-as-default': 'off',
       'import/no-named-as-default-member': 'off',
-      'import/no-self-import': 'off',
       'import/no-unresolved': 'off',
       'import/no-useless-path-segments': 'off',
       'import/order': 'off',
-
-      'no-underscore-dangle': 'off', // TODO : adhere to standard naming
-      'no-restricted-syntax': 'warn', // TODO : fix for-in loops
-
+      'no-underscore-dangle': 'off',
+      'no-restricted-syntax': 'warn',
+      'import/no-relative-packages': 'off'
+    }
+  },
+  {
+    files: angularSourceFiles,
+    ignores: customConstellationFiles,
+    extends: [eslint.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylistic],
+    processor: angularTemplate.processors['extract-inline-html'],
+    plugins: { '@angular-eslint': angular, '@angular-eslint/template': angularTemplate },
+    rules: {
+      ...angular.configs.recommended.rules,
+      '@angular-eslint/prefer-inject': 'off',
+      '@angular-eslint/prefer-standalone': 'off',
+      '@angular-eslint/no-empty-lifecycle-method': 'off',
+      '@angular-eslint/directive-selector': ['error', { type: 'attribute', style: 'camelCase', prefix: ['app'] }],
+      '@angular-eslint/component-selector': [
+        'error',
+        { type: 'element', style: 'kebab-case', prefix: ['app', 'component', 'lib', 'mediaco', 'table', 'wss'] }
+      ],
+      '@angular-eslint/no-output-on-prefix': 'off',
+      '@angular-eslint/use-lifecycle-interface': 'off',
+      '@typescript-eslint/array-type': 'off',
+      '@typescript-eslint/consistent-generic-constructors': 'off',
+      '@typescript-eslint/consistent-indexed-object-style': 'off',
+      '@typescript-eslint/method-signature-style': ['error', 'property'],
+      '@typescript-eslint/naming-convention': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-inferrable-types': 'off',
+      '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      'no-console': 'off',
+      'import/prefer-default-export': 'off'
+    }
+  },
+  {
+    files: ['src/app/**/*.html'],
+    ignores: ['src/app/_components/custom-constellation/**'],
+    languageOptions: { parser: angularTemplateParser },
+    plugins: { '@angular-eslint/template': angularTemplate },
+    rules: {
+      ...angularTemplate.configs.recommended.rules,
+      ...angularTemplate.configs.accessibility.rules,
+      '@angular-eslint/template/prefer-control-flow': 'off',
+      '@angular-eslint/template/eqeqeq': 'off',
+      '@angular-eslint/template/alt-text': 'off',
+      '@angular-eslint/template/label-has-associated-control': 'off',
+      '@angular-eslint/template/click-events-have-key-events': 'off',
+      '@angular-eslint/template/interactive-supports-focus': 'off'
+    }
+  },
+  {
+    files: customConstellationFiles,
+    extends: [eslint.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylistic],
+    plugins: { react, 'react-hooks': reactHooks, 'jsx-a11y': jsxA11y },
+    rules: {
+      'react/jsx-filename-extension': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-fragments': 'off',
+      'react-hooks/rules-of-hooks': 'off',
+      'react-hooks/exhaustive-deps': 'off',
       'jsx-a11y/alt-text': 'off',
       'jsx-a11y/anchor-is-valid': 'off',
       'jsx-a11y/click-events-have-key-events': 'off',
       'jsx-a11y/label-has-associated-control': 'off',
       'jsx-a11y/no-static-element-interactions': 'off',
-
-      '@typescript-eslint/naming-convention': 'off', // prefer warn but needs different parserOptions
-      '@typescript-eslint/ban-types': 'off', // also, see override below
-      '@typescript-eslint/no-explicit-any': 'off', // prefer warn but needs different parserOptions
-      '@typescript-eslint/no-empty-object-type': 'off', // prefer warn but needs different parserOptions
-      '@typescript-eslint/ban-ts-comment': 'off', // prefer warn but needs different parserOptions
+      '@typescript-eslint/array-type': 'off',
+      '@typescript-eslint/naming-convention': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
-
-      'import/no-relative-packages': 'off' // arnab
-    }
-  },
-  {
-    files: ['**/*.@(ts|tsx)'],
-
-    rules: {
-      '@typescript-eslint/method-signature-style': ['error', 'property'],
-      quotes: 'off',
-      '@typescript-eslint/quotes': 'off'
-    }
-  },
-  {
-    files: ['**/*.@(jsx|tsx|mdx)'],
-
-    rules: {
-      'react/react-in-jsx-scope': 'off',
-      'react-hooks/rules-of-hooks': 'off',
-      'react-hooks/exhaustive-deps': 'off'
-    }
-  },
-  {
-    files: ['**/*.@(ts|tsx)'],
-    rules: {
+      '@typescript-eslint/ban-ts-comment': 'off',
       'no-console': 'off',
       'import/prefer-default-export': 'off',
-      'import/no-relative-packages': 'off',
-      'react/jsx-fragments': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react-hooks/exhaustive-deps': 'off',
       'sonarjs/cognitive-complexity': ['warn', 45]
-    }
-  },
-  {
-    files: ['**/*.@(js|jsx|ts|tsx|mdx)'],
-    rules: {}
-  },
-
-  {
-    files: ['*/**/mocks/**.@(mocks|styles).@(tsx|ts)'],
-
-    rules: {
-      'import/prefer-default-export': ['off']
     }
   }
 ]);
