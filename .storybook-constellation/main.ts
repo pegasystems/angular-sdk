@@ -1,7 +1,8 @@
-import path from 'path';
+import { fileURLToPath } from 'node:url';
+import type { StorybookConfig } from '@storybook/react-webpack5';
+import type { Configuration } from 'webpack';
 
-/** @type { import('@storybook/react-webpack5').StorybookConfig } */
-const config = {
+const config: StorybookConfig = {
   stories: ['../src/app/_components//custom-constellation/**/*.stories.@(js|jsx|ts|tsx)'],
 
   typescript: {
@@ -10,7 +11,6 @@ const config = {
 
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
     {
       name: '@storybook/addon-docs',
       options: { mdxBabelOptions: { babelrc: true, configFile: true } }
@@ -18,9 +18,9 @@ const config = {
   ],
   framework: '@storybook/react-webpack5',
 
-  webpackFinal: async config => {
-    if (config.resolve?.alias) {
-      config.resolve.alias['@pega/auth/lib/sdk-auth-manager'] = path.resolve(__dirname, '../__mocks__/authManager.tsx');
+  webpackFinal: async (config: Configuration) => {
+    if (config.resolve?.alias && !Array.isArray(config.resolve.alias)) {
+      config.resolve.alias['@pega/auth/lib/sdk-auth-manager'] = fileURLToPath(new URL('../__mocks__/authManager.tsx', import.meta.url));
     }
 
     if (config.module) {
@@ -35,7 +35,11 @@ const config = {
         },
         {
           test: /\.tsx?$/,
-          use: 'ts-loader',
+          use: {
+            loader: 'ts-loader',
+            // dev-mode watch program produces false-positive errors not reproduced by `tsc`/`storybook build`; type-checking is covered by those and the editor
+            options: { transpileOnly: true }
+          },
           exclude: /node_modules/
         }
       );

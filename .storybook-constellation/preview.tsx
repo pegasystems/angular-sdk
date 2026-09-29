@@ -1,15 +1,15 @@
-import { Preview } from '@storybook/react';
+import type { Preview, Decorator } from '@storybook/react';
 import { Configuration, PopoverManager, Toaster, ModalManager, WorkTheme } from '@pega/cosmos-react-core';
 import setPCoreMocks from '../__mocks__/pcoreMocks';
 
 setPCoreMocks();
 
-const decorators = [
+const decorators: Decorator[] = [
   (Story, context) => {
     return (
       <Configuration>
         <PopoverManager>
-          <Toaster dismissAfter={5000}>
+          <Toaster>
             <ModalManager>
               <Story {...context} />
             </ModalManager>

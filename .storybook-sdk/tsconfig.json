@@ -4,7 +4,8 @@
     "types": ["node"],
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "emitDecoratorMetadata": false
+    "emitDecoratorMetadata": false,
+    "rootDir": ".."
   },
   "include": ["../src/**/*.d.ts", "../src/app/_components/custom-sdk/**/*", "./preview.ts", "../__mocks__/*"],
   "exclude": ["../src/test.ts", "../src/**/*.spec.ts", "../src/app/_samples/**/*"],
