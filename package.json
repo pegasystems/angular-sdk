@@ -97,7 +97,7 @@
     "@storybook/addon-links": "^8.6.18",
     "@storybook/angular": "^8.6.18",
     "@storybook/react": "^8.6.18",
-    "@storybook/react-webpack5": "^8.6.18",
+    "@storybook/react-webpack5": "^10.6.0",
     "@types/jasmine": "~6.0.0",
     "@types/jasminewd2": "~2.0.13",
     "@types/node": "^24.0.0",
