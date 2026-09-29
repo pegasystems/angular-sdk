@@ -4,11 +4,8 @@ import tseslint from 'typescript-eslint';
 import angular from '@angular-eslint/eslint-plugin';
 import angularTemplate from '@angular-eslint/eslint-plugin-template';
 import angularTemplateParser from '@angular-eslint/template-parser';
+import eslintReact from '@eslint-react/eslint-plugin';
 import sonarjs from 'eslint-plugin-sonarjs';
-import importPlugin from 'eslint-plugin-import';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
 import { defineConfig } from 'eslint/config';
 
 const angularSourceFiles = ['src/app/**/*.ts'];
@@ -41,31 +38,12 @@ export default defineConfig([
       sourceType: 'module',
       parserOptions: { project: 'tsconfig.json', ecmaFeatures: { jsx: true } }
     },
-    settings: {
-      'import/resolver': {
-        typescript: {},
-        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-        react: { version: 'detect' }
-      },
-      react: { version: 'detect' }
-    },
-    plugins: { sonarjs, import: importPlugin },
+    plugins: { sonarjs },
     rules: {
       'sonarjs/cognitive-complexity': ['warn', 20],
       'sonarjs/no-duplicate-string': 'off',
-      'import/extensions': 'off',
-      'import/named': 'off',
-      'import/no-cycle': 'off',
-      'import/no-duplicates': 'off',
-      'import/no-extraneous-dependencies': 'off',
-      'import/no-named-as-default': 'off',
-      'import/no-named-as-default-member': 'off',
-      'import/no-unresolved': 'off',
-      'import/no-useless-path-segments': 'off',
-      'import/order': 'off',
       'no-underscore-dangle': 'off',
-      'no-restricted-syntax': 'warn',
-      'import/no-relative-packages': 'off'
+      'no-restricted-syntax': 'warn'
     }
   },
   {
@@ -121,18 +99,10 @@ export default defineConfig([
   {
     files: customConstellationFiles,
     extends: [eslint.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylistic],
-    plugins: { react, 'react-hooks': reactHooks, 'jsx-a11y': jsxA11y },
+    plugins: { '@eslint-react': eslintReact },
     rules: {
-      'react/jsx-filename-extension': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react/jsx-fragments': 'off',
-      'react-hooks/rules-of-hooks': 'off',
-      'react-hooks/exhaustive-deps': 'off',
-      'jsx-a11y/alt-text': 'off',
-      'jsx-a11y/anchor-is-valid': 'off',
-      'jsx-a11y/click-events-have-key-events': 'off',
-      'jsx-a11y/label-has-associated-control': 'off',
-      'jsx-a11y/no-static-element-interactions': 'off',
+      '@eslint-react/no-children-count': 'off',
+      '@eslint-react/set-state-in-effect': 'off',
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
@@ -140,7 +110,6 @@ export default defineConfig([
       '@typescript-eslint/no-unsafe-function-type': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       'no-console': 'off',
-      'import/prefer-default-export': 'off',
       'sonarjs/cognitive-complexity': ['warn', 45]
     }
   }

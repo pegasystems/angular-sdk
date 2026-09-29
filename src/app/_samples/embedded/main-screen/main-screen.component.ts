@@ -67,7 +67,7 @@ export class MainScreenComponent implements OnInit, OnDestroy {
           mashupCaseType = caseTypes[0].pyWorkTypeImplementationClassName;
         }
       }
-      let selectedPhoneGUID = '';
+      let selectedPhoneGUID: string;
       const phoneName = optionClicked ? optionClicked.trim() : '';
 
       switch (phoneName) {
