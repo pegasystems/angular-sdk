@@ -67,7 +67,7 @@
 
 ### **Dependencies & Infrastructure**
 
-The following table lists the packages whose versions have been updated:
+The following table lists the packages whose major versions have been updated:
 
 | Package | Updated version |
 | :--- | :--- |
@@ -79,44 +79,25 @@ The following table lists the packages whose versions have been updated:
 | **@pega/cosmos-react-condition-builder** | 9.23.4 |
 | **@pega/cosmos-react-core** | 9.23.4 |
 | **@pega/cosmos-react-work** | 9.23.4 |
-| **@angular-builders/custom-webpack** | 21.1.0 |
-| **@angular-devkit/build-angular** | 21.2.3 |
-| **@angular-devkit/core** | 21.2.3 |
-| **@angular/cli** | 21.2.3 |
 | **@chromatic-com/storybook** | 5.3.1 |
-| **@eslint-react/eslint-plugin** | 5.23.0 |
-| **@eslint/js** | 10.0.1 |
-| **@playwright/test** | 1.63.0 |
 | **@storybook/addon-a11y** | 10.6.0 |
-| **@storybook/addon-docs** | 10.6.0 |
 | **@storybook/addon-links** | 10.6.0 |
 | **@storybook/angular** | 10.6.0 |
 | **@storybook/react** | 10.6.0 |
 | **@storybook/react-webpack5** | 10.6.0 |
 | **@types/jasmine** | 6.0.0 |
 | **@types/node** | 24.0.0 |
-| **@types/styled-components** | 5.1.36 |
 | **compressing** | 2.1.3 |
 | **copy-webpack-plugin** | 14.0.0 |
 | **eslint** | 10.11.0 |
-| **eslint-plugin-jest** | 29.16.6 |
-| **eslint-plugin-sonarjs** | 4.2.2 |
-| **fs-extra** | 11.4.1 |
 | **jasmine-core** | 7.0.2 |
-| **jest** | 30.5.2 |
-| **jest-environment-jsdom** | 30.5.2 |
-| **karma** | 6.4.4 |
-| **karma-jasmine-html-reporter** | 2.3.0 |
-| **postcss** | 8.5.28 |
-| **prettier** | 3.9.9 |
 | **replace-in-file** | 9.0.0 |
-| **rxjs** | 7.8.2 |
 | **storybook** | 10.6.0 |
 | **style-loader** | 4.0.0 |
-| **styled-components** | 6.3.12 |
-| **ts-loader** | 9.6.2 |
-| **typescript-eslint** | 8.71.0 |
-| **webpack** | 5.111.1 |
+
+The following packages have been added:
+
+*   **@eslint-react/eslint-plugin**, **@eslint/js**, **@storybook/addon-docs**, **prettier**
 
 The following packages have been removed:
 
