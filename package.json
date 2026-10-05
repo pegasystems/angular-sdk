@@ -1,6 +1,6 @@
 {
   "name": "angular-sdk",
-  "version": "25.1.12",
+  "version": "26.1.10",
   "engines": {
     "node": ">=24.0.0"
   },
@@ -64,7 +64,7 @@
     "@angular/platform-browser": "^21.2.4",
     "@angular/platform-browser-dynamic": "^21.2.4",
     "@angular/router": "^21.2.4",
-    "@pega/angular-sdk-components": "~0.26.6",
+    "@pega/angular-sdk-components": "~26.1.10",
     "@pega/auth": "^1.0.0",
     "@pega/cosmos-react-condition-builder": "^9.23.4",
     "@pega/cosmos-react-core": "^9.23.4",
@@ -88,9 +88,9 @@
     "@chromatic-com/storybook": "^5.3.1",
     "@eslint-react/eslint-plugin": "^5.23.0",
     "@eslint/js": "^10.0.1",
-    "@pega/angular-sdk-overrides": "~0.26.6",
+    "@pega/angular-sdk-overrides": "~26.1.10",
     "@pega/constellationjs": "~26.1.0",
-    "@pega/dx-component-builder-sdk": "~0.26.2",
+    "@pega/dx-component-builder-sdk": "~26.1.11",
     "@pega/pcore-pconnect-typedefs": "^5.1.1",
     "@playwright/test": "^1.63.0",
     "@storybook/addon-a11y": "^10.6.0",
