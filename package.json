@@ -66,7 +66,7 @@
     "@angular/router": "^21.2.4",
     "@pega/angular-sdk-components": "~0.26.6",
     "@pega/auth": "^1.0.0",
-    "@pega/cosmos-react-condition-builder": "^9.23.4",
+    "@pega/cosmos-react-condition-builder": "^9.28.0",
     "@pega/cosmos-react-core": "^9.23.4",
     "@pega/cosmos-react-work": "^9.23.4",
     "lodash.get": "^4.4.2",
