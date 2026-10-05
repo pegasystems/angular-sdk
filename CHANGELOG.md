@@ -29,6 +29,8 @@
     * Github: [PR-594](https://github.com/pegasystems/angular-sdk-components/pull/594)
 *   **Fixed an issue where column header labels in the SimpleTableManual and ListView table were not localized.**
     * Github: [PR-603](https://github.com/pegasystems/angular-sdk-components/pull/603)
+*   **Dropdown placeholder now uses the native Material placeholder, with an option to clear the selection.**
+    * Github: [PR-616](https://github.com/pegasystems/angular-sdk-components/pull/616)
 
 ### **Bug fixes**
 *   **Fixed DataReference not making an api call on state change.**
