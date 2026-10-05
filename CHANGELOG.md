@@ -1,3 +1,112 @@
+# [26.1.10](https://github.com/pegasystems/angular-sdk/tree/release/26.1.10)
+
+### **Features**
+*   **Replaced the TinyMCE dependency with Tiptap for rich text editing capabilities.**
+    * Github: [PR-545](https://github.com/pegasystems/angular-sdk-components/pull/545)
+*   Support Embedded attachment in simple table manual.
+    * Github: [PR-547](https://github.com/pegasystems/angular-sdk-components/pull/547)
+*   **Added support for instructions in the DefaultForm template.**
+    * Github: [PR-548](https://github.com/pegasystems/angular-sdk-components/pull/548)
+*   **Added support for conditional Add, Edit, and Delete actions, including record-level conditions, in editable EmbeddedData table.**
+    * Github: [PR-553](https://github.com/pegasystems/angular-sdk-components/pull/553)
+*   **Added support for contextual warning messages in field components.**
+    * Github: [PR-559](https://github.com/pegasystems/angular-sdk-components/pull/559)
+*   **Added Support for DataReference field value rendering in the Details template.**
+    * Github: [PR-562](https://github.com/pegasystems/angular-sdk-components/pull/562)
+*   **DataReference as Autocomplete supports Secondary Text.**
+    * Github: [PR-569](https://github.com/pegasystems/angular-sdk-components/pull/569)
+*   **Added left and right alignment support for vertical multi-step assignment navigation.**
+    * Github: [PR-576](https://github.com/pegasystems/angular-sdk-components/pull/576)
+*   **Added support for Data Object actions in the case view, and Submit/Cancel controls in the Data Object modal.**
+    * Github: [PR-577](https://github.com/pegasystems/angular-sdk-components/pull/577)
+*   **DataReference as Autocomplete supports grouping.**
+    * Github: [PR-578](https://github.com/pegasystems/angular-sdk-components/pull/578)
+*   **Added support for primary fields in EmbeddedData and query params for refreshFor action.**
+    * Github: [PR-584](https://github.com/pegasystems/angular-sdk-components/pull/584)
+*   **Added support for creating new records for the Autocomplete DataReference and CaseReference components.**
+    * Github: [PR-585](https://github.com/pegasystems/angular-sdk-components/pull/585)
+*   **Added support for the authored placeholder in the Dropdown component, falling back to 'Select...' when not configured.**
+    * Github: [PR-594](https://github.com/pegasystems/angular-sdk-components/pull/594)
+*   **Fixed an issue where column header labels in the SimpleTableManual and ListView table were not localized.**
+    * Github: [PR-603](https://github.com/pegasystems/angular-sdk-components/pull/603)
+*   **Dropdown placeholder now uses the native Material placeholder, with an option to clear the selection.**
+    * Github: [PR-616](https://github.com/pegasystems/angular-sdk-components/pull/616)
+
+### **Bug fixes**
+*   **Fixed DataReference not making an api call on state change.**
+      * Github: [PR-486](https://github.com/pegasystems/angular-sdk-components/pull/486)
+*   **Fixed the issue where views are not rendering in Details Template.**
+      * Github: [PR-533](https://github.com/pegasystems/angular-sdk-components/pull/533)
+*   **Fixed an issue where FieldGroup visibility was not worked correctly.**
+      * Github: [PR-538](https://github.com/pegasystems/angular-sdk-components/pull/538)
+*   **Fixed an issue where dynamic headings were not displayed in EmbeddedData repeating views.**
+      * Github: [PR-540](https://github.com/pegasystems/angular-sdk-components/pull/540)
+*   **Fixed the issue where filtering did not work on empty tables and corrected the filter pop-up styling.**
+      * Github: [PR-543](https://github.com/pegasystems/angular-sdk-components/pull/543)
+*   **Fixed DateTime component theme colors.**
+      * Github: [PR-561](https://github.com/pegasystems/angular-sdk-components/pull/561)
+*   **Fixed label display in Details templates.**
+      * Github: [PR-568](https://github.com/pegasystems/angular-sdk-components/pull/568)
+*   **Fixed the issue where the DataReference value was displayed as a SemanticLink in the CaseSummary view.**
+      * Github: [PR-572](https://github.com/pegasystems/angular-sdk-components/pull/572)
+      * Github: [PR-591](https://github.com/pegasystems/angular-sdk-components/pull/591)
+*   **Displays the configured custom label for the Add button.**
+      * Github: [PR-574](https://github.com/pegasystems/angular-sdk-components/pull/574)
+*   **Fixed collapsible and expandable behavior in FieldGroup.**
+      * Github: [PR-579](https://github.com/pegasystems/angular-sdk-components/pull/579)
+*   **Fixed the issue where changing a property value on the screen was not reflected in the list below.**
+      * Github: [PR-581](https://github.com/pegasystems/angular-sdk-components/pull/581)
+*   **Fixed search form label issue, fallback to inherited label when config label is missing.**
+      * Github: [PR-582](https://github.com/pegasystems/angular-sdk-components/pull/582)
+*   **Refactored Details templates to correctly render regions and child components.**
+      * Github: [PR-586](https://github.com/pegasystems/angular-sdk-components/pull/586)
+*   **Fixed the missing required-field asterisk indicator for the Multiselect combobox.**
+      * Github: [PR-595](https://github.com/pegasystems/angular-sdk-components/pull/595)
+*   **Fixed the DateTime component showing '[object Object]' for invalid input and defaulting to the current date and time on blur.**
+      * Github: [PR-600](https://github.com/pegasystems/angular-sdk-components/pull/600)
+*   **Fixed the issue where required validation was not triggered in the Rich Text Editor.**
+      * Github: [PR-601](https://github.com/pegasystems/angular-sdk-components/pull/601)
+
+### **Dependencies & Infrastructure**
+
+The following table lists the packages whose major versions have been updated:
+
+| Package | Updated version |
+| :--- | :--- |
+| **@pega/angular-sdk-components** | 26.1.10 |
+| **@pega/angular-sdk-overrides** | 26.1.10 |
+| **@pega/dx-component-builder-sdk** | 26.1.11 |
+| **@pega/constellationjs** | 26.1.0 |
+| **@pega/auth** | 1.0.0 |
+| **@pega/pcore-pconnect-typedefs** | 5.1.1 |
+| **@pega/cosmos-react-condition-builder** | 9.23.4 |
+| **@pega/cosmos-react-core** | 9.23.4 |
+| **@pega/cosmos-react-work** | 9.23.4 |
+| **@chromatic-com/storybook** | 5.3.1 |
+| **@storybook/addon-a11y** | 10.6.0 |
+| **@storybook/addon-links** | 10.6.0 |
+| **@storybook/angular** | 10.6.0 |
+| **@storybook/react** | 10.6.0 |
+| **@storybook/react-webpack5** | 10.6.0 |
+| **@types/jasmine** | 6.0.0 |
+| **@types/node** | 24.0.0 |
+| **compressing** | 2.1.3 |
+| **copy-webpack-plugin** | 14.0.0 |
+| **eslint** | 10.11.0 |
+| **jasmine-core** | 7.0.2 |
+| **replace-in-file** | 9.0.0 |
+| **storybook** | 10.6.0 |
+| **style-loader** | 4.0.0 |
+
+The following packages have been added:
+
+*   **@eslint-react/eslint-plugin**, **@eslint/js**, **@storybook/addon-docs**, **prettier**
+
+The following packages have been removed:
+
+*   **@angular/language-service**, **@pega/configs**, **@storybook/addon-essentials**, **@storybook/addon-interactions**, **core-js**, **eslint-plugin-import**, **eslint-plugin-react**, **eslint-plugin-react-hooks**, **stylelint**, **tinymce**, **zone.js**
+
+
 # [25.1.13](https://github.com/pegasystems/angular-sdk/tree/release/25.1.13) - Released: 12/06/2026
 
 ## Breaking changes
