@@ -78,6 +78,7 @@ The following table lists the packages whose major versions have been updated:
 | **@pega/dx-component-builder-sdk** | 26.1.11 |
 | **@pega/constellationjs** | 26.1.0 |
 | **@pega/auth** | 1.0.0 |
+| **@pega/pcore-pconnect-typedefs** | 5.1.1 |
 | **@pega/cosmos-react-condition-builder** | 9.23.4 |
 | **@pega/cosmos-react-core** | 9.23.4 |
 | **@pega/cosmos-react-work** | 9.23.4 |
