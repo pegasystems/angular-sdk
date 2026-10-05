@@ -35,7 +35,7 @@ export class WssNavBarComponent implements OnInit, OnDestroy {
   @Input() caseTypes$: any[];
   @Input() homePage: any;
   @Input() arChildren$: any[];
-  @Input() portalLogoImage$: string;
+  @Input() portalLogoImage$: string | Blob | null;
 
   // For interaction with AngularPConnect
   angularPConnectData: AngularPConnectData = {};

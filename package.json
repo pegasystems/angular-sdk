@@ -51,7 +51,7 @@
     "_internal-check-node-version": "node scripts/check-node-version",
     "_internal-copy-index": "shx cp dist/index.html dist/simpleportal.html && shx cp dist/index.html dist/portal.html && shx cp dist/index.html dist/fullportal.html && shx cp dist/index.html dist/embedded.html && shx cp dist/index.html dist/mashup.html",
     "_internal-install-sdk": "echo \"installing...\" && npm install --loglevel notice",
-    "_internal-test-functional": "npm run test:functional:local:sdk-a --prefix node_modules/@pega/dx-component-builder-sdk",
+    "_internal-test-functional": "npm run test:functional:local:sdk-a --prefix node_modules/@pega/dx-component-builder-sdk -- --config '{\"haste\":{\"retainAllFiles\":true},\"testPathIgnorePatterns\":[]}'",
     "_internal-build-jest-assets": "dx-component-builder-sdk buildJestAssets",
     "_internal-test-quarantine": "dx-component-builder-sdk quarantine"
   },
@@ -91,7 +91,7 @@
     "@pega/angular-sdk-overrides": "~0.26.6",
     "@pega/constellationjs": "~26.1.0",
     "@pega/dx-component-builder-sdk": "~0.26.2",
-    "@pega/pcore-pconnect-typedefs": "4.1.0",
+    "@pega/pcore-pconnect-typedefs": "^5.1.1",
     "@playwright/test": "^1.63.0",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",

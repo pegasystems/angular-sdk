@@ -51,7 +51,7 @@ export class AppShellComponent implements OnInit, OnDestroy {
   bOkDisplayError = false;
   portalTemplate: string;
   links: any = [];
-  imageURL: string | Blob;
+  imageURL: string | Blob | null;
   localizedVal = PCore.getLocaleUtils().getLocaleValue;
 
   constructor(
