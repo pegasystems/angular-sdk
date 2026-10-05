@@ -68,7 +68,7 @@
     "@pega/auth": "^1.0.0",
     "@pega/cosmos-react-condition-builder": "^9.23.4",
     "@pega/cosmos-react-core": "^9.23.4",
-    "@pega/cosmos-react-work": "^9.23.4",
+    "@pega/cosmos-react-work": "^9.28.0",
     "lodash.get": "^4.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
