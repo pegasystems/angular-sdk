@@ -85,7 +85,7 @@
     "@angular-eslint/template-parser": "^21.3.1",
     "@angular/cli": "^21.2.3",
     "@angular/compiler-cli": "^21.2.4",
-    "@chromatic-com/storybook": "^5.3.1",
+    "@chromatic-com/storybook": "^5.4.0",
     "@eslint-react/eslint-plugin": "^5.23.0",
     "@eslint/js": "^10.0.1",
     "@pega/angular-sdk-overrides": "~26.1.10",
