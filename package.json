@@ -99,7 +99,7 @@
     "@storybook/angular": "^10.6.0",
     "@storybook/react": "^10.6.0",
     "@storybook/react-webpack5": "^10.6.0",
-    "@types/jasmine": "~6.0.0",
+    "@types/jasmine": "~7.0.0",
     "@types/jasminewd2": "~2.0.13",
     "@types/node": "^24.0.0",
     "@types/styled-components": "^5.1.36",
