@@ -1,8 +1,17 @@
 import { Routes } from '@angular/router';
-import { endpoints } from '@pega/angular-sdk-components';
 import { FullPortalComponent } from './_samples/full-portal/full-portal.component';
 import { EmbeddedComponent } from './_samples/embedded/embedded.component';
-import { NavigationComponent } from './_samples/simple-portal/navigation/navigation.component';
+
+const routePaths = {
+  portal: 'portal',
+  portalHtml: 'portal.html',
+  fullPortal: 'fullportal',
+  fullPortalHtml: 'fullportal.html',
+  embedded: 'embedded',
+  embeddedHtml: 'embedded.html',
+  mashup: 'mashup',
+  mashupHtml: 'mashup.html'
+};
 
 // Adding path to remove "Cannot match routes" error at launch
 // Tried this at one point... Need to add /app in path now...
@@ -15,14 +24,12 @@ import { NavigationComponent } from './_samples/simple-portal/navigation/navigat
 
 export const routes: Routes = [
   { path: '', component: EmbeddedComponent },
-  { path: endpoints.PORTAL, component: FullPortalComponent },
-  { path: endpoints.PORTALHTML, component: FullPortalComponent },
-  { path: endpoints.FULLPORTAL, component: FullPortalComponent },
-  { path: endpoints.FULLPORTALHTML, component: FullPortalComponent },
-  { path: endpoints.EMBEDDED, component: EmbeddedComponent },
-  { path: endpoints.EMBEDDEDHTML, component: EmbeddedComponent },
-  { path: endpoints.MASHUP, component: EmbeddedComponent },
-  { path: endpoints.MASHUPHTML, component: EmbeddedComponent },
-  { path: endpoints.SIMPLEPORTAL, component: NavigationComponent },
-  { path: endpoints.SIMPLEPORTALHTML, component: NavigationComponent }
+  { path: routePaths.portal, component: FullPortalComponent },
+  { path: routePaths.portalHtml, component: FullPortalComponent },
+  { path: routePaths.fullPortal, component: FullPortalComponent },
+  { path: routePaths.fullPortalHtml, component: FullPortalComponent },
+  { path: routePaths.embedded, component: EmbeddedComponent },
+  { path: routePaths.embeddedHtml, component: EmbeddedComponent },
+  { path: routePaths.mashup, component: EmbeddedComponent },
+  { path: routePaths.mashupHtml, component: EmbeddedComponent }
 ];
