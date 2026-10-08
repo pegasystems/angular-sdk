@@ -5,7 +5,7 @@ import {
   QueryList,
   AfterViewInit,
   OnDestroy,
-  NgZone,
+  ChangeDetectorRef,
   Input,
   OnChanges,
   SimpleChanges,
@@ -35,7 +35,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   skeletonItems: any[] = new Array(6).fill(0);
 
   constructor(
-    private ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
     private dialog: MatDialog
   ) {}
 
@@ -115,18 +115,17 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   finishLoading() {
     this.isLoading = false;
+    this.cdRef.markForCheck();
     setTimeout(() => {
       this.initializeScroll();
     }, 0);
   }
 
   ngAfterViewInit() {
-    this.ngZone.runOutsideAngular(() => {
-      const container = this.scrollContainer?.nativeElement;
-      if (container) {
-        container.addEventListener('scroll', this.onScroll.bind(this));
-      }
-    });
+    const container = this.scrollContainer?.nativeElement;
+    if (container) {
+      container.addEventListener('scroll', this.onScroll.bind(this));
+    }
   }
 
   ngOnDestroy() {

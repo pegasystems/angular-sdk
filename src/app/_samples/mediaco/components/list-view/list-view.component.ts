@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Utils, ListViewComponent as OOTBListViewComponent } from '@pega/angular-sdk-components';
 import { CarouselComponent } from '../carousel/carousel.component';
@@ -59,7 +59,8 @@ export class ListViewComponent implements OnInit {
 
   constructor(
     public utils: Utils,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef
   ) {
     this.caseTypeToActivityMap = {
       'Plan Upgrade': 'Plan Upgrade',
@@ -94,6 +95,7 @@ export class ListViewComponent implements OnInit {
       }).then(response => {
         this.listContext = response;
         this.getListData();
+        this.cdRef.markForCheck();
       });
     }
   }
@@ -108,6 +110,7 @@ export class ListViewComponent implements OnInit {
       .getDataAsync(this.referenceDataPage, this.pConn$.getContextName())
       .then(({ data }) => {
         this.modifyListData(data);
+        this.cdRef.markForCheck();
       });
   }
 
