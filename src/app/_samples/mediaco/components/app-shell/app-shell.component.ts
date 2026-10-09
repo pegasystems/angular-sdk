@@ -88,7 +88,6 @@ export class AppShellComponent implements OnInit, OnDestroy {
       PCore.getEnvironmentInfo().setEnvironmentInfo({ ...PCore.getEnvironmentInfo().environmentInfoObject, pyPortalTemplate: 'wss' } as any);
     }
 
-    // @ts-ignore - Property 'pyCaseTypesAvailableToCreateDP' does not exist on type pxApplication
     const caseTypesAvailableToCreateDP = PCore.getEnvironmentInfo().environmentInfoObject?.pxApplication?.pyCaseTypesAvailableToCreateDP;
     if (caseTypesAvailableToCreateDP) {
       const portalID = this.pConn$.getValue('.pyOwner');
