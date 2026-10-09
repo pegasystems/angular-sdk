@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone, forwardRef, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input, forwardRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -58,7 +58,7 @@ export class AppShellComponent implements OnInit, OnDestroy {
     private angularPConnect: AngularPConnectService,
     private erService: ErrorMessagesService,
     private snackBar: MatSnackBar,
-    private ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
     private utils: Utils
   ) {}
 
@@ -151,17 +151,15 @@ export class AppShellComponent implements OnInit, OnDestroy {
     const portalClass = this.pConn$.getValue('.classID', ''); // 2nd arg empty string until typedef marked correctly
     const envPortalName = envInfo.getPortalName();
 
-    this.ngZone.run(() => {
-      // making a copy, so can add info
-      this.pages$ = this.configProps$.pages;
+    // making a copy, so can add info
+    this.pages$ = this.configProps$.pages;
 
-      if (this.pages$) {
-        this.bShowAppShell$ = true;
-      }
+    if (this.pages$) {
+      this.bShowAppShell$ = true;
+    }
 
-      this.caseTypes$ = this.configProps$.caseTypes;
-      this.arChildren$ = this.pConn$.getChildren();
-    });
+    this.caseTypes$ = this.configProps$.caseTypes;
+    this.arChildren$ = this.pConn$.getChildren();
 
     const portalLogo = this.configProps$.portalLogo;
     // using the default icon then fetch it from the static folder (not auth involved)
@@ -180,12 +178,14 @@ export class AppShellComponent implements OnInit, OnDestroy {
         .getSvcImageUrl(portalLogo)
         .then(data => {
           this.imageURL = data;
+          this.cdRef.markForCheck();
         })
         .catch(() => {
           console.error(`${this.localizedVal('Unable to load the image for the portal logo/icon with the insName', 'AppShell')}:${portalLogo}`);
         });
     }
     this.appName$ = this.localizedVal(appNameToDisplay || '', '', `${portalClass}!PORTAL!${envPortalName}`.toUpperCase());
+    this.cdRef.markForCheck();
   }
 
   // fpr show/hiding error messages in the SnackBar component
@@ -243,5 +243,6 @@ export class AppShellComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+    this.cdRef.markForCheck();
   }
 }
