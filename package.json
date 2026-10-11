@@ -87,7 +87,7 @@
     "@chromatic-com/storybook": "^3.2.7",
     "@pega/angular-sdk-overrides": "~0.25.18",
     "@pega/configs": "^0.16.3",
-    "@pega/constellationjs": "~0.25.2",
+    "@pega/constellationjs": "~0.25.3",
     "@pega/dx-component-builder-sdk": "25.1.15",
     "@pega/pcore-pconnect-typedefs": "~4.1.4",
     "@playwright/test": "^1.54.2",
