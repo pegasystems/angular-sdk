@@ -92,7 +92,7 @@
     "@pega/constellationjs": "~26.1.0",
     "@pega/dx-component-builder-sdk": "~26.1.11",
     "@pega/pcore-pconnect-typedefs": "^5.1.1",
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.0",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-links": "^10.6.0",
