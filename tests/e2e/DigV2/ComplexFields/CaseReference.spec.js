@@ -28,8 +28,11 @@ test.describe('E2E test', () => {
     await expect(page.getByRole('row', { name: ' Product Name ' })).toBeVisible();
     // /** Storing case-id of the newly created Query case-type(s), will be used later */
     const caseID = [];
+    const caseIdLocator = page.locator('div[id="caseId"]:visible');
 
-    caseID.push(await page.locator('div[id="caseId"]').textContent());
+    await expect(caseIdLocator).toHaveCount(1);
+    await expect(caseIdLocator).toHaveText(/\S/);
+    caseID.push((await caseIdLocator.innerText()).trim());
 
     /** Creating another Query case-type which will be used for ListOfRecords mode */
     await common.createCase('Query', page);
@@ -41,7 +44,9 @@ test.describe('E2E test', () => {
     await modal.locator('button:has-text("submit")').click();
     await expect(modal).not.toBeVisible();
 
-    caseID.push(await page.locator('div[id="caseId"]').textContent());
+    await expect(caseIdLocator).not.toHaveText(caseID[0]);
+    await expect(caseIdLocator).toHaveText(/\S/);
+    caseID.push((await caseIdLocator.innerText()).trim());
 
     /** Creating a Complex Fields case-type */
     /** opening all case types */
