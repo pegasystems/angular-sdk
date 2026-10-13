@@ -35,14 +35,14 @@ test.describe('E2E test', () => {
     expect(await requiredRichTextLabel.innerText()).toEqual('RichText Required');
     await page.locator('button:has-text("submit")').click();
     let canNotBeBlankMsg = await requiredRichTextContainer.locator('p:has-text("Cannot be blank")');
-    expect(canNotBeBlankMsg).toBeVisible();
+    await expect(canNotBeBlankMsg).toBeVisible();
 
     const notRequiredRichTextContainer = page.locator('div[data-test-id="913fcb2ea3513d1f0dd357aa1766757f"]');
     const notRequiredRichTextLabel = notRequiredRichTextContainer.locator('label');
     expect(await notRequiredRichTextLabel.innerText()).toEqual('RichText Not Required');
     await page.locator('button:has-text("submit")').click();
     canNotBeBlankMsg = await notRequiredRichTextContainer.locator('p:has-text("Cannot be blank")');
-    expect(canNotBeBlankMsg).not.toBeVisible();
+    await expect(canNotBeBlankMsg).not.toBeVisible();
 
     /** Selecting Disable from the Sub Category dropdown */
     await common.selectSubCategory('Disable', page);
@@ -84,13 +84,13 @@ test.describe('E2E test', () => {
     const readOnlyRichTextLabel = readOnlyRichTextContainer.locator('label');
     expect(await readOnlyRichTextLabel.innerText()).toEqual('RichText ReadOnly');
     const readOnlyRTEDiv = readOnlyRichTextContainer.locator('div[class="readonly-richtext-editor"]');
-    expect(readOnlyRTEDiv).toBeVisible();
+    await expect(readOnlyRTEDiv).toBeVisible();
 
     const editableRichTextContainer = page.locator('div[data-test-id="c5f3892e688f607040637162ef2d61e2"]');
     const editableRichTextLabel = editableRichTextContainer.locator('label');
     expect(await editableRichTextLabel.innerText()).toEqual('RichText Editable');
     const editableRichTextDiv = editableRichTextContainer.locator('div[role="application"]');
-    expect(editableRichTextDiv).toBeVisible();
+    await expect(editableRichTextDiv).toBeVisible();
 
     /** Selecting Visibility from the Sub Category dropdown */
     await common.selectSubCategory('Visibility', page);
