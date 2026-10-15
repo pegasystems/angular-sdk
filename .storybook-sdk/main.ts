@@ -22,6 +22,11 @@ const config: StorybookConfig = {
       config.resolve.alias['@pega/auth/lib/sdk-auth-manager'] = path.resolve(__dirname, '../__mocks__/authManager.ts');
     }
 
+    // App is zoneless; @storybook/angular injects zone.js unless experimentalZoneless is set (unsupported on Angular 21)
+    if (Array.isArray(config.entry)) {
+      config.entry = config.entry.filter(entry => entry !== 'zone.js');
+    }
+
     return config;
   }
 };

@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AngularPConnectService, getSdkComponentMap } from '@pega/angular-sdk-components';
 import { Preview, applicationConfig } from '@storybook/angular';
@@ -32,7 +33,7 @@ class MockingAngularPConnectService {
 const preview: Preview = {
   decorators: [
     applicationConfig({
-      providers: [provideAnimations(), { provide: AngularPConnectService, useClass: MockingAngularPConnectService }]
+      providers: [provideZonelessChangeDetection(), provideAnimations(), { provide: AngularPConnectService, useClass: MockingAngularPConnectService }]
     })
   ],
   parameters: {
