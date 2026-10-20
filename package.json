@@ -63,7 +63,7 @@
     "@angular/forms": "^21.2.4",
     "@angular/platform-browser": "^21.2.4",
     "@angular/platform-browser-dynamic": "^21.2.4",
-    "@angular/router": "^21.2.4",
+    "@angular/router": "^21.2.25",
     "@pega/angular-sdk-components": "~26.1.10",
     "@pega/auth": "^1.0.0",
     "@pega/cosmos-react-condition-builder": "^9.23.4",
