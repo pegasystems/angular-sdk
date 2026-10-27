@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,7 @@ import { FooterComponent } from 'src/app/_samples/mediaco/components/footer/foot
   templateUrl: './wss-nav-bar.component.html',
   styleUrls: ['./wss-nav-bar.component.scss'],
   providers: [Utils],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     MatButtonModule,

@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
@@ -11,7 +11,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     provideAnimations(),
     { provide: APP_BASE_HREF, useValue: '/' }
   ]

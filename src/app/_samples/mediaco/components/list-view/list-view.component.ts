@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Utils, ListViewComponent as OOTBListViewComponent } from '@pega/angular-sdk-components';
 import { CarouselComponent } from '../carousel/carousel.component';
@@ -36,6 +36,7 @@ interface ListViewProps {
   imports: [CommonModule, CarouselComponent, OOTBListViewComponent, MatIconButton, MatIcon],
   templateUrl: './list-view.component.html',
   styleUrl: './list-view.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [Utils]
 })
 export class ListViewComponent implements OnInit {

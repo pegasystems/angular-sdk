@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval, Subscription } from 'rxjs';
@@ -25,6 +25,7 @@ declare global {
   selector: 'app-full-portal',
   templateUrl: './full-portal.component.html',
   styleUrls: ['./full-portal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, MatProgressSpinnerModule, ComponentMapperComponent]
 })
 export class FullPortalComponent implements OnInit, OnDestroy {

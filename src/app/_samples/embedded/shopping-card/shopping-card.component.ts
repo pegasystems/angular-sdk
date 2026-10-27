@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface PlanOption {
@@ -14,6 +14,7 @@ export interface PlanOption {
   selector: 'app-shopping-card',
   imports: [CommonModule],
   templateUrl: './shopping-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shopping-card.component.scss', '../EmbeddedStyles.scss']
 })
 export class ShoppingCardComponent {

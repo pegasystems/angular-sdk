@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Utils } from '@pega/angular-sdk-components';
@@ -16,6 +16,7 @@ interface QuickCreateProps {
   selector: 'app-quick-create',
   templateUrl: './quick-create.component.html',
   styleUrls: ['./quick-create.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, MatIcon, MasonryDirective]
 })
 export class QuickCreateComponent implements OnInit, OnChanges {

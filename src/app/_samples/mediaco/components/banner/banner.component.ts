@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { PortalModule, TemplatePortal } from '@angular/cdk/portal';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { PortalService } from '../../services/portal.service';
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, PortalModule, forwardRef(() => ComponentMapperComponent)]
 })
 export class BannerComponent {

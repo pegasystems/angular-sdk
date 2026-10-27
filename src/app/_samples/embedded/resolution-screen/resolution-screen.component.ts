@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-resolution-screen',
   templateUrl: './resolution-screen.component.html',
   styleUrls: ['./resolution-screen.component.scss', '../EmbeddedStyles.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule]
 })
 export class ResolutionScreenComponent implements OnInit {

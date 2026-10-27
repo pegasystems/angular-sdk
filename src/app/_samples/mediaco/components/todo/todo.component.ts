@@ -1,4 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, Input, ViewContainerRef, ViewChild, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  ViewContainerRef,
+  ViewChild,
+  TemplateRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatIcon } from '@angular/material/icon';
@@ -66,6 +76,7 @@ interface ToDoProps {
   selector: 'app-mediaco-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, MatIcon, OOTBTodoComponent]
 })
 export class TodoComponent implements OnInit, OnDestroy {
