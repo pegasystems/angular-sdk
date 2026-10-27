@@ -9,7 +9,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './carousel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {

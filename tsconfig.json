@@ -6,7 +6,9 @@
     "allowJs": true,
     "typeRoots": ["node_modules/@types", "node_modules/@pega"],
     "types": ["pcore-pconnect-typedefs", "jasmine"],
-    "baseUrl": "./",
+    "paths": {
+      "src/*": ["./src/*"]
+    },
     "esModuleInterop": true,
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

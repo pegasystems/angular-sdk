@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResolutionScreenComponent } from '../resolution-screen/resolution-screen.component';
 import { ShoppingCardComponent } from '../shopping-card/shopping-card.component';
@@ -10,6 +10,7 @@ import { shoppingOptions } from '../utils';
   selector: 'app-main-screen',
   templateUrl: './main-screen.component.html',
   styleUrls: ['./main-screen.component.scss', '../EmbeddedStyles.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ShoppingCardComponent, ComponentMapperComponent, ResolutionScreenComponent]
 })
 export class MainScreenComponent implements OnInit, OnDestroy {

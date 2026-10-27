@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, Input, forwardRef, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input, forwardRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -31,6 +31,7 @@ interface AppShellProps {
   selector: 'app-app-shell',
   templateUrl: './app-shell.component.html',
   styleUrls: ['./app-shell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, MatSnackBarModule, forwardRef(() => ComponentMapperComponent)]
 })
 export class AppShellComponent implements OnInit, OnDestroy {

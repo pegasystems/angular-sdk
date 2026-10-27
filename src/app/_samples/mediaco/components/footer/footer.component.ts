@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDividerModule } from '@angular/material/divider';
@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   imports: [MatIcon, MatDividerModule, MatListModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {

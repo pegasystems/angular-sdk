@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +10,7 @@ import { TableTemplateCardComponent } from './table-template-card/table-template
   standalone: true,
   imports: [CommonModule, MatDialogModule, MatIconModule, MatButtonModule, TableTemplateCardComponent],
   templateUrl: './gallery-grid-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./gallery-grid-component.scss']
 })
 export class GalleryGridComponent {
