@@ -1,13 +1,13 @@
 <p align="center"><img width=60% src="docs/media/AngularSDK-Logo.png">
 
-# Angular SDK - Release Announcement - v25.1.14
+# Angular SDK - Release Announcement - v25.1.15
 
-The **SDK-A v25.1.14** release is **only compatible with Pega Infinity '25**. This release is available in the [**release/25.1.14**](https://github.com/pegasystems/angular-sdk/tree/release/25.1.14) branch of the Angular SDK repository.
+The **SDK-A v25.1.15** release is **only compatible with Pega Infinity '25**. This release is available in the [**release/25.1.15**](https://github.com/pegasystems/angular-sdk/tree/release/25.1.15) branch of the Angular SDK repository.
 
 **Note**: The main branch is the active development branch for future versions of Angular SDK.
 
-The SDK-A v25.1.14 release allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
-[What's new in SDK-A 25.1.14](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
+The SDK-A v25.1.15 release allows Angular SDK users to take advantage of the latest SDK enhancements and fixes. For more information, see
+[What's new in SDK-A 25.1.15](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
 
 For information on all Angular SDK releases, see [Angular SDK updates](https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/angular-sdk-updates.html).
 
@@ -41,8 +41,8 @@ The **MediaCo** sample application is already configured as a Constellation arch
 
 The **Angular SDK** has been tested with:
 
-- node 24.4.1
-- npm 11.4.2
+- node 24.22.1
+- npm 11.19.1
 
 Future updates to the SDK will support more recent LTS versions of node as the Constellation architecture supports them.
 
