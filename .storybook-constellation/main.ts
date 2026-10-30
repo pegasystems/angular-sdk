@@ -5,7 +5,12 @@ const config = {
   stories: ['../src/app/_components//custom-constellation/**/*.stories.@(js|jsx|ts|tsx)'],
 
   typescript: {
-    reactDocgen: 'react-docgen-typescript'
+    reactDocgen: 'react-docgen-typescript',
+    // TypeScript 6 requires an absolute tsconfig path here, otherwise createProgram throws
+    // "Paths must either both be absolute or both be relative".
+    reactDocgenTypescriptOptions: {
+      tsconfigPath: path.resolve(__dirname, '../tsconfig.json')
+    }
   },
 
   addons: [
