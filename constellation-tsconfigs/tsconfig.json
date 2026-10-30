@@ -6,7 +6,7 @@
     "sourceMap": true,
     "module": "es2020",
     "target": "es2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "allowJs": true,
     "noImplicitAny": false,

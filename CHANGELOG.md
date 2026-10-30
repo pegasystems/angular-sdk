@@ -1,3 +1,56 @@
+# [25.1.15](https://github.com/pegasystems/angular-sdk/tree/release/25.1.15) - Released: 30/10/2026
+
+## Breaking changes
+
+*   Upgraded the `Angular` version to 22, the `Angular Material` version to 22, and the `TypeScript` version to 6.
+    * Github: [PR-880](https://github.com/pegasystems/angular-sdk/pull/880)
+    * Github: [PR-647](https://github.com/pegasystems/angular-sdk-components/pull/647)
+*   The application build has been migrated from the `@angular-builders/custom-webpack` builder to the `@angular/build:application` builder. The `extra-webpack.config.js` file has been removed.
+    * Github: [PR-880](https://github.com/pegasystems/angular-sdk/pull/880)
+*   Upgraded `@pega/auth` to version 0.3.x.
+    * Github: [PR-650](https://github.com/pegasystems/angular-sdk-components/pull/650)
+
+## Non Breaking changes
+
+### **Bug fixes**
+*   **Fixed server-side validation messages being cleared from form fields when the field value or validation was updated.**
+      * Github: [PR-648](https://github.com/pegasystems/angular-sdk-components/pull/648)
+---
+
+### **Dependencies & Infrastructure**
+
+*   The **@angular-builders/custom-webpack** and **copy-webpack-plugin** packages have been removed.
+    * Github: [PR-880](https://github.com/pegasystems/angular-sdk/pull/880)
+*   The following table lists the packages whose versions have been updated:
+
+| Package | Updated version |
+| :--- | :--- |
+| **@angular/animations** | 22.2.3 |
+| **@angular/build** | 22.2.4 |
+| **@angular/cdk** | 22.2.4 |
+| **@angular/cli** | 22.2.3 |
+| **@angular/common** | 22.2.3 |
+| **@angular/compiler** | 22.2.3 |
+| **@angular/compiler-cli** | 22.2.3 |
+| **@angular/core** | 22.2.3 |
+| **@angular/forms** | 22.2.3 |
+| **@angular/language-service** | 22.2.3 |
+| **@angular/material** | 22.2.4 |
+| **@angular/platform-browser** | 22.2.3 |
+| **@angular/platform-browser-dynamic** | 22.2.3 |
+| **@angular/router** | 22.2.3 |
+| **@angular-devkit/build-angular** | 22.2.4 |
+| **@angular-devkit/core** | 22.2.3 |
+| **@angular-eslint/eslint-plugin** | 22.6.0 |
+| **@angular-eslint/eslint-plugin-template** | 22.6.0 |
+| **@angular-eslint/template-parser** | 22.6.0 |
+| **@pega/angular-sdk-components** | 25.1.15 |
+| **@pega/angular-sdk-overrides** | 25.1.15 |
+| **@pega/auth** | 0.3.3 |
+| **@pega/dx-component-builder-sdk** | 25.1.18 |
+| **typescript** | 6.0.3 |
+| **typescript-eslint** | 8.72.0 |
+
 # [25.1.14](https://github.com/pegasystems/angular-sdk/tree/release/25.1.14) - Released: 15/10/2026
 
 ## Breaking changes
