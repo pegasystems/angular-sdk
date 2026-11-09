@@ -90,7 +90,7 @@
             ],
             "styles": ["src/styles.scss", "src/app/_samples/mediaco/mediaCoStyles.scss"],
             "scripts": ["./node_modules/tinymce/tinymce.min.js"],
-            "allowedCommonJsDependencies": ["lodash.clonedeep", "lodash.debounce", "lodash.get", "downloadjs", "dayjs", "fast-deep-equal", "moment"]
+            "allowedCommonJsDependencies": ["downloadjs", "dayjs", "fast-deep-equal", "moment"]
           },
           "configurations": {
             "production": {

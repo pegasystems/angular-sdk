@@ -67,7 +67,7 @@
     "@pega/cosmos-react-core": "^8.34.3",
     "@pega/cosmos-react-work": "^8.34.3",
     "core-js": "^3.39.0",
-    "lodash.get": "^4.4.2",
+    "lodash-es": "^4.18.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rxjs": "^7.8.1",

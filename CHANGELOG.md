@@ -1,3 +1,18 @@
+# [25.1.16](https://github.com/pegasystems/angular-sdk/tree/release/25.1.16) - Released: TBD
+
+## Non Breaking changes
+
+### **Dependencies & Infrastructure**
+
+*   The **lodash.get** package has been replaced with **lodash-es**. The `lodash.*` entries have been removed from `allowedCommonJsDependencies` in `angular.json`.
+    * Github: [PR-TBD](https://github.com/pegasystems/angular-sdk/pulls)
+    * Github: [PR-657](https://github.com/pegasystems/angular-sdk-components/pull/657)
+*   The following table lists the packages that have been added:
+
+| Package | Added version |
+| :--- | :--- |
+| **lodash-es** | 4.18.1 |
+
 # [25.1.15](https://github.com/pegasystems/angular-sdk/tree/release/25.1.15) - Released: 30/10/2026
 
 ## Breaking changes
