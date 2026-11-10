@@ -5,8 +5,11 @@
 ### **Dependencies & Infrastructure**
 
 *   The **lodash.get** package has been replaced with **lodash-es**. The `lodash.*` entries have been removed from `allowedCommonJsDependencies` in `angular.json`.
-    * Github: [PR-TBD](https://github.com/pegasystems/angular-sdk/pulls)
+    * Github: [PR-888](https://github.com/pegasystems/angular-sdk/pull/888)
     * Github: [PR-657](https://github.com/pegasystems/angular-sdk-components/pull/657)
+*   The deprecated **@angular/platform-browser-dynamic** package has been removed from the dependencies. `provideAnimations()`, which relies on the deprecated `@angular/animations` package, has been removed from `src/main.ts` and the Storybook preview. The Karma test setup in `src/test.ts` now uses `@angular/platform-browser/testing`.
+    * Github: [PR-889](https://github.com/pegasystems/angular-sdk/pulls)
+    * Github: [PR-658](https://github.com/pegasystems/angular-sdk-components/pulls)
 *   The following table lists the packages that have been added:
 
 | Package | Added version |
